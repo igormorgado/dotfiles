@@ -1,0 +1,12 @@
+# Python stuff
+
+PYTHONSTARTUP=~/.pythonrc.py
+export PYTHONSTARTUP
+
+# For python virtualenv 
+VIRTUALENV_DIR=${HOME}/venv/
+if [ -x ${VIRTUALENV_DIR}/bin/activate ]
+    source ${VIRTUALENV_DIR}/bin/activate
+fi
+
+# vim: ft=sh:

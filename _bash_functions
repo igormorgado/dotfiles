@@ -1,0 +1,158 @@
+# Declare useful functions on environment
+function addpath() {
+	# Insert (in the beginning) a dir to ${PATH} (only if exists)
+    [ -d "${1}" ] && PATH="${1}:${PATH}"
+}
+
+
+function apppath() {
+# Append (in the end) a dir to ${PATH} (only if exists)
+    [ -d "${1}" ] && PATH="${PATH}:${1}"
+}
+
+
+function loadresource() {
+# Load resource only if exists
+	[ -f "${1}" ] && source "${1}"
+}
+
+
+function parse_git_branch() {
+	git branch 2> /dev/null | grep '*' | sed 's#*\ \(.*\)#(git::\1)#'
+}
+
+
+function parse_svn_repository_root() {
+	svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
+}
+
+
+function parse_svn_url() {
+	svn info 2>/dev/null | sed -ne 's#^URL: ##p'
+}
+
+
+function parse_svn_branch() {
+	parse_svn_url | \
+	sed -e 's#^'"$(parse_svn_repository_root)"'##g' | \
+	awk -F / '{print "(svn::"$1 "/" $2 ")"}'
+}
+
+
+function colortest() {
+    echo -e "
+    ${BLACK}BLACK       ${DGRAY}DGRAY     
+    ${RED}RED           ${LRED}LRED       
+    ${GREEN}GREEN       ${LGREEN}LGREEN   
+    ${BROWN}BROWN       ${YELLOW}YELLOW   
+    ${BLUE}BLUE         ${LBLUE}LBLUE     
+    ${PURPLE}PURPLE     ${LPURPLE}LPURPLE 
+    ${CYAN}CYAN         ${LCYAN}LCYAN     
+    ${LGRAY}LGRAY       ${WHITE}WHITE     
+    ${CRST}RESET
+    "
+}
+
+
+# Start the SUPREME PS1 functions
+function prevCmd() {
+    if [ $1 == 0 ] ; then
+        echo ${GREEN}
+    else
+        echo ${RED}
+    fi
+}
+
+
+function bash_prompt_command() {
+    RETVAL=$?
+    prevCmd=$(prevCmd ${RETVAL})
+}
+
+
+# Solarize me
+function solarized_light() {
+	if [ -f ~/dotfiles/_dir_colors.ansi-light ]; then
+		cd ~/dotfiles
+		rm _dir_colors
+		ln -s _dir_colors.ansi-light _dir_colors
+		eval $(dircolors -b _dir_colors)
+		cd -
+	fi
+}
+
+
+function solarized_dark(){
+	if [ -f ~/dotfiles/_dir_colors.ansi-dark ]; then
+		cd ~/dotfiles
+		rm _dir_colors
+		ln -s _dir_colors.ansi-dark _dir_colors
+		eval $(dircolors -b _dir_colors)
+		cd -
+	fi
+    }
+
+
+
+function dedup() {
+    fdupes -rnNd .
+}
+
+
+function settitle () { 
+	echo -ne "\e]2;$@\a\e]1;$@\a"; 
+}
+
+
+function cd_func () {
+	local x2 the_new_dir adir index
+	local -i cnt
+
+	if [[ $1 ==  "--" ]]; then
+		dirs -v
+		return 0
+	fi
+
+	the_new_dir=$1
+	[[ -z $1 ]] && the_new_dir=$HOME
+
+	if [[ ${the_new_dir:0:1} == '-' ]]; then
+		#
+		# Extract dir N from dirs
+		index=${the_new_dir:1}
+		[[ -z $index ]] && index=1
+		adir=$(dirs +$index)
+		[[ -z $adir ]] && return 1
+		the_new_dir=$adir
+	fi
+
+	#
+	# '~' has to be substituted by ${HOME}
+	[[ ${the_new_dir:0:1} == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
+
+	#
+	# Now change to the new dir and add to the top of the stack
+	pushd "${the_new_dir}" > /dev/null
+	[[ $? -ne 0 ]] && return 1
+	the_new_dir=$(pwd)
+
+	#
+	# Trim down everything beyond 11th entry
+	popd -n +11 2>/dev/null 1>/dev/null
+
+	#
+	# Remove any other occurence of this dir, skipping the top of the stack
+	for ((cnt=1; cnt <= 10; cnt++)); do
+		x2=$(dirs +${cnt} 2>/dev/null)
+		[[ $? -ne 0 ]] && return 0
+		[[ ${x2:0:1} == '~' ]] && x2="${HOME}${x2:1}"
+		if [[ "${x2}" == "${the_new_dir}" ]]; then
+			popd -n +$cnt 2>/dev/null 1>/dev/null
+			cnt=cnt-1
+		fi
+	done
+
+	return 0
+}
+
+# vim: ft=sh:
