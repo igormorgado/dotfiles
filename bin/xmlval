@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+xmllint --valid --noout "$@"

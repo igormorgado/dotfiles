@@ -1,0 +1,110 @@
+#!/bin/bash
+
+cd ~
+
+# Verify if dir exists
+if [ ! -e dotfiles ] 
+then
+    ln -sf Dropbox/dotfiles
+elif [ ! -L dotfiles ]
+then
+    # Dotfies exist but isn't a symlink to DROPBOX
+    echo -n "ERRO: Dotfiles exists but isn't a symlink to Dropbox. Continue? (y/N)"
+    read INPUT
+    [ "$INPUT" != "y" -a "$INPUT" != "Y" ]  && exit
+fi
+
+case $1 in
+    vim|vi)
+        ln -sf dotfiles/_vimrc .vimrc
+        ln -sf dotfiles/_vim .vim
+        ln -sf dotfiles/_viminfo  .viminfo
+        ;;
+    subversion|svn)
+        ln -sf dotfiles/_subversion .subversion
+        ;;
+    git)
+        ln -sf dotfiles/_gitconfig .gitconfig
+        ;;
+    bash|bashrc|shell)
+        ln -sf dotfiles/_bashrc .bashrc
+        ln -sf dotfiles/_bash_aliases .bash_aliases
+        ln -sf dotfiles/_bash_functions  .bash_functions
+        ln -sf dotfiles/_bash_history .bash_history
+        ln -sf dotfiles/_bash_logout  .bash_logout
+        ln -sf dotfiles/_bash_profile .bash_profile
+        ln -sf dotfiles/_bash_python  .bash_python
+        ln -sf dotfiles/_dir_colors .dir_colors
+        ln -sf dotfiles/_inputrc .inputrc
+        ln -sf dotfiles/_profile .profile
+        ln -sf dotfiles/_bash_nda  .bash_nda
+        ;;
+    mutt)
+        ln -sf dotfiles/_mutt .mutt
+        ;;
+    python)
+        ln -sf dotfiles/_pdbrc .pdbrc
+        ln -sf dotfiles/_pdbrc.py .pdbrc.py
+        ln -sf dotfiles/_pythonrc.py .pythonrc.py
+        ;;
+    fonts)
+        ln -sf dotfiles/_fonts .fonts
+		ln -sf ~/dotfiles/_fonts ~/.local/share/fonts
+        ;;
+    screen)
+        ln -sf dotfiles/_screenrc .screenrc
+        ;;
+    alexandria)
+        ln -sf dotfiles/_alexandria .alexandria
+        ;;
+    ssh)
+        if [ -d ~/.ssh/ ]; then
+            echo "Dir ~/.ssh/ exists. Exiting"
+        else
+            ln -s dotfiles/_ssh .ssh
+            chmod 600 ~/.ssh/identity ~/.ssh/igormorgado ~/.ssh/id_rsa
+        fi
+        ;;
+    mc)
+        rm -rf .config/mc .mc
+        ln -sf dotfiles/_mc .mc
+        ln -sf dotfiles/_mc .config/mc
+        ;;
+    term)
+        rm .config/terminator
+        ln -sf dotfiles/_config/terminator .config/terminator
+        ;;
+    desktop)
+        if [ "$(uname)" == "Linux" ]
+        then
+            if [ "${LANG%.*}" == "pt_BR" ]
+            then 
+                for DIR in Biblioteca Documentos Música Imagens Público Modelos Vídeos bin
+                do
+                    rmdir ~/$DIR && ln -sf Dropbox/$DIR
+                done
+            else
+                for DIR in Library Documents Music Pictures Public Templates Videos bin
+                do
+                    rmdir ~/$DIR && ln -sf Dropbox/$DIR
+                done
+            fi
+        fi
+        ;;
+    *)
+        echo Options
+        echo "   bash|shell|bashrc"
+        echo "   fonts"
+        echo "   git"
+        echo "   mutt"
+        echo "   python"
+        echo "   screen"
+        echo "   ssh"
+        echo "   subversion|svn"
+        echo "   vim|vi"
+        echo "   mc"
+        echo "   desktop"
+        ;;
+esac
+
+cd -

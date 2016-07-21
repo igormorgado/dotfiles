@@ -155,4 +155,40 @@ function cd_func () {
 	return 0
 }
 
+function create_test_dir() {
+	# Missing sockets, pipes, char, block, fifo, brokenlink
+	
+	local d=test_dir
+	mkdir -m 775 -p ${d}/common
+	mkdir -m 2775 -p ${d}/group
+	mkdir -m 2755 -p ${d}/group_broken
+	mkdir -m 755 -p ${d}/directory
+	mkdir -m 1777 -p ${d}/directoryt
+	mkdir -m 1775 -p ${d}/directory+t_o+w
+
+	testfiles="archive.tar archive.tar.gz audio.ogg backup.bak
+	document.pdf executable_file file1.ogg file2 file2.bak file3
+	file_ex image.png logfile.log setgid_g+s setuid_u+s ttt.JPG
+	video.mkv"
+	
+	for f in ${testfiles}; do
+		touch ${d}/${f}
+		touch ${d}/common/${f}
+		touch ${d}/directory/${f}
+	done
+	cd ${d}
+	ln file3 file3.hardlink	
+	ln -s file3 file3.synlink
+	ln -s file_ex link
+	ln -s /dev/null devnull
+	ln -s /dev/sda1 devsda1
+	ln -s directory directory_link
+	ln -s nonexist brokenlink 
+	cd -
+	chmod g+s ${d}/setgid_g+s
+	chmod u+s ${d}/setuid_u+s
+	chmod 755 ${d}/executable_file
+	chmod 755 ${d}/file_ex
+}
+
 # vim: ft=sh:

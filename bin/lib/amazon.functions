@@ -1,0 +1,39 @@
+function get_last_snapshot_of() {
+	while [ -n "${1}" ]; do
+		ec2-describe-snapshots | grep ${1} | awk '{ print $2 }'
+		shift
+	done
+}
+
+function get_volume_tags_of() {
+	while [ -n "${1}" ]; do
+		ec2-describe-volumes  ${1} | grep TAG | awk -F '\t' '{ print "\""$4 "=" $5"\"" }' | tr " " "_"
+		shift
+	done
+}
+
+function set_object_with_tags() {
+	local TAGLINE
+	OBJECT="${1}"
+	shift
+	while [ -n "${1}" ]; do
+		TAGLINE="${TAGLINE} --tag ${1}"
+		shift
+	done
+	ec2-create-tags ${OBJECT} ${TAGLINE}
+}
+
+# Copy all tags from VOLUME to their respective snapshots
+function volume_tag_to_snapshot() {
+	while [ -n "${1}" ]; do
+		local SNAPSHOT
+		local TAGS
+		SNAPSHOT="$(get_last_snapshot_of ${1})"
+		TAGS="$(get_volume_tags_of ${1})"
+		set_object_with_tags ${SNAPSHOT} ${TAGS}
+		shift
+	done
+}
+
+
+
