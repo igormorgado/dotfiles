@@ -1,0 +1,21 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- "S\xC3\xA9rgio Lima Netto"
+edition: "1"
+isbn: "9788585818425"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: Sociedade Brasileira de Matematica
+publishing_year: 2009
+rating: 0
+redd: false
+saved_ident: "9788585818425"
+tags: []
+
+title: "Construc\xCC\xA7o\xCC\x83es geometricas: Exerc\xC3\xADcios e solu\xC3\xA7\xC3\xB5es"
+version: 0.6.3
+want: false

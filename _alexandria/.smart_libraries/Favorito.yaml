@@ -1,0 +1,7 @@
+--- 
+:rules: 
+- :value: "5"
+  :operand: :rating
+  :operation: :is
+:predicate_operator_rule: :all
+:name: Favorito

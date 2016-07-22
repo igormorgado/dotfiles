@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Kreley Irraciel Martins Oliveira
+- "Achan Jose Corcho Fernand\xC3\xA9z"
+edition: "2"
+isbn: "9788585818463"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: Sociedade Brasileira de Matematica
+publishing_year: 2010
+rating: 0
+redd: false
+saved_ident: "9788585818463"
+tags: []
+
+title: "Inicia\xC3\xA7\xC3\xA3o a matem\xC3\xA1tica: Um curso com problemas e solu\xC3\xA7\xC3\xB5es"
+version: 0.6.3
+want: false

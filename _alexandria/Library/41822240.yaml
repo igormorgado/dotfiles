@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Francisco Javier Thayer
+edition: ""
+isbn: 
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: false
+publisher: Instituto de Matematica Pura e Aplicada
+publishing_year: 2007
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "41822240"
+tags: []
+
+title: Operadores auto-adjuntos e equacoes diferenciais parciais
+version: 0.6.3
+want: true

@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- E  L Lima
+edition: ""
+isbn: 
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: false
+publisher: "Instituto de Matema\xCC\x81tica Pura e Aplicada"
+publishing_year: 1987
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "-494078858"
+tags: []
+
+title: Meu professor de matematica e outras historias.
+version: 0.6.3
+want: true

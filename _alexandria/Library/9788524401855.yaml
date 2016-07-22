@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Elon Lages Lima
+edition: ""
+isbn: "9788524401855"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: "Instituto de Matema\xCC\x81tica Pura e Aplicada"
+publishing_year: 2008
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788524401855"
+tags: []
+
+title: "Geometria anali\xCC\x81tica e a\xCC\x81lgebra linear"
+version: 0.6.3
+want: true

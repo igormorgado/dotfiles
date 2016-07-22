@@ -1,0 +1,7 @@
+--- 
+:rules: 
+- :value: 
+  :operand: :redd
+  :operation: :is_true
+:predicate_operator_rule: :all
+:name: Ler

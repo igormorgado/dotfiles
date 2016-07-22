@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Eduardo Wagner
+edition: ""
+isbn: "9788524400841"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: "Sociedade Brasileira de Matema\xCC\x81tica 2000."
+publishing_year: 2000
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788524400841"
+tags: []
+
+title: "Construc\xCC\xA7o\xCC\x83es geometricas"
+version: 0.6.3
+want: true

@@ -1,0 +1,7 @@
+--- 
+:rules: 
+- :value: 
+  :operand: :own
+  :operation: :is_true
+:predicate_operator_rule: :all
+:name: Propriedade de

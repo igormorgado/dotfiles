@@ -1,0 +1,10 @@
+--- 
+:rules: 
+- :value: 
+  :operand: :want
+  :operation: :is_true
+- :value: 
+  :operand: :own
+  :operation: :is_not_true
+:predicate_operator_rule: :all
+:name: Lista do pedido

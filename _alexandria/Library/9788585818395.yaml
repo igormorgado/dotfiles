@@ -1,0 +1,21 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Carlos Yuzo Shine
+edition: "1"
+isbn: "9788585818395"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: Sociedade Brasileira de Matematica
+publishing_year: 2009
+rating: 0
+redd: false
+saved_ident: "9788585818395"
+tags: []
+
+title: "21 aulas de matem\xC3\xA1tica ol\xC3\xADmpica"
+version: 0.6.3
+want: false

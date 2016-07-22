@@ -1,0 +1,24 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Laszlo Lovasz
+- Jozsef Pelikan
+- Katalin Vesztergombi
+edition: ""
+isbn: "9788585818289"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: Sociedade Brasileira de Matematica 2003.
+publishing_year: 2003
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788585818289"
+tags: []
+
+title: Matematica discreta
+version: 0.6.3
+want: true

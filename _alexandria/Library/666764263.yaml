@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Marcio G Soares
+edition: ""
+isbn: 
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: false
+publisher: "Instituto de Matema\xCC\x81tica Pura e Aplicada"
+publishing_year: 1999
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "666764263"
+tags: []
+
+title: "Ca\xCC\x81lculo em uma varia\xCC\x81vel complexa"
+version: 0.6.3
+want: true

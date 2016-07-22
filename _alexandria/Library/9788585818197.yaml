@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Carlos Moreira
+edition: ""
+isbn: "9788585818197"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: "Sociedade Brasileira de Matema\xCC\x81tica"
+publishing_year: 2003
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788585818197"
+tags: []
+
+title: "Olimpi\xCC\x81adas brasileiras de matema\xCC\x81tica 9. a 16. : Problemas e resoluc\xCC\xA7o\xCC\x83es"
+version: 0.6.3
+want: true

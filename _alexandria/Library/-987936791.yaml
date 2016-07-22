@@ -1,0 +1,25 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Elon Lages Lima
+- Paulo Cezar Pinto Carvalho
+- Eduardo Wagner
+- "Augusto Ce\xCC\x81sar Morgado"
+edition: ""
+isbn: 
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: false
+publisher: "Sociedade Brasileira de Matema\xCC\x81tica"
+publishing_year: 1996
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "-987936791"
+tags: []
+
+title: "A matema\xCC\x81tica do ensino me\xCC\x81dio: Solucoes e exercicios"
+version: 0.6.3
+want: true

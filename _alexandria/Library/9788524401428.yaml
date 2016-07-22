@@ -1,0 +1,17 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- "Jose\xCC\x81 Pli\xCC\x81nio de Oliveira Santos"
+edition: ""
+isbn: "9788524401428"
+library: 
+notes: ""
+own: true
+publisher: IMPA
+publishing_year: 2009
+redd: false
+saved_ident: "9788524401428"
+tags: []
+
+title: "Introduc\xCC\xA7a\xCC\x83o a\xCC\x80 teoria dos nu\xCC\x81meros"
+version: 0.6.3
+want: true

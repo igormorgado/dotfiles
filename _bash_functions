@@ -191,4 +191,8 @@ function create_test_dir() {
 	chmod 755 ${d}/file_ex
 }
 
+function gca() {
+	git add --all && git commit -m "$*"
+}
+
 # vim: ft=sh:

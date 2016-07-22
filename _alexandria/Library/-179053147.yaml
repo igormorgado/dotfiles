@@ -1,0 +1,23 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Arnaldo Garcia
+- Yves Lequain
+edition: ""
+isbn: 
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: false
+publisher: "Instituto de Matema\xCC\x81tica Pura e Aplicada"
+publishing_year: 1988
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "-179053147"
+tags: []
+
+title: "Algebra: um curso de introducao"
+version: 0.6.3
+want: true

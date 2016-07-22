@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- "Manfredo Perdiga\xCC\x83o do Carmo"
+edition: ""
+isbn: 
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: false
+publisher: "Instituto de Matema\xCC\x81tica Pura e Aplicada "
+publishing_year: 1979
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "992812968"
+tags: []
+
+title: Geometria Riemanniana
+version: 0.6.3
+want: true

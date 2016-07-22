@@ -1,0 +1,24 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- "E\xCC\x81lio Mega"
+- Renate Watanabe
+- "Sociedade Brasileira de Matema\xCC\x81tica Comissa\xCC\x83o de Olimpi\xCC\x81adas."
+edition: ""
+isbn: "9788570567697"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: "Sociedade Brasileira de Matema\xCC\x81tica"
+publishing_year: 1995
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788570567697"
+tags: []
+
+title: "Olimpi\xCC\x81adas brasileiras de matema\xCC\x81tica 1a.a 8a. (problemas e resoluc\xCC\xA7o\xCC\x83es)"
+version: 0.6.3
+want: true

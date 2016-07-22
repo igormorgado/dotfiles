@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Djairo Guedes de Figueiredo
+edition: ""
+isbn: "9788524401206"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: "Instituto de Matema\xCC\x81tica Pura e Aplicada"
+publishing_year: 2000
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788524401206"
+tags: []
+
+title: "Ana\xCC\x81lise de Fourier e equac\xCC\xA7oes diferenciais parciais"
+version: 0.6.3
+want: true

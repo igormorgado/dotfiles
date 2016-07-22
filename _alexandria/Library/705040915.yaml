@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Marcos Sebastiani
+edition: ""
+isbn: 
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: false
+publisher: "Instituto de Matema\xCC\x81tica Pura e Aplicada"
+publishing_year: 2004
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "705040915"
+tags: []
+
+title: "Introduc\xCC\xA7a\xCC\x83o a\xCC\x80 geometria anali\xCC\x81tica complexa"
+version: 0.6.3
+want: true

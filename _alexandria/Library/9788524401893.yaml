@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Elon L Lima
+edition: ""
+isbn: "9788524401893"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: false
+publisher: "Instituto de Matema\xCC\x81tica Pura e Aplicada"
+publishing_year: 2000
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788524401893"
+tags: []
+
+title: "Ana\xCC\x81lise no espac\xCC\xA7o Rn"
+version: 0.6.3
+want: true

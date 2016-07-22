@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Paulo Cezar Pinto Carvalho
+edition: ""
+isbn: "9788524400858"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: "Sociedade Brasileira de Matema\xCC\x81tica"
+publishing_year: 1999
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788524400858"
+tags: []
+
+title: "Introduc\xCC\xA7a\xCC\x83o a\xCC\x80 geometria espacial"
+version: 0.6.3
+want: true

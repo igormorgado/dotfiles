@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Elon Lages Lima
+edition: ""
+isbn: "9788524400896"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: true
+publisher: "Sociedade Brasileira de Matema\xCC\x81tica"
+publishing_year: 1996
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788524400896"
+tags: []
+
+title: Algebra linear.
+version: 0.6.3
+want: true

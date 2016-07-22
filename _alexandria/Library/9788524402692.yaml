@@ -1,0 +1,22 @@
+--- !ruby/object:Alexandria::Book 
+authors: 
+- Elon Lages Lima
+edition: ""
+isbn: "9788524402692"
+library: 
+loaned: false
+loaned_since: 
+loaned_to: ""
+notes: ""
+own: false
+publisher: "Instituto de Matema\xCC\x81tica Pura e Aplicada"
+publishing_year: 2007
+rating: 0
+redd: false
+redd_when: 
+saved_ident: "9788524402692"
+tags: []
+
+title: "Ana\xCC\x81lise real volume 3 ana\xCC\x81lise vetorial."
+version: 0.6.3
+want: true
