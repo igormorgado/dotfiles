@@ -192,7 +192,7 @@ function create_test_dir() {
 }
 
 function gca() {
-	git add --all && git commit -m "$*"
+	git commit -a -m "$*"
 }
 
 # vim: ft=sh:
