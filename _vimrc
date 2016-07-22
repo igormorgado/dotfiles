@@ -129,6 +129,7 @@ set hidden
 " Maps/Macros {{{
 " ================================================
 
+nnoremap <ESC><ESC> :q<CR>
 " ctrl-jklm  changes to that split
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k

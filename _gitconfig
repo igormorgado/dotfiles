@@ -1,3 +1,5 @@
 [user]
 	name = igormorgado
 	email = igormorgado@users.noreply.github.com
+[push]
+	default = matching

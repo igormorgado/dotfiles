@@ -15,6 +15,10 @@ then
 fi
 
 case $1 in
+	fzf)
+		ln -sf dotfiles/_fzf .fzf
+		ln -sf dotfiles/_fzf.bash .fzf.bash
+		;;
     vim|vi)
         ln -sf dotfiles/_vimrc .vimrc
         ln -sf dotfiles/_vim .vim
