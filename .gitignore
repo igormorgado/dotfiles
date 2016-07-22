@@ -1,7 +1,4 @@
-*cgg*
-*CGG*
-_bash_nda
-*bash_nda*
+# SSH Stuff
 *authorized_keys*
 *id_rsa*
 *id_rsa.ppk*
@@ -11,9 +8,13 @@ _bash_nda
 *igormorgado.ppk*
 *igormorgado.pub*
 *known_hosts*
-logs/
-log/
-gcloud/logs/
-gcloud/completion_cache/
+
+*.old
+*cgg*
+*CGG*
+_bash_nda
+_config/gcloud/logs/
+_config/gcloud/completion_cache/
 _vim/plugged/
 _fzf/
+_local/share/mc/history
