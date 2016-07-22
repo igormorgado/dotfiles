@@ -15,3 +15,5 @@ logs/
 log/
 gcloud/logs/
 gcloud/completion_cache/
+_vim/plugged/
+_fzf/
