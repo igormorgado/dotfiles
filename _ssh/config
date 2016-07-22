@@ -25,5 +25,6 @@ Host rio*
 
 
 Host github.com
+    user igormorgado
     IdentityFile ~/.ssh/igormorgado
 
