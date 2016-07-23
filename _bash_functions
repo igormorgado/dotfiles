@@ -195,4 +195,13 @@ function gca() {
 	git commit -a -m "$*"
 }
 
+function gle() {
+	echo "# Global"
+	[ -f "${HOME}/.config/git/ignore" ] && \
+	git ls-files -i --exclude-from=${HOME}/.config/git/ignore
+	echo "# Local"
+	[ -f ".gitignore" ] && \
+	git ls-files -i --exclude-from=.gitignore
+}
+
 # vim: ft=sh:

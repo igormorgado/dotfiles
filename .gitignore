@@ -13,8 +13,10 @@
 *cgg*
 *CGG*
 _bash_nda
-_config/gcloud/logs/
 _config/gcloud/completion_cache/
-_vim/plugged/
+_config/gcloud/logs/
 _fzf/
+_local/share/fonts/
+_fonts/
 _local/share/mc/history
+_vim/plugged/

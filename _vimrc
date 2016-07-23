@@ -90,7 +90,6 @@ set viminfo^=%
 set scrolloff=5
 
 " Indent
-set smartindent
 set shiftround
 
 " Search
@@ -145,6 +144,9 @@ nnoremap <leader>w <C-w>v<C-w>l
 " Famous shortcuts
 nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%p:h'))<cr>/*<C-d>
 nnoremap <leader>f :find *
+nnoremap <leader>l :set list!<cr>
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>m :make<CR>
 nnoremap <leader>l :set list!<cr>
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>m :make<CR>
@@ -294,9 +296,6 @@ if executable("ag")
     set grepprg=ag\ --nogroup\ --nocolor\ --ignore-case\ --column
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
-
-" Quickfix
-let g:qf_mapping_ack_style = 1
 
 "}}}
 

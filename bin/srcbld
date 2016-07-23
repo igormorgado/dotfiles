@@ -1,16 +1,72 @@
 #!/bin/bash
 
-SRCDIR="~/src"
-[ ! -d "${SRCDIR}" ] && mkdir -p ${SRCDIR}
+export http_proxy="http://imorgado@165.225.34.32:80"
+export https_proxy="http://imorgado@165.225.34.32:80"
+
+SRCDIR="${HOME}/src"
+[ -d "${SRCDIR}" ] || mkdir -p ${SRCDIR}
 
 
 GITHUB_REP="github/gitignore"
 
 
 # Fetching GITHUB repository
-function github_fetch()
+function github_fetch() {
 	while (( "$#" )); do
 		git clone https://github.com/${1}
 		shift
 	done
+}
+
+cd ${SRCDIR}
+pwd
+github_fetch ${GITHUB_REP}
+
+#!/bin/bash
+
+
+export PREFIX=${HOME}
+export PATH=${PREFIX}/bin:"$PATH"
+export PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig:"$PKG_CONFIG_PATH"
+export LD_LIBRARY_PATH=${PREFIX}/lib:"$LD_LIBRARY_PATH"
+export CFLAGS="-O3 -ffast-math -march=native"
+
+
+libsrc="
+http://download.enlightenment.org/rel/libs/efl/efl-1.17.0.tar.gz
+http://download.enlightenment.org/rel/libs/emotion_generic_players/emotion_generic_players-1.17.0.tar.gz
+http://download.enlightenment.org/rel/libs/evas_generic_loaders/evas_generic_loaders-1.17.0.tar.gz
+http://download.enlightenment.org/rel/libs/elementary/elementary-1.17.0.tar.gz
+http://download.enlightenment.org/rel/bindings/python/python-efl-1.17.0.tar.gz
+"
+
+appsrc="
+http://download.enlightenment.org/rel/apps/terminology/terminology-0.9.1.tar.gz
+"
+
+missing="
+luajit
+"
+
+function build() {
+	./configure --prefix=${PREFIX} && \
+	make && \
+	make install
+}
+
+function isUnpack() {
+	[ -f ${1}/INSTALL ] && return 0 || return 1
+}
+
+#DEBUG=echo
+for url in ${libsrc} ${appsrc}; do
+	pack=$(basename ${url})
+	cdir=${pack/.tar.gz/}
+
+	${DEBUG} wget -c ${url}
+	${DEBUG} isUnpack ${cdir} || ${DEBUG} tar zxvf ${pack}
+	${DEBUG} cd ${cdir} 
+	build || exit
+	${DEBUG} cd -
+
 done
