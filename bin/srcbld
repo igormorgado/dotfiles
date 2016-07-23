@@ -1,0 +1,16 @@
+#!/bin/bash
+
+SRCDIR="~/src"
+[ ! -d "${SRCDIR}" ] && mkdir -p ${SRCDIR}
+
+
+GITHUB_REP="github/gitignore"
+
+
+# Fetching GITHUB repository
+function github_fetch()
+	while (( "$#" )); do
+		git clone https://github.com/${1}
+		shift
+	done
+done
