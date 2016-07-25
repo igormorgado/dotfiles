@@ -8,7 +8,7 @@ set nocompatible
 filetype off
 call plug#begin('~/.vim/plugged')
 
-Plug 'justinmk/vim-dirvish'
+"Plug 'justinmk/vim-dirvish'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
 Plug 'romainl/vim-qf'
@@ -42,7 +42,7 @@ endif
 " Some colors
 set listchars=tab:>\ ,eol:¬
 
-colorscheme lanox
+colorscheme flattened_dark
 
 " Status line
 highlight StatusLine NONE ctermbg=DarkBlue ctermfg=White cterm=NONE
@@ -81,7 +81,7 @@ set linebreak
 set wrap
 set virtualedit=block
 set numberwidth=5
-set relativenumber |
+set relativenumber
 set nonumber
 set cursorline
 
@@ -147,7 +147,6 @@ nnoremap <leader>f :find *
 nnoremap <leader>l :set list!<cr>
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>m :make<CR>
-nnoremap <leader>l :set list!<cr>
 nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
 nnoremap <leader>m :make<CR>
 nnoremap <leader>/ :nohlsearch<cr>

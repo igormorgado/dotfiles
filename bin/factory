@@ -8,6 +8,9 @@
 # EFL DEPS
 # libpoppler-cpp-dev
 # libspectre
+# libraw-dev
+# librsvg2-dev
+# libcairo2-dev
 
 # Where to install the packages
 PREFIX=${HOME}/usr
@@ -93,8 +96,16 @@ function compile() {
 
 
 function produce() {
+	echo -ne "${GREEN}=========================================\n"
+	echo -ne "${GREEN}       ${1}\n"
+	echo -ne "${GREEN}=========================================\n"
+	echo -ne "${CRST}"
 	source ${CONFDIR}/${1}.conf || exit
 	for module in ${MODULES}; do
+	    echo -ne "${RED}=========================================\n"
+		echo -ne "${RED}            ${module}\n"
+	    echo -ne "${RED}=========================================\n"
+	    echo -ne "${CRST}"
 		dstdir=${module##*/}
 		fetch ${module}
 		compile ${module}
