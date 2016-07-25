@@ -1,72 +1,298 @@
-#!/bin/bash
+#!/bin/bash 
 
-export http_proxy="http://imorgado@165.225.34.32:80"
-export https_proxy="http://imorgado@165.225.34.32:80"
+# TODO
+# Instal gperf
+# python lxml
+# Libmount-dev
+# autogen
+# EFL DEPS
+# libpoppler-cpp-dev
+# libspectre
 
+# Where to install the packages
+PREFIX=${HOME}/usr
+
+# Where all conf lies
+CONFDIR=${0}.d
+
+# Where to store the sources
 SRCDIR="${HOME}/src"
+
+# Inital variables {{{
+
+# Setting up proxy (call the parameter with password)
+if [ ${#} -gt 1 ]; then
+	PROXYPASS=${1}
+	PROXYUSER="${2:-$(whoami)}"
+	PROXYSERVER="${3:-'165.225.34.32:80'}"
+	export http_proxy="http://${PROXYUSER}@${PROXYSERVER}"
+	export https_proxy="http://${PROXYUSER}@${PROXYSERVER}"
+	echo ${http_proxy}
+fi
+
+# Add more paths to build
+PATH=${PREFIX}/bin:${HOME}/bin:${PATH}
+
+# Insert the compiled libraries on lib path
+PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
+LD_LIBRARY_PATH=${PREFIX}/lib:${LD_LIBRARY_PATH}
+
+# Compilation flags
+CFLAGS="-O3 -ffast-math -march=native"
+
+# Execute starting procedures 
 [ -d "${SRCDIR}" ] || mkdir -p ${SRCDIR}
 
+#}}}
 
-GITHUB_REP="github/gitignore"
+# Support functions {{{
+function a_c_m_mi() {
+	./autogen.sh && \ 
+	./configure --prefix=${PREFIX} && \
+	make && \ 
+	make install 
+}
+	
+
+function c_m_mi() {
+		./configure --prefix=${PREFIX} && \
+		make && \
+		make install
+}
 
 
-# Fetching GITHUB repository
-function github_fetch() {
-	while (( "$#" )); do
-		git clone https://github.com/${1}
+#function fetch_cvs() {
+#	cvs -d "${REPROOT} login 
+#	cvs -d "${REPROOT} checkout libjpeg
+#}
+
+
+function fetch_git() {
+	while (( "${#}" )); do
+		git clone ${REPOSITORY}/${1}.git
 		shift
 	done
 }
 
+
+function fetch() {
+	while (( "${#}" )); do
+		fetch_${METHOD} ${1}
+		shift
+	done
+	
+}
+
+
+function compile() {
+	dstdir=${1##*/}
+	cd ${dstdir} && \
+	${BUILD} && \
+	cd - || exit 1
+}
+
+
+function produce() {
+	source ${CONFDIR}/${1}.conf || exit
+	for module in ${MODULES}; do
+		dstdir=${module##*/}
+		fetch ${module}
+		compile ${module}
+		shift
+	done
+
+	unset METHOD BUILD REPOSITORY PKGDEP MODULES dstdir
+}
+
+function produce_all() {
+	for file in ${CONFDIR}/*; do
+		PACKAGE=$(basename ${file})
+		PACKAGE=${PACKAGE%.*}
+		produce ${PACKAGE}
+	done
+}
+# }}}
+
 cd ${SRCDIR}
-pwd
-github_fetch ${GITHUB_REP}
+produce freetype6
+produce terminology
+#produce_all
+cd -
 
-#!/bin/bash
+# TO BE ADDED CORRECTLY {{{
+## GitHub {{{
+#GITHUB_URL="https://github.com/"
+#GITHUB_REP="
+#github/gitignore
+#bulletphysics/bullet3
+#erikd/libsndfile
+#"
+#
+##}}}
+#
+## GIT REPOS
+## https://anongit.freedesktop.org/git/
+## https://github.com/
+
+## libjpeg-dev {{{
+#function libjpeg_fetch() {
+#	CVSROOT=":pserver:cvs@libjpeg.cvs.sourceforge.net:/cvsroot/libjpeg"
+#	echo -ne "NOPASSWD\n" | cvs login 
+#	cvs checkout libjpeg
+#}
+#
+#function libjpeg_compile() {
+#	cd libjpeg && \
+#	a_c_m_mi && \
+#	cd - || exit
+#}
+#
+#function libjpeg_build() {
+#	echo Libjpeg
+#	libjpeg_fetch
+#	libjpeg_compile
+#}
+##}}}
+#
+## libgif-dev {{{
+#function giflib_fetch() {
+#	CVSROOT=":pserver:cvs@giflib.cvs.sourceforge.net:/cvsroot/giflib"
+#	echo -ne "NOPASSWD\n" | cvs login 
+#	cvs checkout giflib
+#}
+#
+#function giflib_compile() {
+#	cd giflib && \
+#	a_c_m_mi && \
+#	cd - || exit
+#}
+#
+#function giflib_build() {
+#	echo Libgif
+#	giflib_fetch
+#	giflib_compile
+#}
+#
+##}}}
+#
+## libtiff5-dev {{{
+#function libtiff_fetch() {
+#	CVSROOT=":pserver:cvsanon@cvs.maptools.org:/cvs/maptools/cvsroot" 
+#	echo -ne "NOPASSWD\n" | cvs login 
+#	cvs checkout libtiff
+#}
+#
+#function libtiff_compile() {
+#	cd libtiff && \
+#	a_c_m_mi && \
+#	cd - || exit
+#}
+#
+#function libtiff_build() {
+#	echo libtiff
+#	libtiff_fetch
+#	libtiff_compile
+#}
+##}}}
+#
+## libbullet-dev {{{
+#function bullet3_compile() {
+#	cd bullet3 && \
+#	./build_and_run_premake.sh && \
+#	./premake4_linux64 gmake && \
+#	cd gmake && \
+#	m_mi && \
+#	cd ../.. || exit
+#}
+#
+#function bullet3_build() {
+#	echo bullet3
+#	bullet3_compile
+#}
+##}}}
+#
+## libfontconfig1-dev {{{
+#function libfontconfig_fetch() {
+#	git clone git://anongit.freedesktop.org/fontconfig
+#}
+#
+#function libfontconfig_compile() {
+#	cd fontconfig && \
+#	a_c_m_mi && \
+#	cd - || exit
+#}
+#
+#function libfontconfig_build() {
+#	echo libfontconfig
+#	libfontconfig_fetch
+#	libfontconfig_compile
+#}
+##}}}
+#
+## libsndfile1-dev {{{
+#function libsndfile_compile() {
+#	cd libsndfile && \
+#	a_c_m_mi && \
+#	cd ../../ || exit
+#}
+#
+#function libsndfile_build() {
+#	echo libsndfile
+#	libsndfile_compile
+#}
+##}}}
+#
+## libsdl2-dev {{{
+#function libsdl2_fetch() {
+#	hg clone http://hg.libsdl.org/SDL
+#}
+#
+#function libsdl2_compile() {
+#	cd SDL && \
+#	c_m_mi && \
+#	cd - || exit
+#}
+#
+#function libsdl2_build() {
+#	libsdl2_fetch
+#	libsdl2_compile
+#}
+##}}}
+#
+## libluajit-5.1-dev {{{
+## }}}
+#
+#### HERE
+## libfribidi-dev {{{
+#function libfribidi_fetch() {
+#	git clone git://anongit.freedesktop.org/fribidi/fribidi
+#}
+#
+#function libfribidi_compile() {
+#	cd fribidi && \
+#	a_c_m_mi && \
+#	cd - || exit
+#}
+#
+#function libfribidi_build() {
+#	echo libfribidi
+#	libfribidi_fetch
+#	libfribidi_compile
+#}
+##}}}
 
 
-export PREFIX=${HOME}
-export PATH=${PREFIX}/bin:"$PATH"
-export PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig:"$PKG_CONFIG_PATH"
-export LD_LIBRARY_PATH=${PREFIX}/lib:"$LD_LIBRARY_PATH"
-export CFLAGS="-O3 -ffast-math -march=native"
 
+#github_fetch ${GITHUB_REP}
+#libtiff_build
+#giflib_build
+#libjpeg_build
+#libfontconfig_build
+#libsndfile_build
+#libsdl2_build
+#libfribidi_build
+#bullet3_build
 
-libsrc="
-http://download.enlightenment.org/rel/libs/efl/efl-1.17.0.tar.gz
-http://download.enlightenment.org/rel/libs/emotion_generic_players/emotion_generic_players-1.17.0.tar.gz
-http://download.enlightenment.org/rel/libs/evas_generic_loaders/evas_generic_loaders-1.17.0.tar.gz
-http://download.enlightenment.org/rel/libs/elementary/elementary-1.17.0.tar.gz
-http://download.enlightenment.org/rel/bindings/python/python-efl-1.17.0.tar.gz
-"
+# }}}
 
-appsrc="
-http://download.enlightenment.org/rel/apps/terminology/terminology-0.9.1.tar.gz
-"
-
-missing="
-luajit
-"
-
-function build() {
-	./configure --prefix=${PREFIX} && \
-	make && \
-	make install
-}
-
-function isUnpack() {
-	[ -f ${1}/INSTALL ] && return 0 || return 1
-}
-
-#DEBUG=echo
-for url in ${libsrc} ${appsrc}; do
-	pack=$(basename ${url})
-	cdir=${pack/.tar.gz/}
-
-	${DEBUG} wget -c ${url}
-	${DEBUG} isUnpack ${cdir} || ${DEBUG} tar zxvf ${pack}
-	${DEBUG} cd ${cdir} 
-	build || exit
-	${DEBUG} cd -
-
-done
+# vim: foldmethod=marker:foldlevel=0
