@@ -45,6 +45,7 @@ fi
 
 # Add paths
 addpath ${HOME}/bin
+addpath ${HOME}/usr/bin
 addpath /Applications/MacVim.app/Contents/MacOS/
 addpath "/c/Anaconda"
 addpath "/c/Anaconda2"
@@ -241,6 +242,12 @@ export PROMPT_COMMAND
 
 # Final configurations {{{
 ######################################################################
+
+addpkgpath ${HOME}/usr/lib/pkgconfig
+addlibpath ${HOME}/usr/lib
+addrunpath ${HOME}/usr/lib
+addlibpath ${HOME}/lib
+addrunpath ${HOME}/lib
 
 # Load some external files
 loadresource ~/.bash_aliases

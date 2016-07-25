@@ -1,13 +1,27 @@
 # Declare useful functions on environment
 function addpath() {
 	# Insert (in the beginning) a dir to ${PATH} (only if exists)
-    [ -d "${1}" ] && PATH="${1}:${PATH}"
+    [ -d "${1}" ] && export PATH="${1}:${PATH}"
 }
-
 
 function apppath() {
 # Append (in the end) a dir to ${PATH} (only if exists)
-    [ -d "${1}" ] && PATH="${PATH}:${1}"
+    [ -d "${1}" ] && export PATH="${PATH}:${1}"
+}
+
+function addlibpath() {
+	[ -d "${1}" ] && export LD_LIBRARY_PATH=${1}:${LD_LIBRARY_PATH}
+}
+
+
+function addrunpath() {
+	[ -d "${1}" ] && export LD_RUN_PATH=${1}:${LD_RUN_PATH}
+
+}
+
+function addpkgpath() {
+	[ -d "${1}" ] && export PKG_CONFIG_PATH=${1}:${PKG_CONFIG_PATH}
+
 }
 
 

@@ -1,6 +1,10 @@
-#!/bin/bash 
+#!/bin/bash +x
 
-# TODO
+# TODO {{{
+#github_fetch ${GITHUB_REP}
+#GITHUB_URL="https://github.com/"
+#GITHUB_REP=" github/gitignore "
+#
 # Instal gperf
 # python lxml
 # Libmount-dev
@@ -11,68 +15,93 @@
 # libraw-dev
 # librsvg2-dev
 # libcairo2-dev
-
-# Where to install the packages
-PREFIX=${HOME}/usr
-
-# Where all conf lies
-CONFDIR=${0}.d
-
-# Where to store the sources
-SRCDIR="${HOME}/src"
+# Add a globalconf file in a external file
+# Add PREFIX as source to libraries headers and binaries
+# Find a way to not download sources (parameter)
+# More elegant way to proxy
+# Setting up proxy (call the parameter with password)
+# Implement a way it can be called from "source or execution" 
+# if [ ${#} -gt 1 ]; then
+# 	PROXYPASS=${1}
+# 	PROXYUSER="${2:-$(whoami)}"
+# 	PROXYSERVER="${3:-'165.225.34.32:80'}"
+# 	export http_proxy="http://${PROXYUSER}@${PROXYSERVER}"
+# 	export https_proxy="http://${PROXYUSER}@${PROXYSERVER}"
+# 	echo ${http_proxy}
+# fi
+#}}}
 
 # Inital variables {{{
+# Where to install the packages
+FACTORY_PREFIX=${HOME}/usr
 
-# Setting up proxy (call the parameter with password)
-if [ ${#} -gt 1 ]; then
-	PROXYPASS=${1}
-	PROXYUSER="${2:-$(whoami)}"
-	PROXYSERVER="${3:-'165.225.34.32:80'}"
-	export http_proxy="http://${PROXYUSER}@${PROXYSERVER}"
-	export https_proxy="http://${PROXYUSER}@${PROXYSERVER}"
-	echo ${http_proxy}
-fi
+
+# Where all conf lies
+FACTORY_CONFDIR=${HOME}/bin/factory.d
+
+# Where to store the sources
+FACTORY_SRCDIR="${HOME}/src"
 
 # Add more paths to build
-PATH=${PREFIX}/bin:${HOME}/bin:${PATH}
+PATH=${FACTORY_PREFIX}/bin:${HOME}/bin:${PATH}
 
 # Insert the compiled libraries on lib path
-PKG_CONFIG_PATH=${PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
-LD_LIBRARY_PATH=${PREFIX}/lib:${LD_LIBRARY_PATH}
+PKG_CONFIG_PATH=${FACTORY_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
+LD_LIBRARY_PATH=${FACTORY_PREFIX}/lib:${LD_LIBRARY_PATH}
 
 # Compilation flags
 CFLAGS="-O3 -ffast-math -march=native"
 
 # Execute starting procedures 
-[ -d "${SRCDIR}" ] || mkdir -p ${SRCDIR}
+[ -d "${FACTORY_SRCDIR}" ] || mkdir -p ${FACTORY_SRCDIR}
+
+export FACTORY_SRCDIR FACTORY_CONFDIR FACTORY_PREFIX
 
 #}}}
 
 # Support functions {{{
 function a_c_m_mi() {
 	./autogen.sh && \ 
-	./configure --prefix=${PREFIX} && \
+	./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
 	make && \ 
-	make install 
+	make install || return 1
 }
 	
 
 function c_m_mi() {
-		./configure --prefix=${PREFIX} && \
+	    ./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
 		make && \
-		make install
+		make install || return 1
 }
 
 
-#function fetch_cvs() {
-#	cvs -d "${REPROOT} login 
-#	cvs -d "${REPROOT} checkout libjpeg
-#}
+function m_mi() {
+		make && \
+		make install || return 1
+}
+
+function bullet3_compile() {
+	./build_and_run_premake.sh && \
+	./premake4_linux64 gmake && \
+	pushd gmake && \
+	m_mi && \
+	popd
+}
+
+function fetch_cvs() {
+	while (( "${#}" )); do
+		# CVSROOT="${REPOSITORY}"
+		echo -ne "NOPASSWD\n" | \
+		cvs -d "${REPOSITORY}" login 
+		cvs -d "${REPOSITORY}" checkout ${1}
+		shift
+	done
+}
 
 
 function fetch_git() {
 	while (( "${#}" )); do
-		git clone ${REPOSITORY}/${1}.git
+		git clone ${REPOSITORY}/${1}.git 
 		shift
 	done
 }
@@ -89,18 +118,31 @@ function fetch() {
 
 function compile() {
 	dstdir=${1##*/}
-	cd ${dstdir} && \
+	pushd ${dstdir} && \
 	${BUILD} && \
-	cd - || exit 1
+	popd
 }
 
 
 function produce() {
+
+	PLANT=${FACTORY_CONFDIR}/${1}.conf 
+	if [ ! -r ${PLANT} ]; then
+		echo "${RED}Couldn't set up the plant for${CRST} ${PLANT}"
+		return
+	fi
+
+	if [ "${INSTALL_THIS_PLANT}" = "NO" ]; then
+		echo "${YELLOW}Plant ${CRST}${PLANT}${YELLOW} will not be installed${CRST}"
+		return
+	fi
+
+	source ${PLANT}
 	echo -ne "${GREEN}=========================================\n"
 	echo -ne "${GREEN}       ${1}\n"
 	echo -ne "${GREEN}=========================================\n"
 	echo -ne "${CRST}"
-	source ${CONFDIR}/${1}.conf || exit
+	pushd ${FACTORY_SRCDIR}
 	for module in ${MODULES}; do
 	    echo -ne "${RED}=========================================\n"
 		echo -ne "${RED}            ${module}\n"
@@ -110,13 +152,14 @@ function produce() {
 		fetch ${module}
 		compile ${module}
 		shift
+	popd
 	done
 
 	unset METHOD BUILD REPOSITORY PKGDEP MODULES dstdir
 }
 
-function produce_all() {
-	for file in ${CONFDIR}/*; do
+function mass_produce() {
+	for file in ${FACTORY_CONFDIR}/*; do
 		PACKAGE=$(basename ${file})
 		PACKAGE=${PACKAGE%.*}
 		produce ${PACKAGE}
@@ -124,155 +167,36 @@ function produce_all() {
 }
 # }}}
 
-cd ${SRCDIR}
-produce freetype6
-produce terminology
-#produce_all
-cd -
+# Main {{{
+case $- in
+	*i*) return ;;
+	*)
+		produce libjpeg
+		produce libgif
+		produce libtiff
+		produce freetype6
+		produce bullet3
+		produce terminology
+		# mass_produce
+		;;
+esac
+#}}}
 
-# TO BE ADDED CORRECTLY {{{
-## GitHub {{{
-#GITHUB_URL="https://github.com/"
-#GITHUB_REP="
-#github/gitignore
-#bulletphysics/bullet3
-#erikd/libsndfile
-#"
-#
-##}}}
-#
-## GIT REPOS
-## https://anongit.freedesktop.org/git/
-## https://github.com/
 
-## libjpeg-dev {{{
-#function libjpeg_fetch() {
-#	CVSROOT=":pserver:cvs@libjpeg.cvs.sourceforge.net:/cvsroot/libjpeg"
-#	echo -ne "NOPASSWD\n" | cvs login 
-#	cvs checkout libjpeg
-#}
-#
-#function libjpeg_compile() {
-#	cd libjpeg && \
-#	a_c_m_mi && \
-#	cd - || exit
-#}
-#
-#function libjpeg_build() {
-#	echo Libjpeg
-#	libjpeg_fetch
-#	libjpeg_compile
-#}
-##}}}
-#
-## libgif-dev {{{
-#function giflib_fetch() {
-#	CVSROOT=":pserver:cvs@giflib.cvs.sourceforge.net:/cvsroot/giflib"
-#	echo -ne "NOPASSWD\n" | cvs login 
-#	cvs checkout giflib
-#}
-#
-#function giflib_compile() {
-#	cd giflib && \
-#	a_c_m_mi && \
-#	cd - || exit
-#}
-#
-#function giflib_build() {
-#	echo Libgif
-#	giflib_fetch
-#	giflib_compile
-#}
-#
-##}}}
-#
-## libtiff5-dev {{{
-#function libtiff_fetch() {
-#	CVSROOT=":pserver:cvsanon@cvs.maptools.org:/cvs/maptools/cvsroot" 
-#	echo -ne "NOPASSWD\n" | cvs login 
-#	cvs checkout libtiff
-#}
-#
-#function libtiff_compile() {
-#	cd libtiff && \
-#	a_c_m_mi && \
-#	cd - || exit
-#}
-#
-#function libtiff_build() {
-#	echo libtiff
-#	libtiff_fetch
-#	libtiff_compile
-#}
-##}}}
-#
-## libbullet-dev {{{
-#function bullet3_compile() {
-#	cd bullet3 && \
-#	./build_and_run_premake.sh && \
-#	./premake4_linux64 gmake && \
-#	cd gmake && \
-#	m_mi && \
-#	cd ../.. || exit
-#}
-#
-#function bullet3_build() {
-#	echo bullet3
-#	bullet3_compile
-#}
-##}}}
-#
-## libfontconfig1-dev {{{
-#function libfontconfig_fetch() {
 #	git clone git://anongit.freedesktop.org/fontconfig
-#}
-#
-#function libfontconfig_compile() {
-#	cd fontconfig && \
 #	a_c_m_mi && \
-#	cd - || exit
-#}
-#
-#function libfontconfig_build() {
-#	echo libfontconfig
-#	libfontconfig_fetch
-#	libfontconfig_compile
-#}
-##}}}
-#
+
 ## libsndfile1-dev {{{
-#function libsndfile_compile() {
-#	cd libsndfile && \
+#erikd/libsndfile
 #	a_c_m_mi && \
-#	cd ../../ || exit
-#}
-#
-#function libsndfile_build() {
-#	echo libsndfile
-#	libsndfile_compile
-#}
-##}}}
-#
+
 ## libsdl2-dev {{{
-#function libsdl2_fetch() {
 #	hg clone http://hg.libsdl.org/SDL
-#}
-#
-#function libsdl2_compile() {
-#	cd SDL && \
 #	c_m_mi && \
-#	cd - || exit
-#}
-#
-#function libsdl2_build() {
-#	libsdl2_fetch
-#	libsdl2_compile
-#}
-##}}}
-#
+
 ## libluajit-5.1-dev {{{
 ## }}}
-#
+
 #### HERE
 ## libfribidi-dev {{{
 #function libfribidi_fetch() {
@@ -292,18 +216,5 @@ cd -
 #}
 ##}}}
 
-
-
-#github_fetch ${GITHUB_REP}
-#libtiff_build
-#giflib_build
-#libjpeg_build
-#libfontconfig_build
-#libsndfile_build
-#libsdl2_build
-#libfribidi_build
-#bullet3_build
-
-# }}}
 
 # vim: foldmethod=marker:foldlevel=0
