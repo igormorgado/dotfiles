@@ -68,7 +68,7 @@ function colortest() {
 }
 
 
-# Start the SUPREME PS1 functions
+# Colorize prompt based on last RETVAL
 function prevCmd() {
     if [ $1 == 0 ] ; then
         echo ${GREEN}
