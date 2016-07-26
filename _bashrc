@@ -50,8 +50,8 @@ addpath /Applications/MacVim.app/Contents/MacOS/
 addpath "/c/Anaconda"
 addpath "/c/Anaconda2"
 
-# Avoid quick logouts
-export TMOUT=3600
+# Disable logouts
+export TMOUT=
 
 # don't put duplicate lines in the history. See bash(1) for more options
 # don't overwrite GNU Midnight Commander's setting of `ignorespace'.
