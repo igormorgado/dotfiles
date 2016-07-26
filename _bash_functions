@@ -218,4 +218,14 @@ function gle() {
 	git ls-files -i --exclude-from=.gitignore
 }
 
+function lower() {
+	echo "${@}" | tr "[A-Z]" "[a-z]"
+}
+
+
+function upper() {
+	echo "${@}" | tr "[a-z]" "[A-Z]"
+}
+
+
 # vim: ft=sh:
