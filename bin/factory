@@ -1,14 +1,25 @@
 #!/bin/bash +x
 
 # TODO {{{
+# Requisites:
+#	build-essential
+#	libtool
+#	autogen
+#	automake
+#   autopoint
+#   pkg-config
+#	python-pip
+
 #github_fetch ${GITHUB_REP}
 #GITHUB_URL="https://github.com/"
 #GITHUB_REP=" github/gitignore "
 #
+# Add a way to listall all plants
+# Add a variable to point to PLANTS (FACTORYPLANT)
+# Check all references to cd - and cd and change for pushd/popd
 # Instal gperf
 # python lxml
 # Libmount-dev
-# autogen
 # EFL DEPS
 # libpoppler-cpp-dev
 # libspectre
@@ -29,6 +40,8 @@
 # 	export https_proxy="http://${PROXYUSER}@${PROXYSERVER}"
 # 	echo ${http_proxy}
 # fi
+# Stop production when a error ocurrs
+# put the correct requisites where it should be
 #}}}
 
 # Inital variables {{{
@@ -48,9 +61,17 @@ PATH=${FACTORY_PREFIX}/bin:${HOME}/bin:${PATH}
 # Insert the compiled libraries on lib path
 PKG_CONFIG_PATH=${FACTORY_PREFIX}/lib/pkgconfig:${PKG_CONFIG_PATH}
 LD_LIBRARY_PATH=${FACTORY_PREFIX}/lib:${LD_LIBRARY_PATH}
+LD_RUN_PATH=${FACTORY_PREFIX}/lib:${LD_RUN_PATH}
 
 # Compilation flags
 CFLAGS="-O3 -ffast-math -march=native"
+# LDFLAGS     linker flags, e.g. -L<lib dir> if you have libraries in a
+#             nonstandard directory <lib dir>
+# LIBS        libraries to pass to the linker, e.g. -l<library>
+# CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
+#             you have headers in a nonstandard directory <include dir>
+
+PREFIX=${FACTORY_PREFIX}
 
 # Execute starting procedures 
 [ -d "${FACTORY_SRCDIR}" ] || mkdir -p ${FACTORY_SRCDIR}
