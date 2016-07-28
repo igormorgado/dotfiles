@@ -15,7 +15,7 @@
 #GITHUB_REP=" github/gitignore "
 #
 # Add a way to listall all plants
-# Add a variable to point to PLANTS (FACTORYPLANT)
+# Add a variable to point to BLUEPRINT (FACTORYBLUEPRINT)
 # Check all references to cd - and cd and change for pushd/popd
 # Instal gperf
 # python lxml
@@ -153,18 +153,18 @@ function produce() {
 		return 1
 	fi
 
-	PLANT=${FACTORY_CONFDIR}/${1}.conf 
-	if [ ! -r ${PLANT} ]; then
-		echo "${RED}Couldn't set up the plant for${CRST} ${PLANT}"
+	BLUEPRINT=${FACTORY_CONFDIR}/${1}.conf 
+	if [ ! -r ${BLUEPRINT} ]; then
+		echo "${RED}Couldn't set up the blueprint for${CRST} ${BLUEPRINT}"
 		return
 	fi
 
-	if [ "${INSTALL_THIS_PLANT}" = "NO" ]; then
-		echo "${YELLOW}Plant ${CRST}${PLANT}${YELLOW} will not be installed${CRST}"
+	if [ "${INSTALL_THIS_BLUEPRINT}" = "NO" ]; then
+		echo "${YELLOW}Plant ${CRST}${BLUEPRINT}${YELLOW} will not be installed${CRST}"
 		return
 	fi
 
-	source ${PLANT}
+	source ${BLUEPRINT}
 	echo -ne "${GREEN}=========================================\n"
 	echo -ne "${GREEN}       ${1}\n"
 	echo -ne "${GREEN}=========================================\n"
