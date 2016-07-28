@@ -16,6 +16,7 @@
 # Mesa 12.0.1
 # GLU
 
+# On git fetch if dir exist run git pull instead git clone
 
 # Gconv
 # Not able to compile libspectre (libgs notfound =/ )
