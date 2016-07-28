@@ -1,18 +1,21 @@
 #!/bin/bash
 
-cd ~
+pushd ${HOME}
 
 # Verify if dir exists
-if [ ! -e dotfiles ] 
-then
-    ln -sf Dropbox/dotfiles
-elif [ ! -L dotfiles ]
-then
-    # Dotfies exist but isn't a symlink to DROPBOX
-    echo -n "ERRO: Dotfiles exists but isn't a symlink to Dropbox. Continue? (y/N)"
-    read INPUT
-    [ "$INPUT" != "y" -a "$INPUT" != "Y" ]  && exit
+if [ ! -e "${HOME}/dotfiles" ]; then
+	if [ -e "${HOME}/Dropbox/dotfiles" ]; then
+		ln -sf Dropbox/dotfiles
+	else
+		if type git &> /dev/null; then
+			git clone http://github.com/igormorgado/dotfiles
+		else
+			echo "ERROR: dotfiles not found neither git binary. Please it and rerun."
+			exit
+		fi
+	fi
 fi
+
 
 case $1 in
 	fzf)
@@ -31,6 +34,7 @@ case $1 in
         ln -sf dotfiles/_gitconfig .gitconfig
         ;;
     bash|bashrc|shell)
+		ln -sf dotfiles/bin bin
         ln -sf dotfiles/_bashrc .bashrc
         ln -sf dotfiles/_bash_aliases .bash_aliases
         ln -sf dotfiles/_bash_functions  .bash_functions
@@ -111,4 +115,4 @@ case $1 in
         ;;
 esac
 
-cd -
+popd
