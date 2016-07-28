@@ -148,9 +148,9 @@ function compile() {
 function produce() {
 
 	if [ -z "${1}" ]; then
-		echo "We need a blueprint."
+		echo "We need a blueprint. Choose from:"
 		ls -1 ${FACTORY_CONFDIR}
-		exit 1
+		return 1
 	fi
 
 	PLANT=${FACTORY_CONFDIR}/${1}.conf 
