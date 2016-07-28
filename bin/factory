@@ -155,7 +155,10 @@ function compile() {
 	if [ -n "${REPOSITORY_ALIAS}" ]; then
 		dstdir=${REPOSITORY_ALIAS}
 	else
+		# Just basename
 		dstdir=${1##*/}
+		# Remove .git
+		dstdir=${dstdir%*.git}
 	fi
 	
 	pushd ${dstdir} && \
@@ -234,8 +237,5 @@ case $- in
 		;;
 esac
 #}}}
-
-
-
 
 # vim: foldmethod=marker:foldlevel=0
