@@ -12,7 +12,7 @@
 
 # Gconv
 # libxcb-shm0-dev
-# librsvg
+# Not able to compile libspectre (libgs notfound =/ )
 # libspectre
 
 #github_fetch ${GITHUB_REP}
@@ -184,6 +184,11 @@ function compile() {
 
 
 function produce() {
+	# All blue print variables are local
+	#unset BUILD CONF_FLAGS MODULES REPOSITORY_ALIAS INSTALL_THIS_BLUEPRINT
+	#unset DPKGDEP PYDEP REPOSITORY METHOD 
+	local BUILD CONF_FLAGS MODULES REPOSITORY_ALIAS INSTALL_THIS_BLUEPRINT
+	local DPKGDEP PYDEP REPOSITORY METHOD 
 
 	if [ -z "${1}" ]; then
 		echo "We need a blueprint. Choose from:"
@@ -202,11 +207,6 @@ function produce() {
 		return
 	fi
 
-	# First clean all variables found on blueprints
-	# This is not so beautiful, will make all local therefore no need
-	# to unset
-	unset BUILD CONF_FLAGS MODULES REPOSITORY_ALIAS INSTALL_THIS_BLUEPRINT
-	unset DPKGDEP PYDEP REPOSITORY METHOD 
 	source ${BLUEPRINT}
 	echo -ne "${GREEN}=========================================\n"
 	echo -ne "${GREEN}       ${1}\n"
