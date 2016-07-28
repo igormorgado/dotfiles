@@ -99,7 +99,7 @@ function c_m_mi() {
 
 
 function m_mi() {
-		make && \
+		make PREFIX=${FACTORY_PREFIX} && \
 		make install || return 1
 }
 
@@ -215,35 +215,12 @@ esac
 #	git clone git://anongit.freedesktop.org/fontconfig
 #	a_c_m_mi && \
 
-## libsndfile1-dev {{{
-#erikd/libsndfile
-#	a_c_m_mi && \
-
 ## libsdl2-dev {{{
 #	hg clone http://hg.libsdl.org/SDL
 #	c_m_mi && \
 
 ## libluajit-5.1-dev {{{
 ## }}}
-
-#### HERE
-## libfribidi-dev {{{
-#function libfribidi_fetch() {
-#	git clone git://anongit.freedesktop.org/fribidi/fribidi
-#}
-#
-#function libfribidi_compile() {
-#	cd fribidi && \
-#	a_c_m_mi && \
-#	cd - || exit
-#}
-#
-#function libfribidi_build() {
-#	echo libfribidi
-#	libfribidi_fetch
-#	libfribidi_compile
-#}
-##}}}
 
 
 # vim: foldmethod=marker:foldlevel=0
