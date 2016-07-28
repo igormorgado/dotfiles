@@ -11,9 +11,9 @@
 #	python-pip
 
 # Gconv
-# libxcb-shm0-dev
 # Not able to compile libspectre (libgs notfound =/ )
 # libspectre
+# libcurl
 
 #github_fetch ${GITHUB_REP}
 #GITHUB_URL="https://github.com/"
@@ -128,6 +128,11 @@ function bullet3_compile() {
 	pushd gmake && \
 	m_mi && \
 	popd
+}
+
+function curl_compile() {
+	./buildconf
+	c_m_mi
 }
 
 function fetch_cvs() {
