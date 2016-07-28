@@ -129,7 +129,7 @@ function fetch_cvs() {
 
 function fetch_git() {
 	while (( "${#}" )); do
-		git clone ${REPOSITORY}/${1}
+		git clone ${REPOSITORY}/${1} ${REPOSITORY_ALIAS}
 		shift
 	done
 }
@@ -145,7 +145,14 @@ function fetch() {
 
 
 function compile() {
-	dstdir=${1##*/}
+	# There are cases where repository conflict or use
+	# stupid names.
+	if [ -n "${REPOSITORY_ALIAS}" ]; then
+		dstdir=${REPOSITORY_ALIAS}
+	else
+		dstdir=${1##*/}
+	fi
+	
 	pushd ${dstdir} && \
 	${BUILD} && \
 	popd
