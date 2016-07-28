@@ -147,6 +147,12 @@ function compile() {
 
 function produce() {
 
+	if [ -z "${1}"]; then
+		echo "We need a blueprint."
+		ls -1 ${FACTORY_CONFDIR}
+		exit 1
+	fi
+
 	PLANT=${FACTORY_CONFDIR}/${1}.conf 
 	if [ ! -r ${PLANT} ]; then
 		echo "${RED}Couldn't set up the plant for${CRST} ${PLANT}"
