@@ -196,7 +196,9 @@ function produce() {
 	popd
 	done
 
-	unset METHOD BUILD REPOSITORY PKGDEP MODULES dstdir
+	# Need to unset all variables here
+	# Need to find a cleaner way
+	unset METHOD BUILD REPOSITORY PKGDEP MODULES REPOSITORY_ALIAS dstdir
 }
 
 function mass_produce() {
