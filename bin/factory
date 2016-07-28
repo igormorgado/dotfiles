@@ -1,6 +1,14 @@
 #!/bin/bash +x
 
 # TODO {{{
+# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/libogg.html
+# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/libvorbis.html
+# http://www.linuxfromscratch.org/blfs/view/svn/server/sqlite.html
+# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/pulseaudio.html
+# http://www.linuxfromscratch.org/blfs/view/svn/general/nasm.html
+# http://www.linuxfromscratch.org/blfs/view/svn/general/nasm.html
+# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/alsa-lib.html
+# 
 # Requisites:
 #	build-essential
 #	libtool
@@ -20,11 +28,29 @@
 # Implement ordered building (PLANTS)
 # On git fetch if dir exist run git pull instead git clone
 
+# Install gtk3
+# Install librsvg
+# Install libgobject
+# libudev
+# libblkid-dev
+# libdbus-1-deva
+# http://www.linuxfromscratch.org/blfs/view/svn/general/dbus.html
+# libpulse
+# libxine-dev 
+#No package 'gstreamer-plugins-base-1.0' found
+
+# libgstreamer-plugins-base1.0-dev  libgstreamer1.0-dev
+
+#No package 'gstreamer-video-1.0' found
+#No package 'gstreamer-audio-1.0' found
+#No package 'gstreamer-tag-1.0' found
+
 # Gconv
 # Not able to compile libspectre (libgs notfound =/ )
 # libspectre
 # libcurl
 # Create preexec and postexec methods
+# Not able to build gobject-introspection
 
 #github_fetch ${GITHUB_REP}
 #GITHUB_URL="https://github.com/"
