@@ -10,6 +10,13 @@
 #   pkg-config
 #	python-pip
 
+# Packages that will not installed:
+# xorg libraries (and dev)
+# libdrm-2.4.70
+# Mesa 12.0.1
+# GLU
+
+
 # Gconv
 # Not able to compile libspectre (libgs notfound =/ )
 # libspectre
