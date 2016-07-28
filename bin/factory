@@ -99,8 +99,13 @@ function c_m_mi() {
 
 
 function m_mi() {
-		make PREFIX=${FACTORY_PREFIX} && \
+		make && \
 		make install || return 1
+}
+
+function m_mip() {
+		make && \
+		make install PREFIX=${FACTORY_PREFIX} || return 1
 }
 
 function bullet3_compile() {
