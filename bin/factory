@@ -189,6 +189,7 @@ function produce() {
 	#unset DPKGDEP PYDEP REPOSITORY METHOD 
 	local BUILD CONF_FLAGS MODULES REPOSITORY_ALIAS INSTALL_THIS_BLUEPRINT
 	local DPKGDEP PYDEP REPOSITORY METHOD 
+	local dstdir
 
 	if [ -z "${1}" ]; then
 		echo "We need a blueprint. Choose from:"
@@ -224,10 +225,6 @@ function produce() {
 		shift
 	popd
 	done
-
-	# Need to unset all variables here
-	# Need to find a cleaner way
-	unset METHOD BUILD REPOSITORY PKGDEP MODULES REPOSITORY_ALIAS dstdir
 }
 
 function mass_produce() {
