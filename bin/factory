@@ -40,6 +40,7 @@
 #No package 'gstreamer-plugins-base-1.0' found
 
 # libgstreamer-plugins-base1.0-dev  libgstreamer1.0-dev
+# add make global opetions as -j4
 
 #No package 'gstreamer-video-1.0' found
 #No package 'gstreamer-audio-1.0' found
@@ -128,32 +129,32 @@ export PATH PKG_CONFIG_PATH LD_LIBRARY_PATH LD_RUN_PATH CFLAGS LDFLAGS PREFIX
 function ar_c_m_mi() {
 	./autoreconf -fiv && \ 
 	./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
-	make && \ 
+	make ${MAKE_FLAGS} && \ 
 	make install || return 1
 }
 
 function a_c_m_mi() {
 	./autogen.sh && \ 
 	./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
-	make && \ 
+	make ${MAKE_FLAGS} && \ 
 	make install || return 1
 }
 	
 
 function c_m_mi() {
 	    ./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
-		make && \
+		make ${MAKE_FLAGS} && \
 		make install || return 1
 }
 
 
 function m_mi() {
-		make && \
+		make ${MAKE_FLAGS} && \
 		make install || return 1
 }
 
 function m_mip() {
-		make && \
+		make ${MAKE_FLAGS} && \
 		make install PREFIX=${FACTORY_PREFIX} || return 1
 }
 
@@ -161,13 +162,13 @@ function b_cm_m_mi() {
 	mkdir build && \
 	pushd build && \
 	cmake -DCMAKE_INSTALL_PREFIX=${FACTORY_PREFIX} .. && \
-	make && \
+	make ${MAKE_FLAGS} && \
 	make install && \
 	popd
 }
 
 function bullet3_compile() {
-	./build_and_run_premake.sh && \
+	cd build3 && \
 	./premake4_linux64 gmake && \
 	pushd gmake && \
 	m_mi && \
