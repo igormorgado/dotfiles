@@ -12,7 +12,8 @@ fi
 
 alias bvim="vim -u ~/.vim/practical.vim"
 
-alias factory_load='source ${HOME}/bin/factory'
+alias fload='source ${HOME}/bin/factory'
+alias gp="cd ~/dotfiles; git pull ; cd -"
 
 
 
