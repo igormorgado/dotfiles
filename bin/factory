@@ -14,6 +14,7 @@
 # Not able to compile libspectre (libgs notfound =/ )
 # libspectre
 # libcurl
+# Create preexec and postexec methods
 
 #github_fetch ${GITHUB_REP}
 #GITHUB_URL="https://github.com/"
