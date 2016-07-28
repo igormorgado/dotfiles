@@ -167,17 +167,8 @@ function b_cm_m_mi() {
 	popd
 }
 
-function bullet3_compile() {
-	cd build3 && \
-	./premake4_linux64 gmake && \
-	pushd gmake && \
-	m_mi && \
-	popd
-}
-
-function curl_compile() {
-	./buildconf
-	c_m_mi
+function p_s() {
+	python setup.py build
 }
 
 function fetch_cvs() {
