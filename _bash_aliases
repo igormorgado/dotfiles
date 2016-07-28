@@ -12,6 +12,8 @@ fi
 
 alias bvim="vim -u ~/.vim/practical.vim"
 
+alias factory_load='source ${HOME}/bin/factory'
+
 
 
 
