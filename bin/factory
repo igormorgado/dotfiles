@@ -129,7 +129,7 @@ function fetch_cvs() {
 
 function fetch_git() {
 	while (( "${#}" )); do
-		git clone ${REPOSITORY}/${1}.git 
+		git clone ${REPOSITORY}/${1}
 		shift
 	done
 }
@@ -217,15 +217,9 @@ esac
 #}}}
 
 
-#	git clone git://anongit.freedesktop.org/fontconfig
-#	a_c_m_mi && \
-
 ## libsdl2-dev {{{
 #	hg clone http://hg.libsdl.org/SDL
 #	c_m_mi && \
-
-## libluajit-5.1-dev {{{
-## }}}
 
 
 # vim: foldmethod=marker:foldlevel=0
