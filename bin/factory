@@ -134,6 +134,11 @@ function fetch_git() {
 	done
 }
 
+function fetch_hg() {
+	while (( "${#}" )); do
+		hg clone ${REPOSITORY}/${1} ${REPOSITORY_ALIAS}
+		shift
+	done
 
 function fetch() {
 	while (( "${#}" )); do
@@ -231,9 +236,6 @@ esac
 #}}}
 
 
-## libsdl2-dev {{{
-#	hg clone http://hg.libsdl.org/SDL
-#	c_m_mi && \
 
 
 # vim: foldmethod=marker:foldlevel=0
