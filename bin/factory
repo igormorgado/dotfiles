@@ -147,7 +147,7 @@ function compile() {
 
 function produce() {
 
-	if [ -z "${1}"]; then
+	if [ -z "${1}" ]; then
 		echo "We need a blueprint."
 		ls -1 ${FACTORY_CONFDIR}
 		exit 1
