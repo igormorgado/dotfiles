@@ -89,6 +89,13 @@ export PATH PKG_CONFIG_PATH LD_LIBRARY_PATH LD_RUN_PATH CFLAGS LDFLAGS PREFIX
 #}}}
 
 # Support functions {{{
+function ar_c_m_mi() {
+	./autoreconf -fiv && \ 
+	./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
+	make && \ 
+	make install || return 1
+}
+
 function a_c_m_mi() {
 	./autogen.sh && \ 
 	./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
