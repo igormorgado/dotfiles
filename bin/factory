@@ -64,9 +64,9 @@ LD_LIBRARY_PATH=${FACTORY_PREFIX}/lib:${LD_LIBRARY_PATH}
 LD_RUN_PATH=${FACTORY_PREFIX}/lib:${LD_RUN_PATH}
 
 # Compilation flags
-CFLAGS+="-O3 -ffast-math -march=native"
-CFLAGS+="-I${FACTORY_PREFIX}/include"
-LDFLAGS+="-L${FACTORY_PREFIX}/lib"
+CFLAGS+=" -O3 -ffast-math -march=native"
+CFLAGS+=" -I${FACTORY_PREFIX}/include"
+LDFLAGS+=" -L${FACTORY_PREFIX}/lib"
 # LIBS        libraries to pass to the linker, e.g. -l<library>
 # CPPFLAGS    (Objective) C/C++ preprocessor flags, e.g. -I<include dir> if
 #             you have headers in a nonstandard directory <include dir>
