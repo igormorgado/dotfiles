@@ -108,6 +108,15 @@ function m_mip() {
 		make install PREFIX=${FACTORY_PREFIX} || return 1
 }
 
+function b_cm_m_mi() {
+	mkdir build && \
+	push build && \
+	cmake -DCMAKE_INSTALL_PREFIX=${FACTORY_PREFIX} .. && \
+	make && \
+	make install && \
+	popd
+}
+
 function bullet3_compile() {
 	./build_and_run_premake.sh && \
 	./premake4_linux64 gmake && \
