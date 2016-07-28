@@ -110,7 +110,7 @@ function m_mip() {
 
 function b_cm_m_mi() {
 	mkdir build && \
-	push build && \
+	pushd build && \
 	cmake -DCMAKE_INSTALL_PREFIX=${FACTORY_PREFIX} .. && \
 	make && \
 	make install && \
