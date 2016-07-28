@@ -10,6 +10,11 @@
 #   pkg-config
 #	python-pip
 
+# Gconv
+# libxcb-shm0-dev
+# librsvg
+# libspectre
+
 #github_fetch ${GITHUB_REP}
 #GITHUB_URL="https://github.com/"
 #GITHUB_REP=" github/gitignore "
