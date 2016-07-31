@@ -14,6 +14,8 @@ tags
 *.old
 *cgg*
 *CGG*
+.bash_history
+_bash_history
 _bash_nda
 _config/gcloud/
 _fzf/
