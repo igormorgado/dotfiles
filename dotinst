@@ -23,6 +23,7 @@ case $1 in
 		ln -sf dotfiles/_fzf.bash .fzf.bash
 		;;
     vim|vi)
+		mkdir ~/.tmp
         ln -sf dotfiles/_vimrc .vimrc
         ln -sf dotfiles/_vim .vim
         ln -sf dotfiles/_viminfo  .viminfo
