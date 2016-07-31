@@ -1,15 +1,9 @@
 #!/bin/bash +x
 
-# TODO {{{
-# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/libogg.html
-# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/libvorbis.html
-# http://www.linuxfromscratch.org/blfs/view/svn/server/sqlite.html
-# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/pulseaudio.html
-# http://www.linuxfromscratch.org/blfs/view/svn/general/nasm.html
-# http://www.linuxfromscratch.org/blfs/view/svn/general/nasm.html
-# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/alsa-lib.html
-# 
-# Requisites:
+# HINT
+# To run this code you need to install some tools, in debian you should 
+# install at least:
+#
 #	build-essential
 #	libtool
 #	autogen
@@ -17,74 +11,79 @@
 #   autopoint
 #   pkg-config
 #	python-pip
-
-# Packages that will not installed:
-# xorg libraries (and dev)
-# libdrm-2.4.70
-# Mesa 12.0.1
-# GLU
-# FreeGLUT
-
-# Implement ordered building (PLANTS)
-# On git fetch if dir exist run git pull instead git clone
-
-# Install gtk3
-# Install librsvg
-# Install libgobject
-# libudev
-# libblkid-dev
-# libdbus-1-deva
-# http://www.linuxfromscratch.org/blfs/view/svn/general/dbus.html
-# libpulse
-# libxine-dev 
-#No package 'gstreamer-plugins-base-1.0' found
-
-# libgstreamer-plugins-base1.0-dev  libgstreamer1.0-dev
-# add make global opetions as -j4
-
-#No package 'gstreamer-video-1.0' found
-#No package 'gstreamer-audio-1.0' found
-#No package 'gstreamer-tag-1.0' found
-
-# Gconv
-# Not able to compile libspectre (libgs notfound =/ )
-# libspectre
-# libcurl
-# Create preexec and postexec methods
-# Not able to build gobject-introspection
-
-#github_fetch ${GITHUB_REP}
-#GITHUB_URL="https://github.com/"
-#GITHUB_REP=" github/gitignore "
+#	cvs
+#	svn
+#	mercurial
+#	git
 #
-# Add a way to listall all plants
-# Add a variable to point to BLUEPRINT (FACTORYBLUEPRINT)
-# Check all references to cd - and cd and change for pushd/popd
-# Instal gperf
-# python lxml
-# Libmount-dev
-# EFL DEPS
-# libpoppler-cpp-dev
-# libspectre
-# libraw-dev
-# librsvg2-dev
-# libcairo2-dev
-# Add a globalconf file in a external file
-# Add PREFIX as source to libraries headers and binaries
-# Find a way to not download sources (parameter)
-# More elegant way to proxy
-# Setting up proxy (call the parameter with password)
-# Implement a way it can be called from "source or execution" 
-# if [ ${#} -gt 1 ]; then
+#
+#
+# TODO {{{
+#
+# Implement ordered building (PLANTS)
+# - On git fetch if dir exist run git pull instead git clone
+# - Create an external conffile to add global parameters as:
+#    	LD_LIBS
+#	    MAKE_FLAGS
+# - Create a parameter (or conf) to avoid download sources, just run
+# the compilation steps (in case of no internet)
+# - Create preexec and postexec methods
+# - Move custom build methods to the blueprint
+# - Add a way to list all valid blueprints and plants
+# - Create a proxymode (elegant)
 # 	PROXYPASS=${1}
 # 	PROXYUSER="${2:-$(whoami)}"
 # 	PROXYSERVER="${3:-'165.225.34.32:80'}"
 # 	export http_proxy="http://${PROXYUSER}@${PROXYSERVER}"
 # 	export https_proxy="http://${PROXYUSER}@${PROXYSERVER}"
 # 	echo ${http_proxy}
-# fi
-# Stop production when a error ocurrs
-# put the correct requisites where it should be
+# - Add a variable to point to BLUEPRINT (FACTORYBLUEPRINT)
+# - Check all references to cd - and cd and change for pushd/popd
+# - Write function to install Python packages (verify if is inst first)
+# - Write function to install deb pkgs (Verify first if isn't already inst)
+# - Stop production when a error ocurrs ( correctly )
+#
+# Create blueprints to the packages:
+# ======================================================================
+# zlib
+# gtk3
+# librsvg
+# libgobject
+# libudev
+# libblkid-dev
+# libdbus-1-deva
+# libpulse
+# libxine-dev 
+# libpoppler-cpp-dev
+# libspectre
+# libraw-dev
+# librsvg2-dev
+# libcairo2-dev
+# gstreamer
+# libspectre
+# libcurl
+# libgs
+# 
+# Follow the compilation guides from LFS documentation is a nice thing
+# ======================================================================
+# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/libogg.html
+# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/libvorbis.html
+# http://www.linuxfromscratch.org/blfs/view/svn/server/sqlite.html
+# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/pulseaudio.html
+# http://www.linuxfromscratch.org/blfs/view/svn/general/nasm.html
+# http://www.linuxfromscratch.org/blfs/view/svn/general/nasm.html
+# http://www.linuxfromscratch.org/blfs/view/svn/multimedia/alsa-lib.html
+# http://www.linuxfromscratch.org/blfs/view/svn/general/dbus.html
+# 
+# Packages that will not installed thru blueprints right now
+# ======================================================================
+# xorg libraries (and dev)
+# libdrm-2.4.70
+# Mesa 12.0.1
+# GLU
+# FreeGLUT
+# libmount
+# 
 #}}}
 
 # Inital variables {{{
