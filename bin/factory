@@ -1,6 +1,6 @@
 #!/bin/bash +x
 
-# HINT
+# HINT {{{
 # To run this code you need to install some tools, in debian you should 
 # install at least:
 #
@@ -16,8 +16,8 @@
 #	mercurial
 #	git
 #
-#
-#
+# }}}
+
 # TODO {{{
 #
 # Implement ordered building (PLANTS)
@@ -280,12 +280,7 @@ function mass_produce() {
 case $- in
 	*i*) return ;;
 	*)
-		produce libjpeg
-		produce libgif
-		produce libtiff
-		produce freetype6
-		produce bullet3
-		produce terminology
+		ls  ${FACTORY_CONFDIR}
 		# mass_produce
 		;;
 esac
