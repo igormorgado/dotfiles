@@ -21,7 +21,6 @@ fi
 
 # dotinst bash vim
 pushd ${HOME}/dotfiles
-./dotinst env
 ./dotinst bash
 ./dotinst vim
 popd
