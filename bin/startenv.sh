@@ -29,7 +29,7 @@ pushd ${HOME}/dotfiles
 popd
 
 # Vim install plugins
-vim -c "PlugInstall | qa"
+vim -s -c "PlugInstall | qa"
 
 # Load congfigs
 source ${HOME}/.bashrc
