@@ -18,9 +18,11 @@ tags
 _bash_history
 _bash_nda
 _config/gcloud/
+_config/gcloud/*
 _fzf/
 _local/share/fonts/
 _fonts/
 _local/share/mc/history
 _vim/plugged/
+_vim/gutentags
 edown.sh
