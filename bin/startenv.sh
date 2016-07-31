@@ -5,11 +5,27 @@
 
 # Install packages
 PACKAGES="
-vim
-mc
-exuberant-ctags
-git
+autoconf
+autogen
+automake
+autopoint
 build-essential
+cmake
+cvs
+exuberant-ctags
+fdupes
+git
+git
+libtool
+m4
+make
+mc
+mercurial
+pkg-config
+python3-pip
+subversion
+vim
+virtualenv
 "
 sudo apt-get update
 sudo apt-get -y -f --force-yes install ${PACKAGES}
