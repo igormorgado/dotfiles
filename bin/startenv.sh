@@ -36,6 +36,10 @@ if [ ! -d "${HOME}/dotfiles" ]; then
 	pushd ${HOME}
 	git clone https://github.com/igormorgado/dotfiles
 	popd
+else
+	pushd "${HOME}/dotfiles"
+	git pull
+	popd
 fi
 
 # dotinst bash vim
