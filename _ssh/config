@@ -28,3 +28,7 @@ Host github.com
     user igormorgado
     IdentityFile ~/.ssh/igormorgado
 
+
+Host instance*
+    StrictHostKeyChecking no
+
