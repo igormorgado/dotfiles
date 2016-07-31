@@ -1,3 +1,5 @@
+tags
+.tags
 # SSH Stuff
 *authorized_keys*
 *id_rsa*
@@ -13,8 +15,7 @@
 *cgg*
 *CGG*
 _bash_nda
-_config/gcloud/completion_cache/
-_config/gcloud/logs/
+_config/gcloud/
 _fzf/
 _local/share/fonts/
 _fonts/

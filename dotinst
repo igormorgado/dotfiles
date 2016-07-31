@@ -66,6 +66,7 @@ case $1 in
         ln -sf dotfiles/_vimrc .vimrc
         ln -sf dotfiles/_vim .vim
         ln -sf dotfiles/_viminfo  .viminfo
+        ln -sf dotfiles/_ctags  .ctags
         ;;
     subversion|svn)
         ln -sf dotfiles/_subversion .subversion
