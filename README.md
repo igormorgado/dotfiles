@@ -1,6 +1,10 @@
 # dotfiles
 
-Use inst to install the dotfiles in the correct place as:
+To initialize the environment in a clean machine do:
 
-./inst bash
+. <( https://raw.githubusercontent.com/igormorgado/dotfiles/master/bin/startenv.sh )
+
+Use dotinst to install the dotfiles in the correct place as:
+
+./dotinst bash
 
