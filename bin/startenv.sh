@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # To execute run:
-. <( https://raw.githubusercontent.com/igormorgado/dotfiles/master/bin/startenv.sh )
+. <( curl -s https://raw.githubusercontent.com/igormorgado/dotfiles/master/bin/startenv.sh )
 
 # Install packages
 PACKAGES="
