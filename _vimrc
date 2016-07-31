@@ -43,7 +43,7 @@ endif
 " Some colors
 set listchars=tab:>\ ,eol:¬
 
-colorscheme flattened_dark
+silent! colorscheme flattened_dark
 
 " Status line
 highlight StatusLine NONE ctermbg=DarkBlue ctermfg=White cterm=NONE
