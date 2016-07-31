@@ -58,6 +58,7 @@ if has("statusline")
   set statusline+=\ %m          " modified flag '[+]' if modifiable
   set statusline+=\ %h          " help flag '[Help]'
   set statusline+=\ %{fugitive#statusline()}    " GIT Branch
+  set statusline+=\ %{gutentags#statusline()}
   set statusline+=%=            " left/right separation point
   set statusline+=\ \|\ %{&ff}  " fileformat
   set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
@@ -101,7 +102,7 @@ set hlsearch
 
 " Menu
 set wildmode=longest:list,full
-set wildignore+=tags,cscope.out,*.o,*~,*.pyc
+set wildignore+=tags,cscope.out,*.o,*~,*.pyc,.tags
 set wildignorecase
 
 " File handling
@@ -124,6 +125,12 @@ set splitright
 
 " Buffers
 set hidden
+
+" Tags startup
+set tags=.tags;tags;${HOME}
+
+" Unecessary and slow
+"match WarningMsg '\%>80v.\+'
 
 "}}}
 
