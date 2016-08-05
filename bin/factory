@@ -1,9 +1,10 @@
 #!/bin/bash +x
 
 # HINT {{{
-# To run this code you need to install some tools, in debian you should 
+# To run this code you need to install some tools, in debian you should
 # install at least:
 #
+# To build:
 #	build-essential
 #	libtool
 #	autogen
@@ -11,6 +12,10 @@
 #   autopoint
 #   pkg-config
 #	python-pip
+#   libdbus-1
+#	bison
+#	flex
+# To download source:
 #	cvs
 #	svn
 #	mercurial
@@ -20,12 +25,14 @@
 
 # TODO {{{
 #
+# Create a parameter (or conf) to avoid download sources, just run
+# and to download only not build
+# Move prerequisites to the packages
 # Implement ordered building (PLANTS)
 # - On git fetch if dir exist run git pull instead git clone
 # - Create an external conffile to add global parameters as:
 #    	LD_LIBS
 #	    MAKE_FLAGS
-# - Create a parameter (or conf) to avoid download sources, just run
 # the compilation steps (in case of no internet)
 # - Create preexec and postexec methods
 # - Move custom build methods to the blueprint
@@ -45,25 +52,15 @@
 #
 # Create blueprints to the packages:
 # ======================================================================
-# zlib
+# gtkdoc
+# many xml stuff required by gtkdoc
 # gtk3
-# librsvg
-# libgobject
-# libudev
-# libblkid-dev
-# libdbus-1-deva
-# libpulse
-# libxine-dev 
-# libpoppler-cpp-dev
-# libspectre
-# libraw-dev
-# librsvg2-dev
-# libcairo2-dev
-# gstreamer
-# libspectre
-# libcurl
+# libblkid
 # libgs
-# 
+# libpulse
+# libudev
+# libxine
+#
 # Follow the compilation guides from LFS documentation is a nice thing
 # ======================================================================
 # http://www.linuxfromscratch.org/blfs/view/svn/multimedia/libogg.html
@@ -74,7 +71,7 @@
 # http://www.linuxfromscratch.org/blfs/view/svn/general/nasm.html
 # http://www.linuxfromscratch.org/blfs/view/svn/multimedia/alsa-lib.html
 # http://www.linuxfromscratch.org/blfs/view/svn/general/dbus.html
-# 
+#
 # Packages that will not installed thru blueprints right now
 # ======================================================================
 # xorg libraries (and dev)
@@ -83,7 +80,11 @@
 # GLU
 # FreeGLUT
 # libmount
-# 
+# xutils-dev
+# libegl1-mesa-dev
+# mesa-common-dev
+# libdbus-1-dev
+#
 #}}}
 
 # Inital variables {{{
@@ -116,8 +117,8 @@ LDFLAGS+=" -L${FACTORY_PREFIX}/lib"
 PREFIX=${FACTORY_PREFIX}
 
 
-# Execute starting procedures 
-[ -d "${FACTORY_SRCDIR}" ] || mkdir -p ${FACTORY_SRCDIR}
+# Execute starting procedures
+[ -d "${FACTORY_SRCDIR}" ] || mkdir -p "${FACTORY_SRCDIR}"
 
 export FACTORY_SRCDIR FACTORY_CONFDIR FACTORY_PREFIX
 export PATH PKG_CONFIG_PATH LD_LIBRARY_PATH LD_RUN_PATH CFLAGS LDFLAGS PREFIX
@@ -126,153 +127,159 @@ export PATH PKG_CONFIG_PATH LD_LIBRARY_PATH LD_RUN_PATH CFLAGS LDFLAGS PREFIX
 
 # Support functions {{{
 function ar_c_m_mi() {
-	./autoreconf -fiv && \ 
-	./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
-	make ${MAKE_FLAGS} && \ 
-	make install || return 1
+autoreconf -fiv && \
+./configure "${CONF_FLAGS[@]}" --prefix="${FACTORY_PREFIX}" && \
+	make "${MAKE_FLAGS[@]}" && \
+make install || return 1
 }
 
 function a_c_m_mi() {
-	./autogen.sh && \ 
-	./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
-	make ${MAKE_FLAGS} && \ 
-	make install || return 1
+./autogen.sh && \
+./configure "${CONF_FLAGS[@]}" --prefix="${FACTORY_PREFIX}" && \
+	make "${MAKE_FLAGS[@]}" && \
+make install || return 1
 }
-	
+
 
 function c_m_mi() {
-	    ./configure ${CONF_FLAGS} --prefix=${FACTORY_PREFIX} && \
-		make ${MAKE_FLAGS} && \
-		make install || return 1
+./configure "${CONF_FLAGS[@]}" --prefix="${FACTORY_PREFIX}" && \
+	make "${MAKE_FLAGS[@]}" && \
+	make install || return 1
 }
 
 
 function m_mi() {
-		make ${MAKE_FLAGS} && \
-		make install || return 1
+make "${MAKE_FLAGS[@]}" && \
+	make install || return 1
 }
 
 function m_mip() {
-		make ${MAKE_FLAGS} && \
-		make install PREFIX=${FACTORY_PREFIX} || return 1
+make "${MAKE_FLAGS[@]}" && \
+	make install PREFIX="${FACTORY_PREFIX}" || return 1
 }
 
 function b_cm_m_mi() {
-	mkdir build && \
+mkdir build && \
 	pushd build && \
-	cmake -DCMAKE_INSTALL_PREFIX=${FACTORY_PREFIX} .. && \
-	make ${MAKE_FLAGS} && \
+	cmake -DCMAKE_INSTALL_PREFIX="${FACTORY_PREFIX}" .. && \
+	make "${MAKE_FLAGS[@]}" && \
 	make install && \
 	popd
 }
 
 function p_s() {
-	python setup.py build
+python setup.py build
 }
 
 function fetch_cvs() {
-	while (( "${#}" )); do
-		# CVSROOT="${REPOSITORY}"
-		echo -ne "NOPASSWD\n" | \
-		cvs -d "${REPOSITORY}" login 
-		cvs -d "${REPOSITORY}" checkout ${1}
-		shift
-	done
+while (( "${#}" )); do
+	# CVSROOT="${REPOSITORY}"
+	echo -ne "NOPASSWD\n" | \
+		cvs -d "${REPOSITORY}" login
+	cvs -d "${REPOSITORY}" checkout "${1}"
+	shift
+done
 }
 
+function fetch_svn() {
+while (( "${#}" )); do
+	SVN co "${REPOSITORY}/${1}" "${REPOSITORY_ALIAS}"
+	shift
+done
+}
 
 function fetch_git() {
-	while (( "${#}" )); do
-		git clone ${REPOSITORY}/${1} ${REPOSITORY_ALIAS}
-		shift
-	done
+while (( "${#}" )); do
+	git clone "${REPOSITORY}/${1}" "${REPOSITORY_ALIAS}"
+	shift
+done
 }
 
 function fetch_hg() {
-	while (( "${#}" )); do
-		hg clone ${REPOSITORY}/${1} ${REPOSITORY_ALIAS}
-		shift
-	done
+while (( "${#}" )); do
+	hg clone "${REPOSITORY}/${1}" "${REPOSITORY_ALIAS}"
+	shift
+done
 }
 
 
 function fetch() {
-	while (( "${#}" )); do
-		fetch_${METHOD} ${1}
-		shift
-	done
-	
+while (( "${#}" )); do
+	fetch "${METHOD}" "${1}"
+	shift
+done
+
 }
 
 
 function compile() {
-	# There are cases where repository conflict or use
-	# stupid names.
-	if [ -n "${REPOSITORY_ALIAS}" ]; then
-		dstdir=${REPOSITORY_ALIAS}
-	else
-		# Just basename
-		dstdir=${1##*/}
-		# Remove .git
-		dstdir=${dstdir%*.git}
-	fi
-	
-	pushd ${dstdir} && \
+# There are cases where repository conflict or use
+# stupid names.
+if [ -n "${REPOSITORY_ALIAS}" ]; then
+	dstdir=${REPOSITORY_ALIAS}
+else
+	# Just basename
+	dstdir=${1##*/}
+	# Remove .git
+	dstdir=${dstdir%*.git}
+fi
+
+pushd "${dstdir}" && \
 	${BUILD} && \
 	popd
 }
 
 
 function produce() {
-	# All blue print variables are local
-	#unset BUILD CONF_FLAGS MODULES REPOSITORY_ALIAS INSTALL_THIS_BLUEPRINT
-	#unset DPKGDEP PYDEP REPOSITORY METHOD 
-	local BUILD CONF_FLAGS MODULES REPOSITORY_ALIAS INSTALL_THIS_BLUEPRINT
-	local DPKGDEP PYDEP REPOSITORY METHOD 
-	local dstdir
+# All blue print variables are local
+#unset BUILD CONF_FLAGS MODULES REPOSITORY_ALIAS INSTALL_THIS_BLUEPRINT
+#unset DPKGDEP PYDEP REPOSITORY METHOD
+local BUILD CONF_FLAGS MODULES REPOSITORY_ALIAS INSTALL_THIS_BLUEPRINT
+local DPKGDEP PYDEP REPOSITORY METHOD
+local dstdir
 
-	if [ -z "${1}" ]; then
-		echo "We need a blueprint. Choose from:"
-		ls -1 ${FACTORY_CONFDIR}
-		return 1
-	fi
+if [ -z "${1}" ]; then
+	echo "We need a blueprint. Choose from:"
+	ls -1 "${FACTORY_CONFDIR}"
+	return 1
+fi
 
-	BLUEPRINT=${FACTORY_CONFDIR}/${1}.conf 
-	if [ ! -r ${BLUEPRINT} ]; then
-		echo "${RED}Couldn't set up the blueprint for${CRST} ${BLUEPRINT}"
-		return
-	fi
+BLUEPRINT=${FACTORY_CONFDIR}/${1}.conf
+if [ ! -r "${BLUEPRINT}" ]; then
+	echo "${RED}Couldn't set up the blueprint for${CRST} ${BLUEPRINT}"
+	return
+fi
 
-	if [ "${INSTALL_THIS_BLUEPRINT}" = "NO" ]; then
-		echo "${YELLOW}Plant ${CRST}${BLUEPRINT}${YELLOW} will not be installed${CRST}"
-		return
-	fi
+if [ "${INSTALL_THIS_BLUEPRINT}" = "NO" ]; then
+	echo "${YELLOW}Plant ${CRST}${BLUEPRINT}${YELLOW} will not be installed${CRST}"
+	return
+fi
 
-	source ${BLUEPRINT}
-	echo -ne "${GREEN}=========================================\n"
-	echo -ne "${GREEN}       ${1}\n"
-	echo -ne "${GREEN}=========================================\n"
+source "${BLUEPRINT}"
+echo -ne "${GREEN}=========================================\n"
+echo -ne "${GREEN}       ${1}\n"
+echo -ne "${GREEN}=========================================\n"
+echo -ne "${CRST}"
+pushd "${FACTORY_SRCDIR}"
+for module in ${MODULES}; do
+	echo -ne "${RED}=========================================\n"
+	echo -ne "${RED}            ${module}\n"
+	echo -ne "${RED}=========================================\n"
 	echo -ne "${CRST}"
-	pushd ${FACTORY_SRCDIR}
-	for module in ${MODULES}; do
-	    echo -ne "${RED}=========================================\n"
-		echo -ne "${RED}            ${module}\n"
-	    echo -ne "${RED}=========================================\n"
-	    echo -ne "${CRST}"
-		dstdir=${module##*/}
-		fetch ${module}
-		compile ${module}
-		shift
+	dstdir=${module##*/}
+	fetch "${module}"
+	compile "${module}"
+	shift
 	popd
-	done
+done
 }
 
 function mass_produce() {
-	for file in ${FACTORY_CONFDIR}/*; do
-		PACKAGE=$(basename ${file})
-		PACKAGE=${PACKAGE%.*}
-		produce ${PACKAGE}
-	done
+for file in ${FACTORY_CONFDIR}/*; do
+	PACKAGE=$(basename "${file}")
+	PACKAGE=${PACKAGE%.*}
+	produce "${PACKAGE}"
+done
 }
 # }}}
 
@@ -280,7 +287,7 @@ function mass_produce() {
 case $- in
 	*i*) return ;;
 	*)
-		ls  ${FACTORY_CONFDIR}
+		ls  "${FACTORY_CONFDIR}"
 		# mass_produce
 		;;
 esac

@@ -8,7 +8,6 @@ set nocompatible
 filetype off
 call plug#begin('~/.vim/plugged')
 
-"Plug 'justinmk/vim-dirvish'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
 Plug 'romainl/vim-qf'
@@ -22,12 +21,27 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-tbone'
+
+Plug 'tpope/vim-markdown'
+augroup readMarkdown
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+augroup END
+let g:markdown_fenced_langagues = ['html', 'python','bash=sh','c']
+
+" Plug 'tpope/vim-vinegar'
+" let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+
+Plug 'tpope/vim-rhubarb'
+
+Plug 'tpope/vim-obsession'
 
 " Themes
 Plug 'romainl/flattened'
 Plug 'vim-scripts/Sift'
 Plug 'bounceme/highwayman'
 Plug 'lanox/lanox-vim-theme'
+Plug 'tpope/vim-vividchalk'
 
 call plug#end()
 " }}}
@@ -137,7 +151,7 @@ set tags=.tags;tags;${HOME}
 " Maps/Macros {{{
 " ================================================
 
-nnoremap <ESC><ESC> :q<CR>
+nnoremap <ESC><ESC><ESC> :q<CR>
 " ctrl-jklm  changes to that split
 nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
@@ -304,6 +318,9 @@ if executable("ag")
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
+let g:gutentags_exclude = ['*.css', '*.html', '*.js']
+let g:gutentags_cache_dir='~/.vim/gutentags'
+let g:gutentags_project_root=[ 'Makefile', 'setup.py' ]
 "}}}
 
 " vim:foldmethod=marker:foldlevel=0

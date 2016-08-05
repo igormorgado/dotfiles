@@ -14,3 +14,7 @@ setlocal softtabstop=4
 setlocal fileformat=unix
 setlocal encoding=utf-8
 
+set makeprg=shellcheck\ -f\ gcc\ %
+augroup shellsave
+    au BufWritePost * :silent make | redraw!
+augroup END
