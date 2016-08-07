@@ -197,8 +197,9 @@ if ${TERM_IS_COLOR} && ( dircolors --help && ls --color ) &> /dev/null; then
 
 	# List files from highest priority to lowest.  As soon as the loop finds
 	# one that works, it will exit.
-	POSSIBLE_DIR_COLORS="${HOME}/.dir_colors /etc/DIR_COLORS"
-	for DIR in ${POSSIBLE_DIR_COLORS}  ; do
+	declare -a POSSIBLE_DIR_COLORS
+	POSSIBLE_DIR_COLORS=("${HOME}/.dir_colors" "/etc/DIR_COLORS")
+	for DIR in "${POSSIBLE_DIR_COLORS[@]}"  ; do
 		[[ -f "${DIR}" ]] && [[ -r "${DIR}" ]] && eval "$( dircolors -b \"${DIR}\")" && break
 	done
 fi
@@ -260,6 +261,7 @@ addlibpath "${HOME}"/lib
 addrunpath "${HOME}"/lib
 
 # Load some external files
+loadresource ~/.local/bin/factory
 loadresource ~/.bash_aliases
 loadresource ~/.bash_python
 loadresource ~/.bash_nda
