@@ -250,6 +250,12 @@ export PROMPT_COMMAND
 addpkgpath "${HOME}"/usr/lib/pkgconfig
 addlibpath "${HOME}"/usr/lib
 addrunpath "${HOME}"/usr/lib
+
+addpkgpath "${HOME}"/.local/lib/pkgconfig
+addlibpath "${HOME}"/.local/lib
+addrunpath "${HOME}"/.local/lib
+
+addpkgpath "${HOME}"/lib/pkgconfig
 addlibpath "${HOME}"/lib
 addrunpath "${HOME}"/lib
 
