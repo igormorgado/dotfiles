@@ -75,16 +75,16 @@ function colortest() {
 
 # Colorize prompt based on last RETVAL
 function prevCmd() {
-    if [ $1 == 0 ] ; then
-        echo ${GREEN}
+    if [ "${1}" == 0 ] ; then
+        echo "${GREEN}"
     else
-        echo ${RED}
+        echo "${RED}"
     fi
 }
 
 
 function bash_prompt_command() {
-    RETVAL=$?
+    RETVAL="${?}"
     prevCmd=$(prevCmd ${RETVAL})
 }
 
@@ -92,22 +92,22 @@ function bash_prompt_command() {
 # Solarize me
 function solarized_light() {
 	if [ -f ~/dotfiles/_dir_colors.ansi-light ]; then
-		cd ~/dotfiles
+		pushd ~/dotfiles
 		rm _dir_colors
 		ln -s _dir_colors.ansi-light _dir_colors
-		eval $(dircolors -b _dir_colors)
-		cd -
+		eval "$(dircolors -b _dir_colors)" 
+		popd
 	fi
 }
 
 
 function solarized_dark(){
 	if [ -f ~/dotfiles/_dir_colors.ansi-dark ]; then
-		cd ~/dotfiles
+		pushd ~/dotfiles
 		rm _dir_colors
 		ln -s _dir_colors.ansi-dark _dir_colors
-		eval $(dircolors -b _dir_colors)
-		cd -
+		eval "$(dircolors -b _dir_colors)"
+		popd 
 	fi
     }
 
@@ -119,7 +119,7 @@ function dedup() {
 
 
 function settitle () { 
-	echo -ne "\e]2;$@\a\e]1;$@\a"; 
+	echo -ne "\e]2;${@}\a\e]1;${@}\a"; 
 }
 
 
@@ -167,7 +167,7 @@ function cd_func () {
 		[[ ${x2:0:1} == '~' ]] && x2="${HOME}${x2:1}"
 		if [[ "${x2}" == "${the_new_dir}" ]]; then
 			popd -n +$cnt 2>/dev/null 1>/dev/null
-			cnt=cnt-1
+			cnt=$(( cnt-1 ))
 		fi
 	done
 
@@ -178,22 +178,23 @@ function create_test_dir() {
 	# Missing sockets, pipes, char, block, fifo, brokenlink
 	
 	local d=test_dir
-	mkdir -m 775 -p ${d}/common
-	mkdir -m 2775 -p ${d}/group
-	mkdir -m 2755 -p ${d}/group_broken
-	mkdir -m 755 -p ${d}/directory
-	mkdir -m 1777 -p ${d}/directoryt
-	mkdir -m 1775 -p ${d}/directory+t_o+w
+	mkdir -m 775 -p "${d}/common"
+	mkdir -m 2775 -p "${d}/group"
+	mkdir -m 2755 -p "${d}/group_broken"
+	mkdir -m 755 -p  "${d}/directory"
+	mkdir -m 1777 -p "${d}/directoryt"
+	mkdir -m 1775 -p "${d}/directory+t_o+w"
 
-	testfiles="archive.tar archive.tar.gz audio.ogg backup.bak
+	declare -a testfiles
+	testfiles=(archive.tar archive.tar.gz audio.ogg backup.bak
 	document.pdf executable_file file1.ogg file2 file2.bak file3
 	file_ex image.png logfile.log setgid_g+s setuid_u+s ttt.JPG
-	video.mkv"
+	video.mkv)
 	
-	for f in ${testfiles}; do
-		touch ${d}/${f}
-		touch ${d}/common/${f}
-		touch ${d}/directory/${f}
+	for f in "${testfiles[@]}"; do
+		touch "${d}/${f}"
+		touch "${d}/common/${f}"
+		touch "${d}/directory/${f}"
 	done
 	cd ${d}
 	ln file3 file3.hardlink	
@@ -204,10 +205,10 @@ function create_test_dir() {
 	ln -s directory directory_link
 	ln -s nonexist brokenlink 
 	cd -
-	chmod g+s ${d}/setgid_g+s
-	chmod u+s ${d}/setuid_u+s
-	chmod 755 ${d}/executable_file
-	chmod 755 ${d}/file_ex
+	chmod g+s "${d}/setgid_g+s"
+	chmod u+s "${d}/setuid_u+s"
+	chmod 755 "${d}/executable_file"
+	chmod 755 "${d}/file_ex"
 }
 
 function gca() {
@@ -217,20 +218,74 @@ function gca() {
 function gle() {
 	echo "# Global"
 	[ -f "${HOME}/.config/git/ignore" ] && \
-	git ls-files -i --exclude-from=${HOME}/.config/git/ignore
+	git ls-files -i --exclude-from="${HOME}/.config/git/ignore"
 	echo "# Local"
 	[ -f ".gitignore" ] && \
 	git ls-files -i --exclude-from=.gitignore
 }
 
 function lower() {
-	echo "${@}" | tr "[A-Z]" "[a-z]"
+	echo "${@}" | tr "[:upper:]" "[:lower:]"
 }
 
 
 function upper() {
-	echo "${@}" | tr "[a-z]" "[A-Z]"
+	echo "${@}" | tr "[:lower:]" "[:upper:]"
 }
 
+function proxy_on() {
+    export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
+
+    if (( "${#}" > 0 )); then
+        valid=$(echo "${@}" | sed -n 's/\([0-9]\{1,3\}.\)\{4\}:\([0-9]\+\)/&/p')
+        if [[ "${valid}" != "${@}" ]]; then
+            >&2 echo "Invalid address"
+            return 1
+        fi
+
+        export http_proxy="http://$1/"
+        export https_proxy=$http_proxy
+        export ftp_proxy=$http_proxy
+        export rsync_proxy=$http_proxy
+    export HTTP_PROXY=$http_proxy
+    export HTTPS_PROXY=$http_proxy
+    export FTP_PROXY=$http_proxy
+    export RSYNC_PROXY=$http_proxy
+        echo "Proxy environment variable set."
+        return 0
+    fi
+
+	echo "You can pass the proxy data as parameter to function. Anyway..."
+	echo 
+    echo -n "username: "; read username
+    if [[ $username != "" ]]; then
+        echo -n "password: "
+        read -es password
+        local pre="$username:$password@"
+    fi
+
+    echo -n "server: "; read server
+    echo -n "port: "; read port
+    export http_proxy="http://$pre$server:$port/"
+    export https_proxy=$http_proxy
+    export ftp_proxy=$http_proxy
+    export rsync_proxy=$http_proxy
+    export HTTP_PROXY=$http_proxy
+    export HTTPS_PROXY=$http_proxy
+    export FTP_PROXY=$http_proxy
+    export RSYNC_PROXY=$http_proxy
+}
+
+function proxy_off(){
+    unset http_proxy
+    unset https_proxy
+    unset ftp_proxy
+    unset rsync_proxy
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
+    unset FTP_PROXY
+    unset RSYNC_PROXY
+    echo -e "Proxy environment variable removed."
+}
 
 # vim: ft=sh:
