@@ -15,7 +15,7 @@ esac
 # How many colors on terminal? Colorize!
 
 #COLORS
-if [ $(tput colors) -gt 0 ] ; then
+if [ "$(tput colors)" -gt 0 ] ; then
 	export   BLACK=$(tput setaf 0)
 	export     RED=$(tput setaf 1)
 	export   GREEN=$(tput setaf 2)
@@ -47,8 +47,9 @@ fi
 ###########################################################################
 
 # Add paths
-addpath ${HOME}/bin
-addpath ${HOME}/usr/bin
+addpath "${HOME}"/bin
+addpath "${HOME}"/usr/bin
+addpath "${HOME}"/.local/bin
 addpath /Applications/MacVim.app/Contents/MacOS/
 addpath "/c/Anaconda"
 addpath "/c/Anaconda2"
@@ -106,11 +107,11 @@ fi
 # I dont think this is necessary, probably just on OSX, if is that case
 # when I need again I will create a darwin test to run this code
 # Gvim if it exists... ftw!
-vim=`type -P vim`
+vim=$( type -P vim )
 if [ "${vim}" == "" ]; then
 	vim="gvim -v"
 fi
-alias vim="$vim"
+#alias vim="${vim}"
 
 # Configure Editors Vim FTW!
 export EDITOR="$vim"
@@ -150,9 +151,9 @@ esac
 {
 	[ "${TERM}" = "xterm" ] && type ldd && type grep && type tput && [ -L "/proc/${PPID}/exe" ] && {
 	if ldd /proc/${PPID}/exe | grep libvte; then
-		if [ "`tput -Txterm-256color colors`" = "256" ]; then
+		if [ "$(tput -Txterm-256color colors)" = "256" ]; then
 			TERM=xterm-256color
-		elif [ "`tput -Txterm-256color colors`" = "256" ]; then
+		elif [ "$(tput -Txterm-256color colors)" = "256" ]; then
 			TERM=xterm-256color
 		elif tput -T xterm; then
 			TERM=xterm
@@ -168,24 +169,24 @@ esac
 # Maybe there are better ways to check this
 case ${TERM} in
 	xterm|vt100|rxvt|cygwin) # Old fashined VT
-		TERM_IS_COLOR=true
-		TERM_IS_256COLOR=false
-		TERM_CAN_TITLE=true
+		export TERM_IS_COLOR=true
+		export TERM_IS_256COLOR=false
+		export TERM_CAN_TITLE=true
 		;;
 	*xterm*|rxvt|Eterm|eterm|screen*) # screen.linux|screen-w
-		TERM_IS_COLOR=true
-		TERM_IS_256COLOR=true
-		TERM_CAN_TITLE=true
+		export TERM_IS_COLOR=true
+		export TERM_IS_256COLOR=true
+		export TERM_CAN_TITLE=true
 		;;
 	linux)  # Linux VT
-		TERM_IS_COLOR=true
-		TERM_IS_256COLOR=false
-		TERM_CAN_TITLE=false
+		export TERM_IS_COLOR=true
+		export TERM_IS_256COLOR=false
+		export TERM_CAN_TITLE=false
 		;;
 	*) # What left
-		TERM_IS_COLOR=false
-		TERM_IS_256COLOR=false
-		TERM_CAN_TITLE=false
+		export TERM_IS_COLOR=false
+		export TERM_IS_256COLOR=false
+		export TERM_CAN_TITLE=false
 		;;
 esac
 
@@ -196,22 +197,22 @@ if ${TERM_IS_COLOR} && ( dircolors --help && ls --color ) &> /dev/null; then
 
 	# List files from highest priority to lowest.  As soon as the loop finds
 	# one that works, it will exit.
-	POSSIBLE_DIR_COLORS="$HOME/.dir_colors /etc/DIR_COLORS"
+	POSSIBLE_DIR_COLORS="${HOME}/.dir_colors /etc/DIR_COLORS"
 	for DIR in ${POSSIBLE_DIR_COLORS}  ; do
-		[[ -f "${DIR}" ]] && [[ -r "${DIR}" ]] && eval `dircolors -b "${DIR}"` && break
+		[[ -f "${DIR}" ]] && [[ -r "${DIR}" ]] && eval "$( dircolors -b \"${DIR}\")" && break
 	done
 fi
 
 # Are we on cygwin without proper ansi escaping
 if [ "${TERM}" == "cygwin" ]; then
-	LANG=en_US.UTF-8
-	LC_CTYPE="en_US.UTF-8"
-	LC_NUMERIC="en_US.UTF-8"
-	LC_TIME="en_US.UTF-8"
-	LC_COLLATE="en_US.UTF-8"
-	LC_MONETARY="en_US.UTF-8"
-	LC_MESSAGES="en_US.UTF-8"
-	LC_ALL=
+	export LANG=en_US.UTF-8
+	export LC_CTYPE="en_US.UTF-8"
+	export LC_NUMERIC="en_US.UTF-8"
+	export LC_TIME="en_US.UTF-8"
+	export LC_COLLATE="en_US.UTF-8"
+	export LC_MONETARY="en_US.UTF-8"
+	export LC_MESSAGES="en_US.UTF-8"
+	export LC_ALL=
 	alias mc="LANG=C mc"
 
 	umask 027
@@ -246,11 +247,11 @@ export PROMPT_COMMAND
 # Final configurations {{{
 ######################################################################
 
-addpkgpath ${HOME}/usr/lib/pkgconfig
-addlibpath ${HOME}/usr/lib
-addrunpath ${HOME}/usr/lib
-addlibpath ${HOME}/lib
-addrunpath ${HOME}/lib
+addpkgpath "${HOME}"/usr/lib/pkgconfig
+addlibpath "${HOME}"/usr/lib
+addrunpath "${HOME}"/usr/lib
+addlibpath "${HOME}"/lib
+addrunpath "${HOME}"/lib
 
 # Load some external files
 loadresource ~/.bash_aliases
@@ -259,10 +260,10 @@ loadresource ~/.bash_nda
 loadresource ~/.fzf.bash
 
 # Bash completion
-[ ! $(shopt -oq posix) ] && loadresource /etc/bash_completion
-COMP_CVS_REMOTE=1
-COMP_CONFIGURE_HINTS=1
-COMP_TAR_INTERNAL_PATHS=1
+[ ! "$(shopt -oq posix)" ] && loadresource /etc/bash_completion
+export COMP_CVS_REMOTE=1
+export COMP_CONFIGURE_HINTS=1
+export COMP_TAR_INTERNAL_PATHS=1
 
 #}}}
 
