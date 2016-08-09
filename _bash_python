@@ -5,8 +5,8 @@ export PYTHONSTARTUP
 
 # For python virtualenv 
 VIRTUALENV_DIR=${HOME}/venv/
-if [ -x ${VIRTUALENV_DIR}/bin/activate ]; then
-    source ${VIRTUALENV_DIR}/bin/activate
+if [ -x "${VIRTUALENV_DIR}/bin/activate" ]; then
+    source "${VIRTUALENV_DIR}/bin/activate"
 fi
 
 # vim: ft=sh:

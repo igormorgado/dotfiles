@@ -226,18 +226,24 @@ fi
 
 # Colorize term (no exceptions for now)
 if ${COLOR_ENVIRONMENT}; then
-	PS1="${debian_chroot:+($debian_chroot)}\[${BLUE}\]\u\[${GREEN}\]@\[${BLUE}\]\h\[${CRST}\]:\[${LRED}\]\w\[${CRST}\] \[\$prevCmd\]\$\[$CRST\]"
+	PS1="${debian_chroot:+($debian_chroot)}\[${BLUE}\]\u\[${GREEN}\]@\[${BLUE}\]\h\[${CRST}\]:\[${LRED}\]\w\[${CRST}\] \n"
 else
-	PS1="${debian_chroot:+($debian_chroot)}\u\@\h:\w \[\$prevCmd\]\$"
+	PS1="${debian_chroot:+($debian_chroot)}\u\@\h:\w \n"
 fi
 
 # Add git and svn branch names
 [ -x "$(which git)" ] && PS1="$PS1\$(parse_git_branch)"
 [ -x "$(which svn)" ] && PS1="$PS1\$(parse_svn_branch)"
-export PS1="${PS1} "
+
+# Add last status and colorize
+if ${COLOR_ENVIRONMENT}; then
+	PS1="${PS1}\[\$prevCmd\]\$\[$CRST\] "
+else
+	PS1="${PS1}\$ "
+fi
+export PS1
 
 PROMPT_COMMAND=bash_prompt_command
-PROMPT_COMMAND="history -a; history -c; history -r; ${PROMPT_COMMAND}"
 export PROMPT_COMMAND
 
 # }}}

@@ -84,7 +84,10 @@ function prevCmd() {
 
 
 function bash_prompt_command() {
-    RETVAL="${?}"
+    RETVAL="$?"
+	history -a
+	history -c
+	history -r
     prevCmd=$(prevCmd ${RETVAL})
 }
 

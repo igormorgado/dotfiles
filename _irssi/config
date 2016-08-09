@@ -111,6 +111,7 @@ channels = (
   { name = "silc"; chatnet = "silc"; autojoin = "No"; },
   { name = "#vim"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "#python"; chatnet = "freenode"; autojoin = "yes"; }
+  { name = "#bash"; chatnet = "freenode"; autojoin = "yes"; }
 );
 
 aliases = {
