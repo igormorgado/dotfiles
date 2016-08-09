@@ -1,8 +1,0 @@
-[core]
-account = morgado.igor@gmail.com
-project = engaged-parsec-136820
-
-[compute]
-zone = us-central1-b
-region = us-central1
-
