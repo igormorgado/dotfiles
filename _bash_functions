@@ -35,6 +35,20 @@ function loadresource() {
 	[ -f "${1}" ] && source "${1}"
 }
 
+function lsbytesum() {
+find . -maxdepth 1 -printf "%s\n" | awk '
+function human(x) {
+	s="B KBMBGBTBEBPBYBZB"; 
+	
+	while ( x>=1024 && length(s)>2 ) { 
+		x/=1024;
+		s=substr(s,3);
+	} 
+	
+	return sprintf("%.2f %s",x,substr(s,1,2)) }
+	
+	{ SUM+=$1 } END { printf "%s\n",human(SUM) }' 
+}
 
 function parse_git_branch() {
 	git branch 2> /dev/null | grep '*' | sed 's#*\ \(.*\)#(git::\1)#'
@@ -88,6 +102,7 @@ function bash_prompt_command() {
 	history -a
 	history -c
 	history -r
+	settitle "$(whoami)@$(hostname):$(pwd)"
     prevCmd=$(prevCmd ${RETVAL})
 }
 
@@ -122,7 +137,12 @@ function dedup() {
 
 
 function settitle () { 
-	echo -ne "\e]2;${@}\a\e]1;${@}\a"; 
+	case "${TERM}" in
+		xterm*)
+			echo -ne "\e]2;${*}\a\e]1;${*}\a"; 
+			;;
+		*) ;;
+	esac
 }
 
 
@@ -135,7 +155,7 @@ function cd_func () {
 		return 0
 	fi
 
-	the_new_dir=$1
+	the_new_dir=${1}
 	[[ -z $1 ]] && the_new_dir=$HOME
 
 	if [[ ${the_new_dir:0:1} == '-' ]]; then

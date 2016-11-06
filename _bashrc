@@ -226,14 +226,15 @@ fi
 
 # Colorize term (no exceptions for now)
 if ${COLOR_ENVIRONMENT}; then
-	PS1="${debian_chroot:+($debian_chroot)}\[${BLUE}\]\u\[${GREEN}\]@\[${BLUE}\]\h\[${CRST}\]:\[${LRED}\]\w\[${CRST}\] \n"
+	PS1="${debian_chroot:+($debian_chroot)}\[${BLUE}\]\u\[${GREEN}\]@\[${BLUE}\]\h\[${CRST}\]:\[${LRED}\]\w\[${CRST}\] ( \$(lsbytesum) )\n"
 else
-	PS1="${debian_chroot:+($debian_chroot)}\u\@\h:\w \n"
+	PS1="${debian_chroot:+($debian_chroot)}\u\@\h:\w ( \$(lsbytesum) )\n"
 fi
 
 # Add git and svn branch names
 [ -x "$(which git)" ] && PS1="$PS1\$(parse_git_branch)"
 [ -x "$(which svn)" ] && PS1="$PS1\$(parse_svn_branch)"
+
 
 # Add last status and colorize
 if ${COLOR_ENVIRONMENT}; then
