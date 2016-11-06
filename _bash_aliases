@@ -10,6 +10,10 @@ else
   alias ll="ls -lF"
 fi
 
+# Host aliases
+alias inst1='ssh 104.154.20.1'
+
+
 alias bvim="vim -u ~/.vim/practical.vim"
 
 alias fload='source ${HOME}/bin/factory'

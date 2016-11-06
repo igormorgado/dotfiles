@@ -108,7 +108,8 @@ vim=$( type -P vim )
 if [ "${vim}" == "" ]; then
 	vim="gvim -v"
 fi
-#alias vim="${vim}"
+# this is necessary otherwise bash_completion breaks
+alias vim="${vim}"
 
 # Configure Editors Vim FTW!
 export EDITOR="$vim"

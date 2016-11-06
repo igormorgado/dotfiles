@@ -234,10 +234,12 @@ function create_test_dir() {
 	chmod 755 "${d}/file_ex"
 }
 
+# Commit all files from argument
 function gca() {
 	git commit -a -m "$*"
 }
 
+# Exclude files from ignore list
 function gle() {
 	echo "# Global"
 	[ -f "${HOME}/.config/git/ignore" ] && \
