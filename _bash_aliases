@@ -17,12 +17,14 @@ alias inst1='ssh 104.154.20.1'
 alias bvim="vim -u ~/.vim/practical.vim"
 
 alias fload='source ${HOME}/bin/factory'
-alias gp="cd ~/dotfiles; git pull ; cd -"
 
+
+alias dotpull="cd ~/dotfiles; git pull ; cd -"
+alias dotpush="cd ~/dotfiles; git push ; cd -"
 
 alias cggprx='proxy_on 165.225.34.32:80 imorgado'
-alias realias='source ~/.bash_aliases'
 
+alias realias='source ~/.bash_aliases'
 
 alias cd=cd_func
 
