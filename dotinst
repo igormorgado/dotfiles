@@ -117,11 +117,11 @@ case $1 in
     mc)
         rm -rf .config/mc .mc
         ln -sf dotfiles/_mc .mc
-        ln -sf dotfiles/_mc .config/mc
+        ln -sf ../dotfiles/_mc .config/mc
         ;;
     term)
-        rm .config/terminator
-        ln -sf dotfiles/_config/terminator .config/terminator
+        rm -rf .config/terminator
+        ln -sf ../dotfiles/_config/terminator .config/terminator
         ;;
     desktop)
         if [ "$(uname)" == "Linux" ]

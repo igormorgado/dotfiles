@@ -1,3 +1,8 @@
+#!/bin/bash
+
+#  correlate two or more bash arrays
+# example:
+# 	iterate "um dois tres"  "1 2 3"
 
 function iterate {
 

@@ -8,7 +8,7 @@
     scrollbar_position = hidden
     foreground_color = "#839496"
     scroll_on_output = False
-    background_color = "#002a35"
+    background_color = "#002b36"
     scrollback_infinite = True
 [layouts]
   [[default]]
