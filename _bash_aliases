@@ -15,6 +15,8 @@ alias inst1='ssh 104.154.20.1'
 
 
 alias bvim="vim -u ~/.vim/practical.vim"
+alias bespeak="espeak -v pt"
+alias fala='while :; do read LINE; espeak -v pt "${LINE}" 2> /dev/null;done'
 
 alias fload='source ${HOME}/bin/factory'
 
