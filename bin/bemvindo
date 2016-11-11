@@ -1,0 +1,4 @@
+#!/bin/bash
+esp="espeak -s 140 -p 50 -v pt"
+${esp} "Bem vindo de volta mestre."
+${esp} "Como posso ajudá-lo?"
