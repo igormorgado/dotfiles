@@ -26,3 +26,7 @@ _local/share/mc/history
 _vim/plugged/
 _vim/gutentags
 edown.sh
+
+_irssi/config
+_bash_history
+
