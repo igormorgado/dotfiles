@@ -203,7 +203,7 @@ if ${TERM_IS_COLOR} && ( dircolors --help && ls --color ) &> /dev/null; then
 	declare -a POSSIBLE_DIR_COLORS
 	POSSIBLE_DIR_COLORS=("${HOME}/.dir_colors" "/etc/DIR_COLORS")
 	for DIR in "${POSSIBLE_DIR_COLORS[@]}"  ; do
-		[[ -f "${DIR}" ]] && [[ -r "${DIR}" ]] && eval "$( dircolors -b ${DIR})" && break
+		[[ -f "${DIR}" ]] && [[ -r "${DIR}" ]] && dircolors -b "${DIR}"  > ~/.colors.tmp && source ~/.colors.tmp  && break
 	done
 fi
 
