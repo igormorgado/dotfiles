@@ -123,6 +123,7 @@ case $1 in
         rm -rf .config/terminator
         ln -sf ../dotfiles/_config/terminator .config/terminator
         ;;
+	# Update this with ~/.config/user-dirs.dirs (xdg-user-dirs)
     desktop)
         if [ "$(uname)" == "Linux" ]
         then
