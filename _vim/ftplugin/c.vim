@@ -14,5 +14,5 @@ setlocal fileformat=unix
 setlocal encoding=utf-8
 
 " Compiling
-setlocal makeprg=gcc\ % && ./a.out
+setlocal makeprg=gcc\ %\ &&\ ./a.out
 
