@@ -104,7 +104,7 @@ fi
 # I dont think this is necessary, probably just on OSX, if is that case
 # when I need again I will create a darwin test to run this code
 # Gvim if it exists... ftw!
-vim=$( type -P vim )
+#vim=$( type -P vim )
 if [ "${vim}" == "" ]; then
 	vim="gvim -v"
 fi
@@ -115,7 +115,7 @@ export EDITOR="$vim"
 export GIT_EDITOR="$vim"
 
 # Configure nmon
-export NMON=vcmLknNDojt.
+export NMON=vcmknDt.
 
 # CVS Sample
 CVS_RSH=ssh
