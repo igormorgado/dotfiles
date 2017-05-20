@@ -13,6 +13,7 @@ Plug 'mbbill/undotree'
 Plug 'romainl/vim-qf'
 Plug 'romainl/vim-qlist'
 Plug 'tell-k/vim-autopep8'
+Plug 'ivanov/vim-ipython'
 Plug 'tmhedberg/SimpylFold'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
@@ -318,7 +319,7 @@ if executable("ag")
     set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
-let g:gutentags_exclude = ['*.css', '*.html', '*.js']
+let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
 let g:gutentags_cache_dir='~/.vim/gutentags'
 let g:gutentags_project_root=[ 'Makefile', 'setup.py' ]
 "}}}

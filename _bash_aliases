@@ -10,13 +10,23 @@ else
   alias ll="ls -lF"
 fi
 
+# Host aliases
+alias inst1='ssh 104.154.20.1'
+
+
 alias bvim="vim -u ~/.vim/practical.vim"
+alias bespeak="espeak -v pt"
+alias fala='while :; do read LINE; espeak -v pt "${LINE}" 2> /dev/null;done'
 
 alias fload='source ${HOME}/bin/factory'
-alias gp="cd ~/dotfiles; git pull ; cd -"
 
 
+alias dotpull="cd ~/dotfiles; git pull ; cd -"
+alias dotpush="cd ~/dotfiles; git push ; cd -"
 
+alias cggprx='proxy_on 165.225.34.32:80 imorgado'
+
+alias realias='source ~/.bash_aliases'
 
 alias cd=cd_func
 

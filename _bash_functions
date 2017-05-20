@@ -109,8 +109,8 @@ function bash_prompt_command() {
 
 # Solarize me
 function solarized_light() {
-	if [ -f ~/dotfiles/_dir_colors.ansi-light ]; then
-		pushd ~/dotfiles
+	if [ -f "~/dotfiles/_dir_colors.ansi-light" ]; then
+		pushd "~/dotfiles"
 		rm _dir_colors
 		ln -s _dir_colors.ansi-light _dir_colors
 		eval "$(dircolors -b _dir_colors)" 
@@ -120,8 +120,8 @@ function solarized_light() {
 
 
 function solarized_dark(){
-	if [ -f ~/dotfiles/_dir_colors.ansi-dark ]; then
-		pushd ~/dotfiles
+	if [ -f "~/dotfiles/_dir_colors.ansi-dark" ]; then
+		pushd "~/dotfiles"
 		rm _dir_colors
 		ln -s _dir_colors.ansi-dark _dir_colors
 		eval "$(dircolors -b _dir_colors)"
@@ -150,30 +150,31 @@ function cd_func () {
 	local x2 the_new_dir adir index
 	local -i cnt
 
-	if [[ $1 ==  "--" ]]; then
+	if [[ "$1" ==  "--" ]]; then
 		dirs -v
 		return 0
 	fi
 
 	the_new_dir=${1}
-	[[ -z $1 ]] && the_new_dir=$HOME
+	[[ -z "$1" ]] && the_new_dir="${HOME}"
 
-	if [[ ${the_new_dir:0:1} == '-' ]]; then
+	if [[ "${the_new_dir:0:1}" == '-' ]]; then
 		#
 		# Extract dir N from dirs
 		index=${the_new_dir:1}
-		[[ -z $index ]] && index=1
+		[[ -z "${index}" ]] && index=1
 		adir=$(dirs +$index)
-		[[ -z $adir ]] && return 1
+		[[ -z "${adir}" ]] && return 1
 		the_new_dir=$adir
 	fi
 
 	#
 	# '~' has to be substituted by ${HOME}
-	[[ ${the_new_dir:0:1} == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
+	[[ "${the_new_dir:0:1}" == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
 
 	#
 	# Now change to the new dir and add to the top of the stack
+	echo "${the_new_dir}"
 	pushd "${the_new_dir}" > /dev/null
 	[[ $? -ne 0 ]] && return 1
 	the_new_dir=$(pwd)
@@ -187,9 +188,9 @@ function cd_func () {
 	for ((cnt=1; cnt <= 10; cnt++)); do
 		x2=$(dirs +${cnt} 2>/dev/null)
 		[[ $? -ne 0 ]] && return 0
-		[[ ${x2:0:1} == '~' ]] && x2="${HOME}${x2:1}"
+		[[ "${x2:0:1}" == '~' ]] && x2="${HOME}${x2:1}"
 		if [[ "${x2}" == "${the_new_dir}" ]]; then
-			popd -n +$cnt 2>/dev/null 1>/dev/null
+			popd -n +"${cnt}" 2>/dev/null 1>/dev/null
 			cnt=$(( cnt-1 ))
 		fi
 	done
@@ -234,10 +235,12 @@ function create_test_dir() {
 	chmod 755 "${d}/file_ex"
 }
 
+# Commit all files from argument
 function gca() {
 	git commit -a -m "$*"
 }
 
+# Exclude files from ignore list
 function gle() {
 	echo "# Global"
 	[ -f "${HOME}/.config/git/ignore" ] && \
@@ -260,43 +263,54 @@ function proxy_on() {
     export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
 
     if (( "${#}" > 0 )); then
-        valid=$(echo "${@}" | sed -n 's/\([0-9]\{1,3\}.\)\{4\}:\([0-9]\+\)/&/p')
-        if [[ "${valid}" != "${@}" ]]; then
+		local addr=${1}
+		local username=${2}
+		local passwd=${3}
+
+        valid=$(echo "${addr}" | sed -n 's/\([0-9]\{1,3\}.\)\{4\}:\([0-9]\+\)/&/p')
+        if [[ "${valid}" != "${addr}" ]]; then
             >&2 echo "Invalid address"
             return 1
         fi
 
-        export http_proxy="http://$1/"
-        export https_proxy=$http_proxy
-        export ftp_proxy=$http_proxy
-        export rsync_proxy=$http_proxy
-    export HTTP_PROXY=$http_proxy
-    export HTTPS_PROXY=$http_proxy
-    export FTP_PROXY=$http_proxy
-    export RSYNC_PROXY=$http_proxy
-        echo "Proxy environment variable set."
-        return 0
-    fi
+		if [ "${username}" != "" -a "${passwd}" == "" ]; then
+    	    echo -n "Password: "; read -es passwd
 
-	echo "You can pass the proxy data as parameter to function. Anyway..."
-	echo 
-    echo -n "username: "; read username
-    if [[ $username != "" ]]; then
-        echo -n "password: "
-        read -es password
-        local pre="$username:$password@"
-    fi
+			if [ "${passwd}" != "" ]; then
+	    	    local username="${username}:${passwd}@"
+			fi
+    	fi
 
-    echo -n "server: "; read server
-    echo -n "port: "; read port
-    export http_proxy="http://$pre$server:$port/"
-    export https_proxy=$http_proxy
-    export ftp_proxy=$http_proxy
-    export rsync_proxy=$http_proxy
-    export HTTP_PROXY=$http_proxy
-    export HTTPS_PROXY=$http_proxy
-    export FTP_PROXY=$http_proxy
-    export RSYNC_PROXY=$http_proxy
+	else
+		echo "You can pass the proxy data as parameter to function."
+		echo "address user passwd"
+		echo
+		echo "Anyway..."
+		echo 
+	    echo -n "server:port: "; read addr
+		echo -n "username: "; read username
+
+		if [[ "${username}" != "" ]]; then
+    	    echo -n "password: "
+    	    read -es passwd
+    	    local username="${username}:$passwd@"
+			echo
+    	fi
+		
+	fi
+
+	export http_proxy="http://${username}${addr}/"
+	export https_proxy=$http_proxy
+	export ftp_proxy=$http_proxy
+	export rsync_proxy=$http_proxy
+	export HTTP_PROXY=$http_proxy
+	export HTTPS_PROXY=$http_proxy
+	export FTP_PROXY=$http_proxy
+	export RSYNC_PROXY=$http_proxy
+	printf "\nProxy environment variable set.\n"
+	return 0
+
+
 }
 
 function proxy_off(){
