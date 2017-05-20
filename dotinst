@@ -1,6 +1,6 @@
 #!/bin/bash
 
-pushd ${HOME}
+pushd "${HOME}"
 
 # Verify if dir exists
 if [ ! -e "${HOME}/dotfiles" ]; then
@@ -18,7 +18,6 @@ fi
 
 PACKAGES="
 bash-completion
-byobu
 htop
 irssi
 links
@@ -100,8 +99,8 @@ case $1 in
         ln -sf dotfiles/_fonts .fonts
 		ln -sf ~/dotfiles/_fonts ~/.local/share/fonts
         ;;
-    screen)
-        ln -sf dotfiles/_screenrc .screenrc
+    tmux)
+        ln -sf dotfiles/_tmux.conf .tmux.conf
         ;;
     alexandria)
         ln -sf dotfiles/_alexandria .alexandria
@@ -143,7 +142,7 @@ case $1 in
         ;;
 	debpkgs)
 		sudo apt-get update
-		sudo apt-get -f -y --force-yes ${PACKAGES}
+		sudo apt-get -f -y --force-yes "${PACKAGES}"
 		;;
     *)
         echo Options
