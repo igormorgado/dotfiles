@@ -98,12 +98,18 @@ function prevCmd() {
 
 
 function bash_prompt_command() {
+	
     RETVAL="$?"
-	history -a
-	history -c
-	history -r
+	# history -a
+	# history -c
+	# history -r
 	settitle "$(whoami)@$(hostname):$(pwd)"
-    prevCmd=$(prevCmd ${RETVAL})
+	if [ -f /etc/profile.d/vte-2.91.hs ]; then
+		VTE_PWD="$(__vte_osc7)"
+		prevCmd=$(prevCmd ${RETVAL}${VTE_PWD})
+	else
+		prevCmd=$(prevCmd ${RETVAL})
+	fi
 }
 
 
@@ -324,5 +330,51 @@ function proxy_off(){
     unset RSYNC_PROXY
     echo -e "Proxy environment variable removed."
 }
+
+
+function jupstart() {
+	local jdir="${HOME}/Dropbox/nb"
+	local ldir="${jdir}/.log"
+
+	if [ ! -d "${jdir}" ]; then
+		printf "Dir %s doesn't exist. Creating" "${jdir}"
+		mkdir -p "${ldir}"
+	fi
+
+	cd "${jdir}"
+	jupyter-notebook -y --no-browser  > ${ldir}/jupyter.log 2> ${ldir}/jupyter.err &
+	PID=$!
+	echo ${PID} > ${ldir}/jupyter.pid
+
+}
+
+
+function jupstop() {
+	local jdir="${HOME}/Drobbox/nb"
+	local ldir="${jdir}/.log"
+	local pidfile="${ldir}/jupyter.pid"
+
+	if [ -r "${pidfile}" ]; then
+		PID=$(cat ${pidfile} )
+		printf "Killing Jupyter at PID %d" "${PID}"
+		kill ${PID} 
+		sleep 2 && kill -0 ${PID} 2> /dev/null || rm ${pidfile}
+
+	else
+		printf "Could not find pid file or jupyter isn't running. Exiting"
+		return 1
+	fi
+
+}
+
+function cleansys() {
+		sudo apt -y install localepurge deborphan
+		sudo apt -y clean
+		sudo apt -y autoremove
+		sudo apt -y auto-clean
+		dpkg -l | grep ^rc | awk '{ print $2}' | sudo xargs apt purge -y
+		deborphan | sudo xargs apt purge -y
+	}
+
 
 # vim: ft=sh:
