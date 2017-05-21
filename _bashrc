@@ -111,11 +111,10 @@ stty stop undef # to unmap ctrl-s
 # I dont think this is necessary, probably just on OSX, if is that case
 # when I need again I will create a darwin test to run this code
 # Gvim if it exists... ftw!
-#vim=$( basename $( which vim ) )
-#if [ "${vim}" == "" ]; then
-#	vim="gvim -v"
-#fi
-# this is necessary otherwise bash_completion breaks
+#vim=$( type -P vim )
+if [ "${vim}" == "" ]; then
+	vim="gvim -v"
+fi
 #alias vim="${vim}"
 #vim=vim
 
@@ -126,7 +125,11 @@ export EDITOR="vim"
 export GIT_EDITOR="vim"
 
 # Configure nmon
+<<<<<<< HEAD
 export NMON=vcmknt.
+=======
+export NMON=vcmknDt.
+>>>>>>> 11f07c2994a04311cb1b137c5eb8b9d9ecbc6876
 
 # CVS Sample
 CVS_RSH=ssh
