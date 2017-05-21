@@ -33,6 +33,11 @@ if [ "$(tput colors)" -gt 0 ] ; then
 	export     RST=$(tput op)
 fi
 
+
+if [ -f /etc/profile.d/vte-2.91.sh ]; then
+		source /etc/profile.d/vte-2.91.sh
+fi
+
 # Load functions
 if [ -f "${HOME}/.bash_functions" ]; then
 	source "${HOME}/.bash_functions"
@@ -121,7 +126,7 @@ export EDITOR="vim"
 export GIT_EDITOR="vim"
 
 # Configure nmon
-export NMON=vcmLknNDojt.
+export NMON=vcmknt.
 
 # CVS Sample
 CVS_RSH=ssh
