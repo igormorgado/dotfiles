@@ -102,7 +102,7 @@ chatnets = {
   freenode = {
     type = "IRC";
     nick = "__imp__";
-    autosendcmd = "/msg nickserv ghost __imp__ senha; wait 2000; /msg nickserv identify senha; wait 2000";
+    autosendcmd = "/msg nickserv ghost __imp__ senha2; wait 2000; /msg nickserv identify senha2; wait 2000";
   };
 };
 
