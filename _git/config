@@ -1,0 +1,3 @@
+clean = "sed -e 's/password = \"\(.*\)\";/password = \"<PASSWORD>\";/' -e 's/ghost __imp__ [^;]*;/ghost __imp__ <PASSWORD>;/' -e 's/identify [^;]*;/identify <PASSWORD>;/' " 
+
+
