@@ -72,7 +72,6 @@ case $1 in
         ;;
     git)
         ln -sf dotfiles/_gitconfig .gitconfig
-        ln -sf dotfiles/_git .git
         ;;
     bash|bashrc|shell)
 		ln -sf dotfiles/bin bin
