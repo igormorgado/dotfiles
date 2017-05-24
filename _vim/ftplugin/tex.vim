@@ -1,8 +1,6 @@
 " 
 filetype indent on
 
-let g:tex_flavor='latex'
-
 " Line wrap
 setlocal nowrap
 setlocal nolinebreak
@@ -22,7 +20,7 @@ setlocal encoding=utf-8
 setlocal iskeyword+=:
 setlocal grepprg=grep\ -nH\ $*
 setlocal makeprg=pdflatex\ %
-augroup latexsave
-    au BufWritePost * :silent make | redraw!
-augroup END
+" augroup latexsave
+"     au BufWritePost * :silent make | redraw!
+" augroup END
 
