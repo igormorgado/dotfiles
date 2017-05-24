@@ -10,6 +10,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
+Plug 'vim-latex/vim-latex'
 Plug 'romainl/vim-qf'
 Plug 'romainl/vim-qlist'
 Plug 'tell-k/vim-autopep8'
