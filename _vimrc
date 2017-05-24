@@ -315,6 +315,8 @@ endif
 " Plugins {{{
 " ======================================================================
 
+let g:tex_flavor = "latex" 
+
 if executable("ag")
     set grepprg=ag\ --nogroup\ --nocolor\ --ignore-case\ --column
     set grepformat=%f:%l:%c:%m,%f:%l:%m
