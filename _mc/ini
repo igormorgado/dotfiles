@@ -5,7 +5,7 @@ shell_patterns=1
 auto_save_setup=1
 preallocate_space=0
 auto_menu=0
-use_internal_view=1
+use_internal_view=0
 use_internal_edit=0
 clear_before_exec=1
 confirm_delete=1
@@ -14,7 +14,7 @@ confirm_execute=0
 confirm_history_cleanup=1
 confirm_exit=0
 confirm_directory_hotlist_delete=1
-safe_delete=1
+safe_delete=0
 mouse_repeat_rate=100
 double_click_speed=250
 use_8th_bit_as_meta=0
@@ -82,6 +82,8 @@ editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
 ignore_ftp_chattr_errors=true
 
+editor_state_full_filename=1
+
 [Layout]
 message_visible=1
 keybar_visible=1
@@ -110,10 +112,12 @@ clipboard_paste=
 
 [Colors]
 base_color=
-xterm=
+xterm-256color=
 color_terminals=
 
-xterm-256color=
+screen=
+
+cygwin=
 
 screen-256color=
 
@@ -139,6 +143,8 @@ quick_search_mode=2
 select_flags=6
 
 simple_swap=false
+
+panel_scroll_center=false
 
 [Panelize]
 Find *.orig after patching=find . -name \\*.orig -print
