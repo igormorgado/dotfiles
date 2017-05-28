@@ -27,6 +27,8 @@ alias fload='source ${HOME}/bin/factory'
 alias dotpull="cd ~/dotfiles; git pull ; cd -"
 alias dotpush="cd ~/dotfiles; git push ; cd -"
 
+alias gplog="git log --oneline --graph --decorate --all"
+
 alias cggprx='proxy_on 165.225.34.32:80 imorgado'
 
 alias realias='source ~/.bash_aliases'

@@ -21,6 +21,8 @@
 # would be benifitial to all, please feel free to send
 # a patch to the cygwin mailing list.
 
+
+
 # the following line is actually
 # equivalent to "\C-?": delete-char
 "\e[3~": delete-char
@@ -84,3 +86,22 @@ $if Bash
   Space: magic-space
 $endif
 
+# VI FTW
+set editing-mode vi
+
+set keymap vi-command
+set keymap vi-insert
+
+set menu-complete-display-prefix on
+
+# Edit options before rerunning previous command, eg: ls a b c -> ls -al a b c
+"\C-o": "\e-0eli "
+
+# Cycle thru completions.
+"\C-a": menu-complete
+
+# glob patterns without executing, eg: 'rm *x'
+"\C-e": glob-expand-word
+
+# Two escapes clear command line. (Use C-c or \eC\eC instead)
+"\e\e": "\e0\C-ki"

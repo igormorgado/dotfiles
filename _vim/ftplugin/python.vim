@@ -21,14 +21,14 @@ setlocal encoding=utf-8
 let python_hightlight_all = 1
 
 " Folding
-setlocal foldmethod=expr
-let g:SimpylFold_fold_import = 0
+"setlocal foldmethod=expr
+let g:SimpylFold_fold_import = 1
 let g:SimpylFold_docstring_preview = 1
 let g:SimpylFold_fold_docstring = 0
 
 augroup filetype_python
 	autocmd!
-	autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
+	autocmd BufWinEnter *.py setlocal foldmethod=expr
 	autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 augroup END
 
