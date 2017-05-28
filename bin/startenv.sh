@@ -15,7 +15,6 @@ cvs
 exuberant-ctags
 fdupes
 git
-git
 libtool
 m4
 make
@@ -25,10 +24,10 @@ pkg-config
 python3-pip
 subversion
 vim
-virtualenv
+python3-virtualenv
 "
-sudo apt-get update
-sudo apt-get -y -f --force-yes install ${PACKAGES}
+sudo apt update
+sudo apt -y -f install ${PACKAGES}
 
 
 # git clone dotfiles at $HOME
