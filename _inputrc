@@ -21,6 +21,7 @@
 # would be benifitial to all, please feel free to send
 # a patch to the cygwin mailing list.
 
+# TO leanr more : man readline
 
 
 # the following line is actually
@@ -88,11 +89,16 @@ $endif
 
 # VI FTW
 set editing-mode vi
-
 set keymap vi-command
 set keymap vi-insert
 
-set menu-complete-display-prefix on
+$if mode=vi
+
+set keymap vi-command
+Control-l: clear-screen
+
+set keymap vi-insert
+Control-l: clear-screen
 
 # Edit options before rerunning previous command, eg: ls a b c -> ls -al a b c
 "\C-o": "\e-0eli "
@@ -103,5 +109,11 @@ set menu-complete-display-prefix on
 # glob patterns without executing, eg: 'rm *x'
 "\C-e": glob-expand-word
 
-# Two escapes clear command line. (Use C-c or \eC\eC instead)
-"\e\e": "\e0\C-ki"
+# Three escapes clear command line. (Use C-c or \eC\eC instead)
+"\e\e\e": "\e0\C-ki"
+
+$endif
+
+
+set menu-complete-display-prefix on
+
