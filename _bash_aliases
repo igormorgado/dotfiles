@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 if ${COLOR_ENVIRONMENT}; then
   alias dir='ls --color=auto --format=vertical'
   alias ls="ls --color=auto"
@@ -9,6 +10,8 @@ else
   alias ls="ls -F"
   alias ll="ls -lF"
 fi
+
+alias wsz='echo "(${LINES}, ${COLUMNS})"'
 
 # Host aliases
 alias inst1='ssh 104.154.20.1'

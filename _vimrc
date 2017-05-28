@@ -10,6 +10,7 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'mbbill/undotree'
+Plug 'vim-latex/vim-latex'
 Plug 'romainl/vim-qf'
 Plug 'romainl/vim-qlist'
 Plug 'tell-k/vim-autopep8'
@@ -313,6 +314,8 @@ endif
 
 " Plugins {{{
 " ======================================================================
+
+let g:tex_flavor = "latex" 
 
 if executable("ag")
     set grepprg=ag\ --nogroup\ --nocolor\ --ignore-case\ --column
