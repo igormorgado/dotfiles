@@ -92,7 +92,7 @@ set editing-mode vi
 set keymap vi-command
 set keymap vi-insert
 
-menu-complete-display-prefix on
+set menu-complete-display-prefix on
 
 # Edit options before rerunning previous command, eg: ls a b c -> ls -al a b c
 "\C-o": "\e-0eli "
