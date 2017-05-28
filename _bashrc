@@ -1,4 +1,4 @@
-# If not running interactively, don't do anything
+# Inf not running interactively, don't do anything
 case $- in
 	*i*) ;;
 	*) return ;;
@@ -31,6 +31,11 @@ if [ "$(tput colors)" -gt 0 ] ; then
 	export   WHITE=$(tput bold; tput setaf 7)
 	export    CRST=$(tput sgr0 )
 	export     RST=$(tput op)
+fi
+
+
+if [ -f /etc/profile.d/vte-2.91.sh ]; then
+		source /etc/profile.d/vte-2.91.sh
 fi
 
 # Load functions
@@ -69,7 +74,11 @@ shopt -s histappend
 shopt -s cmdhist
 
 # One day I will return to vim mode
-set -o emacs
+#set -o emacs
+# That day has come!
+set -o vi
+#set editing-mode vi
+#set keymap vi-command
 
 # Enable notifications of running jobs
 set -o notify
@@ -120,7 +129,7 @@ export EDITOR="vim"
 export GIT_EDITOR="vim"
 
 # Configure nmon
-export NMON=vcmknDt.
+export NMON=vcmknt.
 
 # CVS Sample
 CVS_RSH=ssh

@@ -8,14 +8,19 @@ set nocompatible
 filetype off
 call plug#begin('~/.vim/plugged')
 
+" https://github.com/ludovicchabant/vim-gutentags
 Plug 'ludovicchabant/vim-gutentags'
-Plug 'mbbill/undotree'
+
+"Plug 'mbbill/undotree'
+
+" http://vim-latex.sourceforge.net/
 Plug 'vim-latex/vim-latex'
+
+" https://github.com/romainl/vim-qf
 Plug 'romainl/vim-qf'
+" https://github.com/romainl/vim-qlist
 Plug 'romainl/vim-qlist'
-Plug 'tell-k/vim-autopep8'
-Plug 'ivanov/vim-ipython'
-Plug 'tmhedberg/SimpylFold'
+
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-commentary'
@@ -31,12 +36,18 @@ augroup readMarkdown
 augroup END
 let g:markdown_fenced_langagues = ['html', 'python','bash=sh','c']
 
-" Plug 'tpope/vim-vinegar'
-" let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+Plug 'tpope/vim-vinegar'
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 
 Plug 'tpope/vim-rhubarb'
 
 Plug 'tpope/vim-obsession'
+"
+"FOR PYTHON
+Plug 'tell-k/vim-autopep8'
+Plug 'ivanov/vim-ipython'
+Plug 'tmhedberg/SimpylFold'
+
 
 " Themes
 Plug 'romainl/flattened'
