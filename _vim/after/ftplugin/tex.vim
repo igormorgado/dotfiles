@@ -1,3 +1,10 @@
 call IMAP (g:Tex_Leader.'u', "u_{<++>}^{<++>}<++>", 'tex')
 call IMAP (g:Tex_Leader.'P', '\langle <++>, <++> \rangle <++>', 'tex')
+call IMAP ('NN', '\mathbb{Z} ', 'tex')
+call IMAP ('ZZ', '\mathbb{Z} ', 'tex')
+call IMAP ('QQ', '\mathbb{Z} ', 'tex')
+call IMAP ('RR', '\mathbb{R} ', 'tex')
+call IMAP ('CC', '\mathbb{C} ', 'tex')
+call IMAP ('<<', '\langle <++> \rangle <++> ', 'tex')
+call IMAP ('||', '\left| <++> \right| <++>', 'tex')
 
