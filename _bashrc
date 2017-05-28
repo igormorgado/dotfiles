@@ -1,4 +1,4 @@
-# If not running interactively, don't do anything
+# Inf not running interactively, don't do anything
 case $- in
 	*i*) ;;
 	*) return ;;
@@ -74,7 +74,11 @@ shopt -s histappend
 shopt -s cmdhist
 
 # One day I will return to vim mode
-set -o emacs
+#set -o emacs
+# That day has come!
+set -o vi
+#set editing-mode vi
+#set keymap vi-command
 
 # Enable notifications of running jobs
 set -o notify
