@@ -137,7 +137,7 @@ CVSROOT=:ext:imorgado@HOSTNAME:/PATH
 export CVS_RSH CVSROOT
 
 # MC settings
-export MC_SKIN=$HOME/.mc/solarized.ini
+export MC_SKIN=$HOME/.config/mc/solarized.ini
 
 XML_CATALOG_FILES="${HOME}/Dropbox/xml/catalog /etc/xml/catalog"
 export XML_CATALOG_FILES
