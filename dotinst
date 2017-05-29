@@ -70,6 +70,9 @@ case $1 in
     subversion|svn)
         ln -sf dotfiles/_subversion .subversion
         ;;
+    todo)
+        ln -sf dotfiles/_todo .todo
+        ;;
     git)
         ln -sf dotfiles/_gitconfig .gitconfig
         ;;
@@ -114,9 +117,9 @@ case $1 in
         fi
         ;;
     mc)
+		mkdir -p .config
         rm -rf .config/mc .mc
-        ln -sf dotfiles/_mc .mc
-        ln -sf ../dotfiles/_mc .config/mc
+        ln -sf dotfiles/_config/mc .config/mc
         ;;
     term)
         rm -rf .config/terminator
@@ -146,18 +149,7 @@ case $1 in
 		;;
     *)
         echo Options
-        echo "   bash|shell|bashrc"
-        echo "   fonts"
-        echo "   debpkgs"
-        echo "   git"
-        echo "   mutt"
-        echo "   python"
-        echo "   screen"
-        echo "   ssh"
-        echo "   subversion|svn"
-        echo "   vim|vi"
-        echo "   mc"
-        echo "   desktop"
+		cat dotfiles/$0 | grep "^[| a-zA-Z0-9]*)$" | tr -d " )" | tr "|" "\n" | sed 's/^/\t/g'
         ;;
 esac
 

@@ -42,12 +42,13 @@ let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
 Plug 'tpope/vim-rhubarb'
 
 Plug 'tpope/vim-obsession'
-"
+".
 "FOR PYTHON
 Plug 'tell-k/vim-autopep8'
 Plug 'ivanov/vim-ipython'
 Plug 'tmhedberg/SimpylFold'
 
+Plug 'freitass/todo.txt-vim' 
 
 " Themes
 Plug 'romainl/flattened'
@@ -103,6 +104,7 @@ endif
 " Basic Settings {{{
 " ==========================================================
 let mapleader=" "
+let maplocalleader=" "
 
 " Composing
 set undolevels=1000
