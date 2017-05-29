@@ -11,6 +11,7 @@ else
   alias ll="ls -lF"
 fi
 
+alias t=todo-txt
 alias wsz='echo "(${LINES}, ${COLUMNS})"'
 
 # Host aliases
