@@ -41,9 +41,9 @@ statusbar+="${d} "
 checkidle_status="/var/run/checkidle/status" 
 if [ -r "${checkidle_status}" ]; then
 	CI=( $( cat ${checkidle_status} ) )
+	printf -v c "%s,%s(%s)" "${CI[1]}" "${CI[2]}" "${CI[3]}"
+	statusbar+="${c} "
 fi
-printf -v c "%s,%s(%s)" "${CI[1]}" "${CI[2]}" "${CI[3]}"
-statusbar+="${c} "
 
 ##############################
 # Load average
