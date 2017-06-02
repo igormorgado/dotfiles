@@ -1,11 +1,54 @@
 #!/bin/bash
-checkidle_status="/var/run/checkidle/status" 
 
+statusbar=""
+
+##############################
+# DROPBOX
+dstatus=$( dropbox status | head -n1 | tr "[:upper:]" "[:lower:]")
+case "${dstatus}" in
+	connec*)
+		d="."
+		;;
+	star*)
+		d="o"
+		;;
+	sync*)
+		d="@"
+		;;
+	index*)
+		d="i"
+		;;
+	"up to date")
+		d="O"
+		;;
+	upload*)
+		d="^"
+		;;
+	downlo*)
+		d="v"
+		;;
+	*running*)
+		d="X"
+		;;
+	*)
+		d="${dstatus}"
+		;;
+esac
+statusbar+="${d} "
+
+##############################
+# Check IDLE
+checkidle_status="/var/run/checkidle/status" 
 if [ -r "${checkidle_status}" ]; then
 	CI=( $( cat ${checkidle_status} ) )
 fi
+printf -v c "%s,%s(%s)" "${CI[1]}" "${CI[2]}" "${CI[3]}"
+statusbar+="${c} "
 
-printf -v statusbar "%s,%s(%s)" "${CI[1]}" "${CI[2]}" "${CI[3]}"
-printf -v statusbar "%s %s" "${statusbar}" "$( cut -d " " -f 1-3 /proc/loadavg )"
+##############################
+# Load average
+l=$( cut -d " " -f 1-3 /proc/loadavg )
+statusbar+="${l} "
 
-echo $statusbar
+
+echo "${statusbar}"
