@@ -27,15 +27,13 @@ runfile="status"
 ######################################################################
 # TODO:
 # - Add conf file at /etc
-# - Add control files on /var/run/service  to be accessed by externalapps
-#   similar to a /proc/sys  standard
 # - Add logged users monitoring (users idle time is possible?)
 # How to get this IDLE counter?:
 #  USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
 #  igormorg pts/1    186.205.163.49   21:02    8.00s  0.08s  0.08s -bash
 # - Make thresholds be based on a unit as (packets/s loadavg/m, etc.
 #   that way no matter if the interval is 10 or 2000 it will scale for it.
-#   Change reset to -shutdown time since it will count the same tiem again...
+# Remove all GLOBALS and make it a class)
 
 
 
