@@ -17,19 +17,11 @@ setlocal softtabstop=2
 setlocal foldmethod=syntax
 setlocal foldnestmax=10
 setlocal foldlevel=4
-=======
-
-" Ident
-setlocal autoindent
-setlocal cindent
->>>>>>> 62abe374e8864a635576ce9598ae479c73cf3c94
 
 " File format
 setlocal fileformat=unix
 setlocal encoding=utf-8
 
-<<<<<<< HEAD
-setlocal makeprg=gcc\ %
 
 augroup filetype_c
 	autocmd!
@@ -42,8 +34,7 @@ augroup filetype_c
 	" autocmd BufWinLeave *.c setlocal foldexpr< foldmethod<
 augroup END
 
-=======
 " Compiling
 setlocal makeprg=gcc\ %\ &&\ ./a.out
->>>>>>> 62abe374e8864a635576ce9598ae479c73cf3c94
+" setlocal makeprg=gcc\ %
 
