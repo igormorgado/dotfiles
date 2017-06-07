@@ -28,8 +28,8 @@ augroup filetype_c
     au BufWinEnter *.c compiler gcc
     au BufWinEnter *.c imap <buffer> <F5> <ESC>:w <bar> :make <CR>:!./a.out<CR> 
     au BufWinEnter *.c nmap <buffer> <F5> :w <bar> :make<CR>:!./a.out<CR>
-    au BufWinLeave *.c unnmap <buffer> <F5>
-    au BufWinLeave *.c unimap <buffer> <F5>
+    au BufWinLeave *.c nunmap <buffer> <F5>
+    au BufWinLeave *.c iunmap <buffer> <F5>
 	" autocmd BufWinEnter *.c setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
 	" autocmd BufWinLeave *.c setlocal foldexpr< foldmethod<
 augroup END
