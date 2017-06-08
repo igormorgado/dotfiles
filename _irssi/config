@@ -107,10 +107,12 @@ chatnets = {
 };
 
 channels = (
-  { name = "#vim"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#python"; chatnet = "freenode"; autojoin = "yes"; }
-  { name = "#bash"; chatnet = "freenode"; autojoin = "yes"; }
+  { name = "#algorithms"; chatnet = "freenode"; autojoin = "yes"; },
   { name = "##C"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#python"; chatnet = "freenode"; autojoin = "yes"; }
+  { name = "#vim"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#tmux"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#bash"; chatnet = "freenode"; autojoin = "yes"; }
   { name = "#linux"; chatnet = "freenode"; autojoin = "yes"; },
 );
 
