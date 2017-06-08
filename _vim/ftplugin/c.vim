@@ -17,33 +17,24 @@ setlocal softtabstop=2
 setlocal foldmethod=syntax
 setlocal foldnestmax=10
 setlocal foldlevel=4
-=======
-
-" Ident
-setlocal autoindent
-setlocal cindent
->>>>>>> 62abe374e8864a635576ce9598ae479c73cf3c94
 
 " File format
 setlocal fileformat=unix
 setlocal encoding=utf-8
 
-<<<<<<< HEAD
-setlocal makeprg=gcc\ %
 
 augroup filetype_c
 	autocmd!
     au BufWinEnter *.c compiler gcc
     au BufWinEnter *.c imap <buffer> <F5> <ESC>:w <bar> :make <CR>:!./a.out<CR> 
     au BufWinEnter *.c nmap <buffer> <F5> :w <bar> :make<CR>:!./a.out<CR>
-    au BufWinLeave *.c unnmap <buffer> <F5>
-    au BufWinLeave *.c unimap <buffer> <F5>
+    au BufWinLeave *.c nunmap <buffer> <F5>
+    au BufWinLeave *.c iunmap <buffer> <F5>
 	" autocmd BufWinEnter *.c setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
 	" autocmd BufWinLeave *.c setlocal foldexpr< foldmethod<
 augroup END
 
-=======
 " Compiling
 setlocal makeprg=gcc\ %\ &&\ ./a.out
->>>>>>> 62abe374e8864a635576ce9598ae479c73cf3c94
+" setlocal makeprg=gcc\ %
 
