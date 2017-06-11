@@ -136,11 +136,11 @@ set wildignorecase
 
 " File handling
 set backup
-set backupdir=~/.tmp,~/tmp
+set backupdir=~/.tmp/vim,~/tmp/vim
 set swapfile
-set directory=~/.tmp,~/tmp
+set directory=~/.tmp/vim,~/tmp/vim
 set undofile
-set undodir=~/.tmp,~/tmp
+set undodir=~/.tmp/vim,~/tmp/vim
 set writebackup
 set path=.,**
 
@@ -168,10 +168,10 @@ set tags=.tags;tags;${HOME}
 
 nnoremap <ESC><ESC><ESC> :q<CR>
 " ctrl-jklm  changes to that split
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
-nnoremap <c-h> <c-w>h
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
 " nnoremap <c-J> <c-w>J
 " nnoremap <c-K> <c-w>K
 " nnoremap <c-L> <c-w>L
@@ -336,7 +336,7 @@ if executable("ag")
 endif
 
 let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
-let g:gutentags_cache_dir='~/.vim/gutentags'
+let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
 let g:gutentags_project_root=[ 'Makefile', 'setup.py' ]
 "}}}
 
