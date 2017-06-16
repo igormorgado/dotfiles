@@ -50,6 +50,10 @@ Plug 'tmhedberg/SimpylFold'
 
 Plug 'freitass/todo.txt-vim' 
 
+Plug 'christoomey/vim-tmux-navigator'
+let g:tmux_navigator_save_on_switch = 2
+let g:tmux_navigator_disable_when_zoomed = 1
+
 " Themes
 Plug 'romainl/flattened'
 Plug 'vim-scripts/Sift'
@@ -65,8 +69,8 @@ call plug#end()
 if has("gui_running")
     set guioptions-=m
     set guioptions-=T
-    set mouse=a
 endif
+set mouse=a
 
 " Some colors
 set listchars=tab:>\ ,eol:¬

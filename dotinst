@@ -26,6 +26,7 @@ mutt
 ncdu
 pastebinit
 tmux
+tmux-plugin-manager
 vim-nox
 mlocate
 gperf
@@ -69,7 +70,8 @@ case $1 in
         ln -sf dotfiles/_bash_history .bash_history
         ln -sf dotfiles/_bash_logout  .bash_logout
         ln -sf dotfiles/_bash_profile .bash_profile
-        ln -sf dotfiles/_bash_python  .bash_python
+		ln -sf dotfiles/_bash_python  .bash_python
+        ln -sf dotfiles/_bash_tmux  .bash_tmux
         ln -sf dotfiles/_dir_colors .dir_colors
         ln -sf dotfiles/_inputrc .inputrc
         ln -sf dotfiles/_profile .profile
@@ -88,6 +90,7 @@ case $1 in
 		ln -sf ~/dotfiles/_fonts ~/.local/share/fonts
         ;;
     tmux)
+        ln -sf dotfiles/_tmux .tmux
         ln -sf dotfiles/_tmux.conf .tmux.conf
         ;;
     alexandria)

@@ -283,6 +283,7 @@ addrunpath "${HOME}"/lib
 loadresource ~/.local/bin/factory
 loadresource ~/.bash_aliases
 loadresource ~/.bash_python
+loadresource ~/.bash_tmux
 loadresource ~/.bash_nda
 loadresource ~/.fzf.bash
 
