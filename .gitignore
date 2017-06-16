@@ -28,3 +28,4 @@ _vim/gutentags
 edown.sh
 _vim/.netrwhist
 _irssi/logs/
+_tmux/resurrect/*

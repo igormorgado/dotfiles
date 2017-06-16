@@ -47,8 +47,8 @@ fi
 
 ##############################
 # Load average
-l=$( cut -d " " -f 1-3 /proc/loadavg )
-statusbar+="${l} "
+#l=$( cut -d " " -f 1-3 /proc/loadavg )
+#statusbar+="${l} "
 
 
 echo "${statusbar}"
