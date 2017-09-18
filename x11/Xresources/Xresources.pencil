@@ -1,0 +1,23 @@
+#if defined(PENCIL_LIGHT) || defined(PENCIL_DARK)
+
+#if !defined(PENCIL_LIGHT) && !defined(PENCIL_DARK)
+#define PENCIL_DARK
+#elif defined(PENCIL_LIGHT) && defined(PENCIL_DARK)
+#undef PENCIL_LIGHT
+#endif
+
+#include "Xresources.pencil_colors"
+#include "Xresources.pencil_rebase"
+
+#if   defined(PENCIL_DARK)
+#include "Xresources.pencil_dark"
+#elif defined(PENCIL_LIGHT)
+#include "Xresources.pencil_light"
+#endif
+
+#include "Xresources.pencil_XTerm" 
+#include "Xresources.pencil_UXTerm" 
+
+#endif
+
+

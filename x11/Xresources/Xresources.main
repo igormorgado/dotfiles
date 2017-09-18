@@ -1,0 +1,17 @@
+#define SOLARIZED_DARK
+
+!! ###################################################
+!! Configuration <COLOR RELATED>
+!! ###################################################
+
+#include "Xresources.solarized"
+#include "Xresources.pencil"
+
+
+!! ###################################################
+!! Configuration <NOT COLOR RELATED>
+!! ###################################################
+#include "Xresources.Term" 
+#include "Xresources.XTerm" 
+#include "Xresources.UXTerm" 
+

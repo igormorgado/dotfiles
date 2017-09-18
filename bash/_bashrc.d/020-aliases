@@ -1,0 +1,108 @@
+#!/usr/bin/env bash
+if ${COLOR_ENVIRONMENT}; then
+  alias dir='ls --color=auto --format=vertical'
+  alias ls="ls --color=auto"
+  alias ll="ls --color=auto -l"
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+else
+  alias ls="ls -F"
+  alias ll="ls -lF"
+fi
+
+alias dropstart="DISPLAY= dropbox start"
+
+alias start="sudo systemctl start"
+alias stop="sudo systemctl stop"
+alias restart="sudo systemctl restart"
+alias status="sudo systemctl status"
+
+alias shutc="sudo shutdown -c"
+alias t=todo-txt
+alias wsz='echo "(${LINES}, ${COLUMNS})"'
+alias tb="nc termbin.com 9999"
+alias pb="pastebinit -b paste.ubuntu.com"
+
+# Host aliases
+alias inst1='ssh 104.154.20.1'
+
+
+alias bvim="vim -u ~/.vim/practical.vim"
+alias bespeak="espeak -v pt"
+alias fala='while :; do read LINE; espeak -v pt "${LINE}" 2> /dev/null;done'
+
+alias fload='source ${HOME}/bin/factory'
+
+
+alias dotpull="cd ~/dotfiles; git pull ; cd -"
+alias dotpush="cd ~/dotfiles; git push ; cd -"
+
+alias gplog="git log --oneline --graph --decorate --all"
+
+alias cggprx='proxy_on 165.225.34.32:80 imorgado'
+
+alias realias='source ~/.bash_aliases'
+
+alias cd=cd_func
+
+alias less='less -r'                          # raw control characters
+alias whence='type -a'                        # where, of a sort
+
+
+# Command aliases
+
+# do not delete / or prompt if deleting more than 3 files at a time #
+alias rm='rm -I --preserve-root'
+ 
+# confirmation #
+alias mv='mv -i'
+alias cp='cp -i'
+alias ln='ln -i'
+  
+# Parenting changing perms on / #
+alias chown='chown --preserve-root'
+alias chmod='chmod --preserve-root'
+alias chgrp='chgrp --preserve-root'
+
+# All of our servers eth0 is connected to the Internets via vlan / router etc  ##
+alias dnstop='dnstop -l 5  eth0'
+alias vnstat='vnstat -i eth0'
+alias iftop='iftop -i eth0'
+alias tcpdump='tshark -i eth0'
+alias tshark='tshark -i eth0'
+alias ethtool='ethtool eth0'
+ 
+# work on wlan0 by default #
+# Only useful for laptop as all servers are without wireless interface
+alias iwconfig='iwconfig wlan0'
+
+alias iotop='iotop'
+
+## pass options to free ## 
+alias meminfo='free -m -l -t'
+ 
+## get top process eating memory
+alias psmem='ps auxf | sort -nr -k 4'
+alias psmem10='ps aux | sort -nr -k 4 | head -10'
+ 
+## get top process eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3'
+alias pscpu10='ps aux | sort -nr -k 3 | head -10'
+ 
+## Get server cpu info ##
+alias cpuinfo='lscpu'
+ 
+## older system use /proc/cpuinfo ##
+##alias cpuinfo='less /proc/cpuinfo' ##
+ 
+## get GPU ram on desktop / laptop## 
+alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+
+# For environments with bad apt sources
+alias apt-get='apt-get --force-yes -y' 
+
+alias whome='cd /c/Users/morga'
+alias cyg-get="/c/root/setup -q -P"
+
+# vim: ft=sh:

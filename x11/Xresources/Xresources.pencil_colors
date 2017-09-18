@@ -1,0 +1,30 @@
+! -- Pencil -------------------------------------------------------- {{{
+!
+!   A color scheme inspired by iA Writer
+!   <https://github.com/reedes/vim-colors-pencil>
+!
+! }}}
+
+! -- Colors -------------------------------------------------------- {{{
+
+! Defined Pencil colorspace (16 colors)
+
+#define black		#212121
+#define light_black	#424242
+!#define red		#c30771      
+#define red		#c3063c
+#define pink		#fb007a
+#define dark_green	#10a778
+#define light_green	#5fd7af	
+#define dark_yellow	#a89c14
+#define yellow		#f3e430
+#define dark_blue	#008ec4
+#define blue		#20bbfc
+#define dark_purple 	#523c79
+#define purple		#6855de
+#define dark_cyan	#20a5ba
+#define light_cyan	#4fb8cc
+#define light_gray	#d9d9d9
+#define white		#f1f1f1
+
+

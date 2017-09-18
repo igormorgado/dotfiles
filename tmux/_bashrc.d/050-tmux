@@ -1,0 +1,130 @@
+#!/bin/bash 
+
+function tmpdf() {
+	if [ -n "${TMUX}" ]; then
+		tmux splitw -d -h -p 65
+		tmux splitw -d -v -p 53
+		tmux selectp -R
+		tmux splitw    -h
+		tmux splitw	  -v
+		tmux selectp -L
+	else
+		echo "TMUX not running"
+	fi
+}
+
+
+function tmt() {
+	if [ -n "${TMUX}" ]; then
+		mincolsz=80
+		minlinsz=24
+
+		ncol=$((COLUMNS/mincolsz))
+		colsz=$((COLUMNS/ncol))
+
+		nlin=$((LINES/minlinsz))
+		linsz=$((LINES/nlin))
+
+		for ((j=1;j<ncol;j++)); do
+			${DEBUG} tmux split-window -d -h -l $colsz
+		done
+
+		for ((j=0;j<ncol;j++)); do
+			for ((i=1;i<nlin;i++)); do
+				${DEBUG} tmux split-window -d -v -l $linsz
+			done
+			${DEBUG} tmux select-pane -R
+		done
+		${DEBUG} tmux select-pane -t 0
+	else
+		echo "TMUX not running"
+	fi
+}
+
+function tm212() {
+	if [ -n "${TMUX}" ]; then
+		if [ "${COLUMNS}" -lt 239 ] || [ "${LINES}" -lt 50 ]; then
+			echo "Not enough Screen (need bigger than 239x50)"
+		else
+			[ -z "${TMUX}" ] && tmux new-session -d "2x3"
+			tmux split-window -h
+			tmux select-pane -L
+			tmux resize-pane -x 80
+			tmux split-window -v
+			tmux select-pane -R
+			tmux split-window -h
+			tmux split-window -v
+			tmux resize-pane -x 80
+			tmux select-pane -L
+			[ -z "${TMUX}" ] && tmux -2 attach-session -d 
+		fi
+	else
+		echo "TMUX not running"
+	fi
+}
+
+function tm2x3() {
+	if [ -n "${TMUX}" ]; then
+		if [ "${COLUMNS}" -lt 239 ] || [ "${LINES}" -lt 50 ]; then
+			echo "Not enough Screen (need bigger than 239x50)"
+		else
+			[ -z "${TMUX}" ] && tmux new-session -d "2x3"
+			tmux split-window -h
+			tmux select-pane -L
+			tmux resize-pane -x 80
+			tmux split-window -v
+			tmux select-pane -R
+			tmux split-window -h
+			tmux split-window -v
+			tmux resize-pane -x 80
+			tmux select-pane -L
+			tmux split-window -v
+			tmux resize-pane -y 24
+			tmux select-pane -U
+			[ -z "${TMUX}" ] && tmux -2 attach-session -d 
+		fi
+	else
+		echo "TMUX not running"
+	fi
+}
+
+function tm2x2() {
+	if [ -n "${TMUX}" ]; then
+		if [ "${COLUMNS}" -lt 162 ] || [ "${LINES}" -lt 50 ]; then
+			echo "Not enough COLUMNS (need bigger than 162)"
+		else
+			[ -z "${TMUX}" ] && tmux new-session -d "2x2"
+			tmux split-window -h
+			tmux select-pane -L
+			tmux resize-pane -x 80
+			tmux split-window -v
+			tmux select-pane -R
+			tmux split-window -v
+			tmux select-pane -U
+
+			[ -z "${TMUX}" ] && tmux -2 attach-session -d 
+		fi
+	else
+		echo "TMUX not running"
+	fi
+}
+
+
+
+function tm21() {
+	if [ -n "${TMUX}" ]; then
+		if [ "${COLUMNS}" -lt 160 ] || [ "${LINES}" -lt 50 ]; then
+			echo "Not enough COLUMNS (need bigger than 160)"
+		else
+			[ -z "${TMUX}" ] && tmux new-session -d "2x3"
+			tmux split-window -h
+			tmux select-pane -L
+			tmux resize-pane -x 80
+			tmux split-window -v
+			tmux select-pane -R
+			[ -z "${TMUX}" ] && tmux -2 attach-session -d 
+		fi
+	else
+		echo "TMUX not running"
+	fi
+}

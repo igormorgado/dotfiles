@@ -1,0 +1,359 @@
+" ======================================================================
+" VIM
+" ======================================================================
+
+" Plugins {{{
+" ======================================================================
+set nocompatible
+filetype off
+call plug#begin('~/.vim/plugged')
+
+
+Plug 'igormorgado/vim-tbone'
+Plug 'kshenoy/vim-signature'
+Plug 'romainl/flattened'
+Plug 'romainl/vim-qf'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+
+Plug 'tpope/vim-flagship'
+set laststatus=2
+set showtabline=2
+set guioptions-=e
+
+Plug 'tpope/vim-markdown'
+augroup readMarkdown
+    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
+    autocmd BufNewFile,BufReadPost *.md set conceallevel=2
+augroup END
+let g:markdown_fenced_langagues = ['html', 'python','bash=sh','c']
+
+Plug 'tpope/vim-vinegar'
+let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+
+if v:version > 740
+ Plug 'ludovicchabant/vim-gutentags'
+ let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
+ let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
+ let g:gutentags_project_root=[ 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
+endif
+
+Plug 'christoomey/vim-tmux-navigator'
+let g:tmux_navigator_save_on_switch = 2
+let g:tmux_navigator_disable_when_zoomed = 1
+
+
+" FOR PYTHON
+Plug 'davidhalter/jedi-vim'
+let g:jedi#use_splits_not_buffers = "bottom"
+" let g:jedi#use_tabs_not_buffers = 1
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#popup_select_first = 0
+" let g:jedi#show_call_signatures = "1"
+
+Plug 'tmhedberg/SimpylFold'
+let g:SimpylFold_fold_import = 1
+let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 0
+
+Plug 'vim-scripts/indentpython'
+Plug 'tell-k/vim-autopep8'
+
+"Plug 'vim-latex/vim-latex'
+"let g:tex_flavor = "latex" 
+
+call plug#end()
+" }}}
+
+" Theme and graph {{{
+" ======================================================================
+if has("gui_running")
+    set guioptions-=m
+    set guioptions-=T
+endif
+set mouse=a
+
+" Some :colors
+silent! set listchars=tab:>\ ,eol:¬
+
+let BACKGROUND=$BACKGROUND
+if BACKGROUND == 'light'
+    silent! colorscheme flattened_light
+    set background=light
+else
+    silent! colorscheme flattened_dark
+    set background=dark
+endif
+
+" Status line
+highlight StatusLine NONE ctermbg=DarkBlue ctermfg=White cterm=NONE
+
+if has("statusline")
+  set statusline =              " clear
+  set statusline+=\ %02n        " leading zero 2 digit buffer number
+  set statusline+=\ %#IncSearch#    " Color
+  set statusline+=\ %<%F        " file full path, truncate
+  set statusline+=\ %*
+  set statusline+=\ %r          " read only flag '[RO]'
+  set statusline+=\ %m          " modified flag '[+]' if modifiable
+  set statusline+=\ %h          " help flag '[Help]'
+  set statusline+=\ %{fugitive#statusline()}    " GIT Branch
+if v:version > 740
+  set statusline+=\ %{gutentags#statusline()}
+endif
+  set statusline+=%=            " left/right separation point
+  set statusline+=\ \|\ %{&ff}  " fileformat
+  set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
+  set statusline+=\ \|\ [%03b   " decimal byte
+  set statusline+=\ x%02B]      " hex byte ' \x62'
+  set statusline+=\ (%04v,%04l) " (x,y)
+  set statusline+=\ \|\ %P    " percent of file
+  set statusline+=\ of
+  set statusline+=\ %L          " line/lines
+  set statusline+=\ lines
+endif
+
+highlight Comment gui=italic
+highlight Comment cterm=italic
+
+" }}}
+
+" Basic Settings {{{
+" ==========================================================
+let mapleader=" "
+let maplocalleader=" "
+
+" Composing
+set undolevels=1000
+set linebreak
+set wrap
+set virtualedit=block
+set numberwidth=5
+set relativenumber
+set nonumber
+set cursorline
+set conceallevel=0
+
+" Navigating
+set viminfo^=%
+set scrolloff=20
+
+" Indent
+set shiftround
+
+" Search
+set showmatch
+set matchpairs+=<:>
+set smartcase
+set hlsearch
+
+" Menu
+set wildmode=longest:list,full
+set wildignore+=tags,cscope.out,*.o,*~,*.pyc,.tags
+set wildignorecase
+
+" File handling
+set backup
+set backupdir=~/.tmp/vim,~/tmp/vim
+set swapfile
+set directory=~/.tmp/vim,~/tmp/vim
+set undofile
+set undodir=~/.tmp/vim,~/tmp/vim
+set writebackup
+set path=.,**
+
+" Terminal settings
+set title
+set titleold=""
+
+" Split windows
+set splitbelow
+set splitright
+
+" Buffers
+set hidden
+
+" Tags startup
+set tags=.tags;tags;${HOME}
+
+"}}}
+
+" Maps/Macros {{{
+" ================================================
+
+"Lets try this a little
+"nnoremap k kzz
+"nnoremap j jzz
+"nnoremap G Gzz
+"nnoremap p pzz
+"nnoremap P Pzz
+
+
+nnoremap <ESC><ESC><ESC> :q<CR>
+" ctrl-jklm  changes to that split
+inoremap <C-k> <C-w>k
+inoremap <C-l> <C-w>l
+inoremap <C-h> <C-w>h
+inoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+" nnoremap <c-J> <c-w>J
+" nnoremap <c-K> <c-w>K
+" nnoremap <c-L> <c-w>L
+" nnoremap <c-H> <c-w>H
+nnoremap <leader>w <C-w>v<C-w>l
+
+" Famous shortcuts
+nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%p:h'))<cr>/*<C-d>
+nnoremap <leader>f :find *
+nnoremap <leader>l :set list!<cr>
+nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>/ :nohlsearch<cr>
+nnoremap <leader><space> za
+
+" Space strip all
+nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
+" Identall
+nnoremap _= :call Preserve("normal gg=G")<CR>
+
+" W use capital w to write too..
+command! W :w
+
+" sudo write this
+cmap W! w !sudo tee % >/dev/null
+cmap w!! w !sudo tee % >/dev/null
+
+"}}}
+
+" Function keys {{{
+" ======================================================================
+
+" Buffers
+inoremap <F2> <ESC>:buffers<CR>:buffer<Space>
+nnoremap <F2>      :buffers<CR>:buffer<Space>
+
+" inoremap <F3>
+" nnoremap <F3>
+
+inoremap <F4> <ESC>:Texec<CR>j<Insert>
+nnoremap <F4>	   :Texec<CR>j
+vnoremap <F4> 	   :Texec<CR>j 
+
+" Often used to build stuff...
+"inoremap <F5> <ESC>
+"nnoremap <F5>
+
+"inoremap <F6> <ESC>
+"nnoremap <F6>
+
+inoremap <F7> <ESC>:vimgrep // **/*<left><left><left><left><left><left>
+nnoremap <F7>      :vimgrep // **/*<left><left><left><left><left><left>
+
+"inoremap <F8> <ESC>
+"nnoremap <F8>
+
+"inoremap <F9> <ESC>
+"nnoremap <F9>
+
+"inoremap <F10> <ESC>
+"nnoremap <F10>
+
+" Quickfix navigation
+" Maybe start to use only unimpaired shortcuts
+inoremap   <F11> <ESC>:cprev<CR>
+nnoremap   <F11>      :cprev<CR>
+
+inoremap   <F12> <ESC>:cnext<CR>
+nnoremap   <F12>      :cnext<CR>
+
+inoremap <C-F11> <ESC>:cpfile<CR>
+nnoremap <C-F11>      :cpfile<CR>
+
+inoremap <C-F12> <ESC>:cnfile<CR>
+nnoremap <C-F12>      :cnfile<CR>
+
+inoremap <S-F11> <ESC>:colder<CR>
+nnoremap <S-F11>      :colder<CR>
+
+inoremap <S-F12> <ESC>:cnewer<CR>
+nnoremap <S-F12>      :cnewer<CR>
+"}}}
+
+" Functions {{{
+" ======================================================================
+
+function! HardVim()
+    nnoremap <up> <nop>
+    nnoremap <down> <nop>
+    nnoremap <left> <nop>
+    nnoremap <right> <nop>
+    inoremap <up> <nop>
+    inoremap <down> <nop>
+    inoremap <left> <nop>
+    inoremap <right> <nop>
+endfunction
+call HardVim()
+
+function! Preserve(command)
+  " Preparation: save last search, and cursor position.
+  let _s=@/
+  let l = line(".")
+  let c = col(".")
+  " Do the business:
+  execute a:command
+  " Clean up: restore previous search history, and cursor position
+  let @/=_s
+  call cursor(l, c)
+endfunction
+"}}}
+
+" Groups {{{
+" ======================================================================
+
+if has("autocmd")
+    augroup autosave
+        autocmd!
+        autocmd FocusLost * :wa
+"        autocmd BufWritePre *.py,*.js,*.c :call Preserve("%s/\\s\\+$//e")<CR>
+    augroup END
+
+    augroup reload_vimrc
+        autocmd!
+        autocmd bufwritepost $MYVIMRC source $MYVIMRC
+    augroup END
+
+    augroup openingbuffer
+        autocmd!
+        " Return to last edit position when opening files (You want this!)
+        autocmd BufReadPost *
+                    \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                    \   exe "normal! g`\"" |
+                    \ endif |
+    augroup END
+
+    augroup numbering
+        autocmd!
+        autocmd InsertEnter * :set number | :set norelativenumber
+        autocmd InsertLeave * :set relativenumber | :set nonumber
+    augroup END
+
+    augroup filetypes
+        autocmd!
+        autocmd BufNewFile,BufRead *.xhtml  setlocal ft=html
+        autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2   setlocal ft=html
+    augroup END
+
+endif
+
+"}}}
+
+
+" vim:foldmethod=marker:foldlevel=0

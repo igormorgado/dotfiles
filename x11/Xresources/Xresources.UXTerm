@@ -1,0 +1,77 @@
+UXTerm.termName: xterm-256color
+
+!! Strictly follow Locale
+UXTerm.VT100.locale: true
+
+!! Number of lines saved
+UXTerm.VT100.saveLines: 16384
+
+!! No scroolbars please
+UXTerm.VT100.scrollBar: false
+UXTerm.VT100.scrollbar.width: 8
+
+UXTerm.VT100.geometry: 80x24
+
+!! Copy to X clipboard not primary
+UXTerm.VT100.selectToClipboard: true
+
+UXTerm.VT100.loginShell: true
+UXTerm.VT100.eightBitInput: false
+
+!! Bell is urgent
+UXTerm.VT100.bellIsUrgent: true
+
+!! Blink Cursor is so OldSchool (Tm)
+UXTerm.VT100.cursorBlink: True
+
+!! Doubleclicks et all
+!! UXTerm.VT100.charClass: 33:48,35-37:48,43:48,45-47:48,64:48,95:48,126:48
+UXTerm.VT100.charClass: 33:48,35-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+!! Select URLs too on 3 clicks
+!!UXTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]!#+,./=?@_~-]|(%[[:xdigit:]][[:xdigit:]]))+
+
+UXTerm.VT100.on2Clicks:  regex [^/@ \n]+
+UXTerm.VT100.on3Clicks:  regex [^ \n]+
+UXTerm.VT100.on4Clicks:  regex [^#$]+
+UXTerm.VT100.on5Clicks:  line
+
+
+!! ##############################################################
+!! FONTS!
+!! ##############################################################
+
+!! Fonts settings
+UXTerm.VT100.renderFont: false 
+UXTerm.VT100.forceBoxChars : true 
+
+UXTerm.VT100.boldMode: true
+
+UXTerm.VT100.colorULMode: false
+UXTerm.VT100.colorITMode: false
+UXTerm.VT100.colorBDMode: false
+
+
+!! Font selection
+
+!! Font height tunning
+UXTerm.scaleHeight: 1.00
+
+
+UXTerm.VT100.font:  terminus-14
+UXTerm.VT100.font1: nil2
+UXTerm.VT100.font2: terminus-12
+UXTerm.VT100.font3: terminus-18
+UXTerm.VT100.font4: terminus-22
+UXTerm.VT100.font5: terminus-24
+UXTerm.VT100.font6: terminus-32
+
+UXTerm.fontMenu.Label:                VT Fonts
+UXTerm.fontMenu*fontdefault*Label:    Default
+UXTerm.fontMenu*font1*Label:          Unreadable
+UXTerm.fontMenu*font2*Label:          12-pt
+UXTerm.fontMenu*font3*Label:          18-pt
+UXTerm.fontMenu*font4*Label:          22-pt
+UXTerm.fontMenu*font5*Label:          24-pt
+UXTerm.fontMenu*font6*Label:          32-pt
+

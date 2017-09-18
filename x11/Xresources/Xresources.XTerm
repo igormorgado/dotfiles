@@ -1,0 +1,79 @@
+XTerm.termName: xterm-256color
+
+XTerm.VT100.utf8:       2
+
+!! Strictly follow Locale
+XTerm.VT100.locale: true
+
+!! Number of lines saved
+XTerm.VT100.saveLines: 16384
+
+!! No scroolbars please
+XTerm.VT100.scrollBar: false
+XTerm.VT100.scrollbar.width: 8
+
+XTerm.VT100.geometry: 80x24
+
+!! Copy to X clipboard not primary
+XTerm.VT100.selectToClipboard: true
+
+XTerm.VT100.loginShell: true
+XTerm.VT100.eightBitInput: false
+
+!! Bell is urgent
+XTerm.VT100.bellIsUrgent: true
+
+!! Blink Cursor is so OldSchool (Tm)
+XTerm.VT100.cursorBlink: True
+
+!! Doubleclicks et all
+!! XTerm.VT100.charClass: 33:48,35-37:48,43:48,45-47:48,64:48,95:48,126:48
+XTerm.VT100.charClass: 33:48,35-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+!! Select URLs too on 3 clicks
+!!XTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]!#+,./=?@_~-]|(%[[:xdigit:]][[:xdigit:]]))+
+
+XTerm.VT100.on2Clicks:  regex [^/@ \n]+
+XTerm.VT100.on3Clicks:  regex [^ \n]+
+XTerm.VT100.on4Clicks:  regex [^#$]+
+XTerm.VT100.on5Clicks:  line
+
+
+!! ##############################################################
+!! FONTS!
+!! ##############################################################
+
+!! Fonts settings
+XTerm.VT100.renderFont: false 
+XTerm.VT100.forceBoxChars : true 
+
+XTerm.VT100.boldMode: true
+
+XTerm.VT100.colorULMode: false
+XTerm.VT100.colorITMode: false
+XTerm.VT100.colorBDMode: false
+
+
+!! Font selection
+
+!! Font height tunning
+XTerm.scaleHeight: 1.00
+
+
+XTerm.VT100.font:  terminus-14
+XTerm.VT100.font1: nil2
+XTerm.VT100.font2: terminus-12
+XTerm.VT100.font3: terminus-18
+XTerm.VT100.font4: terminus-22
+XTerm.VT100.font5: terminus-24
+XTerm.VT100.font6: terminus-32
+
+XTerm.fontMenu.Label:                VT Fonts
+XTerm.fontMenu*fontdefault*Label:    Default
+XTerm.fontMenu*font1*Label:          Unreadable
+XTerm.fontMenu*font2*Label:          12-pt
+XTerm.fontMenu*font3*Label:          18-pt
+XTerm.fontMenu*font4*Label:          22-pt
+XTerm.fontMenu*font5*Label:          24-pt
+XTerm.fontMenu*font6*Label:          32-pt
+

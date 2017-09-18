@@ -1,0 +1,643 @@
+#!/bin/bash
+# Declare useful functions on environment
+
+# For add and app env variables, should be nice add a verification
+# if the new value already exists, this will avoid useless (and ugly)
+# duplication.
+
+function addpath() {
+	# Insert (in the beginning) a dir to ${PATH} (only if exists)
+    [ -d "${1}" ] && export PATH="${1}:${PATH}"
+}
+
+function apppath() {
+# Append (in the end) a dir to ${PATH} (only if exists)
+    [ -d "${1}" ] && export PATH="${PATH}:${1}"
+}
+
+function addlibpath() {
+	[ -d "${1}" ] && export LD_LIBRARY_PATH=${1}:${LD_LIBRARY_PATH}
+}
+
+
+function addrunpath() {
+	[ -d "${1}" ] && export LD_RUN_PATH=${1}:${LD_RUN_PATH}
+
+}
+
+function addpkgpath() {
+	[ -d "${1}" ] && export PKG_CONFIG_PATH=${1}:${PKG_CONFIG_PATH}
+
+}
+
+
+function loadresource() {
+# Load resource only if exists
+	[ -f "${1}" ] && source "${1}"
+}
+
+function lsbytesum() {
+find . -maxdepth 1 -printf "%s\n" | awk '
+function human(x) {
+	s="B KBMBGBTBEBPBYBZB";
+
+	while ( x>=1024 && length(s)>2 ) {
+		x/=1024;
+		s=substr(s,3);
+	}
+
+	return sprintf("%.2f %s",x,substr(s,1,2)) }
+
+	{ SUM+=$1 } END { printf "%s\n",human(SUM) }'
+}
+
+function parse_git_branch() {
+	git branch 2> /dev/null | grep '*' | sed 's#*\ \(.*\)#(git::\1)#'
+}
+
+
+function parse_svn_repository_root() {
+	svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
+}
+
+
+function parse_svn_url() {
+	svn info 2>/dev/null | sed -ne 's#^URL: ##p'
+}
+
+
+function parse_svn_branch() {
+	parse_svn_url | \
+	sed -e 's#^'"$(parse_svn_repository_root)"'##g' | \
+	awk -F / '{print "(svn::"$1 "/" $2 ")"}'
+}
+
+
+function testcolor() {
+    echo -e "
+    ${BLACK}BLACK${CRST}        ${DGRAY}DGRAY${CRST}
+    ${RED}RED${CRST}           ${LRED}LRED${CRST}
+    ${GREEN}GREEN${CRST}       ${LGREEN}LGREEN${CRST}
+    ${BROWN}BROWN${CRST}       ${YELLOW}YELLOW${CRST}
+    ${BLUE}BLUE${CRST}         ${LBLUE}LBLUE${CRST}
+    ${PURPLE}PURPLE${CRST}     ${LPURPLE}LPURPLE${CRST}
+    ${CYAN}CYAN${CRST}         ${LCYAN}LCYAN${CRST}
+    ${LGRAY}LGRAY${CRST}        ${WHITE}WHITE${CRST}
+    ${BBLACK}BLACK${CRST}        ${BDGRAY}DGRAY${CRST}
+    ${BRED}RED${CRST}           ${BLRED}LRED${CRST}
+    ${BGREEN}GREEN${CRST}       ${BLGREEN}LGREEN${CRST}
+    ${BBROWN}BROWN${CRST}       ${BYELLOW}YELLOW${CRST}
+    ${BBLUE}BLUE${CRST}         ${BLBLUE}LBLUE${CRST}
+    ${BPURPLE}PURPLE${CRST}     ${BLPURPLE}LPURPLE${CRST}
+    ${BCYAN}CYAN${CRST}         ${BLCYAN}LCYAN${CRST}
+    ${BLGRAY}LGRAY${CRST}        ${BWHITE}WHITE${CRST}
+    RESET
+    "
+}
+
+function testcolor256() {
+	for ((i=0; i<256;i++)); do
+		tput setaf $i
+		printf "%03d " "$i"
+		(( i % 20  == 19 )) && echo -e "${CRST}"
+	done
+	echo -e "${CRST}"
+	for ((i=0; i<256;i++)); do
+		tput setab $i
+		printf "%03d " "$i"
+		(( i % 20  == 19 )) && echo -e "${CRST}"
+	done
+	echo -e "${CRST}"
+}
+
+
+function testface() {
+	echo -e "
+	${BOLD}You should see a BOLD text here${CRST}. Reset
+
+	${REV}You should see a reversed text here${CRST}. Reset
+
+	${ITALIC}You should see a italic text here${CRST}. Reset
+
+	${STRIKE}You should see a strike text here${CRST}. Reset
+
+	${UNDER}You should see a underlined text here${CRST}. Reset
+
+	${BLINK}You should see and not see a blink text here${CRST}. Reset
+
+	${DIM}You should see a dimmed text here, check the brightness${CRST}. Reset
+
+	Everything is ok here. This text has no effects, it'r regular font${CRST}. Reset
+
+    ${CRST}
+	"
+}
+
+function testUTF8() {
+	curl http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-demo.txt
+}
+
+setBackgroundColor()
+{
+	#printf '\x1bPtmux;\x1b\x1b[48;2;%s;%s;%sm' $1 $2 $3
+	printf '\x1b[48;2;%s;%s;%sm' "$1" "$2" "$3"
+}
+
+resetOutput()
+{
+	echo -en "\x1b[0m\n"
+}
+
+#   This function echoes a bunch of 24-bit color codes
+#   to the terminal to demonstrate its functionality.
+#   The foreground escape sequence is ^[38;2;<r>;<g>;<b>m
+#   The background escape sequence is ^[48;2;<r>;<g>;<b>m
+#   <r> <g> <b> range from 0 to 255 inclusive.
+#   The escape sequence ^[0m returns output to default
+# Gives a color $1/255 % along HSV
+# Who knows what happens when $1 is outside 0-255
+# Echoes "$red $green $blue" where
+# $red $green and $blue are integers
+# ranging between 0 and 255 inclusive
+function rainbowColor() { 
+	let h=$1/43
+	let f=$1-43*$h
+	let t=$f*255/43
+	let q=255-t
+
+	if [ $h -eq 0 ]
+	then
+		echo "255 $t 0"
+	elif [ $h -eq 1 ]
+	then
+		echo "$q 255 0"
+	elif [ $h -eq 2 ]
+	then
+		echo "0 255 $t"
+	elif [ $h -eq 3 ]
+	then
+		echo "0 $q 255"
+	elif [ $h -eq 4 ]
+	then
+		echo "$t 0 255"
+	elif [ $h -eq 5 ]
+	then
+		echo "255 0 $q"
+	else
+		# execution should never reach here
+		echo "0 0 0"
+	fi
+}
+
+function testcolorTrue() {
+	for i in `seq 0 127`; do
+		setBackgroundColor $i 0 0
+		echo -en " "
+	done
+	resetOutput
+	for i in `seq 255 -1 128`; do
+		setBackgroundColor $i 0 0
+		echo -en " "
+	done
+	resetOutput
+
+	for i in `seq 0 127`; do
+		setBackgroundColor 0 $i 0
+		echo -n " "
+	done
+	resetOutput
+	for i in `seq 255 -1 128`; do
+		setBackgroundColor 0 $i 0
+		echo -n " "
+	done
+	resetOutput
+
+	for i in `seq 0 127`; do
+		setBackgroundColor 0 0 $i
+		echo -n " "
+	done
+	resetOutput
+	for i in `seq 255 -1 128`; do
+		setBackgroundColor 0 0 $i
+		echo -n " "
+	done
+	resetOutput
+
+	for i in `seq 0 127`; do
+		setBackgroundColor `rainbowColor $i`
+		echo -n " "
+	done
+	resetOutput
+	for i in `seq 255 -1 128`; do
+		setBackgroundColor `rainbowColor $i`
+		echo -n " "
+	done
+	resetOutput
+}
+
+
+# Colorize prompt based on last RETVAL
+function prevCmd() {
+    if [ "${1}" == 0 ] ; then
+        echo "${GREEN}"
+    else
+        echo "${RED}"
+    fi
+}
+
+
+function bash_prompt_command() {
+
+    RETVAL="$?"
+	# history -a
+	# history -c
+	# history -r
+	settitle "$(whoami)@$(hostname):$(pwd)"
+	if [ -f /etc/profile.d/vte-2.91.hs ]; then
+		VTE_PWD="$(__vte_osc7)"
+		prevCmd="$(prevCmd ${RETVAL}${VTE_PWD})"
+	else
+		prevCmd="$(prevCmd ${RETVAL})"
+	fi
+}
+
+
+# Solarize me
+function solarized_light() {
+	if [ -f "${HOME}/dotfiles/_dir_colors.ansi-light" ]; then
+		pushd "${HOME}/dotfiles"
+		rm _dir_colors
+		ln -s _dir_colors.ansi-light _dir_colors
+		eval "$(dircolors -b _dir_colors)"
+		popd
+	fi
+}
+
+
+function solarized_dark(){
+	if [ -f "${HOME}/dotfiles/_dir_colors.ansi-dark" ]; then
+		pushd "${HOME}/dotfiles"
+		rm _dir_colors
+		ln -s _dir_colors.ansi-dark _dir_colors
+		eval "$(dircolors -b _dir_colors)"
+		popd
+	fi
+    }
+
+
+
+function dedup() {
+    fdupes -rnNd .
+}
+
+
+function settitle () {
+	case "${TERM}" in
+		xterm*)
+			echo -ne "\e]2;${*}\a\e]1;${*}\a";
+			;;
+		*) ;;
+	esac
+}
+
+
+function cd_func () {
+	local x2 the_new_dir adir index
+	local -i cnt
+
+	if [[ "$1" ==  "--" ]]; then
+		dirs -v
+		return 0
+	fi
+
+	the_new_dir=${1}
+	[[ -z "$1" ]] && the_new_dir="${HOME}"
+
+	if [[ "${the_new_dir:0:1}" == '-' ]]; then
+		#
+		# Extract dir N from dirs
+		index=${the_new_dir:1}
+		[[ -z "${index}" ]] && index=1
+		adir=$(dirs +$index)
+		[[ -z "${adir}" ]] && return 1
+		the_new_dir=$adir
+	fi
+
+	#
+	# '~' has to be substituted by ${HOME}
+	[[ "${the_new_dir:0:1}" == '~' ]] && the_new_dir="${HOME}${the_new_dir:1}"
+
+	#
+	# Now change to the new dir and add to the top of the stack
+	echo "${the_new_dir}"
+	pushd "${the_new_dir}" > /dev/null
+	[[ $? -ne 0 ]] && return 1
+	the_new_dir=$(pwd)
+
+	#
+	# Trim down everything beyond 11th entry
+	popd -n +11 2>/dev/null 1>/dev/null
+
+	#
+	# Remove any other occurence of this dir, skipping the top of the stack
+	for ((cnt=1; cnt <= 10; cnt++)); do
+		x2=$(dirs +${cnt} 2>/dev/null)
+		[[ $? -ne 0 ]] && return 0
+		[[ "${x2:0:1}" == '~' ]] && x2="${HOME}${x2:1}"
+		if [[ "${x2}" == "${the_new_dir}" ]]; then
+			popd -n +"${cnt}" 2>/dev/null 1>/dev/null
+			cnt=$(( cnt-1 ))
+		fi
+	done
+
+	return 0
+}
+
+function create_test_dir() {
+	# Missing sockets, pipes, char, block, fifo, brokenlink
+
+	local d=test_dir
+	mkdir -m 775 -p "${d}/common"
+	mkdir -m 2775 -p "${d}/group"
+	mkdir -m 2755 -p "${d}/group_broken"
+	mkdir -m 755 -p  "${d}/directory"
+	mkdir -m 1777 -p "${d}/directoryt"
+	mkdir -m 1775 -p "${d}/directory+t_o+w"
+
+	declare -a testfiles
+	testfiles=(archive.tar archive.tar.gz audio.ogg backup.bak
+	document.pdf executable_file file1.ogg file2 file2.bak file3
+	file_ex image.png logfile.log setgid_g+s setuid_u+s ttt.JPG
+	video.mkv)
+
+	for f in "${testfiles[@]}"; do
+		touch "${d}/${f}"
+		touch "${d}/common/${f}"
+		touch "${d}/directory/${f}"
+	done
+	pushd "${d}"
+	ln file3 file3.hardlink
+	ln -s file3 file3.synlink
+	ln -s file_ex link
+	ln -s /dev/null devnull
+	ln -s /dev/sda1 devsda1
+	ln -s directory directory_link
+	ln -s nonexist brokenlink
+	popd
+	chmod g+s "${d}/setgid_g+s"
+	chmod u+s "${d}/setuid_u+s"
+	chmod 755 "${d}/executable_file"
+	chmod 755 "${d}/file_ex"
+}
+
+# Commit all files from argument
+function gca() {
+	git commit -a -m "$*"
+}
+
+# Exclude files from ignore list
+function gle() {
+	echo "# Global"
+	[ -f "${HOME}/.config/git/ignore" ] && \
+	git ls-files -i --exclude-from="${HOME}/.config/git/ignore"
+	echo "# Local"
+	[ -f ".gitignore" ] && \
+	git ls-files -i --exclude-from=.gitignore
+}
+
+function lower() {
+	echo "${@}" | tr "[:upper:]" "[:lower:]"
+}
+
+
+function upper() {
+	echo "${@}" | tr "[:lower:]" "[:upper:]"
+}
+
+function proxy_on() {
+    export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
+
+    if (( "${#}" > 0 )); then
+		local addr=${1}
+		local username=${2}
+		local passwd=${3}
+
+        valid=$(echo "${addr}" | sed -n 's/\([0-9]\{1,3\}.\)\{4\}:\([0-9]\+\)/&/p')
+        if [[ "${valid}" != "${addr}" ]]; then
+            >&2 echo "Invalid address"
+            return 1
+        fi
+
+		if [ "${username}" != "" ] && [ "${passwd}" == "" ]; then
+    	    echo -n "Password: "; read -r -es passwd
+
+			if [ "${passwd}" != "" ]; then
+	    	    local username="${username}:${passwd}@"
+			fi
+    	fi
+
+	else
+		echo "You can pass the proxy data as parameter to function."
+		echo "address user passwd"
+		echo
+		echo "Anyway..."
+		echo
+	    echo -n "server:port: "; read -r addr
+		echo -n "username: "; read -r username
+
+		if [[ "${username}" != "" ]]; then
+    	    echo -n "password: "
+    	    read -res passwd
+    	    local username="${username}:$passwd@"
+			echo
+    	fi
+
+	fi
+
+	export http_proxy="http://${username}${addr}/"
+	export https_proxy=$http_proxy
+	export ftp_proxy=$http_proxy
+	export rsync_proxy=$http_proxy
+	export HTTP_PROXY=$http_proxy
+	export HTTPS_PROXY=$http_proxy
+	export FTP_PROXY=$http_proxy
+	export RSYNC_PROXY=$http_proxy
+	printf "\nProxy environment variable set.\n"
+	return 0
+
+
+}
+
+function proxy_off(){
+    unset http_proxy
+    unset https_proxy
+    unset ftp_proxy
+    unset rsync_proxy
+    unset HTTP_PROXY
+    unset HTTPS_PROXY
+    unset FTP_PROXY
+    unset RSYNC_PROXY
+    echo -e "Proxy environment variable removed."
+}
+
+
+function jupstart() {
+	local jdir="${HOME}/Dropbox/nb"
+	local ldir="${jdir}/.log"
+
+	if [ ! -d "${jdir}" ]; then
+		printf "Dir %s doesn't exist. Creating" "${jdir}"
+		mkdir -p "${ldir}"
+	fi
+
+	pushd "${jdir}"
+	jupyter-notebook -y --no-browser  > "${ldir}/jupyter.log" 2> "${ldir}/jupyter.err" &
+	PID=$!
+	echo ${PID} > "${ldir}/jupyter.pid"
+	popd
+
+}
+
+
+function jupstop() {
+	local jdir="${HOME}/Drobbox/nb"
+	local ldir="${jdir}/.log"
+	local pidfile="${ldir}/jupyter.pid"
+
+	if [ -r "${pidfile}" ]; then
+		PID=$(cat "${pidfile}" )
+		printf "Killing Jupyter at PID %d" "${PID}"
+		kill "${PID}"
+		sleep 2
+		kill -9 "${PID}" 2> /dev/null || rm "${pidfile}"
+
+	else
+		printf "Could not find pid file or jupyter isn't running. Exiting"
+		return 1
+	fi
+
+}
+
+function cleansys() {
+		sudo apt -y install localepurge deborphan
+		sudo apt -y clean
+		sudo apt -y autoremove
+		sudo apt -y auto-clean
+		dpkg -l | grep ^rc | awk '{ print $2}' | sudo xargs apt purge -y
+		deborphan | sudo xargs apt purge -y
+	}
+
+
+
+function command_not_found_handle() {
+
+	urlregex='(https?|ftp|file)://[-A-Za-z0-9\+&@#/%?=~_|!:,.;]*[-A-Za-z0-9\+&@#/%=~_|]'
+
+	local cmd state rest
+	local -i pid ppid pgrp session tty_nr tpgid
+
+	# Do not runs from MC or pipe
+	if [ -n "$MC_SID" ] || [ ! -t 1 ] ; then
+		echo $"$1: command not found"
+		return 127
+	fi
+
+	# do not run when within a subshell
+	read -r pid cmd state ppid pgrp session tty_nr tpgid rest  < /proc/self/stat
+	if [ $$ -eq "$tpgid" ]; then
+		echo "$1: command not found"
+		return 127
+	fi
+
+	# Check if called is a url, if os, browserit!
+	if [ -x "/usr/bin/xdg-open" ]; then
+		# Never calls this since urls "looks like" a filepath.
+		# Need to find a workaround
+		if [[ $1 =~ $urlregex ]]; then
+			echo "Opening URL: $1"
+			/usr/bin/xdg-open "$1"
+			return $?
+		fi
+
+		if [ -r "$1" ]; then
+			echo "Opening file: $1"
+			/usr/bin/xdg-open "$1"
+			return $?
+		fi
+	fi
+
+	# Check if called  is a regular file, if so, xdg-open it!
+	if [ -x /usr/lib/command-not-found ]; then
+		/usr/lib/command-not-found -- "$1"
+		return $?
+	elif [ -x /usr/share/command-not-found/command-not-found ]; then
+		/usr/share/command-not-found/command-not-found -- "$1"
+		return $?
+	fi
+
+	echo "$1: command not found"
+	return 127
+}
+
+function kernel_color_theme() {
+	if [ -r /proc/cmdline ]; then
+		mapfile -d ' ' cmdline < /proc/cmdline  
+		for entry in ${cmdline[*]}; do
+			lhs=${entry%=*}
+			rhs=${entry#*=}
+			if [[ ${lhs} =~ bash\.* ]]; then
+				lhs=${lhs//bash./}
+				case ${lhs} in
+					BACKGROUND) BACKGROUND=${rhs} ;;
+					COLOR)      COLOR=${rhs} ;;
+					*)			;;
+				esac
+			fi
+		done
+	fi
+	BACKGROUND=${BACKGROUND:-dark}
+	return 0
+}
+
+# vim: ft=sh:
+#!/bin/bash
+
+#  correlate two or more bash arrays
+# example:
+# 	iterate "um dois tres"  "1 2 3"
+
+function iterate {
+
+    declare -a items=("${!1}")
+    local index="$2"
+
+    if [ "${index}" == "${#dim[@]}" ]; then
+
+        for (( i=0; i<=${index}; i++ ))
+        do
+            echo -n "${items[$i]} "
+        done
+        echo ""
+    else
+        for element in ${dim[${index}]}; do
+            items["${index}"]="${element}"
+            local it=$((index+1))
+            iterate items[@] "$it"
+        done
+    fi
+}
+
+if [ "$1" != "" ]; then
+
+    declare -ag dim
+    count=0
+
+    for arguments in "$@"
+    do
+        dim["$count"]="$arguments"
+        count=$((count+1))
+    done
+
+    iterate "" 0
+
+fi

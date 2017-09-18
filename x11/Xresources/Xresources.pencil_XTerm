@@ -1,0 +1,47 @@
+!XTerm.VT100.colorBD: base3
+!XTerm.VT100.colorUL: base2
+!XTerm.VT100.colorIT: base2
+
+XTerm*background:             base03
+XTerm*foreground:             base2
+
+XTerm*fading:		       40
+XTerm*fadeColor:              base02
+
+XTerm*pointerColorBackground: base02
+XTerm*pointerColorForeground: base2
+
+
+XTerm*cursorColor:            blue
+
+!! black dark/light
+XTerm*color0:                 black
+XTerm*color8:                 light_black
+
+!! red dark/light
+XTerm*color1:                 red
+XTerm*color9:                 pink
+
+!! green dark/light
+XTerm*color2:                 dark_green
+XTerm*color10:                light_green
+
+!! yellow dark/light
+XTerm*color3:                 dark_yellow
+XTerm*color11:                yellow
+
+!! blue dark/light
+XTerm*color4:                 dark_blue
+XTerm*color12:                blue
+
+!! magenta dark/light
+XTerm*color5:                 dark_purple
+XTerm*color13:                purple
+
+!! cyan dark/light
+XTerm*color6:                 dark_cyan
+XTerm*color14:                light_cyan
+
+!! white dark/light
+XTerm*color7:                 light_gray
+XTerm*color15:                white

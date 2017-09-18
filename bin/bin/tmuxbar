@@ -1,0 +1,40 @@
+#!/bin/bash
+
+statusbar=""
+
+##############################
+# DROPBOX
+d=""
+dropbox=$(which dropbox)
+if [ -x ${dropbox} ]; then
+
+	dstatus=$( dropbox status )
+
+	[[ ${dstatus} == *Connecting* ]]		 && d+="."
+	[[ ${dstatus} == *Starting* ]]			 && d+="o"
+	[[ ${dstatus} == *Indexing* ]]			 && d+="i"
+	[[ ${dstatus} == *Syncing* ]]			 && d+="@"
+	[[ ${dstatus} == *Uploading* ]]			 && d+="^"
+	[[ ${dstatus} == *Downloading* ]]		 && d+="v"
+	[[ ${dstatus} == *"Up to date"* ]]		 && d+="O"
+	[[ ${dstatus} == *"isn't responding"* ]] && d+="#"
+	[[ ${dstatus} == *"isn't running"* ]]	 && d+="X"
+	statusbar+="${d} "
+fi
+
+##############################
+# Check IDLE
+checkidle_status="/var/run/checkidle/status" 
+if [ -r "${checkidle_status}" ]; then
+	CI=( $( cat ${checkidle_status} ) )
+	printf -v c "%s,%s(%s)" "${CI[1]}" "${CI[2]}" "${CI[3]}"
+	statusbar+="${c} "
+fi
+
+##############################
+# Load average
+#l=$( cut -d " " -f 1-3 /proc/loadavg )
+#statusbar+="${l} "
+
+
+echo "${statusbar}"

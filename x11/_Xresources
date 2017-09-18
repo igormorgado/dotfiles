@@ -1,0 +1,339 @@
+# 1 "Xresources.main"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 31 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 32 "<command-line>" 2
+# 1 "Xresources.main"
+
+
+!! ###################################################
+!! Configuration <COLOR RELATED>
+!! ###################################################
+
+# 1 "Xresources.solarized" 1
+!! To choose between light/dark background, you have two options:
+!!
+!! 1: Hardcode your choice in your .Xresources file by adding either
+!! #define
+!! or
+!! #define SOLARIZED_LIGHT
+!! above where you pasted the contents of this file.
+!!
+!! 2: Define either of those symbols when loading your .Xresources with
+!! xrdb, like so:
+!! xrdb -DSOLARIZED_LIGHT -merge ~/.Xresources
+
+!!SOLARIZED HEX 16/8 TERMCOL XTERM/HEX L*A*B RGB HSB
+!!--------- ------- ---- ------- ----------- ---------- ----------- -----------
+!!base03 #002b36 8/4 brblack 234 #1c1c1c 15 -12 -12 0 43 54 193 100 21
+!!base02 #073642 0/4 black 235 #262626 20 -12 -12 7 54 66 192 90 26
+!!base01 #586e75 10/7 brgreen 240 #585858 45 -07 -07 88 110 117 194 25 46
+!!base00 #657b83 11/7 bryellow 241 #626262 50 -07 -07 101 123 131 195 23 51
+!!base0 #839496 12/6 brblue 244 #808080 60 -06 -03 131 148 150 186 13 59
+!!base1 #93a1a1 14/4 brcyan 245 #8a8a8a 65 -05 -02 147 161 161 180 9 63
+!!base2 #eee8d5 7/7 white 254 #e4e4e4 92 -00 10 238 232 213 44 11 93
+!!base3 #fdf6e3 15/7 brwhite 230 #ffffd7 97 00 10 253 246 227 44 10 99
+!!yellow #b58900 3/3 yellow 136 #af8700 60 10 65 181 137 0 45 100 71
+!!orange #cb4b16 9/3 brred 166 #d75f00 50 50 55 203 75 22 18 89 80
+!!red #dc322f 1/1 red 160 #d70000 50 65 45 220 50 47 1 79 86
+!!magenta #d33682 5/5 magenta 125 #af005f 50 65 -05 211 54 130 331 74 83
+!!violet #6c71c4 13/5 brmagenta 61 #5f5faf 50 15 -45 108 113 196 237 45 77
+!!blue #268bd2 4/4 blue 33 #0087ff 55 -10 -45 38 139 210 205 82 82
+!!cyan #2aa198 6/6 cyan 37 #00afaf 60 -35 -05 42 161 152 175 74 63
+!!green #859900 2/2 green 64 #5f8700 60 -20 65 133 153 0 68 100 60
+
+
+
+
+! Default to dark background if neither constant is defined, or if both are.
+
+
+
+
+
+
+# 1 "Xresources.solarized_rebase" 1
+# 43 "Xresources.solarized" 2
+# 1 "Xresources.solarized_colors" 1
+# 44 "Xresources.solarized" 2
+
+
+# 1 "Xresources.solarized_dark" 1
+# 47 "Xresources.solarized" 2
+
+
+
+
+!! Apply solarized colors on xterm and stuff
+!#include "Xresources.solarized_global"
+# 1 "Xresources.solarized_XTerm" 1
+!XTerm.VT100.colorBD: #fdf6e3
+!XTerm.VT100.colorUL: #eee8d5
+!XTerm.VT100.colorIT: #eee8d5
+
+XTerm*background: #002b36
+XTerm*foreground: #657b83
+XTerm*fadeColor: #002b36
+XTerm*cursorColor: #93a1a1
+XTerm*pointerColorBackground: #586e75
+XTerm*pointerColorForeground: #93a1a1
+
+!! black dark/light
+XTerm*color0: #073642
+XTerm*color8: #002b36
+
+!! red dark/light
+XTerm*color1: #dc322f
+XTerm*color9: #cb4b16
+
+!! green dark/light
+XTerm*color2: #859900
+XTerm*color10: #586e75
+
+!! yellow dark/light
+XTerm*color3: #b58900
+XTerm*color11: #657b83
+
+!! blue dark/light
+XTerm*color4: #268bd2
+XTerm*color12: #839496
+
+!! magenta dark/light
+XTerm*color5: #d33682
+XTerm*color13: #6c71c4
+
+!! cyan dark/light
+XTerm*color6: #2aa198
+XTerm*color14: #93a1a1
+
+!! white dark/light
+XTerm*color7: #eee8d5
+XTerm*color15: #fdf6e3
+# 54 "Xresources.solarized" 2
+# 1 "Xresources.solarized_UXTerm" 1
+!!UXTerm.VT100.colorBD: #fdf6e3
+!!UXTerm.VT100.colorUL: #eee8d5
+!!UXTerm.VT100.colorIT: #eee8d5
+
+UXTerm*background: #002b36
+UXTerm*foreground: #657b83
+UXTerm*fadeColor: #002b36
+UXTerm*cursorColor: #93a1a1
+UXTerm*pointerColorBackground: #586e75
+UXTerm*pointerColorForeground: #93a1a1
+
+!! black dark/light
+UXTerm*color0: #073642
+UXTerm*color8: #002b36
+
+!! red dark/light
+UXTerm*color1: #dc322f
+UXTerm*color9: #cb4b16
+
+!! green dark/light
+UXTerm*color2: #859900
+UXTerm*color10: #586e75
+
+!! yellow dark/light
+UXTerm*color3: #b58900
+UXTerm*color11: #657b83
+
+!! blue dark/light
+UXTerm*color4: #268bd2
+UXTerm*color12: #839496
+
+!! magenta dark/light
+UXTerm*color5: #d33682
+UXTerm*color13: #6c71c4
+
+!! cyan dark/light
+UXTerm*color6: #2aa198
+UXTerm*color14: #93a1a1
+
+!! white dark/light
+UXTerm*color7: #eee8d5
+UXTerm*color15: #fdf6e3
+# 55 "Xresources.solarized" 2
+# 8 "Xresources.main" 2
+# 1 "Xresources.pencil" 1
+# 9 "Xresources.main" 2
+
+
+!! ###################################################
+!! Configuration <NOT COLOR RELATED>
+!! ###################################################
+# 1 "Xresources.Term" 1
+!! Some niceties
+!! C-M to maximize window
+!! C-R to restore window
+!! Mouse selects to clipboard AND primary
+!! C-S-C copy
+!! C-S-V paste (as windoze expects)
+*VT100.translations: #override \n\
+    Ctrl <Key>M: maximize() \n\
+    Ctrl Shift <Key>M: restore() \n\
+    Ctrl Alt <Key>S: secure() \n\
+    Ctrl Shift <Key>C: copy-selection(CLIPBOARD) \n\
+    Ctrl Shift <Key>V: insert-selection(CLIPBOARD) \n\
+    <Btn1Up>: select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\
+    Ctrl Shift <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY) \n
+# 15 "Xresources.main" 2
+# 1 "Xresources.XTerm" 1
+XTerm.termName: xterm-256color
+
+XTerm.VT100.utf8: 2
+
+!! Strictly follow Locale
+XTerm.VT100.locale: true
+
+!! Number of lines saved
+XTerm.VT100.saveLines: 16384
+
+!! No scroolbars please
+XTerm.VT100.scrollBar: false
+XTerm.VT100.scrollbar.width: 8
+
+XTerm.VT100.geometry: 80x24
+
+!! Copy to X clipboard not primary
+XTerm.VT100.selectToClipboard: true
+
+XTerm.VT100.loginShell: true
+XTerm.VT100.eightBitInput: false
+
+!! Bell is urgent
+XTerm.VT100.bellIsUrgent: true
+
+!! Blink Cursor is so OldSchool (Tm)
+XTerm.VT100.cursorBlink: True
+
+!! Doubleclicks et all
+!! XTerm.VT100.charClass: 33:48,35-37:48,43:48,45-47:48,64:48,95:48,126:48
+XTerm.VT100.charClass: 33:48,35-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+!! Select URLs too on 3 clicks
+!!XTerm*on3Clicks: regex ([[:alpha:]]+:
+
+XTerm.VT100.on2Clicks: regex [^/@ \n]+
+XTerm.VT100.on3Clicks: regex [^ \n]+
+XTerm.VT100.on4Clicks: regex [^#$]+
+XTerm.VT100.on5Clicks: line
+
+
+!! ##############################################################
+!! FONTS!
+!! ##############################################################
+
+!! Fonts settings
+XTerm.VT100.renderFont: false
+XTerm.VT100.forceBoxChars : true
+
+XTerm.VT100.boldMode: true
+
+XTerm.VT100.colorULMode: false
+XTerm.VT100.colorITMode: false
+XTerm.VT100.colorBDMode: false
+
+
+!! Font selection
+
+!! Font height tunning
+XTerm.scaleHeight: 1.00
+
+
+XTerm.VT100.font: terminus-14
+XTerm.VT100.font1: nil2
+XTerm.VT100.font2: terminus-12
+XTerm.VT100.font3: terminus-18
+XTerm.VT100.font4: terminus-22
+XTerm.VT100.font5: terminus-24
+XTerm.VT100.font6: terminus-32
+
+XTerm.fontMenu.Label: VT Fonts
+XTerm.fontMenu*fontdefault*Label: Default
+XTerm.fontMenu*font1*Label: Unreadable
+XTerm.fontMenu*font2*Label: 12-pt
+XTerm.fontMenu*font3*Label: 18-pt
+XTerm.fontMenu*font4*Label: 22-pt
+XTerm.fontMenu*font5*Label: 24-pt
+XTerm.fontMenu*font6*Label: 32-pt
+# 16 "Xresources.main" 2
+# 1 "Xresources.UXTerm" 1
+UXTerm.termName: xterm-256color
+
+!! Strictly follow Locale
+UXTerm.VT100.locale: true
+
+!! Number of lines saved
+UXTerm.VT100.saveLines: 16384
+
+!! No scroolbars please
+UXTerm.VT100.scrollBar: false
+UXTerm.VT100.scrollbar.width: 8
+
+UXTerm.VT100.geometry: 80x24
+
+!! Copy to X clipboard not primary
+UXTerm.VT100.selectToClipboard: true
+
+UXTerm.VT100.loginShell: true
+UXTerm.VT100.eightBitInput: false
+
+!! Bell is urgent
+UXTerm.VT100.bellIsUrgent: true
+
+!! Blink Cursor is so OldSchool (Tm)
+UXTerm.VT100.cursorBlink: True
+
+!! Doubleclicks et all
+!! UXTerm.VT100.charClass: 33:48,35-37:48,43:48,45-47:48,64:48,95:48,126:48
+UXTerm.VT100.charClass: 33:48,35-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+!! Select URLs too on 3 clicks
+!!UXTerm*on3Clicks: regex ([[:alpha:]]+:
+
+UXTerm.VT100.on2Clicks: regex [^/@ \n]+
+UXTerm.VT100.on3Clicks: regex [^ \n]+
+UXTerm.VT100.on4Clicks: regex [^#$]+
+UXTerm.VT100.on5Clicks: line
+
+
+!! ##############################################################
+!! FONTS!
+!! ##############################################################
+
+!! Fonts settings
+UXTerm.VT100.renderFont: false
+UXTerm.VT100.forceBoxChars : true
+
+UXTerm.VT100.boldMode: true
+
+UXTerm.VT100.colorULMode: false
+UXTerm.VT100.colorITMode: false
+UXTerm.VT100.colorBDMode: false
+
+
+!! Font selection
+
+!! Font height tunning
+UXTerm.scaleHeight: 1.00
+
+
+UXTerm.VT100.font: terminus-14
+UXTerm.VT100.font1: nil2
+UXTerm.VT100.font2: terminus-12
+UXTerm.VT100.font3: terminus-18
+UXTerm.VT100.font4: terminus-22
+UXTerm.VT100.font5: terminus-24
+UXTerm.VT100.font6: terminus-32
+
+UXTerm.fontMenu.Label: VT Fonts
+UXTerm.fontMenu*fontdefault*Label: Default
+UXTerm.fontMenu*font1*Label: Unreadable
+UXTerm.fontMenu*font2*Label: 12-pt
+UXTerm.fontMenu*font3*Label: 18-pt
+UXTerm.fontMenu*font4*Label: 22-pt
+UXTerm.fontMenu*font5*Label: 24-pt
+UXTerm.fontMenu*font6*Label: 32-pt
+# 17 "Xresources.main" 2

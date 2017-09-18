@@ -14,28 +14,37 @@ git
 subversion
 mercurial
 pkg-config
-python3-pip
-virtualenv
 libtool
+
+# Python & dev stuff
+ipython3
+pyflakes3
+python3-flake8
+python3-pep8
+python3-pip
+python3-pyflakes
+python3-virtualenv
 
 # Tools
 bash-completion
-byobu
+tmux
+tmux-plugin-manager
 htop
 irssi
 links
-lynx
+w3m
 mc
-mtr
+mtr-tiny
 mutt
 ncdu
 pastebinit
-tmux
 vim-nox
+strace
 
 # OS
-apache2
+nginx
 mlocate
+urlview
 
 # Dev Libs
 x11proto-composite-dev
@@ -55,10 +64,5 @@ x11proto-xext-dev
 x11proto-xf86vidmode-dev
 x11proto-xinerama-dev
 
-gperf
-ipython3
-pep8
-pyflakes
-python-autopep8
-python3-flake8
-python3-pep8
+
+

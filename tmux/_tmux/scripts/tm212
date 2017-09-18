@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [ -n "${TMUX}" ]; then
+	if [ "${COLUMNS}" -lt 239 ] || [ "${LINES}" -lt 50 ]; then
+		echo "Not enough Screen (need bigger than 239x50)"
+	else
+		[ -z "${TMUX}" ] && tmux new-session -d "2x3"
+		tmux split-window -h
+		tmux select-pane -L
+		tmux resize-pane -x 80
+		tmux split-window -v
+		tmux select-pane -R
+		tmux split-window -h
+		tmux split-window -v
+		tmux resize-pane -x 80
+		tmux select-pane -L
+		[ -z "${TMUX}" ] && tmux -2 attach-session -d 
+	fi
+else
+	echo "TMUX not running"
+fi

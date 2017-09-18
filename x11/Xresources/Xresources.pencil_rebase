@@ -1,0 +1,11 @@
+! These should point to colors in colorspace
+! By shading (DARKER to LIGHTER)
+#define rebase03    black
+#define rebase02    light_black
+#define rebase01    dark_blue
+#define rebase00    blue
+#define rebase0     dark_cyan
+#define rebase1     light_cyan
+#define rebase2     light_gray
+#define rebase3     white
+! vim:foldmethod=marker:filetype=xdefaults

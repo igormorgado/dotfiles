@@ -1,0 +1,8 @@
+#define S_base03      S_rebase3
+#define S_base02      S_rebase2
+#define S_base01      S_rebase1
+#define S_base00      S_rebase0
+#define S_base0       S_rebase00
+#define S_base1       S_rebase01
+#define S_base2       S_rebase02
+#define S_base3       S_rebase03

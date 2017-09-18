@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/igormorgado/Dropbox/pysysinfo/oldcode'
+let g:netrw_dirhist_2='/home/igormorgado/Dropbox/pysysinfo/server'
+let g:netrw_dirhist_3='/home/igormorgado/Dropbox/pysysinfo/oldcode'
+let g:netrw_dirhist_4='/home/igormorgado/Dropbox/pysysinfo/server'
+let g:netrw_dirhist_5='/home/igormorgado/Dropbox/pysysinfo'
+let g:netrw_dirhist_6='/home/igormorgado/Dropbox/pysysinfo/oldcode'
+let g:netrw_dirhist_7='/home/igormorgado/Dropbox/pysysinfo/server'
+let g:netrw_dirhist_8='/home/igormorgado/pysys/Source/server'

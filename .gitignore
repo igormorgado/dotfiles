@@ -1,5 +1,3 @@
-tags
-.tags
 # SSH Stuff
 *authorized_keys*
 *id_rsa*
@@ -11,21 +9,21 @@ tags
 *igormorgado.pub*
 *known_hosts*
 
-*.old
+_bash_history
+.bash_history
+_bash_nda
 *cgg*
 *CGG*
-.bash_history
-_bash_history
-_bash_nda
+_config/dotsecrets/dotsecrets.yaml
 _config/gcloud/
 _config/gcloud/*
-_fzf/
-_local/share/fonts/
 _fonts/
-_local/share/mc/history
-_vim/plugged/
-_vim/gutentags
-edown.sh
-_vim/.netrwhist
+_irssi/config
 _irssi/logs/
-_tmux/resurrect/*
+_local/share/fonts/
+_local/share/mc/history
+_mutt/alias
+_mutt/mutt_secrets
+*.old
+tags
+.tags

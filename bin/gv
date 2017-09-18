@@ -1,3 +1,0 @@
-#!/bin/bash
-
-command gvim --remote-silent "$@" || command gvim "$@"

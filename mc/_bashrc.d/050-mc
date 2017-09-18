@@ -1,0 +1,2 @@
+# MC settings
+export MC_SKIN=$HOME/.config/mc/solarized.ini

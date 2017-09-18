@@ -1,0 +1,23 @@
+! -- Pencil -------------------------------------------------------- {{{
+!
+!   A color scheme inspired by iA Writer
+!   <https://github.com/reedes/vim-colors-pencil>
+!
+! }}}
+
+! LIGHT
+!
+! -- Colors -------------------------------------------------------- {{{
+
+! These should point to colors in colorspace
+
+#define base03 rebase2
+#define base02 rebase02
+#define base01 rebase1
+#define base00 rebase0
+#define base0  rebase00
+#define base1  rebase01
+#define base2  rebase03
+#define base3  rebase3
+
+! vim:foldmethod=marker:filetype=xdefaults

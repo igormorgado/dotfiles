@@ -1,0 +1,15 @@
+!! Some niceties
+!! C-M to maximize  window
+!! C-R to restore window
+!! Mouse selects to clipboard AND primary
+!! C-S-C copy
+!! C-S-V paste (as windoze expects)
+*VT100.translations: #override \n\\
+    Ctrl <Key>M: 	maximize() \n\\
+    Ctrl Shift <Key>M: 	restore() \n\\
+    Ctrl Alt <Key>S: 	secure() \n\\
+    Ctrl Shift <Key>C: 	copy-selection(CLIPBOARD) \n\\
+    Ctrl Shift <Key>V: 	insert-selection(CLIPBOARD) \n\\
+    <Btn1Up>: 		select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\\
+    Ctrl Shift <Btn1Up>:      exec-formatted("xdg-open '%t'", PRIMARY) \n
+

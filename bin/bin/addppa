@@ -1,0 +1,24 @@
+#!/bin/bash
+
+TMPKEYFILE="/tmp/.aptaddkey_${RANDOM}.txt"
+
+while [ $# -gt 0 ]; do
+    ppa_name=${1#*:}
+    if [ -z "$ppa_name" ]
+    then
+        echo "PPA name not found"
+        echo "Utility to add PPA repositories in your debian machine"
+        echo "$0 ppa:user/ppa-name"
+		exit
+	fi
+    
+    echo "deb http://ppa.launchpad.net/$ppa_name/ubuntu zesty main" | sudo tee "/etc/apt/sources.list.d/${ppa_name/\//_}.list"
+    sudo apt-get update >> /dev/null 2> "${TMPKEYFILE}"
+    key=$( sed -n '/NO_PUBKEY/ s/.*NO_PUBKEY //pg' "${TMPKEYFILE}")
+	if [ -n "${key}" ]; then
+	    sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys "${key}"
+	fi
+    rm -rf "${TMPKEYFILE}"
+
+	shift
+done
