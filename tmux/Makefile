@@ -17,8 +17,7 @@ tmux:
 	~/.tmux/plugins/tpm/bin/install_plugins
 
 tmuxclean:
-	@rm -rf ~/.tmux/plugins
+	@rm -rf ~/.tmux
 	@rm -f  ~/.tmux.conf
-	@rm -f  ~/.tmux
 	@rm -f  ~/.bashrc.d/050-tmux
 
