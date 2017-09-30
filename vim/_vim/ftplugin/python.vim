@@ -19,17 +19,38 @@ setlocal foldmethod=expr
 " Highlight
 let python_hightlight_all = 1
 
-match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
+au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
+au BufRead,BufNewFile *.py,*.pyw let b:comment_leader = '#'
+" highlight BadWhitespace ctermbg=red guibg=red
+
+if has("python3")
+    nnoremap <buffer> <F5> :py3file %<cr>
+
+    " py from vim import buffers, windows, command, current, error
+    " py import vim, sys
+    " py from vimpy import 
+
+    " command! PyExecBuffer py exec('\n'.join(current.buffer))
+    " nnoremap <F5> :PyExecBuffer<CR>
+    " inoremap <F5> <Esc><F5><CR>a
+
+elseif has("python")
+    nnoremap <buffer> <F5> :pyfile %<cr>
+else
+    nnoremap <buffer> <F5> :exec '!python3' % <cr>
+endif
+
 
 noremap <buffer> <F8> :call Autopep8()<CR>
-let g:autopep8_ignore="E501,W293"
-let g:autopep8_select="E501,W293"
+" let g:autopep8_ignore="E501,W293"
+" let g:autopep8_select="E501,W293"
 let g:autopep8_pep8_passes=100
 let g:autopep8_max_line_length=99
 let g:autopep8_diff_type='horizontal'
 
-if has('python')
-python << EOF
+if has('python3')
+python3 << EOF
 import os.path
 import sys
 import vim
@@ -44,7 +65,7 @@ for p in sys.path:
         vim.command(r"set path+=%s" % (p.replace(" ",r"\ ")))
 EOF
 endif
- 
+
 " Load up virtualenv's vimrc if it exists
 if filereadable($VIRTUAL_ENV . '/.vimrc')
     source $VIRTUAL_ENV/.vimrc

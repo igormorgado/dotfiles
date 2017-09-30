@@ -16,7 +16,7 @@ c.InteractiveShellApp.exec_lines = [
     'pd = pandas'
 ]
 
-c.InteractiveShell.autoindent = True
+c.InteractiveShell.autoindent = False
 c.InteractiveShell.colors = 'Linux'
 c.InteractiveShell.confirm_exit = False
 c.InteractiveShell.deep_reload = True
@@ -26,9 +26,9 @@ c.InteractiveShell.xmode = 'Context'
 c.TerminalInteractiveShell.prompts_class.in_template  = 'In [\#]: '
 c.TerminalInteractiveShell.prompts_class.in2_template = '   .\D.: '
 c.TerminalInteractiveShell.prompts_class.out_template = 'Out[\#]: '
-c.TerminalInteractiveShell.prompts_class.justify = True
+c.TerminalInteractiveShell.prompts_class.justify = False
 
-c.PrefilterManager.multi_line_specials = True
+c.PrefilterManager.multi_line_specials = False
 
 c.AliasManager.user_aliases = [
  ('la', 'ls -al')

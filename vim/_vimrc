@@ -77,6 +77,7 @@ if has("gui_running")
     set guioptions-=m
     set guioptions-=T
 endif
+
 set mouse=a
 
 " Some :colors
@@ -290,6 +291,13 @@ nnoremap <S-F12>      :cnewer<CR>
 " Functions {{{
 " ======================================================================
 
+
+function! EasyVim()
+    inoremap <C-v> <ESC>"+pa
+    vnoremap <C-c> "+y
+    vnoremap <C-d> "+d
+endfunction
+
 function! HardVim()
     nnoremap <up> <nop>
     nnoremap <down> <nop>
@@ -300,7 +308,8 @@ function! HardVim()
     inoremap <left> <nop>
     inoremap <right> <nop>
 endfunction
-call HardVim()
+" I don't need enforce this anymore
+" call HardVim()
 
 function! Preserve(command)
   " Preparation: save last search, and cursor position.
