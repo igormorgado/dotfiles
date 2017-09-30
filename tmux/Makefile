@@ -14,7 +14,7 @@ tmux:
 	@rm -rf ${HOME}/.tmux/plugins
 	@mkdir -p ${HOME}/.tmux/plugins
 	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-	${HOME}/.tmux/plugins/tpm/bin/install_plugins
+	~/.tmux/plugins/tpm/bin/install_plugins
 
 tmuxclean:
 	@rm -rf ${HOME}/.tmux/plugins
