@@ -1,6 +1,11 @@
 TOPTARGETS := all clean
 
-PACKS := bin bash vim mc tmux python x11
+TERMINAL = bin bash vim mc tmux python
+XWIN = x11
+EXTRA := alacritty cgg gcp terminology todo
+
+PACKS := $(TERMINAL) $(XWIN)
+
 
 # TODO
 # ssh
@@ -11,7 +16,6 @@ PACKS := bin bash vim mc tmux python x11
 # htop
 # packages installer !!
 
-EXTRA := alacritty cgg gcp terminology todo
 
 $(TOPTARGETS): $(PACKS)
 $(PACKS):

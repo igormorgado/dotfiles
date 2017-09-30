@@ -10,7 +10,9 @@ tmux:
 	@mkdir -p ${HOME}/.bashrc.d/
 	$(foreach f,$(tmuxfiles),ln -sf $(dir $(mkfile_path))_$(f) ${HOME}/.$(f);)
 	$(foreach f,$(rcdfiles),ln -sf $(dir $(mkfile_path))_bashrc.d/$(f) ${HOME}/.bashrc.d/$(f);)
-	/usr/share/tmux-plugin-manager/bin/install_plugins
+	@mkdir -p ${HOME}/.tmux/plugins
+	git clone https://github.com/tmux-plugins/tpm ${HOME}/.tmux/plugins/tpm
+	${HOME}/.tmux/plugins/tpm/bin/install_plugins
 
 tmuxclean:
 	@rm -f ${HOME}/.tmux.conf

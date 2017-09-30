@@ -1,3 +1,11 @@
+gcp/
+git/
+irssi/
+mutt/
+python/_ipython/_ipython
+python/_ipython/profile_default/db/
+ssh/
+
 # SSH Stuff
 *authorized_keys*
 *id_rsa*
