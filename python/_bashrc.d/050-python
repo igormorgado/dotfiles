@@ -1,23 +1,19 @@
 #!/usr/bin/bash
 # Python stuff
 
-# Adding some pythonpaths
-
-if [ -r "${HOME}/.local/lib/python2.7" ] || [ -r "${HOME}/.local/lib/python3.5" ]; then
-	export PYTHONPATH=${HOME}/.local/lib/:${PYTHONPATH}
-fi
-
-if [ -r "${HOME}/.local/share/jupyter/extensions" ];then
-	export PYTHONPATH=${HOME}/.local/share/jupyter/extensions:${PYTHONPATH}
-fi
-
 PYTHONSTARTUP=~/.pythonrc.py
 [ -r "${PYTHONSTARTUP}" ] && export PYTHONSTARTUP
 
-# For python virtualenv 
-VIRTUALENV_DIR=${HOME}/venv/
-if [ -r "${VIRTUALENV_DIR}/bin/activate" ]; then
-    source "${VIRTUALENV_DIR}/bin/activate"
-fi
+#export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PATH="/home/imorgado/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+pyenv  activate venv36
+
+## For python virtualenv 
+#VIRTUALENV_DIR=${HOME}/venv/
+#if [ -r "${VIRTUALENV_DIR}/bin/activate" ]; then
+#    source "${VIRTUALENV_DIR}/bin/activate"
+#fi
 
 # vim: ft=sh:
