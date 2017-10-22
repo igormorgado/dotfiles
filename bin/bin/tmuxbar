@@ -19,6 +19,7 @@ if [ -x ${dropbox} ]; then
 	[[ ${dstatus} == *"Up to date"* ]]		 && d+="O"
 	[[ ${dstatus} == *"isn't responding"* ]] && d+="#"
 	[[ ${dstatus} == *"isn't running"* ]]	 && d+="X"
+	[[ ${dstatus} == *"selective sync"* ]]	 && d+="s"
 	statusbar+="${d} "
 fi
 

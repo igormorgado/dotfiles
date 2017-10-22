@@ -4,11 +4,15 @@
 PYTHONSTARTUP=~/.pythonrc.py
 [ -r "${PYTHONSTARTUP}" ] && export PYTHONSTARTUP
 
-#export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-export PATH="/home/imorgado/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-pyenv  activate venv36
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+addpath "${HOME}/.pyenv/bin"
+
+
+if which pyenv; then
+	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+	pyenv  activate venv36
+fi
 
 ## For python virtualenv 
 #VIRTUALENV_DIR=${HOME}/venv/
