@@ -1,7 +1,7 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 vimfiles = vimrc ctags
-vimfiledir = after colors ftplugin spell 
+vimfiledir = after ftplugin spell 
 
 all: vim
 clean: vimclean 
