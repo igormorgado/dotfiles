@@ -8,7 +8,6 @@ set nocompatible
 filetype off
 call plug#begin('~/.vim/plugged')
 
-
 Plug 'igormorgado/vim-tbone'
 Plug 'kshenoy/vim-signature'
 Plug 'romainl/flattened'
@@ -50,12 +49,13 @@ let g:tmux_navigator_disable_when_zoomed = 1
 
 
 " FOR PYTHON
-Plug 'davidhalter/jedi-vim'
-let g:jedi#use_splits_not_buffers = "bottom"
-" let g:jedi#use_tabs_not_buffers = 1
-" let g:jedi#popup_on_dot = 0
-" let g:jedi#popup_select_first = 0
-" let g:jedi#show_call_signatures = "1"
+if has('python3')
+    Plug 'davidhalter/jedi-vim'
+    let g:jedi#use_splits_not_buffers = "bottom"
+    " let g:jedi#use_tabs_not_buffers = 1
+    " let g:jedi#popup_on_dot = 0
+    " let g:jedi#popup_select_first = 0
+    " let g:jedi#show_call_signatures = "1"
 
 Plug 'tmhedberg/SimpylFold'
 let g:SimpylFold_fold_import = 1
@@ -64,6 +64,7 @@ let g:SimpylFold_fold_docstring = 0
 
 Plug 'vim-scripts/indentpython'
 Plug 'tell-k/vim-autopep8'
+endif
 
 "Plug 'vim-latex/vim-latex'
 "let g:tex_flavor = "latex" 
