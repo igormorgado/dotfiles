@@ -1,6 +1,6 @@
 TOPTARGETS := all clean
 
-TERMINAL = bin bash vim mc tmux python
+TERMINAL = bin bash vim mc python tmux 
 XWIN = x11
 EXTRA := alacritty cgg gcp terminology todo
 
