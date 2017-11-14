@@ -4,7 +4,7 @@ TERMINAL = bin bash vim mc python tmux
 XWIN = x11
 EXTRA := alacritty cgg gcp terminology todo
 
-PACKS := $(TERMINAL) $(XWIN)
+PACKS := $(TERMINAL)
 
 
 # TODO
@@ -20,6 +20,8 @@ PACKS := $(TERMINAL) $(XWIN)
 $(TOPTARGETS): $(PACKS)
 $(PACKS):
 	$(MAKE) -C $@ $(MAKECMDGOALS)
+
+all: $(TERMINAL) $(XWIN)
 
 .PHONY: $(TOPTARGETS) $(PACKS)
 

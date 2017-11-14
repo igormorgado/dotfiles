@@ -1,16 +1,21 @@
+# Very basic
+build-essential
+make
+vim
+git
+tmux
+mc
+
 # Dev
 autoconf
 autogen
 automake
 autopoint
-build-essential
 cmake
 cvs
 exuberant-ctags
 fdupes
 m4
-make
-git
 subversion
 mercurial
 pkg-config
@@ -27,13 +32,11 @@ python3-virtualenv
 
 # Tools
 bash-completion
-tmux
 tmux-plugin-manager
 htop
 irssi
 links
 w3m
-mc
 mtr-tiny
 mutt
 ncdu

@@ -19,8 +19,8 @@ setlocal foldmethod=expr
 " Highlight
 let python_hightlight_all = 1
 
-au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
+"au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
+"au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
 au BufRead,BufNewFile *.py,*.pyw let b:comment_leader = '#'
 " highlight BadWhitespace ctermbg=red guibg=red
 
