@@ -1,0 +1,6 @@
+CWPROOT=/opt/cwp_su_all_44R1
+
+if [ -d ${CWPROOT} ]; then
+	export CWPROOT
+	addpath $CWPROOT/bin
+fi

@@ -5,6 +5,19 @@
 # if the new value already exists, this will avoid useless (and ugly)
 # duplication.
 
+function bmajor() {
+	echo A
+}
+
+function bminor() {
+	echo A
+}
+
+function brel() {
+	echo A
+}
+
+# TODO: Verify if new PATH isn't already on PATH var
 function addpath() {
 	# Insert (in the beginning) a dir to ${PATH} (only if exists)
     [ -d "${1}" ] && export PATH="${1}:${PATH}"

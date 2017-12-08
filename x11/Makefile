@@ -3,7 +3,7 @@ current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 x11files = xprofile XCompose
 
 all: x11 xresources
-clean: x11clean xresourcesclean
+clean: x11clean 
 
 x11:
 	@mkdir -p ${HOME}/.local/share/applications
