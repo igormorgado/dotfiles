@@ -1,10 +1,12 @@
 c = get_config()
 
+c.TerminalIPythonApp.display_banner = True
+c.InteractiveShell.confirm_exit = False
+
 c.InteractiveShellApp.extensions = ['autoreload']
 c.InteractiveShellApp.extensions.append('Cython')
 c.InteractiveShellApp.exec_lines = ['%autoreload 2']
 
-c.TerminalIPythonApp.display_banner = False
 c.InteractiveShellApp.log_level = 0
 
 c.InteractiveShellApp.exec_lines = [
@@ -18,8 +20,7 @@ c.InteractiveShellApp.exec_lines = [
 
 c.InteractiveShell.autoindent = False
 c.InteractiveShell.colors = 'Linux'
-c.InteractiveShell.confirm_exit = False
-c.InteractiveShell.deep_reload = True
+#c.InteractiveShell.deep_reload = True
 c.InteractiveShell.editor = 'vim'
 c.InteractiveShell.xmode = 'Context'
 
