@@ -1,6 +1,6 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
-pythonfiles = pythonrc.py pdbrc pdbrc.py ipython/profile_default/ipython_config.py
+pythonfiles = pythonrc.py pdbrc pdbrc.py ipython/profile_default/ipython_config.py pylintrc
 rcdfiles = 050-python
 
 all: python

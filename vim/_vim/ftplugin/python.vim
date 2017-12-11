@@ -22,7 +22,14 @@ let python_hightlight_all = 1
 "au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 "au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
 au BufRead,BufNewFile *.py,*.pyw let b:comment_leader = '#'
+au BufWritePost *.py make
 " highlight BadWhitespace ctermbg=red guibg=red
+
+" Set pylint when saving file
+if (executable("pylint"))
+    set makeprg=pylint\ --reports=n\ --output-format\ parseable\ %:p
+    set errorformat=%f:%l:\ %m
+endif
 
 if has("python3")
     nnoremap <buffer> <F5> :py3file %<cr>
@@ -49,6 +56,7 @@ let g:autopep8_pep8_passes=100
 let g:autopep8_max_line_length=99
 let g:autopep8_diff_type='horizontal'
 
+" TODO: Need to change to pyenv instead virtualenv
 if has('python3')
 python3 << EOF
 import os.path
