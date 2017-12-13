@@ -34,13 +34,21 @@ augroup END
 let g:markdown_fenced_langagues = ['html', 'python','bash=sh','c']
 
 Plug 'tpope/vim-vinegar'
-let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_list_hide  = '\(^\|\s\s\)\zs\.\S\+'
+let g:netrw_list_hide .= '\.pyc$,'
+let g:netrw_list_hide .= '\.o$,\.obj$'
+let g:netrw_list_hide .= '\.a$,\.so$,\.lib$,\.dll$,'
+let g:netrw_list_hide .= '\.pyc\s\+,'
+let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+'
+let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
+"nnoremap - :call NetrwBrowseUpDir(1)
+
 
 if v:version > 740
- Plug 'ludovicchabant/vim-gutentags'
- let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
- let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
- let g:gutentags_project_root=[ 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
+    Plug 'ludovicchabant/vim-gutentags'
+    let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
+    let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
+    let g:gutentags_project_root=[ 'vMakefile.include', 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
 endif
 
 Plug 'christoomey/vim-tmux-navigator'
@@ -57,13 +65,13 @@ if has('python3')
     " let g:jedi#popup_select_first = 0
     " let g:jedi#show_call_signatures = "1"
 
-Plug 'tmhedberg/SimpylFold'
-let g:SimpylFold_fold_import = 1
-let g:SimpylFold_docstring_preview = 1
-let g:SimpylFold_fold_docstring = 0
+    Plug 'tmhedberg/SimpylFold'
+    let g:SimpylFold_fold_import = 1
+    let g:SimpylFold_docstring_preview = 1
+    let g:SimpylFold_fold_docstring = 0
 
-Plug 'vim-scripts/indentpython'
-Plug 'tell-k/vim-autopep8'
+    Plug 'vim-scripts/indentpython'
+    Plug 'tell-k/vim-autopep8'
 endif
 
 "Plug 'vim-latex/vim-latex'
@@ -121,8 +129,8 @@ endif
   set statusline+=\ lines
 endif
 
-highlight Comment gui=italic
-highlight Comment cterm=italic
+"highlight Comment gui=italic
+"highlight Comment cterm=italic
 
 " }}}
 
@@ -157,7 +165,7 @@ set hlsearch
 
 " Menu
 set wildmode=longest:list,full
-set wildignore+=tags,cscope.out,*.o,*~,*.pyc,.tags
+set wildignore+=tags,cscope.out,*.o,*~,*.pyc,.tags,*.exe,*.obj,*.bak
 set wildignorecase
 
 " File handling
@@ -359,6 +367,7 @@ if has("autocmd")
         autocmd!
         autocmd BufNewFile,BufRead *.xhtml  setlocal ft=html
         autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2   setlocal ft=html
+        autocmd BufNewFile,BufRead *.cu,*.cuh set filetype=cpp
     augroup END
 
 endif

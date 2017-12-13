@@ -301,6 +301,16 @@ export COMP_TAR_INTERNAL_PATHS=1
 
 #}}}
 
+# Overload default utilities {{{
+######################################################################
+
+if [ -x `which pinfo` ]; then
+	alias man='pinfo -m'
+fi
+
+# }}}
+
+
 # Run all files greater than 99 on ~/.bashrc.d/
 for file in ${HOME}/.bashrc.d/[123456789]*;do
 	source "${file}"
