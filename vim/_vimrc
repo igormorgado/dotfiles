@@ -374,5 +374,11 @@ endif
 
 "}}}
 
+runtime ftplugin/man.vim
+set keywordprg=:Man
+
+"if (executable("pinfo"))
+"    set keywordprg=pinfo
+"endif
 
 " vim:foldmethod=marker:foldlevel=0
