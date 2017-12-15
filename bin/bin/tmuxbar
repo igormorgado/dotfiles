@@ -5,8 +5,7 @@ statusbar=""
 ##############################
 # DROPBOX
 d=""
-dropbox=$(which dropbox)
-if [ -x ${dropbox} ]; then
+if [ $(command -v dropbox >/dev/null 2>&1 ) ]; then
 
 	dstatus=$( dropbox status )
 

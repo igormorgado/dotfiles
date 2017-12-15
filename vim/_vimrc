@@ -53,6 +53,14 @@ endif
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_save_on_switch = 2
 let g:tmux_navigator_disable_when_zoomed = 1
+let g:tmux_navigator_no_mappings = 1
+
+" Standard <C-\> conflicts with vim-CScope"
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
 
 
 " FOR PYTHON
@@ -72,6 +80,19 @@ if has('python3')
     Plug 'vim-scripts/indentpython'
     Plug 'tell-k/vim-autopep8'
 endif
+
+" Experimental
+Plug 'hari-rangarajan/CCTree'
+Plug 'hari-rangarajan/ccglue'
+" set g:CCTreeCscopeDb = "cscope.out"
+" set g:CCTreeMinVisibleDepth = 3
+" " Can be right/left above/below
+" set g:CCTreeOrientation = leftabove
+" set g:CCTreeWindowVertical = 1
+" " 1 compact 2: normal 3: wide
+" set g:CCTreeDisplayMode = 2
+" set g:CCTreeHilightCallTree = 1
+
 
 "Plug 'vim-latex/vim-latex'
 "let g:tex_flavor = "latex" 
@@ -377,9 +398,14 @@ endif
 runtime ftplugin/man.vim
 set keywordprg=:Man
 
-:nnoremap gr :grep <cword> *<CR>
-:nnoremap Gr :grep <cword> %:p:h/*<CR>
-:nnoremap gr :grep '\b<cword>\b' *<CR>
-:nnoremap Gr :grep '\b<cword>\b' %:p:h/*<CR>
+nnoremap gr :grep <cword> *<CR>
+nnoremap Gr :grep <cword> %:p:h/*<CR>
+nnoremap gr :grep '\b<cword>\b' *<CR>
+nnoremap Gr :grep '\b<cword>\b' %:p:h/*<CR>
+
+
+nnoremap <silent> + :exe "resize " . (winheight(0) * 6/5)<CR>
+nnoremap <silent> = :exe "resize " . (winheight(0) * 5/6)<CR>
+
 
 " vim:foldmethod=marker:foldlevel=0
