@@ -41,7 +41,6 @@ let g:netrw_list_hide .= '\.a$,\.so$,\.lib$,\.dll$,'
 let g:netrw_list_hide .= '\.pyc\s\+,'
 let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+'
 let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
-"nnoremap - :call NetrwBrowseUpDir(1)
 
 
 if v:version > 740
@@ -153,6 +152,7 @@ set conceallevel=0
 " Navigating
 set viminfo^=%
 set scrolloff=20
+set number
 
 " Indent
 set shiftround
@@ -238,8 +238,8 @@ nnoremap _= :call Preserve("normal gg=G")<CR>
 command! W :w
 
 " sudo write this
-cmap W! w !sudo tee % >/dev/null
-cmap w!! w !sudo tee % >/dev/null
+cnoremap W! w !sudo tee % >/dev/null
+cnoremap w!! w !sudo tee % >/dev/null
 
 "}}}
 
@@ -359,8 +359,8 @@ if has("autocmd")
 
     augroup numbering
         autocmd!
-        autocmd InsertEnter * :set number | :set norelativenumber
-        autocmd InsertLeave * :set relativenumber | :set nonumber
+        autocmd InsertEnter * :set norelativenumber
+        autocmd InsertLeave * :set relativenumber
     augroup END
 
     augroup filetypes
@@ -377,8 +377,9 @@ endif
 runtime ftplugin/man.vim
 set keywordprg=:Man
 
-"if (executable("pinfo"))
-"    set keywordprg=pinfo
-"endif
+:nnoremap gr :grep <cword> *<CR>
+:nnoremap Gr :grep <cword> %:p:h/*<CR>
+:nnoremap gr :grep '\b<cword>\b' *<CR>
+:nnoremap Gr :grep '\b<cword>\b' %:p:h/*<CR>
 
 " vim:foldmethod=marker:foldlevel=0

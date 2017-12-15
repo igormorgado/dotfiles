@@ -12,17 +12,17 @@ setlocal foldmethod=syntax
 " source $VIMRUNTIME/syntax/syntax.vim
 " source $HOME/.vim/plugged/xmledit/ftplugin/xml.vim
 " inoremap \> >
-" iunmap <buffer> <leader>>
+" iunnoremap <buffer> <leader>>
 " echo "XML mode is on"
 " 
-" nmap <leader>xl <leader>cd:%w !xmllint --valid --noout -
-" nmap <leader>xr <leader>cd:%w !rxp -V -N -s -x
-" nmap <leader>xs :%!xsltlint
-" nmap <leader>xd :%w !xmllint --dtdvalid
+" nnoremap <leader>xl <leader>cd:%w !xmllint --valid --noout -
+" nnoremap <leader>xr <leader>cd:%w !rxp -V -N -s -x
+" nnoremap <leader>xs :%!xsltlint
+" nnoremap <leader>xd :%w !xmllint --dtdvalid
 "  \ "http://www.oasis-open.org/docbook/xml/4.2/docbookx.dtd"
 "  \ --noout -
 " 
-" vmap <leader>px !xmllint --format -
-" nmap <leader>px !!xmllint --format -
-" nmap <leader>pxa :%!xmllint --format -
+" vnoremap <leader>px !xmllint --format -
+" nnoremap <leader>px !!xmllint --format -
+" nnoremap <leader>pxa :%!xmllint --format -
  
