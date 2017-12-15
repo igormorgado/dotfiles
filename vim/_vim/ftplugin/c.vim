@@ -54,7 +54,7 @@ endif
 if filereadable("cctree.out")
     augroup cctree
         autocmd!
-        autocmd BufNewFile,BufRead *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB  cctree.out
+        autocmd BufNewFile,BufRead *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDBFromDisk  cctree.out
     augroup END
     let g:CCTreeDisplayMode=2
     let g:CCTreeRecursiveDepth=5
