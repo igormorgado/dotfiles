@@ -63,21 +63,27 @@ endif
 "   :CCTreeSaveXRefDB cctree.out
 " To browse hover a function and tye:
 " <C-\><  or > = -
-if filereadable("cscope.out") && !filereadable("cctree.out")
-    echom "Converting CCTree"
-    execute ":CCTreeLoadDB cscope.out"
-    execute ":CCTreeSaveXRefDB cctree.out"
-    echom "Converted CCTree"
-endif
+if exists('loaded_cctree')
 
-if filereadable("cctree.out")
-    augroup cctree
-        autocmd!
-        autocmd BufNewFile,BufRead *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDBFromDisk  cctree.out
-    augroup END
     let g:CCTreeDisplayMode=2
     let g:CCTreeRecursiveDepth=5
+    let g:CCTreeUseUTF8Symbols=1
+
+    if filereadable("cscope.out") && !filereadable("cctree.out")
+        execute ":CCTreeLoadDB cscope.out"
+        execute ":CCTreeSaveXRefDB cctree.out"
+        echom "Converted CCTree"
+    endif
+
+    augroup loadcctree
+        autocmd!
+        autocmd VimEnter *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out
+        " Why this one didn't work while loading files from commandline or
+        " reading in buffers?
+        "autocmd BufNewFile,BufReadPost *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out 
+    augroup END
 endif
+
 
 " setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
 " setlocal foldexpr< foldmethod<
