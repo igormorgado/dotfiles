@@ -1,0 +1,5 @@
+[user]
+	email = morgado.igor@gmail.com
+	name = Igor Morgado
+[core]
+	excludesfile = /home/igormorgado/.gitignore
