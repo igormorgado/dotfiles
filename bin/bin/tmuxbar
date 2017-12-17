@@ -4,8 +4,9 @@ statusbar=""
 
 ##############################
 # DROPBOX
+##############################
 d=""
-if [ $(command -v dropbox >/dev/null 2>&1 ) ]; then
+if [ -x "$(which dropbox)"  ]; then
 
 	dstatus=$( dropbox status )
 
@@ -19,22 +20,18 @@ if [ $(command -v dropbox >/dev/null 2>&1 ) ]; then
 	[[ ${dstatus} == *"isn't responding"* ]] && d+="#"
 	[[ ${dstatus} == *"isn't running"* ]]	 && d+="X"
 	[[ ${dstatus} == *"selective sync"* ]]	 && d+="s"
+
 	statusbar+="${d} "
 fi
 
 ##############################
 # Check IDLE
+##############################
 checkidle_status="/var/run/checkidle/status" 
 if [ -r "${checkidle_status}" ]; then
-	CI=( $( cat ${checkidle_status} ) )
+	CI=( $( cat "${checkidle_status}" ) )
 	printf -v c "%s,%s(%s)" "${CI[1]}" "${CI[2]}" "${CI[3]}"
 	statusbar+="${c} "
 fi
-
-##############################
-# Load average
-#l=$( cut -d " " -f 1-3 /proc/loadavg )
-#statusbar+="${l} "
-
 
 echo "${statusbar}"
