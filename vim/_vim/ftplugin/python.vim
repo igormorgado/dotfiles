@@ -1,3 +1,8 @@
+" NEED TO COMPARE:
+"  py3file
+"  pylint
+"  autopep8
+
 " Line wrap
 " setlocal wrap
 " setlocal linebreak
@@ -21,8 +26,6 @@ let python_hightlight_all = 1
 
 "au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
 "au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
-au BufRead,BufNewFile *.py,*.pyw let b:comment_leader = '#'
-au BufWritePost *.py make
 " highlight BadWhitespace ctermbg=red guibg=red
 
 " Set pylint when saving file
@@ -31,6 +34,13 @@ if (executable("pylint"))
     set errorformat=%f:%l:\ %m
 endif
 
+augroup pythonglobal
+    autocmd!
+    au BufRead,BufNewFile *.py,*.pyw let b:comment_leader = '#'
+    au BufWritePost *.py make
+augroup END
+
+" Execute python code inside vim buffer
 if has("python3")
     nnoremap <buffer> <F5> :py3file %<cr>
 
@@ -48,13 +58,6 @@ else
     nnoremap <buffer> <F5> :exec '!python3' % <cr>
 endif
 
-
-noremap <buffer> <F8> :call Autopep8()<CR>
-" let g:autopep8_ignore="E501,W293"
-" let g:autopep8_select="E501,W293"
-let g:autopep8_pep8_passes=100
-let g:autopep8_max_line_length=99
-let g:autopep8_diff_type='horizontal'
 
 " TODO: Need to change to pyenv instead virtualenv
 if has('python3')

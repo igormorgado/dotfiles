@@ -23,7 +23,10 @@ setlocal foldlevel=4
 setlocal fileformat=unix
 setlocal encoding=utf-8
 
+
+
 compiler gcc
+
 if filereadable('Makefile')
     inoremap <buffer> <F5> <ESC>:w <bar> :make <CR>
     nnoremap <buffer> <F5> :w <bar> :make<CR>
@@ -46,9 +49,25 @@ else
     nnoremap <buffer> <F5> :w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
 endif
 
+
 let fname = expand('<afile>:p:h') . '/types.vim'
 if filereadable(fname)
   exe 'so ' . fname
+endif
+
+" To build cctree.out file:
+" Install cscope
+" In source dir run cscope -b -k -R
+" In vim load cscope file with:
+"   :CCTreeLoadDb cscope.out
+"   :CCTreeSaveXRefDB cctree.out
+" To browse hover a function and tye:
+" <C-\><  or > = -
+if filereadable("cscope.out") && !filereadable("cctree.out")
+    echom "Converting CCTree"
+    execute ":CCTreeLoadDB cscope.out"
+    execute ":CCTreeSaveXRefDB cctree.out"
+    echom "Converted CCTree"
 endif
 
 if filereadable("cctree.out")

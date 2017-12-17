@@ -42,7 +42,7 @@ let g:netrw_list_hide .= '\.pyc\s\+,'
 let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+'
 let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
 
-
+" I still live in machines that vim is 730
 if v:version > 740
     Plug 'ludovicchabant/vim-gutentags'
     let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
@@ -54,14 +54,25 @@ Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_save_on_switch = 2
 let g:tmux_navigator_disable_when_zoomed = 1
 let g:tmux_navigator_no_mappings = 1
-
 " Standard <C-\> conflicts with vim-CScope"
 nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
 nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
-
+" inoremap <silent> <C-h> <esc>:TmuxNavigateLeft<cr>
+" inoremap <silent> <C-j> <esc>:TmuxNavigateDown<cr>
+" inoremap <silent> <C-k> <esc>:TmuxNavigateUp<cr>
+" inoremap <silent> <C-l> <esc>:TmuxNavigateRight<cr>
+" inoremap <silent> <C-g> <esc>:TmuxNavigatePrevious<cr>
+    "We didn't loaded tmux navigator, use simple keys
+"    inoremap <C-k> <C-w>k
+"    inoremap <C-l> <C-w>l
+"    inoremap <C-h> <C-w>h
+"    inoremap <C-j> <C-w>j
+"    nnoremap <C-k> <C-w>k
+"    nnoremap <C-l> <C-w>l
+"    nnoremap <C-h> <C-w>h
 
 " FOR PYTHON
 if has('python3')
@@ -76,9 +87,8 @@ if has('python3')
     let g:SimpylFold_fold_import = 1
     let g:SimpylFold_docstring_preview = 1
     let g:SimpylFold_fold_docstring = 0
-
+else
     Plug 'vim-scripts/indentpython'
-    Plug 'tell-k/vim-autopep8'
 endif
 
 " Experimental
@@ -183,6 +193,7 @@ set showmatch
 set matchpairs+=<:>
 set smartcase
 set hlsearch
+set incsearch
 
 " Menu
 set wildmode=longest:list,full
@@ -227,15 +238,6 @@ set tags=.tags;tags;${HOME}
 
 
 nnoremap <ESC><ESC><ESC> :q<CR>
-" ctrl-jklm  changes to that split
-inoremap <C-k> <C-w>k
-inoremap <C-l> <C-w>l
-inoremap <C-h> <C-w>h
-inoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
 " nnoremap <c-J> <c-w>J
 " nnoremap <c-K> <c-w>K
 " nnoremap <c-L> <c-w>L
@@ -246,7 +248,8 @@ nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%p:h'))<cr>/*<C-d>
 nnoremap <leader>f :find *
 nnoremap <leader>l :set list!<cr>
-nnoremap <leader>ev <C-w><C-v><C-l>:e $MYVIMRC<cr>
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype . '.vim'<CR>
 nnoremap <leader>/ :nohlsearch<cr>
 nnoremap <leader><space> za
 
@@ -274,19 +277,25 @@ nnoremap <F2>      :buffers<CR>:buffer<Space>
 " inoremap <F3>
 " nnoremap <F3>
 
+" Push the current line to the other tmux screen (iteractive)
 inoremap <F4> <ESC>:Texec<CR>j<Insert>
 nnoremap <F4>	   :Texec<CR>j
 vnoremap <F4> 	   :Texec<CR>j 
 
-" Often used to build stuff...
+" Often used to build stuff inside each filetype
 "inoremap <F5> <ESC>
 "nnoremap <F5>
 
 "inoremap <F6> <ESC>
 "nnoremap <F6>
 
+" Need to improve vimgrep
 inoremap <F7> <ESC>:vimgrep // **/*<left><left><left><left><left><left>
 nnoremap <F7>      :vimgrep // **/*<left><left><left><left><left><left>
+nnoremap gr :grep <cword> *<CR>
+nnoremap Gr :grep <cword> %:p:h/*<CR>
+nnoremap gr :grep '\b<cword>\b' *<CR>
+nnoremap Gr :grep '\b<cword>\b' %:p:h/*<CR>
 
 "inoremap <F8> <ESC>
 "nnoremap <F8>
@@ -299,6 +308,7 @@ nnoremap <F7>      :vimgrep // **/*<left><left><left><left><left><left>
 
 " Quickfix navigation
 " Maybe start to use only unimpaired shortcuts
+" q[ q] b[ b] 
 inoremap   <F11> <ESC>:cprev<CR>
 nnoremap   <F11>      :cprev<CR>
 
@@ -358,32 +368,39 @@ endfunction
 " ======================================================================
 
 if has("autocmd")
+
+    " Autosave all when changing focus also ident when savin code.
     augroup autosave
         autocmd!
+        autocmd BufNewFile * :write
         autocmd FocusLost * :wa
-"        autocmd BufWritePre *.py,*.js,*.c :call Preserve("%s/\\s\\+$//e")<CR>
+        autocmd BufWritePre *.py,*.js,*.c :call Preserve("%s/\\s\\+$//e")<CR>
     augroup END
 
+    " Reload $MYVIMRC when writing it
     augroup reload_vimrc
         autocmd!
         autocmd bufwritepost $MYVIMRC source $MYVIMRC
     augroup END
 
+    
+   " Return to last edit position when opening files (You want this!)
     augroup openingbuffer
         autocmd!
-        " Return to last edit position when opening files (You want this!)
         autocmd BufReadPost *
                     \ if line("'\"") > 0 && line("'\"") <= line("$") |
                     \   exe "normal! g`\"" |
                     \ endif |
     augroup END
 
+    " Do my lovely numbering
     augroup numbering
         autocmd!
         autocmd InsertEnter * :set norelativenumber
         autocmd InsertLeave * :set relativenumber
     augroup END
 
+    " Set some uncommon filetymes correctly
     augroup filetypes
         autocmd!
         autocmd BufNewFile,BufRead *.xhtml  setlocal ft=html
@@ -398,14 +415,20 @@ endif
 runtime ftplugin/man.vim
 set keywordprg=:Man
 
-nnoremap gr :grep <cword> *<CR>
-nnoremap Gr :grep <cword> %:p:h/*<CR>
-nnoremap gr :grep '\b<cword>\b' *<CR>
-nnoremap Gr :grep '\b<cword>\b' %:p:h/*<CR>
 
 
 nnoremap <silent> + :exe "resize " . (winheight(0) * 6/5)<CR>
 nnoremap <silent> = :exe "resize " . (winheight(0) * 5/6)<CR>
 
+" Abbreviations {{{
+" =====================================================================
+iabbrev migor morgado.igor@gmail.com
+
+" LVSTHW
+
+" maybe this is good
+inoremap jk <esc>
+
+" }}}
 
 " vim:foldmethod=marker:foldlevel=0
