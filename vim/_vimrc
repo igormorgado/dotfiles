@@ -44,23 +44,23 @@ let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
 
 " I still live in machines that vim is 730
 if v:version > 740
-    Plug 'ludovicchabant/vim-gutentags'
+    " Plug 'ludovicchabant/vim-gutentags'
     let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
     let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
     let g:gutentags_project_root=[ 'vMakefile.include', 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
 endif
 
 " Plug 'christoomey/vim-tmux-navigator'
-let g:tmux_navigator_save_on_switch = 2
-let g:tmux_navigator_disable_when_zoomed = 1
-let g:tmux_navigator_no_mappings = 1
-" Standard <C-\> conflicts with vim-CScope"
-" These keys are not working inside CCTree split
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
+" let g:tmux_navigator_save_on_switch = 2
+" let g:tmux_navigator_disable_when_zoomed = 1
+" let g:tmux_navigator_no_mappings = 1
+" " Standard <C-\> conflicts with vim-CScope"
+" " These keys are not working inside CCTree split
+" nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+" nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
 " inoremap <silent> <C-h> <esc>:TmuxNavigateLeft<cr>
 " inoremap <silent> <C-j> <esc>:TmuxNavigateDown<cr>
 " inoremap <silent> <C-k> <esc>:TmuxNavigateUp<cr>
@@ -75,39 +75,39 @@ nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
 "    nnoremap <C-l> <C-w>l
 "    nnoremap <C-h> <C-w>h
 
-" FOR PYTHON
-if has('python3')
-    Plug 'davidhalter/jedi-vim'
-    let g:jedi#use_splits_not_buffers = "bottom"
-    " let g:jedi#use_tabs_not_buffers = 1
-    " let g:jedi#popup_on_dot = 0
-    " let g:jedi#popup_select_first = 0
-    " let g:jedi#show_call_signatures = "1"
-
-    Plug 'tmhedberg/SimpylFold'
-    let g:SimpylFold_fold_import = 1
-    let g:SimpylFold_docstring_preview = 1
-    let g:SimpylFold_fold_docstring = 0
-else
-    Plug 'vim-scripts/indentpython'
-endif
-
-" Experimental
-" Plug 'hari-rangarajan/CCTree'
-let g:CCTreeKeyHilightTree = '<C-t>'        " Static highlighting
-" Plug 'hari-rangarajan/ccglue'
-" set g:CCTreeCscopeDb = "cscope.out"
-" set g:CCTreeMinVisibleDepth = 3
-" " Can be right/left above/below
-" set g:CCTreeOrientation = leftabove
-" set g:CCTreeWindowVertical = 1
-" " 1 compact 2: normal 3: wide
-" set g:CCTreeDisplayMode = 2
-" set g:CCTreeHilightCallTree = 1
-
-
-"Plug 'vim-latex/vim-latex'
-"let g:tex_flavor = "latex" 
+" " FOR PYTHON
+" if has('python3')
+"     Plug 'davidhalter/jedi-vim'
+"     let g:jedi#use_splits_not_buffers = "bottom"
+"     " let g:jedi#use_tabs_not_buffers = 1
+"     " let g:jedi#popup_on_dot = 0
+"     " let g:jedi#popup_select_first = 0
+"     " let g:jedi#show_call_signatures = "1"
+" 
+"     Plug 'tmhedberg/SimpylFold'
+"     let g:SimpylFold_fold_import = 1
+"     let g:SimpylFold_docstring_preview = 1
+"     let g:SimpylFold_fold_docstring = 0
+" else
+"     Plug 'vim-scripts/indentpython'
+" endif
+" 
+" " Experimental
+" " Plug 'hari-rangarajan/CCTree'
+" let g:CCTreeKeyHilightTree = '<C-t>'        " Static highlighting
+" " Plug 'hari-rangarajan/ccglue'
+" " set g:CCTreeCscopeDb = "cscope.out"
+" " set g:CCTreeMinVisibleDepth = 3
+" " " Can be right/left above/below
+" " set g:CCTreeOrientation = leftabove
+" " set g:CCTreeWindowVertical = 1
+" " " 1 compact 2: normal 3: wide
+" " set g:CCTreeDisplayMode = 2
+" " set g:CCTreeHilightCallTree = 1
+" 
+" 
+" "Plug 'vim-latex/vim-latex'
+" "let g:tex_flavor = "latex" 
 
 call plug#end()
 " }}}
