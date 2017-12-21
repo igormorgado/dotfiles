@@ -8,32 +8,32 @@ set nocompatible
 filetype off
 call plug#begin('~/.vim/plugged')
 
-Plug 'igormorgado/vim-tbone'
-Plug 'kshenoy/vim-signature'
+"Plug 'igormorgado/vim-tbone'
+"Plug 'kshenoy/vim-signature'
 Plug 'romainl/flattened'
-Plug 'romainl/vim-qf'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-eunuch'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-obsession'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-rhubarb'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
+" Plug 'romainl/vim-qf'
+" Plug 'tpope/vim-dispatch'
+" Plug 'tpope/vim-eunuch'
+" Plug 'tpope/vim-fugitive'
+" Plug 'tpope/vim-obsession'
+" Plug 'tpope/vim-repeat'
+" Plug 'tpope/vim-rhubarb'
+" Plug 'tpope/vim-surround'
+" Plug 'tpope/vim-unimpaired'
 
-Plug 'tpope/vim-flagship'
+" Plug 'tpope/vim-flagship'
 set laststatus=2
 set showtabline=2
 set guioptions-=e
 
-Plug 'tpope/vim-markdown'
+" Plug 'tpope/vim-markdown'
 augroup readMarkdown
     autocmd BufNewFile,BufReadPost *.md set filetype=markdown
     autocmd BufNewFile,BufReadPost *.md set conceallevel=2
 augroup END
 let g:markdown_fenced_langagues = ['html', 'python','bash=sh','c']
 
-Plug 'tpope/vim-vinegar'
+" Plug 'tpope/vim-vinegar'
 let g:netrw_list_hide  = '\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_list_hide .= '\.pyc$,'
 let g:netrw_list_hide .= '\.o$,\.obj$'
@@ -50,7 +50,7 @@ if v:version > 740
     let g:gutentags_project_root=[ 'vMakefile.include', 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
 endif
 
-Plug 'christoomey/vim-tmux-navigator'
+" Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_save_on_switch = 2
 let g:tmux_navigator_disable_when_zoomed = 1
 let g:tmux_navigator_no_mappings = 1
@@ -93,9 +93,9 @@ else
 endif
 
 " Experimental
-Plug 'hari-rangarajan/CCTree'
+" Plug 'hari-rangarajan/CCTree'
 let g:CCTreeKeyHilightTree = '<C-t>'        " Static highlighting
-Plug 'hari-rangarajan/ccglue'
+" Plug 'hari-rangarajan/ccglue'
 " set g:CCTreeCscopeDb = "cscope.out"
 " set g:CCTreeMinVisibleDepth = 3
 " " Can be right/left above/below
@@ -293,7 +293,7 @@ vnoremap <F4> 	   :Texec<CR>j
 "nnoremap <F6>
 
 " Need to improve vimgrep
-set grepprg=grep\ --exclude-from='${HOME}/.grep_ignore'\ --exclude-dir\ '.git'\ -Ir
+set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ -Ir
 inoremap <F7> <ESC>:grep  *<left><left>
 nnoremap <F7>      :grep  *<left><left>
 nnoremap gr :grep <cword> *<CR>
