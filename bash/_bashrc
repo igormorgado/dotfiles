@@ -282,6 +282,9 @@ addpkgpath "${HOME}"/lib/pkgconfig
 addlibpath "${HOME}"/lib
 addrunpath "${HOME}"/lib
 
+addmanpath "${HOME}/.local/man"
+addinfopath "${HOME}/.local/info"
+
 # Load some external files
 loadresource ~/.local/bin/factory
 loadresource ~/.bash_aliases

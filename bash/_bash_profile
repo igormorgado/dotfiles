@@ -1,10 +1,5 @@
 # source the users bashrc if it exists
+
 [ -f "${HOME}/.bashrc" ] && source "${HOME}/.bashrc"
-
-[ -d "${HOME}/.local/man" ] && MANPATH="${HOME}/.local/man:${MANPATH}"
-
-[ -d "${HOME}/.local/info" ] && INFOPATH="${HOME}/.local/info:${INFOPATH}"
-
-export MANPATH INFOPATH
 
 # vim: foldmethod=marker:ft=sh:

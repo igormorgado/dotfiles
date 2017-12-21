@@ -3,9 +3,9 @@ current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 rcfiles = gitignore gitconfig
 #rcdfiles = 050-pinfo
 
-all: install
+all: git
 
-install:
+git:
 	@mkdir -p ${HOME}/.bashrc.d
 	$(foreach f,$(rcfiles),ln -sf $(dir $(mkfile_path))_$(f) ${HOME}/.$(f);)
 	$(foreach f,$(rcdfiles),ln -sf $(dir $(mkfile_path))_bashrc.d/$(f) ${HOME}/.bashrc.d/$(f);)

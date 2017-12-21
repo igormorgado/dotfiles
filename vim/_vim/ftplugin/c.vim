@@ -27,10 +27,16 @@ setlocal encoding=utf-8
 
 compiler gcc
 
-if filereadable('Makefile')
+if filereadable('Makefile') 
     inoremap <buffer> <F5> <ESC>:w <bar> :make <CR>
     nnoremap <buffer> <F5> :w <bar> :make<CR>
-elseif filereadable('vMakefile.include')
+else
+    inoremap <buffer> <F5> <ESC>:w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
+    nnoremap <buffer> <F5> :w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
+endif
+
+
+if filereadable('vMakefile.include')
     setlocal tabstop=2
     setlocal shiftwidth=2
     setlocal softtabstop=2
@@ -38,31 +44,31 @@ elseif filereadable('vMakefile.include')
     setlocal colorcolumn=79
     if (executable('pmake'))
         compiler icc
-        inoremap <buffer> <F5> <ESC>:w <bar> :!pmake<CR>i
-        nnoremap <buffer> <F5> :w <bar> :!pmake<CR>
+        set makeprg=csh\ -c\ 'pmake\ dist'
+        inoremap <buffer> <F5> <ESC>:w <bar> :make<CR>i
+        nnoremap <buffer> <F5> :w <bar> :make<CR>
+        inoremap <buffer> <S-F5> <ESC>:!gdeploy<CR>i
+        nnoremap <buffer> <S-F5> :!gdeploy<CR>
     else
         inoremap <buffer> <F5> <ESC>:echom "Environment not set 'pmake' not found"<CR>
         nnoremap <buffer> <F5> :echom "Environment not set 'pmake' not found"<CR> 
     endif
-else
-    inoremap <buffer> <F5> <ESC>:w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
-    nnoremap <buffer> <F5> :w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
 endif
 
 
 let fname = expand('<afile>:p:h') . '/types.vim'
 if filereadable(fname)
-  exe 'so ' . fname
+    exe 'so ' . fname
 endif
 
 " To build cctree.out file:
 " Install cscope
 " In source dir run cscope -b -k -R
-" In vim load cscope file with:
-"   :CCTreeLoadDb cscope.out
-"   :CCTreeSaveXRefDB cctree.out
-" To browse hover a function and tye:
-" <C-\><  or > = -
+" Shortcuts:
+"   <C-\><
+"   <C-\>>
+"   <C-\>=
+"   <C-\>-
 if exists('loaded_cctree')
 
     let g:CCTreeDisplayMode=2
@@ -72,16 +78,16 @@ if exists('loaded_cctree')
     if filereadable("cscope.out") && !filereadable("cctree.out")
         execute ":CCTreeLoadDB cscope.out"
         execute ":CCTreeSaveXRefDB cctree.out"
+        execute ":call delete('cscope.out')"
         echom "Converted CCTree"
     endif
 
-    augroup loadcctree
-        autocmd!
-        autocmd VimEnter *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out
-        " Why this one didn't work while loading files from commandline or
-        " reading in buffers?
-        "autocmd BufNewFile,BufReadPost *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out 
-    augroup END
+    if filereadable("cctree.out")
+        augroup loadcctree
+            autocmd!
+            autocmd VimEnter,BufNewFile,BufReadPost *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out
+        augroup END
+    endif
 endif
 
 

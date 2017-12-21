@@ -1,4 +1,4 @@
-CWPROOT=/opt/cwp_su_all_43R3
+CWPROOT=/opt/cwp_su_all_44R1
 
 if [ -d ${CWPROOT} ]; then
 	export CWPROOT

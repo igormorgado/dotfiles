@@ -1,0 +1,9 @@
+*.so
+*.a
+ctags
+Ctags
+tags
+*.swp
+cscope.out
+cctree.out
+

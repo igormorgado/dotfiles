@@ -199,7 +199,7 @@ set incsearch
 
 " Menu
 set wildmode=longest:list,full
-set wildignore+=tags,cscope.out,*.o,*~,*.pyc,.tags,*.exe,*.obj,*.bak
+set wildignore+=tags,cscope.out,*.o,*~,*.pyc,.tags,*.exe,*.obj,*.bak,cctree.out
 set wildignorecase
 
 " File handling
@@ -225,6 +225,7 @@ set hidden
 
 " Tags startup
 set tags=.tags;tags;${HOME}
+
 
 "}}}
 
@@ -292,8 +293,9 @@ vnoremap <F4> 	   :Texec<CR>j
 "nnoremap <F6>
 
 " Need to improve vimgrep
-inoremap <F7> <ESC>:vimgrep // **/*<left><left><left><left><left><left>
-nnoremap <F7>      :vimgrep // **/*<left><left><left><left><left><left>
+set grepprg=grep\ --exclude-from='${HOME}/.grep_ignore'\ --exclude-dir\ '.git'\ -Ir
+inoremap <F7> <ESC>:grep  *<left><left>
+nnoremap <F7>      :grep  *<left><left>
 nnoremap gr :grep <cword> *<CR>
 nnoremap Gr :grep <cword> %:p:h/*<CR>
 nnoremap gr :grep '\b<cword>\b' *<CR>
@@ -407,6 +409,7 @@ if has("autocmd")
         autocmd BufNewFile,BufRead *.xhtml  setlocal ft=html
         autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2   setlocal ft=html
         autocmd BufNewFile,BufRead *.cu,*.cuh set filetype=cpp
+        autocmd BufNewFile,BufRead vMakefile.include set filetype=make
     augroup END
 
 endif

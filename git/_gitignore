@@ -219,10 +219,6 @@ m4/lt~obsolete.m4
 autom4te.cache
 
 
-# C++
-# Prerequisites
-*.d
-
 # Compiled Object files
 *.slo
 *.lo

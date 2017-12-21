@@ -20,26 +20,42 @@ function brel() {
 # TODO: Verify if new PATH isn't already on PATH var
 function addpath() {
 	# Insert (in the beginning) a dir to ${PATH} (only if exists)
+	[[ ":${PATH}:" == *":$1:"* ]] && return
     [ -d "${1}" ] && export PATH="${1}:${PATH}"
 }
 
 function apppath() {
 # Append (in the end) a dir to ${PATH} (only if exists)
+	[[ ":${PATH}:" == *":$1:"* ]] && return
     [ -d "${1}" ] && export PATH="${PATH}:${1}"
 }
 
+function addmanpath() {
+	[[ ":${MANPATH}:" == *":$1:"* ]] && return
+	[ -d "${1}" ] && export MANPATH=${1}:${MANPATH}
+}
+
+function addinfopath() {
+	[[ ":${INFOPATH}:" == *":$1:"* ]] && return
+	[ -d "${1}" ] && export INFOPATH=${1}:${INFOPATH}
+}
+
 function addlibpath() {
+	[[ ":${LD_LIBRARY_PATH}:" == *":$1:"* ]] && return
 	[ -d "${1}" ] && export LD_LIBRARY_PATH=${1}:${LD_LIBRARY_PATH}
 }
 
 
 function addrunpath() {
+	[[ ":${LD_RUN_PATH}:" == *":$1:"* ]] && return
 	[ -d "${1}" ] && export LD_RUN_PATH=${1}:${LD_RUN_PATH}
 
 }
 
 function addpkgpath() {
+	[[ ":${PKG_CONFIG_PATH}:" == *":$1:"* ]] && return
 	[ -d "${1}" ] && export PKG_CONFIG_PATH=${1}:${PKG_CONFIG_PATH}
+
 
 }
 

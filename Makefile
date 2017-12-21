@@ -1,6 +1,6 @@
 TOPTARGETS := all clean
 
-TERMINAL = bin bash vim mc python tmux 
+TERMINAL = bin bash vim mc python tmux git pinfo
 XWIN = x11
 EXTRA := alacritty cgg gcp terminology todo
 
@@ -9,9 +9,8 @@ PACKS := $(TERMINAL)
 
 # TODO
 # ssh
-# git
 # gnome
-# irssi
+# weechat
 # mutt
 # htop
 # packages installer !!
