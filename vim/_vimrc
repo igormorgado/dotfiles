@@ -296,7 +296,7 @@ vnoremap <F4> 	   :Texec<CR>j
 "nnoremap <F6>
 
 " Need to improve vimgrep
-set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ -Ir
+set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ -Inr
 inoremap <F7> <ESC>:grep  *<left><left>
 nnoremap <F7>      :grep  *<left><left>
 nnoremap gr :grep <cword> *<CR>
