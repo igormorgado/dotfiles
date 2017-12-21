@@ -4,36 +4,37 @@
 
 " Plugins {{{
 " ======================================================================
+
 set nocompatible
 filetype off
 call plug#begin('~/.vim/plugged')
 
-"Plug 'igormorgado/vim-tbone'
-"Plug 'kshenoy/vim-signature'
+Plug 'igormorgado/vim-tbone'
+Plug 'kshenoy/vim-signature'
 Plug 'romainl/flattened'
-" Plug 'romainl/vim-qf'
-" Plug 'tpope/vim-dispatch'
-" Plug 'tpope/vim-eunuch'
-" Plug 'tpope/vim-fugitive'
-" Plug 'tpope/vim-obsession'
-" Plug 'tpope/vim-repeat'
-" Plug 'tpope/vim-rhubarb'
-" Plug 'tpope/vim-surround'
-" Plug 'tpope/vim-unimpaired'
+Plug 'romainl/vim-qf'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-eunuch'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
 
-" Plug 'tpope/vim-flagship'
+Plug 'tpope/vim-flagship'
 set laststatus=2
 set showtabline=2
 set guioptions-=e
 
-" Plug 'tpope/vim-markdown'
+Plug 'tpope/vim-markdown'
 augroup readMarkdown
     autocmd BufNewFile,BufReadPost *.md set filetype=markdown
     autocmd BufNewFile,BufReadPost *.md set conceallevel=2
 augroup END
 let g:markdown_fenced_langagues = ['html', 'python','bash=sh','c']
 
-" Plug 'tpope/vim-vinegar'
+Plug 'tpope/vim-vinegar'
 let g:netrw_list_hide  = '\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_list_hide .= '\.pyc$,'
 let g:netrw_list_hide .= '\.o$,\.obj$'
@@ -44,70 +45,72 @@ let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
 
 " I still live in machines that vim is 730
 if v:version > 740
-    " Plug 'ludovicchabant/vim-gutentags'
+    Plug 'ludovicchabant/vim-gutentags'
     let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
     let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
     let g:gutentags_project_root=[ 'vMakefile.include', 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
 endif
 
-" Plug 'christoomey/vim-tmux-navigator'
-" let g:tmux_navigator_save_on_switch = 2
-" let g:tmux_navigator_disable_when_zoomed = 1
-" let g:tmux_navigator_no_mappings = 1
-" " Standard <C-\> conflicts with vim-CScope"
-" " These keys are not working inside CCTree split
-" nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-" nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
-" inoremap <silent> <C-h> <esc>:TmuxNavigateLeft<cr>
-" inoremap <silent> <C-j> <esc>:TmuxNavigateDown<cr>
-" inoremap <silent> <C-k> <esc>:TmuxNavigateUp<cr>
-" inoremap <silent> <C-l> <esc>:TmuxNavigateRight<cr>
-" inoremap <silent> <C-g> <esc>:TmuxNavigatePrevious<cr>
-    "We didn't loaded tmux navigator, use simple keys
-"    inoremap <C-k> <C-w>k
-"    inoremap <C-l> <C-w>l
-"    inoremap <C-h> <C-w>h
-"    inoremap <C-j> <C-w>j
-"    nnoremap <C-k> <C-w>k
-"    nnoremap <C-l> <C-w>l
-"    nnoremap <C-h> <C-w>h
+Plug 'christoomey/vim-tmux-navigator'
+let g:tmux_navigator_save_on_switch = 2
+let g:tmux_navigator_disable_when_zoomed = 1
+let g:tmux_navigator_no_mappings = 1
+" Standard <C-\> conflicts with vim-CScope"
+" These keys are not working inside CCTree split
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
+inoremap <silent> <C-h> <esc>:TmuxNavigateLeft<cr>
+inoremap <silent> <C-j> <esc>:TmuxNavigateDown<cr>
+inoremap <silent> <C-k> <esc>:TmuxNavigateUp<cr>
+inoremap <silent> <C-l> <esc>:TmuxNavigateRight<cr>
+inoremap <silent> <C-g> <esc>:TmuxNavigatePrevious<cr>
+" We didn't loaded tmux navigator, use simple keys
+" SET THIS WITH IF
+" inoremap <C-k> <C-w>k
+" inoremap <C-l> <C-w>l
+" inoremap <C-h> <C-w>h
+" inoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
+" nnoremap <C-h> <C-w>h
 
-" " FOR PYTHON
-" if has('python3')
-"     Plug 'davidhalter/jedi-vim'
-"     let g:jedi#use_splits_not_buffers = "bottom"
-"     " let g:jedi#use_tabs_not_buffers = 1
-"     " let g:jedi#popup_on_dot = 0
-"     " let g:jedi#popup_select_first = 0
-"     " let g:jedi#show_call_signatures = "1"
-" 
-"     Plug 'tmhedberg/SimpylFold'
-"     let g:SimpylFold_fold_import = 1
-"     let g:SimpylFold_docstring_preview = 1
-"     let g:SimpylFold_fold_docstring = 0
-" else
-"     Plug 'vim-scripts/indentpython'
-" endif
-" 
-" " Experimental
-" " Plug 'hari-rangarajan/CCTree'
-" let g:CCTreeKeyHilightTree = '<C-t>'        " Static highlighting
-" " Plug 'hari-rangarajan/ccglue'
-" " set g:CCTreeCscopeDb = "cscope.out"
-" " set g:CCTreeMinVisibleDepth = 3
-" " " Can be right/left above/below
-" " set g:CCTreeOrientation = leftabove
-" " set g:CCTreeWindowVertical = 1
-" " " 1 compact 2: normal 3: wide
-" " set g:CCTreeDisplayMode = 2
-" " set g:CCTreeHilightCallTree = 1
-" 
-" 
-" "Plug 'vim-latex/vim-latex'
-" "let g:tex_flavor = "latex" 
+" FOR PYTHON
+if has('python3')
+    Plug 'davidhalter/jedi-vim'
+    let g:jedi#use_splits_not_buffers = "bottom"
+    " let g:jedi#use_tabs_not_buffers = 1
+    " let g:jedi#popup_on_dot = 0
+    " let g:jedi#popup_select_first = 0
+    " let g:jedi#show_call_signatures = "1"
+
+    Plug 'tmhedberg/SimpylFold'
+    let g:SimpylFold_fold_import = 1
+    let g:SimpylFold_docstring_preview = 1
+    let g:SimpylFold_fold_docstring = 0
+else
+    Plug 'vim-scripts/indentpython'
+endif
+
+" Experimental
+Plug 'hari-rangarajan/CCTree'
+let g:CCTreeKeyHilightTree = '<C-t>'
+let g:CCTreeCscopeDb = "cscope.out"
+let g:CCTreeMinVisibleDepth = 3
+" Can be top/bottom right/left 
+let g:CCTreeOrientation = "topleft"
+let g:CCTreeWindowVertical = 1
+" 1 compact 2: normal 3: wide
+let g:CCTreeDisplayMode = 2
+let g:CCTreeHilightCallTree = 1
+
+Plug 'hari-rangarajan/ccglue'
+
+
+"Plug 'vim-latex/vim-latex'
+"let g:tex_flavor = "latex" 
 
 call plug#end()
 " }}}
@@ -163,7 +166,7 @@ endif
 
 "highlight Comment gui=italic
 "highlight Comment cterm=italic
-
+ 
 " }}}
 
 " Basic Settings {{{
