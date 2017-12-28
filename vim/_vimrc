@@ -439,4 +439,6 @@ inoremap jk <esc>
 
 " }}}
 
+:syn keyword cType ushort dev_mem pthread_t gpuImagingParams
+
 " vim:foldmethod=marker:foldlevel=0

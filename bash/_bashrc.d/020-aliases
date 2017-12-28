@@ -11,6 +11,8 @@ else
   alias ll="ls -lF"
 fi
 
+alias cscp="cscope -k -b -c -R; rm -f cctree.out"
+
 alias dropstart="DISPLAY= dropbox start"
 
 alias start="sudo systemctl start"

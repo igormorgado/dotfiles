@@ -43,7 +43,7 @@ if filereadable('vMakefile.include')
     setlocal textwidth=120
     setlocal colorcolumn=79
     if (executable('pmake'))
-        compiler icc
+        let current_compiler = "icc"
         set makeprg=csh\ -c\ 'pmake\ dist'
         inoremap <buffer> <F5> <ESC>:w <bar> :make<CR>i
         nnoremap <buffer> <F5> :w <bar> :make<CR>
@@ -76,10 +76,10 @@ if exists('loaded_cctree')
     let g:CCTreeUseUTF8Symbols=1
 
     if filereadable("cscope.out") && !filereadable("cctree.out")
-        execute ":CCTreeLoadDB cscope.out"
-        execute ":CCTreeSaveXRefDB cctree.out"
-        execute ":call delete('cscope.out')"
-        echom "Converted CCTree"
+        execute ':CCTreeLoadDB cscope.out'
+        execute ':CCTreeSaveXRefDB cctree.out'
+        execute ':call delete("cscope.out")'
+        echom 'Converted CCTree'
     endif
 
     if filereadable("cctree.out")
@@ -88,9 +88,11 @@ if exists('loaded_cctree')
             autocmd VimEnter,BufNewFile,BufReadPost *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out
         augroup END
     endif
-endif
 
+endif
 
 " setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
 " setlocal foldexpr< foldmethod<
 
+" New cTypes
+"syn keyword cType ushort dev_mem pthread_t gpuImagingParams
