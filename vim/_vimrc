@@ -1,6 +1,9 @@
 " ======================================================================
 " VIM
 " ======================================================================
+" TODO:
+"   - Apply settings only if correct plugins are loaded
+"   - Create custom folding to work with C folding (based on markers)
 
 " Plugins {{{
 " ======================================================================
@@ -9,9 +12,11 @@ set nocompatible
 filetype off
 call plug#begin('~/.vim/plugged')
 
+" My own copies for some custom changes
 Plug 'igormorgado/vim-tbone'
+Plug 'igormorgado/flattened'
+
 Plug 'kshenoy/vim-signature'
-Plug 'romainl/flattened'
 Plug 'romainl/vim-qf'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
@@ -120,6 +125,7 @@ call plug#end()
 if has("gui_running")
     set guioptions-=m
     set guioptions-=T
+    set t_Co=256
 endif
 
 set mouse=a
@@ -368,6 +374,7 @@ endfunction
 " ======================================================================
 
 if has("autocmd")
+
     " Autosave all when changing focus also ident when savin code.
     augroup autosave
         autocmd!
@@ -375,6 +382,7 @@ if has("autocmd")
         autocmd FocusLost * :wa
         " autocmd BufWritePre *.py,*.js,*.c :call Preserve("%s/\\s\\+$//e")<CR>
     augroup END
+
 
     " Reload $MYVIMRC when writing it
     augroup reload_vimrc
@@ -392,12 +400,14 @@ if has("autocmd")
                     \ endif |
     augroup END
 
+
     " Do my lovely numbering
     augroup numbering
         autocmd!
         autocmd InsertEnter * :set norelativenumber
         autocmd InsertLeave * :set relativenumber
     augroup END
+
 
     " Set some uncommon filetymes correctly
     augroup filetypes
@@ -408,6 +418,12 @@ if has("autocmd")
         autocmd BufNewFile,BufRead vMakefile.include set filetype=make
     augroup END
 
+
+    augroup folding
+        autocmd!
+        au BufWrite,VimLeave * mkview
+        au BufRead           * silent loadview
+    augroup END
 
 endif
 

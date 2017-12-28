@@ -23,8 +23,6 @@ setlocal foldlevel=4
 setlocal fileformat=unix
 setlocal encoding=utf-8
 
-
-
 compiler gcc
 
 if filereadable('Makefile') 
@@ -34,7 +32,6 @@ else
     inoremap <buffer> <F5> <ESC>:w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
     nnoremap <buffer> <F5> :w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
 endif
-
 
 if filereadable('vMakefile.include')
     setlocal tabstop=2
