@@ -93,6 +93,3 @@ endif
 
 " setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
 " setlocal foldexpr< foldmethod<
-
-" New cTypes
-"syn keyword cType ushort dev_mem pthread_t gpuImagingParams

@@ -416,8 +416,6 @@ endif
 runtime ftplugin/man.vim
 set keywordprg=:Man
 
-
-
 " Not good shortcut, need to rethink about
 " nnoremap <silent> + :exe "resize " . (winheight(0) * 6/5)<CR>
 " nnoremap <silent> = :exe "resize " . (winheight(0) * 5/6)<CR>
