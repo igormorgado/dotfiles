@@ -235,13 +235,6 @@ set tags=.tags;tags;${HOME}
 " Maps/Macros {{{
 " ================================================
 
-"Lets try this a little
-"nnoremap k kzz
-"nnoremap j jzz
-"nnoremap G Gzz
-"nnoremap p pzz
-"nnoremap P Pzz
-
 
 nnoremap <ESC><ESC><ESC> :q<CR>
 " nnoremap <c-J> <c-w>J
@@ -415,6 +408,7 @@ if has("autocmd")
         autocmd BufNewFile,BufRead vMakefile.include set filetype=make
     augroup END
 
+
 endif
 
 "}}}
@@ -438,7 +432,5 @@ iabbrev migor morgado.igor@gmail.com
 inoremap jk <esc>
 
 " }}}
-
-:syn keyword cType ushort dev_mem pthread_t gpuImagingParams
 
 " vim:foldmethod=marker:foldlevel=0
