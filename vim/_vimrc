@@ -10,8 +10,9 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 Plug 'igormorgado/vim-tbone'
+Plug 'igormorgado/vim-hints'
+Plug 'igormorgado/flattened'
 Plug 'kshenoy/vim-signature'
-Plug 'romainl/flattened'
 Plug 'romainl/vim-qf'
 Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-eunuch'
@@ -436,6 +437,9 @@ iabbrev migor morgado.igor@gmail.com
 
 " maybe this is good
 inoremap jk <esc>
+
+" Enable Digraphs with C-D 
+inoremap <C-D> <C-K>
 
 " }}}
 

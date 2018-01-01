@@ -1,8 +1,3 @@
-" NEED TO COMPARE:
-"  py3file
-"  pylint
-"  autopep8
-
 " Line wrap
 " setlocal wrap
 " setlocal linebreak
@@ -24,40 +19,36 @@ setlocal foldmethod=expr
 " Highlight
 let python_hightlight_all = 1
 
-"au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /^\t\+/
-"au BufRead,BufNewFile *.py,*.pyw match BadWhitespace /\s\+$/
-" highlight BadWhitespace ctermbg=red guibg=red
-
-" Set pylint when saving file
+" Set pylint when building file
 if (executable("pylint"))
-    set makeprg=pylint\ --reports=n\ --output-format\ parseable\ %:p
-    set errorformat=%f:%l:\ %m
+    setlocal makeprg=pylint3\ --reports=n\ --output-format\ parseable\ %:p
+    setlocal errorformat=%f:%l:\ %m
 endif
 
 augroup pythonglobal
     autocmd!
     au BufRead,BufNewFile *.py,*.pyw let b:comment_leader = '#'
-    au BufWritePost *.py make
+    " Is pissing me off
+    " au BufWritePost *.py make
 augroup END
 
+nnoremap <buffer> <F5> :make<CR>
+inoremap <buffer> <F5> <ESC>:make<CR>i
+
 " Execute python code inside vim buffer
-if has("python3")
-    nnoremap <buffer> <F5> :py3file %<cr>
+" if has("python3")
+"     nnoremap <buffer> <F5> :py3file %<cr>
+" elseif has("python")
+"     nnoremap <buffer> <F5> :pyfile %<cr>
+" else
+"     nnoremap <buffer> <F5> :exec '!python3' % <cr>
+" endif
 
-    " py from vim import buffers, windows, command, current, error
-    " py import vim, sys
-    " py from vimpy import 
-
-    " command! PyExecBuffer py exec('\n'.join(current.buffer))
-    " nnoremap <F5> :PyExecBuffer<CR>
-    " inoremap <F5> <Esc><F5><CR>a
-
-elseif has("python")
-    nnoremap <buffer> <F5> :pyfile %<cr>
-else
-    nnoremap <buffer> <F5> :exec '!python3' % <cr>
+" <S-F5> Install the software with pip
+if filereadable("setup.py") && executable("pip")
+    nnoremap <buffer> <S-F5> :!pip\ install\ .<CR>
+    inoremap <buffer> <S-F5> <ESC>:!pip\ install\ .<CR>i
 endif
-
 
 " TODO: Need to change to pyenv instead virtualenv
 if has('python3')
