@@ -418,7 +418,7 @@ if has("autocmd")
         autocmd BufNewFile,BufRead vMakefile.include set filetype=make
     augroup END
 
-
+    " Save folding when leaving and reload when entering
     augroup folding
         autocmd!
         au BufWrite,VimLeave * mkview
