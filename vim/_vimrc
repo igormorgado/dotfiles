@@ -2,8 +2,10 @@
 " VIM
 " ======================================================================
 " TODO:
-"   - Apply settings only if correct plugins are loaded
 "   - Create custom folding to work with C folding (based on markers)
+
+" Uncomment to not load any vim conf
+" finish
 
 " Plugins {{{
 " ======================================================================
@@ -13,33 +15,77 @@ filetype off
 call plug#begin('~/.vim/plugged')
 
 " My own copies for some custom changes
-Plug 'igormorgado/vim-tbone'
-Plug 'igormorgado/vim-hints'
 Plug 'igormorgado/flattened'
+Plug 'igormorgado/vim-hints'
+Plug 'igormorgado/vim-tbone'
+
+
+" Display marks in number column (very useful)
 Plug 'kshenoy/vim-signature'
+
+
+" Smarter Quickfix window (very useful)
 Plug 'romainl/vim-qf'
-Plug 'tpope/vim-dispatch'
+" {{{
+" Inside QF window
+"    s - open entry in a new horizontal window
+"    v - open entry in a new vertical window
+"    t - open entry in a new tab
+"    o - open entry and come back
+"    O - open entry and close the location/quickfix window
+"    p - open entry in a preview window
+if exists("g:loaded_qf")
+	let g:qf_mapping_ack_style = 1
+	" nmap C <Plug>qf_qf_switch
+	" nmap <leader>c <Plug>qf_qf_stay_toggle
+	let g:qf_statusline = {}
+	let g:qf_statusline.before = '%<\ '
+	let g:qf_statusline.after = '\ %f%=%l\/%-6L\ \ \ \ \ '
+endif
+" }}}
+
+
+" UNIX commands from VIM |eunuch.txt|
 Plug 'tpope/vim-eunuch'
+
+
+" VIM with GIT. Precious!
 Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-obsession'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-rhubarb'
+
+
+" Extend vim surrounds to HTML tags, text object and such
 Plug 'tpope/vim-surround'
+
+
 Plug 'tpope/vim-unimpaired'
+" {{{
+" Pair of brackts map to misc things
+" aA  args
+" bB  buffers
+" lL  location 
+" qQ  quickfix
+" tT tag
+" f  files
+" n  diff marker
+" It also do unicode convertions
+" }}}
+
 
 Plug 'tpope/vim-flagship'
 set laststatus=2
 set showtabline=2
 set guioptions-=e
 
+
 Plug 'tpope/vim-markdown'
-augroup readMarkdown
-    autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-    autocmd BufNewFile,BufReadPost *.md set conceallevel=2
-augroup END
-let g:markdown_fenced_langagues = ['html', 'python','bash=sh','c']
+" {{{
+let g:markdown_fenced_langagues = ['html', 'python','bash=sh','c', 'help']
+" }}}
+
 
 Plug 'tpope/vim-vinegar'
+" {{{
 let g:netrw_list_hide  = '\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_list_hide .= '\.pyc$,'
 let g:netrw_list_hide .= '\.o$,\.obj$'
@@ -47,132 +93,153 @@ let g:netrw_list_hide .= '\.a$,\.so$,\.lib$,\.dll$,'
 let g:netrw_list_hide .= '\.pyc\s\+,'
 let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+'
 let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
+" }}}
 
-" I still live in machines that vim is 730
-if v:version > 740
-    Plug 'ludovicchabant/vim-gutentags'
-    let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
-    let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
-    let g:gutentags_project_root=[ 'vMakefile.include', 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
+
+Plug 'ludovicchabant/vim-gutentags'
+" {{{
+if exists('g:loaded_gutentags')
+	let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
+	let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
+	let g:gutentags_project_root=[ 'vMakefile.include', 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
 endif
+" }}}
+
 
 Plug 'christoomey/vim-tmux-navigator'
-let g:tmux_navigator_save_on_switch = 2
-let g:tmux_navigator_disable_when_zoomed = 1
-let g:tmux_navigator_no_mappings = 1
-" Standard <C-\> conflicts with vim-CScope"
-" These keys are not working inside CCTree split
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
-inoremap <silent> <C-h> <esc>:TmuxNavigateLeft<cr>
-inoremap <silent> <C-j> <esc>:TmuxNavigateDown<cr>
-inoremap <silent> <C-k> <esc>:TmuxNavigateUp<cr>
-inoremap <silent> <C-l> <esc>:TmuxNavigateRight<cr>
-inoremap <silent> <C-g> <esc>:TmuxNavigatePrevious<cr>
-" We didn't loaded tmux navigator, use simple keys
-" SET THIS WITH IF
-" inoremap <C-k> <C-w>k
-" inoremap <C-l> <C-w>l
-" inoremap <C-h> <C-w>h
-" inoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
-" nnoremap <C-h> <C-w>h
-
-" FOR PYTHON
-if has('python3')
-    Plug 'davidhalter/jedi-vim'
-    let g:jedi#use_splits_not_buffers = "bottom"
-    " let g:jedi#use_tabs_not_buffers = 1
-    " let g:jedi#popup_on_dot = 0
-    " let g:jedi#popup_select_first = 0
-    " let g:jedi#show_call_signatures = "1"
-
-    Plug 'tmhedberg/SimpylFold'
-    let g:SimpylFold_fold_import = 1
-    let g:SimpylFold_docstring_preview = 1
-    let g:SimpylFold_fold_docstring = 0
+" {{{
+if exists("g:loaded_tmux_navigator") 
+	let g:tmux_navigator_save_on_switch = 2
+	let g:tmux_navigator_disable_when_zoomed = 1
+	let g:tmux_navigator_no_mappings = 1
+	" Standard <C-\> conflicts with vim-CScope"
+	" These keys are not working inside CCTree split
+	nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+	nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+	nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+	nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+	nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
+	inoremap <silent> <C-h> <esc>:TmuxNavigateLeft<cr>
+	inoremap <silent> <C-j> <esc>:TmuxNavigateDown<cr>
+	inoremap <silent> <C-k> <esc>:TmuxNavigateUp<cr>
+	inoremap <silent> <C-l> <esc>:TmuxNavigateRight<cr>
+	inoremap <silent> <C-g> <esc>:TmuxNavigatePrevious<cr>
 else
-    Plug 'vim-scripts/indentpython'
+	inoremap <C-k> <C-w>k
+	inoremap <C-l> <C-w>l
+	inoremap <C-h> <C-w>h
+	inoremap <C-j> <C-w>j
+	nnoremap <C-k> <C-w>k
+	nnoremap <C-l> <C-w>l
+	nnoremap <C-h> <C-w>h
 endif
+" }}}
 
-" Experimental
+
 Plug 'hari-rangarajan/CCTree'
-let g:CCTreeKeyHilightTree = '<C-t>'
-let g:CCTreeCscopeDb = "cscope.out"
-let g:CCTreeMinVisibleDepth = 3
-" Can be top/bottom right/left 
-let g:CCTreeOrientation = "topleft"
-let g:CCTreeWindowVertical = 1
-" 1 compact 2: normal 3: wide
-let g:CCTreeDisplayMode = 2
-let g:CCTreeHilightCallTree = 1
+" {{{
+if exists("loaded_cctree")
+	let g:CCTreeKeyHilightTree = '<C-t>'
+	let g:CCTreeCscopeDb = "cscope.out"
+	let g:CCTreeMinVisibleDepth = 3
+	" Can be top/bottom right/left 
+	let g:CCTreeOrientation = "topleft"
+	let g:CCTreeWindowVertical = 1
+	" 1 compact 2: normal 3: wide
+	let g:CCTreeDisplayMode = 2
+	let g:CCTreeHilightCallTree = 1
+endif
+" }}}
+
 
 Plug 'hari-rangarajan/ccglue'
 
 
+" FOR PYTHON
+" Need to learn more about these plugins
+if has('python3')
+	Plug 'davidhalter/jedi-vim'
+	" {{{
+		let g:jedi#use_splits_not_buffers = "bottom"
+		" let g:jedi#use_tabs_not_buffers = 1
+		" let g:jedi#popup_on_dot = 0
+		" let g:jedi#popup_select_first = 0
+		" let g:jedi#show_call_signatures = "1"
+	" }}}
+
+	Plug 'tmhedberg/SimpylFold'
+	" {{{
+	if exists("b:loaded_SimpylFold")
+		let g:SimpylFold_fold_import = 1
+		let g:SimpylFold_docstring_preview = 1
+		let g:SimpylFold_fold_docstring = 0
+	endif
+	" }}}
+else
+	Plug 'vim-scripts/indentpython'
+endif
+
 "Plug 'vim-latex/vim-latex'
 "let g:tex_flavor = "latex" 
 
+" TO LEARN
+" Plug 'tpope/vim-dispatch'
+
 call plug#end()
+
+" Load vim man plugin
+runtime ftplugin/man.vim
+set keywordprg=:Man
 " }}}
 
 " Theme and graph {{{
 " ======================================================================
 if has("gui_running")
-    set guioptions-=m
-    set guioptions-=T
-    set t_Co=256
+	set guioptions-=m
+	set guioptions-=T
+	set t_Co=256
 endif
 
 set mouse=a
 
-" Some :colors
 silent! set listchars=tab:>\ ,eol:¬
 
 let BACKGROUND=$BACKGROUND
 if BACKGROUND == 'light'
-    silent! colorscheme flattened_light
-    set background=light
+	silent! colorscheme flattened_light
+	set background=light
 else
-    silent! colorscheme flattened_dark
-    set background=dark
+	silent! colorscheme flattened_dark
+	set background=dark
 endif
 
-" Status line
-highlight StatusLine NONE ctermbg=DarkBlue ctermfg=White cterm=NONE
-
+" Status line color
 if has("statusline")
-  set statusline =              " clear
-  set statusline+=\ %02n        " leading zero 2 digit buffer number
-  set statusline+=\ %#IncSearch#    " Color
-  set statusline+=\ %<%F        " file full path, truncate
-  set statusline+=\ %*
-  set statusline+=\ %r          " read only flag '[RO]'
-  set statusline+=\ %m          " modified flag '[+]' if modifiable
-  set statusline+=\ %h          " help flag '[Help]'
-  set statusline+=\ %{fugitive#statusline()}    " GIT Branch
-if v:version > 740
-  set statusline+=\ %{gutentags#statusline()}
+	set statusline =              " clear
+	set statusline+=\ %02n        " leading zero 2 digit buffer number
+	set statusline+=\ %#IncSearch#    " Color
+	set statusline+=\ %<%F        " file full path, truncate
+	set statusline+=\ %*
+	set statusline+=\ %r          " read only flag '[RO]'
+	set statusline+=\ %m          " modified flag '[+]' if modifiable
+	set statusline+=\ %h          " help flag '[Help]'
+	if exists("g:loaded_fugitive")
+		set statusline+=\ %{fugitive#statusline()}    " GIT Branch
+	endif
+	if exists('g:loaded_gutentags')
+		set statusline+=\ %{gutentags#statusline()}
+	endif
+	set statusline+=%=            " left/right separation point
+	set statusline+=\ \|\ %{&ff}  " fileformat
+	set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
+	set statusline+=\ \|\ [%03b   " decimal byte
+	set statusline+=\ x%02B]      " hex byte ' \x62'
+	set statusline+=\ (%04v,%04l) " (x,y)
+	set statusline+=\ \|\ %P    " percent of file
+	set statusline+=\ of
+	set statusline+=\ %L          " line/lines
+	set statusline+=\ lines
 endif
-  set statusline+=%=            " left/right separation point
-  set statusline+=\ \|\ %{&ff}  " fileformat
-  set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
-  set statusline+=\ \|\ [%03b   " decimal byte
-  set statusline+=\ x%02B]      " hex byte ' \x62'
-  set statusline+=\ (%04v,%04l) " (x,y)
-  set statusline+=\ \|\ %P    " percent of file
-  set statusline+=\ of
-  set statusline+=\ %L          " line/lines
-  set statusline+=\ lines
-endif
-
-"highlight Comment gui=italic
-"highlight Comment cterm=italic
- 
 " }}}
 
 " Basic Settings {{{
@@ -195,6 +262,8 @@ set conceallevel=0
 set viminfo^=%
 set scrolloff=20
 set number
+set colorcolumn=79
+set cursorcolumn
 
 " Indent
 set shiftround
@@ -235,18 +304,14 @@ set hidden
 " Tags startup
 set tags=.tags;tags;${HOME}
 
-
-"}}}
+" }}}
 
 " Maps/Macros {{{
 " ================================================
 
-
+" Lazyness
+inoremap jk <esc>
 nnoremap <ESC><ESC><ESC> :q<CR>
-" nnoremap <c-J> <c-w>J
-" nnoremap <c-K> <c-w>K
-" nnoremap <c-L> <c-w>L
-" nnoremap <c-H> <c-w>H
 nnoremap <leader>w <C-w>v<C-w>l
 
 " Famous shortcuts
@@ -270,7 +335,7 @@ command! W :w
 cnoremap W! w !sudo tee % >/dev/null
 cnoremap w!! w !sudo tee % >/dev/null
 
-"}}}
+" }}}
 
 " Function keys {{{
 " ======================================================================
@@ -282,12 +347,15 @@ nnoremap <F2>      :buffers<CR>:buffer<Space>
 " inoremap <F3>
 " nnoremap <F3>
 
-" Push the current line to the other tmux screen (iteractive)
-inoremap <F4> <ESC>:Texec<CR>j<Insert>
-nnoremap <F4>	   :Texec<CR>j
-vnoremap <F4> 	   :Texec<CR>j 
+" Push the current line to the other tmux screen (interactive)
+if exists("g:loaded_tbone")
+	inoremap <F4> <ESC>:Texec<CR>j<Insert>
+	nnoremap <F4>	   :Texec<CR>j
+	vnoremap <F4> 	   :Texec<CR>j 
+endif
 
 " Often used to build stuff inside each filetype
+" Customized in filetypes
 "inoremap <F5> <ESC>
 "nnoremap <F5>
 
@@ -332,122 +400,154 @@ nnoremap <S-F11>      :colder<CR>
 
 inoremap <S-F12> <ESC>:cnewer<CR>
 nnoremap <S-F12>      :cnewer<CR>
-"}}}
+" }}}
 
 " Functions {{{
 " ======================================================================
 
-
 function! EasyVim()
-    inoremap <C-v> <ESC>"+pa
-    vnoremap <C-c> "+y
-    vnoremap <C-d> "+d
+	inoremap <C-v> <ESC>"+pa
+	vnoremap <C-c> "+y
+	vnoremap <C-d> "+d
 endfunction
+
 
 function! HardVim()
-    nnoremap <up> <nop>
-    nnoremap <down> <nop>
-    nnoremap <left> <nop>
-    nnoremap <right> <nop>
-    inoremap <up> <nop>
-    inoremap <down> <nop>
-    inoremap <left> <nop>
-    inoremap <right> <nop>
+	nnoremap <up> <nop>
+	nnoremap <down> <nop>
+	nnoremap <left> <nop>
+	nnoremap <right> <nop>
+	inoremap <up> <nop>
+	inoremap <down> <nop>
+	inoremap <left> <nop>
+	inoremap <right> <nop>
 endfunction
-" I don't need enforce this anymore
-" call HardVim()
+
 
 function! Preserve(command)
-  " Preparation: save last search, and cursor position.
-  let _s=@/
-  let l = line(".")
-  let c = col(".")
-  " Do the business:
-  execute a:command
-  " Clean up: restore previous search history, and cursor position
-  let @/=_s
-  call cursor(l, c)
+	" Preparation: save last search, and cursor position.
+	let _s=@/
+	let l = line(".")
+	let c = col(".")
+	" Do the business:
+	execute a:command
+	" Clean up: restore previous search history, and cursor position
+	let @/=_s
+	call cursor(l, c)
 endfunction
-"}}}
+
+
+function! FoldText()
+	let l:lpadding = &fdc
+	redir => l:signs
+	execute 'silent sign place buffer='.bufnr('%')
+	redir End
+	let l:lpadding += l:signs =~ 'id=' ? 2 : 0
+
+	if exists("+relativenumber")
+		if (&number)
+			let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+		elseif (&relativenumber)
+			let l:lpadding += max([&numberwidth, strlen(v:foldstart - line('w0')), strlen(line('w$') - v:foldstart), strlen(v:foldstart)]) + 1
+		endif
+	else
+		if (&number)
+			let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
+		endif
+	endif
+
+	" expand tabs
+	let l:start = substitute(getline(v:foldstart), '\t', repeat(' ', &tabstop), 'g')
+	let l:end = substitute(substitute(getline(v:foldend), '\t', repeat(' ', &tabstop), 'g'), '^\s*', '', 'g')
+
+	let l:info = ' (' . (v:foldend - v:foldstart) . ')'
+	let l:infolen = strlen(substitute(l:info, '.', 'x', 'g'))
+	let l:width = winwidth(0) - l:lpadding - l:infolen
+
+	let l:separator = ' … '
+	let l:separatorlen = strlen(substitute(l:separator, '.', 'x', 'g'))
+	let l:start = strpart(l:start , 0, l:width - strlen(substitute(l:end, '.', 'x', 'g')) - l:separatorlen)
+	let l:text = l:start . ' … ' . l:end
+
+	return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info
+endfunction
+" }}}
 
 " Groups {{{
 " ======================================================================
 
 if has("autocmd")
 
-    " Autosave all when changing focus also ident when savin code.
-    augroup autosave
-        autocmd!
-        autocmd BufNewFile * :write
-        autocmd FocusLost * :wa
-        " autocmd BufWritePre *.py,*.js,*.c :call Preserve("%s/\\s\\+$//e")<CR>
-    augroup END
+	" Reload $MYVIMRC when writing it
+	augroup reload_vimrc
+		autocmd!
+		autocmd bufwritepost $MYVIMRC source $MYVIMRC
+	augroup END
 
+	" Autosave all when changing focus also ident when savin code.
+	augroup autosave
+		autocmd!
+		autocmd BufNewFile * :write
+		autocmd FocusLost * :wa
+		" autocmd BufWritePre *.py,*.js,*.c :call Preserve("%s/\\s\\+$//e")<CR>
+	augroup END
 
-    " Reload $MYVIMRC when writing it
-    augroup reload_vimrc
-        autocmd!
-        autocmd bufwritepost $MYVIMRC source $MYVIMRC
-    augroup END
+	" Return to last edit position when opening files (You want this!)
+	augroup openingbuffer
+		autocmd!
+		autocmd BufReadPost *
+					\ if line("'\"") > 0 && line("'\"") <= line("$") |
+					\   exe "normal! g`\"" |
+					\ endif |
+	augroup END
 
-    
-   " Return to last edit position when opening files (You want this!)
-    augroup openingbuffer
-        autocmd!
-        autocmd BufReadPost *
-                    \ if line("'\"") > 0 && line("'\"") <= line("$") |
-                    \   exe "normal! g`\"" |
-                    \ endif |
-    augroup END
+	" Do my lovely numbering
+	augroup numbering
+		autocmd!
+		autocmd InsertEnter * :set norelativenumber
+		autocmd InsertLeave * :set relativenumber
+	augroup END
 
+	" Set some uncommon filetymes correctly
+	augroup filetypes
+		autocmd!
+		autocmd BufNewFile,BufRead *.xhtml  setlocal ft=html
+		autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2   setlocal ft=html
+		autocmd BufNewFile,BufRead *.cu,*.cuh set filetype=cpp
+		autocmd BufNewFile,BufRead vMakefile.include set filetype=make
+	augroup END
 
-    " Do my lovely numbering
-    augroup numbering
-        autocmd!
-        autocmd InsertEnter * :set norelativenumber
-        autocmd InsertLeave * :set relativenumber
-    augroup END
-
-
-    " Set some uncommon filetymes correctly
-    augroup filetypes
-        autocmd!
-        autocmd BufNewFile,BufRead *.xhtml  setlocal ft=html
-        autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2   setlocal ft=html
-        autocmd BufNewFile,BufRead *.cu,*.cuh set filetype=cpp
-        autocmd BufNewFile,BufRead vMakefile.include set filetype=make
-    augroup END
-
-    " Save folding when leaving and reload when entering
-    augroup folding
-        autocmd!
-        au BufWrite,VimLeave * mkview
-        au BufRead           * silent loadview
-    augroup END
-
+	" Save folding when leaving and reload when entering
+	augroup folding
+		autocmd!
+		au BufWrite,VimLeave * mkview
+		au BufRead           * silent loadview
+	augroup END
 endif
 
-"}}}
-
-runtime ftplugin/man.vim
-set keywordprg=:Man
-
-" Not good shortcut, need to rethink about
-" nnoremap <silent> + :exe "resize " . (winheight(0) * 6/5)<CR>
-" nnoremap <silent> = :exe "resize " . (winheight(0) * 5/6)<CR>
+" }}}
 
 " Abbreviations {{{
 " =====================================================================
 iabbrev migor morgado.igor@gmail.com
 
-" LVSTHW
+" }}}
 
-" maybe this is good
-inoremap jk <esc>
+" Folding {{{
+if has("folding")
+	set foldenable        " enable folding
+	set foldtext=FoldText()
+endif
+" }}}
+
+
+" LVSTHW {{{
+" =====================================================================
 
 " Enable Digraphs with C-D 
 inoremap <C-D> <C-K>
 
 " }}}
+
 
 " vim:foldmethod=marker:foldlevel=0

@@ -16,42 +16,54 @@ setlocal showmatch
 
 " Fold
 setlocal foldmethod=syntax
+setlocal foldcolumn=5
 setlocal foldnestmax=10
-setlocal foldlevel=4
+setlocal foldtext=FoldText()
 
 " File format
 setlocal fileformat=unix
 setlocal encoding=utf-8
 
-compiler gcc
 
-if filereadable('Makefile') 
-    inoremap <buffer> <F5> <ESC>:w <bar> :make <CR>
-    nnoremap <buffer> <F5> :w <bar> :make<CR>
-else
+if executable('gcc')
+    compiler gcc
+    let current_compiler = "gcc"
     inoremap <buffer> <F5> <ESC>:w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
     nnoremap <buffer> <F5> :w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
 endif
 
+if filereadable('Makefile') 
+    inoremap <buffer> <F5> <ESC>:w <bar> :make <CR>
+    nnoremap <buffer> <F5> :w <bar> :make<CR>
+endif
+
+" Company environment
 if filereadable('vMakefile.include')
     setlocal tabstop=2
     setlocal shiftwidth=2
     setlocal softtabstop=2
-    setlocal textwidth=120
+    setlocal textwidth=79
     setlocal colorcolumn=79
-    if (executable('pmake'))
+
+    if (executable('icc'))
         let current_compiler = "icc"
+    endif
+
+    if (executable('pmake'))
         set makeprg=csh\ -c\ 'pmake\ dist'
-        inoremap <buffer> <F5> <ESC>:w <bar> :make<CR>i
-        nnoremap <buffer> <F5> :w <bar> :make<CR>
-        inoremap <buffer> <S-F5> <ESC>:!gdeploy<CR>i
-        nnoremap <buffer> <S-F5> :!gdeploy<CR>
     else
         inoremap <buffer> <F5> <ESC>:echom "Environment not set 'pmake' not found"<CR>
         nnoremap <buffer> <F5> :echom "Environment not set 'pmake' not found"<CR> 
     endif
-endif
 
+    if executable('gdeploy')
+        inoremap <buffer> <S-F5> <ESC>:!gdeploy<CR>i
+        nnoremap <buffer> <S-F5> :!gdeploy<CR>
+    else
+        inoremap <buffer> <F5> <ESC>:echom "Gdeploy not found. Module installation will not work"<CR>
+        nnoremap <buffer> <F5> :echom "Gdeploy not found. Module installation will not work"<CR> 
+    endif
+endif
 
 let fname = expand('<afile>:p:h') . '/types.vim'
 if filereadable(fname)
@@ -85,8 +97,5 @@ if exists('loaded_cctree')
             autocmd VimEnter,BufNewFile,BufReadPost *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out
         augroup END
     endif
-
 endif
 
-" setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
-" setlocal foldexpr< foldmethod<
