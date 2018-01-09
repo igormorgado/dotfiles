@@ -1,0 +1,32 @@
+#!/bin/bash
+
+TESTROOT=${TESTROOT:-/tpa/imorgado/rel}
+
+[ ! -d ${TESTROOT} ] && mkdir -m 755 -p ${TESTROOT}
+
+if [ ! -r vMakefile.include ] ; then
+	echo "Not inside g2module dir. Exiting."
+	exit
+fi
+
+[ "${1}" == "new" ] && MODVER="-$( date +"%d%H%M" )"
+
+# Fetch Module name
+MODULE=$( sed -n '/APPS/ s/.*=*\s//p' vMakefile.include )
+
+# Fetch version number
+if [ -r "version.h" ]; then
+	VERSION=$( sed -n '/short_version/ s/.*"\(.*\)".*/\1/p' version.h ) 
+fi
+
+dstdir=${TESTROOT}/${MODULE}/${VERSION}.xp.${USER}${MODVER}
+if [ -d "${dstdir}" ]; then
+	# echo Removing "${dstdir}"
+	rm -rf --preserve-root "${dstdir}"
+fi
+
+mkdir -p "${dstdir}"
+cp -r "GWORK.db7/dist/${MODULE}/${VERSION}/"* "${dstdir}"
+
+echo "${MODULE}		${dstdir}"
+

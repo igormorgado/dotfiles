@@ -108,31 +108,28 @@ endif
 
 Plug 'christoomey/vim-tmux-navigator'
 " {{{
-if exists("g:loaded_tmux_navigator") 
-	let g:tmux_navigator_save_on_switch = 2
-	let g:tmux_navigator_disable_when_zoomed = 1
-	let g:tmux_navigator_no_mappings = 1
-	" Standard <C-\> conflicts with vim-CScope"
-	" These keys are not working inside CCTree split
-	nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-	nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-	nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-	nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-	nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
-	inoremap <silent> <C-h> <esc>:TmuxNavigateLeft<cr>
-	inoremap <silent> <C-j> <esc>:TmuxNavigateDown<cr>
-	inoremap <silent> <C-k> <esc>:TmuxNavigateUp<cr>
-	inoremap <silent> <C-l> <esc>:TmuxNavigateRight<cr>
-	inoremap <silent> <C-g> <esc>:TmuxNavigatePrevious<cr>
-else
-	inoremap <C-k> <C-w>k
-	inoremap <C-l> <C-w>l
-	inoremap <C-h> <C-w>h
-	inoremap <C-j> <C-w>j
-	nnoremap <C-k> <C-w>k
-	nnoremap <C-l> <C-w>l
-	nnoremap <C-h> <C-w>h
-endif
+let g:tmux_navigator_save_on_switch = 2
+let g:tmux_navigator_disable_when_zoomed = 1
+let g:tmux_navigator_no_mappings = 1
+" Standard <C-\> conflicts with vim-CScope"
+" These keys are not working inside CCTree split
+nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
+inoremap <silent> <C-h> <ESC>:TmuxNavigateLeft<cr>
+inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>
+inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>
+inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>
+inoremap <silent> <C-g> <ESC>:TmuxNavigatePrevious<cr>
+" inoremap <C-k> <C-w>k
+" inoremap <C-l> <C-w>l
+" inoremap <C-h> <C-w>h
+" inoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
+" nnoremap <C-h> <C-w>h
 " }}}
 
 
