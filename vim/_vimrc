@@ -255,6 +255,13 @@ set nonumber
 set cursorline
 set conceallevel=0
 
+" Share X and Mouse clipboard with Vim
+" set clipboard^=unnamedplus
+" or:
+inoremap <C-v> <ESC>"+pai
+vnoremap <C-c> "+y
+vnoremap <C-x> "+d
+
 " Navigating
 set viminfo^=%
 set scrolloff=20
