@@ -18,6 +18,8 @@ call plug#begin('~/.vim/plugged')
 Plug 'igormorgado/flattened'
 Plug 'igormorgado/vim-hints'
 Plug 'igormorgado/vim-tbone'
+" <leader>V but not for now
+"Plug 'igormorgado/vimroom'
 
 
 " Display marks in number column (very useful)
@@ -494,8 +496,10 @@ if has("autocmd")
 	" Do my lovely numbering
 	augroup numbering
 		autocmd!
-		autocmd InsertEnter * :set norelativenumber
-		autocmd InsertLeave * :set relativenumber
+        if !exists("g:writeroommode=1")
+		    autocmd InsertEnter * :set norelativenumber
+		    autocmd InsertLeave * :set relativenumber
+        endif
 	augroup END
 
 	" Set some uncommon filetymes correctly

@@ -21,7 +21,7 @@ let python_hightlight_all = 1
 
 " Set pylint when building file
 if (executable("pylint"))
-    setlocal makeprg=pylint3\ --reports=n\ --output-format\ parseable\ %:p
+    setlocal makeprg=pylint\ --reports=n\ --output-format\ parseable\ %:p
     setlocal errorformat=%f:%l:\ %m
 endif
 

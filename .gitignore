@@ -29,7 +29,9 @@ _irssi/logs/
 _local/share/fonts/
 _local/share/mc/history
 _mutt/alias
-_mutt/mutt_secrets
+_mutt/secrets
+ mutt/_mutt/alias
+ mutt/_mutt/secrets
 *.old
 tags
 .tags
