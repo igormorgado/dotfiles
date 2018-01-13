@@ -15,6 +15,7 @@ PACKS := $(TERMINAL)
 
 
 $(TOPTARGETS): $(PACKS)
+
 $(PACKS):
 	$(MAKE) -C $@ $(MAKECMDGOALS)
 
