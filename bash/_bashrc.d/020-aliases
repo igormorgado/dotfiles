@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 if ${COLOR_ENVIRONMENT}; then
-  alias dir='ls --color=auto --format=vertical'
-  alias ls="ls --color=auto"
-  alias ll="ls --color=auto -l"
+  alias dir='ls --color --format=vertical'
+  alias ls="ls --color"
+  alias ll="ls --color -l"
   alias grep='grep --color=auto'
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'

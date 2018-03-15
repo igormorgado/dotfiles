@@ -13,6 +13,21 @@ function tmpdf() {
 	fi
 }
 
+function tver() {
+	if [ -n "${TMUX}" ]; then
+		tmux splitw -h -p "${1:-50}"
+	else
+		echo "TMUX not running"
+	fi
+}
+
+function thor() {
+	if [ -n "${TMUX}" ]; then
+		tmux splitw -v -p "${1:-50}"
+	else
+		echo "TMUX not running"
+	fi
+}
 
 function tmt() {
 	if [ -n "${TMUX}" ]; then
@@ -114,7 +129,7 @@ function tm2x2() {
 function tm21() {
 	if [ -n "${TMUX}" ]; then
 		if [ "${COLUMNS}" -lt 160 ] || [ "${LINES}" -lt 50 ]; then
-			echo "Not enough COLUMNS (need bigger than 160)"
+			echo "Not enough COLUMNS (need bigger than 160 and lines 50)"
 		else
 			[ -z "${TMUX}" ] && tmux new-session -d "2x3"
 			tmux split-window -h
