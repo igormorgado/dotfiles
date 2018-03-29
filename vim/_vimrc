@@ -534,11 +534,12 @@ if has("autocmd")
 	augroup END
 
 	" Save folding when leaving and reload when entering
-	augroup folding
-		autocmd!
-		au BufWrite,VimLeave * mkview
-		au BufRead           * silent loadview
-	augroup END
+	" THIS MESS WITH COLOR SOMETIMES
+	" augroup folding
+	" 	autocmd!
+	" 	au BufWrite,VimLeave * mkview
+	" 	au BufRead           * silent loadview
+	" augroup END
 endif
 
 " }}}
@@ -546,6 +547,7 @@ endif
 " Abbreviations {{{
 " =====================================================================
 iabbrev migor morgado.igor@gmail.com
+iabbrev intmain int main(int argc, char *argv[]) {
 
 " }}}
 
