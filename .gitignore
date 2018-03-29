@@ -30,6 +30,8 @@ _local/share/fonts/
 _local/share/mc/history
 _mutt/alias
 _mutt/secrets
+secrets
+*secret*
  mutt/_mutt/alias
  mutt/_mutt/secrets
 *.old
