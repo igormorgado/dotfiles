@@ -7,7 +7,7 @@
 " Uncomment to not load any vim conf
 " finish
 
-" Plugins {{{
+" Plugins 
 " ======================================================================
 
 set nocompatible
@@ -18,8 +18,6 @@ call plug#begin('~/.vim/plugged')
 Plug 'igormorgado/flattened'
 Plug 'igormorgado/vim-hints'
 Plug 'igormorgado/vim-tbone'
-" <leader>V but not for now
-"Plug 'igormorgado/vimroom'
 
 
 " Display marks in number column (very useful)
@@ -28,7 +26,8 @@ Plug 'kshenoy/vim-signature'
 
 " Smarter Quickfix window (very useful)
 Plug 'romainl/vim-qf'
-" {{{
+
+ 
 " Inside QF window
 "    s - open entry in a new horizontal window
 "    v - open entry in a new vertical window
@@ -36,30 +35,28 @@ Plug 'romainl/vim-qf'
 "    o - open entry and come back
 "    O - open entry and close the location/quickfix window
 "    p - open entry in a preview window
-	let g:qf_mapping_ack_style = 1
 	" nmap C <Plug>qf_qf_switch
 	" nmap <leader>c <Plug>qf_qf_stay_toggle
+	let g:qf_mapping_ack_style = 1
 	let g:qf_statusline = {}
 	let g:qf_statusline.before = '%<\ '
 	let g:qf_statusline.after = '\ %f%=%l\/%-6L\ \ \ \ \ '
-" }}}
-
+ 
 
 " UNIX commands from VIM |eunuch.txt|
 Plug 'tpope/vim-eunuch'
-
-
+ 
+ 
 " VIM with GIT. Precious!
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
-
-
+ 
+ 
 " Extend vim surrounds to HTML tags, text object and such
 Plug 'tpope/vim-surround'
 
-
+ 
 Plug 'tpope/vim-unimpaired'
-" {{{
 " Pair of brackts map to misc things
 " aA  args
 " bB  buffers
@@ -69,23 +66,20 @@ Plug 'tpope/vim-unimpaired'
 " f  files
 " n  diff marker
 " It also do unicode convertions
-" }}}
+" 
 
 
 Plug 'tpope/vim-flagship'
 set laststatus=2
 set showtabline=2
 set guioptions-=e
-
-
+ 
+ 
 Plug 'tpope/vim-markdown'
-" {{{
 let g:markdown_fenced_langagues = ['html', 'python','bash=sh','c', 'help']
-" }}}
-
+ 
 
 Plug 'tpope/vim-vinegar'
-" {{{
 let g:netrw_list_hide  = '\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_list_hide .= '\.pyc$,'
 let g:netrw_list_hide .= '\.o$,\.obj$'
@@ -93,19 +87,17 @@ let g:netrw_list_hide .= '\.a$,\.so$,\.lib$,\.dll$,'
 let g:netrw_list_hide .= '\.pyc\s\+,'
 let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+'
 let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
-" }}}
 
 
 Plug 'ludovicchabant/vim-gutentags'
-" {{{
-	let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
-	let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
-	let g:gutentags_project_root=[ 'vMakefile.include', 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
-" }}}
-
-
+let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
+let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
+let g:gutentags_project_root=[ 'vMakefile.include', 'Makefile', 'setup.py', 'Makefile.am', 'CMake' ]
+ 
+ 
+ 
 Plug 'christoomey/vim-tmux-navigator'
-" {{{
+" 
 let g:tmux_navigator_save_on_switch = 2
 let g:tmux_navigator_disable_when_zoomed = 1
 let g:tmux_navigator_no_mappings = 1
@@ -121,69 +113,58 @@ inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>
 inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>
 inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>
 inoremap <silent> <C-g> <ESC>:TmuxNavigatePrevious<cr>
-" inoremap <C-k> <C-w>k
-" inoremap <C-l> <C-w>l
-" inoremap <C-h> <C-w>h
-" inoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
-" nnoremap <C-h> <C-w>h
-" }}}
-
+ 
 
 Plug 'hari-rangarajan/CCTree'
-" {{{
-	let g:CCTreeKeyHilightTree = '<C-t>'
-	let g:CCTreeCscopeDb = "cscope.out"
-	let g:CCTreeMinVisibleDepth = 3
-	" Can be top/bottom right/left 
-	let g:CCTreeOrientation = "topleft"
-	let g:CCTreeWindowVertical = 1
-	" 1 compact 2: normal 3: wide
-	let g:CCTreeDisplayMode = 2
-	let g:CCTreeHilightCallTree = 1
-" }}}
-
-
+let g:CCTreeKeyHilightTree = '<C-t>'
+let g:CCTreeCscopeDb = "cscope.out"
+let g:CCTreeMinVisibleDepth = 3
+" Can be top/bottom right/left 
+let g:CCTreeOrientation = "topleft"
+let g:CCTreeWindowVertical = 1
+" 1 compact 2: normal 3: wide
+let g:CCTreeDisplayMode = 2
+let g:CCTreeHilightCallTree = 1
+    
 Plug 'hari-rangarajan/ccglue'
 
 
 " FOR PYTHON
 " Need to learn more about these plugins
-if has('python3')
-	Plug 'davidhalter/jedi-vim'
-	" {{{
-		let g:jedi#use_splits_not_buffers = "bottom"
-		" let g:jedi#use_tabs_not_buffers = 1
-		" let g:jedi#popup_on_dot = 0
-		" let g:jedi#popup_select_first = 0
-		" let g:jedi#show_call_signatures = "1"
-	" }}}
-
-	Plug 'tmhedberg/SimpylFold'
-	" {{{
-		let g:SimpylFold_fold_import = 1
-		let g:SimpylFold_docstring_preview = 1
-		let g:SimpylFold_fold_docstring = 0
-	" }}}
-else
-	Plug 'vim-scripts/indentpython'
-endif
-
-"Plug 'vim-latex/vim-latex'
-"let g:tex_flavor = "latex" 
-
-" TO LEARN
-" Plug 'tpope/vim-dispatch'
-
+" if has('python3')
+" 	Plug 'davidhalter/jedi-vim'
+" 	" 
+" 		let g:jedi#use_splits_not_buffers = "bottom"
+" 		" let g:jedi#use_tabs_not_buffers = 1
+" 		" let g:jedi#popup_on_dot = 0
+" 		" let g:jedi#popup_select_first = 0
+" 		" let g:jedi#show_call_signatures = "1"
+" 	" 
+" 
+" 	Plug 'tmhedberg/SimpylFold'
+" 	" 
+" 		let g:SimpylFold_fold_import = 0
+" 		let g:SimpylFold_docstring_preview = 1
+" 		let g:SimpylFold_fold_docstring = 0
+" 	" 
+" else
+" 	Plug 'vim-scripts/indentpython'
+" endif
+" 
+" "Plug 'vim-latex/vim-latex'
+" "let g:tex_flavor = "latex" 
+" 
+" " TO LEARN
+" " Plug 'tpope/vim-dispatch'
+" 
 call plug#end()
 
 " Load vim man plugin
 runtime ftplugin/man.vim
 set keywordprg=:Man
-" }}}
+" 
 
-" Theme and graph {{{
+" Theme and graph 
 " ======================================================================
 if has("gui_running")
 	set guioptions-=m
@@ -227,9 +208,9 @@ if has("statusline")
 	set statusline+=\ %L          " line/lines
 	set statusline+=\ lines
 endif
-" }}}
 
-" Basic Settings {{{
+
+" Basic Settings 
 " ==========================================================
 let mapleader=" "
 let maplocalleader=" "
@@ -298,9 +279,9 @@ set hidden
 " Tags startup
 set tags=.tags;tags;${HOME}
 
-" }}}
 
-" Maps/Macros {{{
+
+" Maps/Macros 
 " ================================================
 
 " Lazyness
@@ -329,9 +310,9 @@ command! W :w
 cnoremap W! w !sudo tee % >/dev/null
 cnoremap w!! w !sudo tee % >/dev/null
 
-" }}}
+" 
 
-" Function keys {{{
+" Function keys 
 " ======================================================================
 
 " Buffers
@@ -392,9 +373,9 @@ nnoremap <S-F11>      :colder<CR>
 
 inoremap <S-F12> <ESC>:cnewer<CR>
 nnoremap <S-F12>      :cnewer<CR>
-" }}}
+" 
 
-" Functions {{{
+" Functions 
 " ======================================================================
 
 function! EasyVim()
@@ -485,9 +466,9 @@ command Delview call MyDeleteView()
 " Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
 cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
 
-" }}}
+" 
 
-" Groups {{{
+" Groups 
 " ======================================================================
 
 if has("autocmd")
@@ -499,12 +480,12 @@ if has("autocmd")
 	augroup END
 
 	" Autosave all when changing focus also ident when savin code.
-	augroup autosave
-		autocmd!
-		autocmd BufNewFile * :write
-		autocmd FocusLost * :wa
-		" autocmd BufWritePre *.py,*.js,*.c :call Preserve("%s/\\s\\+$//e")<CR>
-	augroup END
+	"augroup autosave
+	"	autocmd!
+	"	autocmd BufNewFile * :write
+	"	autocmd FocusLost * :wa
+	"	" autocmd BufWritePre *.py,*.js,*.c :call Preserve("%s/\\s\\+$//e")<CR>
+	"augroup END
 
 	" Return to last edit position when opening files (You want this!)
 	augroup openingbuffer
@@ -542,30 +523,30 @@ if has("autocmd")
 	" augroup END
 endif
 
-" }}}
+" 
 
-" Abbreviations {{{
+" Abbreviations 
 " =====================================================================
 iabbrev migor morgado.igor@gmail.com
 iabbrev intmain int main(int argc, char *argv[]) {
 
-" }}}
+" 
 
-" Folding {{{
-if has("folding")
-	set foldenable        " enable folding
-	set foldtext=FoldText()
-endif
-" }}}
+" Folding 
+"if has("folding")
+"	set foldenable        " enable folding
+"	set foldtext=FoldText()
+"endif
+" 
 
 
-" LVSTHW {{{
+" LVSTHW 
 " =====================================================================
 
 " Enable Digraphs with C-D 
 inoremap <C-D> <C-K>
 
-" }}}
+" 
 
 
 " vim:foldmethod=marker:foldlevel=0

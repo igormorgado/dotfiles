@@ -19,6 +19,8 @@ setlocal foldmethod=syntax
 setlocal foldcolumn=5
 setlocal foldnestmax=10
 setlocal foldtext=FoldText()
+setlocal foldlevelstart=99
+setlocal foldlevel=99
 
 " File format
 setlocal fileformat=unix
@@ -32,37 +34,9 @@ if executable('gcc')
     nnoremap <buffer> <F5> :w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
 endif
 
-if filereadable('Makefile') 
+if filereadable('Makefile*') 
     inoremap <buffer> <F5> <ESC>:w <bar> :make <CR>
     nnoremap <buffer> <F5> :w <bar> :make<CR>
-endif
-
-" Company environment
-if filereadable('vMakefile.include')
-    setlocal tabstop=2
-    setlocal shiftwidth=2
-    setlocal softtabstop=2
-    setlocal textwidth=79
-    setlocal colorcolumn=79
-
-    if (executable('icc'))
-        let current_compiler = "icc"
-    endif
-
-    if (executable('pmake'))
-        set makeprg=csh\ -c\ 'pmake\ dist'
-    else
-        inoremap <buffer> <F5> <ESC>:echom "Environment not set 'pmake' not found"<CR>
-        nnoremap <buffer> <F5> :echom "Environment not set 'pmake' not found"<CR> 
-    endif
-
-    if executable('gdeploy')
-        inoremap <buffer> <S-F5> <ESC>:!gdeploy<CR>i
-        nnoremap <buffer> <S-F5> :!gdeploy<CR>
-    else
-        inoremap <buffer> <F5> <ESC>:echom "Gdeploy not found. Module installation will not work"<CR>
-        nnoremap <buffer> <F5> :echom "Gdeploy not found. Module installation will not work"<CR> 
-    endif
 endif
 
 let fname = expand('<afile>:p:h') . '/types.vim'

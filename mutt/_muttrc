@@ -9,7 +9,9 @@ set smtp_pass    = $imap_pass
 
 # Set the above variables in this file instead
 # Is here just to set as an example
+
 source ~/.mutt/secrets
+
 
 source ~/.mutt/alias
 
@@ -133,17 +135,16 @@ source ~/.mutt/solarized_dark_16colors
 
 # OFFLINE GMAIL ACCOUNTs
 # Default inbox.
-#set spoolfile = "+morgado.igor_gmail.com/INBOX"
+#set spoolfile = "+john.doe_gmail.com/INBOX"
 #
 ## Other special folders.
-#set mbox      = "+morgado.igor_gmail.com/archive"
-#set postponed = "+morgado.igor_gmail.com/drafts"
+#set mbox      = "+john.doe_gmail.com/archive"
+#set postponed = "+john.doe_gmail.com/drafts"
 #macro index O "<shell-escape>offlineimap<enter>"           "run offlineimap to sync all mail"
 #macro index o "<shell-escape>offlineimap -qf INBOX<enter>" "run offlineimap to sync inbox"
-#set sendmail = "~/.mutt/msmtpqueue/msmtp-enqueue.sh -a morgado.igor@gmail.com"
+#set sendmail = "~/.mutt/msmtpqueue/msmtp-enqueue.sh -a john.doe@gmail.com"
 #set sendmail_wait = 0
 #macro index F "!~/.mutt/msmtpqueue/msmtp-runqueue.sh^M"
 #macro pager F "!~/.mutt/msmtpqueue/msmtp-runqueue.sh^M"
 
 # 
-
