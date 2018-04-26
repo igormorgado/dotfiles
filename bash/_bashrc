@@ -162,61 +162,6 @@ export MC_SKIN=$HOME/.config/mc/solarized.ini
 # Terminal Configuration {{{
 ###########################################################################
 
-# I will not mess with term variable for now!
-#OSVERSION=$( uname -o )
-#case ${OSVERSION} in
-#	*Linux*|*linux*)
-#		;;
-#	*Darwin*)
-#		export CLICOLOR=TRUE
-#		;;
-#	*)
-#		;;
-#esac
-#
-## Set $TERM for libvte terminals that set $TERM wrong (like gnome-terminal)
-#{
-#	[ "${TERM}" = "xterm" ] && type ldd && type grep && type tput && [ -L "/proc/${PPID}/exe" ] && {
-#	if ldd /proc/${PPID}/exe | grep libvte; then
-#		if [ "$(tput -Txterm-256color colors)" = "256" ]; then
-#			TERM=xterm-256color
-#		elif [ "$(tput -Txterm-256color colors)" = "256" ]; then
-#			TERM=xterm-256color
-#		elif tput -T xterm; then
-#			TERM=xterm
-#		fi
-#	fi
-#	}
-#} >/dev/null 2>/dev/null
-#
-## Necessary for TERMINATOR
-#[ "${COLORTERM}" = "gnome-terminal" ] && TERM=xterm-256color
-#
-## Used in some aux moments
-## Maybe there are better ways to check this
-#case ${TERM} in
-#	xterm|vt100|rxvt|cygwin) # Old fashined VT
-#		export TERM_IS_COLOR=true
-#		export TERM_IS_256COLOR=false
-#		export TERM_CAN_TITLE=true
-#		;;
-#	*xterm*|rxvt|Eterm|eterm|screen*) # screen.linux|screen-w
-#		export TERM_IS_COLOR=true
-#		export TERM_IS_256COLOR=true
-#		export TERM_CAN_TITLE=true
-#		;;
-#	linux)  # Linux VT
-#		export TERM_IS_COLOR=true
-#		export TERM_IS_256COLOR=false
-#		export TERM_CAN_TITLE=false
-#		;;
-#	*) # What left
-#		export TERM_IS_COLOR=false
-#		export TERM_IS_256COLOR=false
-#		export TERM_CAN_TITLE=false
-#		;;
-#esac
-
 # For now just set as tru
 COLOR_ENVIRONMENT=true
 
