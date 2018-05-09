@@ -12,6 +12,7 @@ else
 fi
 
 alias dropstart="DISPLAY= dropbox start"
+alias note="nohup jupyter-notebook > jup.log 2>&1 &"
 
 alias start="sudo systemctl start"
 alias stop="sudo systemctl stop"

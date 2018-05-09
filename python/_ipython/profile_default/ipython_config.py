@@ -9,10 +9,8 @@ c.InteractiveShellApp.log_level = 0
 
 c.InteractiveShellApp.exec_lines = [
     'import numpy',
-    'import scipy',
     'import pandas',
     'np = numpy',
-    'sp = scipy',
     'pd = pandas'
 ]
 
