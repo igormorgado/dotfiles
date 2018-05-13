@@ -15,6 +15,9 @@ alias cscp="cscope -k -b -c -R; rm -f cctree.out"
 
 alias dropstart="DISPLAY= dropbox start"
 
+# Force XTERM mode, Fix on TMUX
+alias mc="mc -x"
+
 alias start="sudo systemctl start"
 alias stop="sudo systemctl stop"
 alias restart="sudo systemctl restart"

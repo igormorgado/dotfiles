@@ -19,7 +19,6 @@ Plug 'igormorgado/flattened'
 Plug 'igormorgado/vim-hints'
 Plug 'igormorgado/vim-tbone'
 
-
 " Display marks in number column (very useful)
 Plug 'kshenoy/vim-signature'
 
@@ -150,9 +149,25 @@ Plug 'hari-rangarajan/ccglue'
 " else
 " 	Plug 'vim-scripts/indentpython'
 " endif
-" 
-" "Plug 'vim-latex/vim-latex'
-" "let g:tex_flavor = "latex" 
+
+" check after/tex.vim
+" Is up here to clean the mapping of C-j and F5
+Plug 'vim-latex/vim-latex'
+imap <C-s> <Plug>IMAP_JumpForward
+imap <C-s> <Plug>IMAP_JumpForward
+map <C-s> <Plug>IMAP_JumpForward
+map <C-s> <Plug>IMAP_JumpForward
+" nmap <C-d> <Plug>IMAP_JumpForward
+" nmap <C-d> <Plug>IMAP_JumpForward
+" vmap <C-d> <Plug>IMAP_JumpForward
+" vmap <C-d> <Plug>IMAP_JumpForward
+let g:tex_flavor = "latex" 
+let g:Tex_Leader = '`'
+let g:Tex_Leader2 = ','
+let g:Tex_DefaultTargetFormat = 'pdf'
+
+
+
 " 
 " " TO LEARN
 " " Plug 'tpope/vim-dispatch'

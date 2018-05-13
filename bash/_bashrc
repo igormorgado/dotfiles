@@ -264,6 +264,7 @@ fi
 for file in ${HOME}/.bashrc.d/[123456789]*;do
 	source "${file}"
 done
+unset file
 
 # vim: foldmethod=marker:ft=sh:
 
