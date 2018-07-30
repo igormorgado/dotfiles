@@ -706,3 +706,5 @@ TSWLatexianTemp*
 *.sta
 
 
+# Geru stuff
+local_prod.ini

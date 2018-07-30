@@ -49,14 +49,23 @@ function addlibpath() {
 function addrunpath() {
 	[[ ":${LD_RUN_PATH}:" == *":$1:"* ]] && return
 	[ -d "${1}" ] && export LD_RUN_PATH=${1}:${LD_RUN_PATH}
-
 }
 
 function addpkgpath() {
 	[[ ":${PKG_CONFIG_PATH}:" == *":$1:"* ]] && return
 	[ -d "${1}" ] && export PKG_CONFIG_PATH=${1}:${PKG_CONFIG_PATH}
+}
 
+function addxdgdatadir() {
+# Add (in the beginning) a dir to ${XDG_DATA_DIRS} (only if exists)
+	[[ ":${XDG_DATA_DIRS}:" == *":$1:"* ]] && return
+    [ -d "${1}" ] && export XDG_DATA_DIRS="${XDG_DATA_DIRS}:${1}"
+}
 
+function appxdgdatadir() {
+# Append (in the end) a dir to XDG_DATA_DIR (only if exists)
+	[[ ":${XDG_DATA_DIRS}:" == *":$1:"* ]] && return
+    [ -d "${1}" ] && export XDG_DATA_DIRS="${1}:${XDG_DATA_DIRS}"
 }
 
 

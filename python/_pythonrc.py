@@ -207,4 +207,3 @@ except NameError:
 
 # Exit the Python shell on exiting the InteractiveConsole
 import sys
-sys.exit()

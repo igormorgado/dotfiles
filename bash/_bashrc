@@ -230,6 +230,8 @@ addrunpath "${HOME}"/lib
 addmanpath "${HOME}/.local/man"
 addinfopath "${HOME}/.local/info"
 
+addxdgdatadir "/var/lib/flatpak/exports/share/applications"
+
 # Load some external files
 loadresource ~/.local/bin/factory
 loadresource ~/.bash_aliases

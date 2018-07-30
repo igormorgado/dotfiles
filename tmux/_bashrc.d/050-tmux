@@ -29,6 +29,33 @@ function thor() {
 	fi
 }
 
+function tmg() {
+	if [ -n "${TMUX}" ]; then
+		mincolsz=142
+		minlinsz=40
+
+		ncol=$((COLUMNS/mincolsz))
+		colsz=$((COLUMNS/ncol))
+
+		nlin=$((LINES/minlinsz))
+		linsz=$((LINES/nlin))
+
+		for ((j=1;j<ncol;j++)); do
+			${DEBUG} tmux split-window -d -h -l $colsz
+		done
+
+		for ((j=0;j<ncol;j++)); do
+			for ((i=1;i<nlin;i++)); do
+				${DEBUG} tmux split-window -d -v -l $linsz
+			done
+			${DEBUG} tmux select-pane -R
+		done
+		${DEBUG} tmux select-pane -t 0
+	else
+		echo "TMUX not running"
+	fi
+}
+
 function tmt() {
 	if [ -n "${TMUX}" ]; then
 		mincolsz=80
