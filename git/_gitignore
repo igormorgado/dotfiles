@@ -705,6 +705,8 @@ TSWLatexianTemp*
 # standalone packages
 *.sta
 
+# Pcloud bin
+pcloud
 
 # Geru stuff
 local_prod.ini
