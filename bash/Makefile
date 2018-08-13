@@ -1,7 +1,7 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 bashfiles = profile bashrc bash_profile bash_logout inputrc grep_ignore
-rcdfiles = 010-bash_functions 020-aliases 800-seismic 999-local
+rcdfiles = 010-bash_functions 020-aliases 700-comp 800-seismic 999-local
 
 all: bash dircolor config
 clean: bashclean dircolorclean configclean
@@ -19,6 +19,8 @@ bashclean:
 	@rm -f ${HOME}/.inputrc
 	@rm -f ${HOME}/.bashrc.d/010-bash_functions
 	@rm -f ${HOME}/.bashrc.d/020-aliases
+	@rm -f ${HOME}/.bashrc.d/700-comp
+	@rm -f ${HOME}/.bashrc.d/800-seismic
 	@rm -f ${HOME}/.bashrc.d/999-local
 
 dircolor:

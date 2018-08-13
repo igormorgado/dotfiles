@@ -19,6 +19,9 @@ Plug 'igormorgado/flattened'
 Plug 'igormorgado/vim-hints'
 Plug 'igormorgado/vim-tbone'
 
+" :XtermColorTable
+Plug 'guns/xterm-color-table.vim'
+
 " Display marks in number column (very useful)
 Plug 'kshenoy/vim-signature'
 
@@ -130,25 +133,25 @@ Plug 'hari-rangarajan/ccglue'
 
 " FOR PYTHON
 " Need to learn more about these plugins
-" if has('python3')
-" 	Plug 'davidhalter/jedi-vim'
-" 	" 
-" 		let g:jedi#use_splits_not_buffers = "bottom"
-" 		" let g:jedi#use_tabs_not_buffers = 1
-" 		" let g:jedi#popup_on_dot = 0
-" 		" let g:jedi#popup_select_first = 0
-" 		" let g:jedi#show_call_signatures = "1"
-" 	" 
-" 
-" 	Plug 'tmhedberg/SimpylFold'
-" 	" 
-" 		let g:SimpylFold_fold_import = 0
-" 		let g:SimpylFold_docstring_preview = 1
-" 		let g:SimpylFold_fold_docstring = 0
-" 	" 
-" else
-" 	Plug 'vim-scripts/indentpython'
-" endif
+if has('python3')
+	Plug 'davidhalter/jedi-vim'
+	 
+	   let g:jedi#use_splits_not_buffers = "bottom"
+	   " let g:jedi#use_tabs_not_buffers = 1
+	   " let g:jedi#popup_on_dot = 0
+	   " let g:jedi#popup_select_first = 0
+	   " let g:jedi#show_call_signatures = "1"
+	 
+
+	Plug 'tmhedberg/SimpylFold'
+	 
+	   let g:SimpylFold_fold_import = 1
+	   let g:SimpylFold_docstring_preview = 1
+	   let g:SimpylFold_fold_docstring = 0
+	 
+else
+	Plug 'vim-scripts/indentpython'
+endif
 
 " check after/tex.vim
 " Is up here to clean the mapping of C-j and F5
@@ -166,6 +169,7 @@ let g:Tex_Leader = '`'
 let g:Tex_Leader2 = ','
 let g:Tex_DefaultTargetFormat = 'pdf'
 
+Plug 'guns/xterm-color-table'
 
 
 " 
@@ -200,11 +204,12 @@ else
 	set background=dark
 endif
 
-" Status line color
+" Status line color (changed for a simpler than informative for many buffer
+" views)
 if has("statusline")
 	set statusline =              " clear
-	set statusline+=\ %02n        " leading zero 2 digit buffer number
-	set statusline+=\ %#IncSearch#    " Color
+	" set statusline+=\ %02n        " leading zero 2 digit buffer number
+	set statusline+=\ %#FileName#    " Color
 	set statusline+=\ %<%F        " file full path, truncate
 	set statusline+=\ %*
 	set statusline+=\ %r          " read only flag '[RO]'
@@ -213,15 +218,15 @@ if has("statusline")
 	" set statusline+=\ %{fugitive#statusline()}    " GIT Branch
 	set statusline+=\ %{gutentags#statusline()}
 	set statusline+=%=            " left/right separation point
-	set statusline+=\ \|\ %{&ff}  " fileformat
-	set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
-	set statusline+=\ \|\ [%03b   " decimal byte
-	set statusline+=\ x%02B]      " hex byte ' \x62'
-	set statusline+=\ (%04v,%04l) " (x,y)
-	set statusline+=\ \|\ %P    " percent of file
-	set statusline+=\ of
-	set statusline+=\ %L          " line/lines
-	set statusline+=\ lines
+	" set statusline+=\ \|\ %{&ff}  " fileformat
+	" set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
+	" set statusline+=\ \|\ [%03b   " decimal byte
+	" set statusline+=\ x%02B]      " hex byte ' \x62'
+	set statusline+=\ (%04v,%04l)\  " (x,y)
+	" set statusline+=\ \|\ %P    " percent of file
+	" set statusline+=\ of
+	" set statusline+=\ %L          " line/lines
+	" set statusline+=\ lines
 endif
 
 
@@ -235,24 +240,26 @@ set undolevels=1000
 set linebreak
 set wrap
 set virtualedit=block
-set numberwidth=5
-set relativenumber
-set nonumber
 set cursorline
 set conceallevel=0
+
+" Numbering
+set numberwidth=5
+set number
+set relativenumber
+" set nonumber
 
 " Share X and Mouse clipboard with Vim
 " set clipboard^=unnamedplus
 " or:
-inoremap <C-v> <ESC>"+pai
+inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-x> "+d
 
 " Navigating
 set viminfo^=%
 set scrolloff=20
-set number
-set colorcolumn=79
+set colorcolumn=80
 set cursorcolumn
 
 " Indent
@@ -294,33 +301,44 @@ set hidden
 " Tags startup
 set tags=.tags;tags;${HOME}
 
+" Project files
+set exrc
+
 
 
 " Maps/Macros 
 " ================================================
 
 " Lazyness
+" Pressing j then k quicly in insert mode leaves insert mode.
 inoremap jk <esc>
+
+" Quit on triple ESC
 nnoremap <ESC><ESC><ESC> :q<CR>
+
+" split window vertically
 nnoremap <leader>w <C-w>v<C-w>l
 
-" Famous shortcuts
+" Add files to buffers
 nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%p:h'))<cr>/*<C-d>
+" Find a file
 nnoremap <leader>f :find *
+" Show special characters
 nnoremap <leader>l :set list!<cr>
+" Edit vim rc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" Edit filetype vim config file
 nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype . '.vim'<CR>
+" Clean search
 nnoremap <leader>/ :nohlsearch<cr>
+" Open/close fold
 nnoremap <leader><space> za
-
 " Space strip all
 nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
 " Identall
 nnoremap _= :call Preserve("normal gg=G")<CR>
-
 " W use capital w to write too..
 command! W :w
-
 " sudo write this
 cnoremap W! w !sudo tee % >/dev/null
 cnoremap w!! w !sudo tee % >/dev/null
@@ -351,13 +369,13 @@ vnoremap <F4> 	   :Texec<CR>j
 "nnoremap <F6>
 
 " Need to improve vimgrep
-set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ -Inr
+set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ --exclude-dir\ '*venv*'\ -Inr 
 inoremap <F7> <ESC>:grep  *<left><left>
 nnoremap <F7>      :grep  *<left><left>
 nnoremap gr :grep <cword> *<CR>
 nnoremap Gr :grep <cword> %:p:h/*<CR>
-nnoremap gr :grep '\b<cword>\b' *<CR>
-nnoremap Gr :grep '\b<cword>\b' %:p:h/*<CR>
+" nnoremap gr :grep '\b<cword>\b' *<CR>
+" nnoremap Gr :grep '\b<cword>\b' %:p:h/*<CR>
 
 "inoremap <F8> <ESC>
 "nnoremap <F8>
@@ -393,6 +411,7 @@ nnoremap <S-F12>      :cnewer<CR>
 " Functions 
 " ======================================================================
 
+" Only works with X enabled vim version as (vim-gtk)
 function! EasyVim()
 	inoremap <C-v> <ESC>"+pa
 	vnoremap <C-c> "+y
@@ -477,7 +496,7 @@ function! MyDeleteView()
 endfunction
 
 " # Command Delview (and it's abbreviation 'delview')
-command Delview call MyDeleteView()
+command! Delview call MyDeleteView()
 " Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
 cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
 
@@ -515,8 +534,8 @@ if has("autocmd")
 	augroup numbering
 		autocmd!
         if !exists("g:writeroommode=1")
-		    autocmd InsertEnter * :set norelativenumber
-		    autocmd InsertLeave * :set relativenumber
+		    autocmd BufEnter,FocusGained,InsertLeave * :set relativenumber
+		    autocmd BufLeave,FocusLost,InsertEnter * :set norelativenumber
         endif
 	augroup END
 
@@ -544,6 +563,7 @@ endif
 " =====================================================================
 iabbrev migor morgado.igor@gmail.com
 iabbrev intmain int main(int argc, char *argv[]) {
+iabbrev iipdb import ipdb; ipdb.set_trace()
 
 " 
 
@@ -561,7 +581,5 @@ iabbrev intmain int main(int argc, char *argv[]) {
 " Enable Digraphs with C-D 
 inoremap <C-D> <C-K>
 
-" 
-
-
+set secure
 " vim:foldmethod=marker:foldlevel=0

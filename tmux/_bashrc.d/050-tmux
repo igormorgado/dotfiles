@@ -29,9 +29,9 @@ function thor() {
 	fi
 }
 
-function tmg() {
+function tmwide() {
 	if [ -n "${TMUX}" ]; then
-		mincolsz=142
+		mincolsz=143
 		minlinsz=40
 
 		ncol=$((COLUMNS/mincolsz))
@@ -98,6 +98,31 @@ function tm212() {
 			tmux split-window -v
 			tmux resize-pane -x 80
 			tmux select-pane -L
+			[ -z "${TMUX}" ] && tmux -2 attach-session -d 
+		fi
+	else
+		echo "TMUX not running"
+	fi
+}
+
+function tm2x3wide() {
+	if [ -n "${TMUX}" ]; then
+		if [ "${COLUMNS}" -lt 427 ] || [ "${LINES}" -lt 52 ]; then
+			echo "Not enough Screen (need bigger than 427x52)"
+		else
+			[ -z "${TMUX}" ] && tmux new-session -d "2x3wide"
+			tmux split-window -h
+			tmux select-pane -L
+			tmux resize-pane -x 143
+			tmux split-window -v
+			tmux select-pane -R
+			tmux split-window -h
+			tmux split-window -v
+			tmux resize-pane -x 143 
+			tmux select-pane -L
+			tmux split-window -v
+			tmux resize-pane -y 24
+			tmux select-pane -U
 			[ -z "${TMUX}" ] && tmux -2 attach-session -d 
 		fi
 	else

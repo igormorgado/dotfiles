@@ -18,6 +18,7 @@ alias note="nohup jupyter-notebook > jup.log 2>&1 &"
 
 # Force XTERM mode, Fix on TMUX
 alias mc="mc -x"
+alias ackpy="ack --python"
 
 alias start="sudo systemctl start"
 alias stop="sudo systemctl stop"

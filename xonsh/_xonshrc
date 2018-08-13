@@ -1,0 +1,12 @@
+# XONSH WIZARD START
+# source-bash --sourcer source "echo loading xonsh foreign shell"
+$PROJECT_DIRS=['~/Geru', '~/Projects']
+#$PROMPT='\n{env_name:{} }{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE}:{cwd}{branch_color}{curr_branch: {}}{NO_COLOR} \n{BOLD_BLUE}{ret_code_color}{ret_code}{prompt_end}{NO_COLOR} '
+$PROMPT='\n{env_name:{} }{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE}:{cwd}{branch_color}{curr_branch: {}}{NO_COLOR} \n{BOLD_BLUE}{prompt_end}{NO_COLOR} '
+$XONSH_COLOR_STYLE='native'
+
+xontrib load apt_tabcomplete autoxsh vox vox_tabcomplete avox distributed docker_tabcomplete jedi mpl prompt_ret_code prompt_vi_mode schedule
+
+# XONSH WIZARD END
+
+aliases['ackpy']=['ack','--python']
