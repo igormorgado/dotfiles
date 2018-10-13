@@ -5,6 +5,9 @@
 "   - Create custom folding to work with C folding (based on markers)
 
 " Uncomment to not load any vim conf
+" TO DEBUG
+"verbose set foldlevel
+"scriptnames
 " finish
 
 " Plugins 
@@ -244,7 +247,7 @@ set conceallevel=0
 " Share X and Mouse clipboard with Vim
 " set clipboard^=unnamedplus
 " or:
-inoremap <C-v> <ESC>"+pai
+inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
 vnoremap <C-x> "+d
 

@@ -25,7 +25,12 @@ let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -src-specials $*'
 let g:Tex_CompileRule_pdf = 'pdflatex -interaction=nonstopmode $*'
 let g:Tex_MultipleCompileFormats = 'dvi,pdf'
 
-setlocal makeprg=pdflatex\ %
+"if filereadable('Makefile')
+"    setlocal makeprg=make
+"else
+"    setlocal makeprg=pdflatex\ %
+"endif
+
 
 " augroup latexsave
 "     au BufWritePost * :silent make | redraw!
