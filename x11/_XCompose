@@ -64,5 +64,17 @@ include "/usr/share/X11/locale/en_US.UTF-8/Compose"
 <Multi_key> <quotedbl> <slash>  	: "〞" U301e	# DOUBLE PRIME QUOTATION MARK
 
 #  Overriding C with acute:
-<dead_acute> <C> 			: "Ç" Ccedilla	# LATIN CAPITAL LETTER C WITH CEDILLA
+<dead_cedilla> <space>           	: "¸"   cedilla # CEDILLA
+<dead_cedilla> <dead_cedilla>    	: "¸"   cedilla # CEDILLA
+
 <dead_acute> <c> 			: "ç" ccedilla	# LATIN SMALL LETTER C WITH CEDILLA
+<dead_cedilla> <c>               	: "ç"   ccedilla # LATIN SMALL LETTER C WITH CEDILLA
+<Multi_key> <comma> <c>          	: "ç"   ccedilla # LATIN SMALL LETTER C WITH CEDILLA
+<Multi_key> <c> <comma> 		: "ç"   ccedilla # LATIN SMALL LETTER C WITH CEDILLA
+<Multi_key> <cedilla> <c>          	: "ç"   ccedilla # LATIN SMALL LETTER C WITH CEDILLA
+
+<dead_acute> <C> 			: "Ç" Ccedilla	# LATIN CAPITAL LETTER C WITH CEDILLA
+<dead_cedilla> <C>               	: "Ç"   Ccedilla # LATIN CAPITAL LETTER C WITH CEDILLA
+<Multi_key> <comma> <C>          	: "Ç"   Ccedilla # LATIN CAPITAL LETTER C WITH CEDILLA
+<Multi_key> <C> <comma> 		: "Ç"   Ccedilla # LATIN CAPITAL LETTER C WITH CEDILLA
+<Multi_key> <cedilla> <C>          	: "Ç"   Ccedilla # LATIN CAPITAL LETTER C WITH CEDILLA

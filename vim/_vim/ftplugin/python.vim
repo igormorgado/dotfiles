@@ -74,76 +74,12 @@ if(executable("ack"))
 endif
 
 
-" Set pylint when building file
-" if (executable("pylint"))
-"     setlocal makeprg=pylint\ --reports=n\ --output-format\ parseable\ %:p
-"     setlocal errorformat=%f:%l:\ %m
-" endif
-
-" if (executable("flake8"))
-"     setlocal makeprg=flake8\ --reports=n\ --output-format\ parseable\ %:p
-"     setlocal errorformat=%f:%l:\ %m
-" endif
-
 augroup pythonglobal
     autocmd!
     au BufRead,BufNewFile *.py,*.pyw let b:comment_leader = '#'
     " It's pissing me off
     " au BufWritePost *.py make
 augroup END
-
-" nnoremap <buffer> <F5> :make<CR>
-" inoremap <buffer> <F5> <ESC>:make<CR>
-
-" Execute python code inside vim buffer
-" if has("python3")
-"     nnoremap <buffer> <F5> :py3file %<cr>
-" elseif has("python")
-"     nnoremap <buffer> <F5> :pyfile %<cr>
-" else
-"     nnoremap <buffer> <F5> :exec '!python3' % <cr>
-" endif
-
-" <S-F5> Install the software with pip
-"if filereadable("setup.py") && executable("pip")
-"    nnoremap <buffer> <S-F5> :!pip\ install\ .<CR>
-"    inoremap <buffer> <S-F5> <ESC>:!pip\ install\ .<CR>i
-"endif
-
-" TODO: Need to change to pyenv instead virtualenv
-" if has('python3')
-" python3 << EOF
-" import os.path
-" import sys
-" import vim
-" if 'VIRTUAL_ENV' in os.environ:
-"     project_base_dir = os.environ['VIRTUAL_ENV']
-"     sys.path.insert(0, project_base_dir)
-"     activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-"     execfile(activate_this, dict(__file__=activate_this))
-" for p in sys.path:
-"     # Add each dir entry in sys.path
-"     if os.path.isdir(p):
-"         vim.command(r"set path+=%s" % (p.replace(" ",r"\ ")))
-" EOF
-" endif
-" 
-" " Load up virtualenv's vimrc if it exists
-" if filereadable($VIRTUAL_ENV . '/.vimrc')
-"     source $VIRTUAL_ENV/.vimrc
-" endif
-
-
-" Comp confs
-setlocal textwidth=130
-setlocal colorcolumn=130
-
-" Check the code
-" if filereadable('Makefile')
-"     inoremap <F5> <ESC>!make\ quick-lint
-"     nnoremap <F5> !make\ quick-lint
-"     vnoremap <F5> !make\ quick-lint
-" endif
 
 if filereadable('development.ini')
     if executable('pshell')

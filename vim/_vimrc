@@ -5,6 +5,9 @@
 "   - Create custom folding to work with C folding (based on markers)
 
 " Uncomment to not load any vim conf
+" TO DEBUG
+"verbose set foldlevel
+"scriptnames
 " finish
 
 " Plugins 
