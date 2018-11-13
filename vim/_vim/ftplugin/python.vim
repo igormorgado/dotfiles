@@ -75,10 +75,15 @@ endif
 
 
 " Set pylint when building file
-if (executable("pylint"))
-    setlocal makeprg=pylint\ --reports=n\ --output-format\ parseable\ %:p
-    setlocal errorformat=%f:%l:\ %m
-endif
+" if (executable("pylint"))
+"     setlocal makeprg=pylint\ --reports=n\ --output-format\ parseable\ %:p
+"     setlocal errorformat=%f:%l:\ %m
+" endif
+
+" if (executable("flake8"))
+"     setlocal makeprg=flake8\ --reports=n\ --output-format\ parseable\ %:p
+"     setlocal errorformat=%f:%l:\ %m
+" endif
 
 augroup pythonglobal
     autocmd!
@@ -87,8 +92,8 @@ augroup pythonglobal
     " au BufWritePost *.py make
 augroup END
 
-nnoremap <buffer> <F5> :make<CR>
-inoremap <buffer> <F5> <ESC>:make<CR>
+" nnoremap <buffer> <F5> :make<CR>
+" inoremap <buffer> <F5> <ESC>:make<CR>
 
 " Execute python code inside vim buffer
 " if has("python3")
@@ -134,11 +139,11 @@ setlocal textwidth=130
 setlocal colorcolumn=130
 
 " Check the code
-if filereadable('Makefile')
-    inoremap <F5> <ESC>!make\ quick-lint
-    nnoremap <F5> !make\ quick-lint
-    vnoremap <F5> !make\ quick-lint
-endif
+" if filereadable('Makefile')
+"     inoremap <F5> <ESC>!make\ quick-lint
+"     nnoremap <F5> !make\ quick-lint
+"     vnoremap <F5> !make\ quick-lint
+" endif
 
 if filereadable('development.ini')
     if executable('pshell')

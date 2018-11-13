@@ -153,6 +153,19 @@ else
 	Plug 'vim-scripts/indentpython'
 endif
 
+Plug 'nvie/vim-flake8'
+augroup vflake8
+    autocmd FileType python map <buffer> <F5> :call Flake8()<CR>
+"   autocmd BufWritePost *.py call Flake8()
+augroup END
+let g:flake8_show_in_gutter=1  " show
+let g:flake8_show_in_file=1  " show
+let g:flake8_error_marker='EE'     " set error marker to 'EE'
+let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
+let g:flake8_pyflake_marker='WP'     " disable PyFlakes warnings
+let g:flake8_complexity_marker='CC'  " disable McCabe complexity warnings
+let g:flake8_naming_marker='NN'      " disable naming warnings
+
 " check after/tex.vim
 " Is up here to clean the mapping of C-j and F5
 Plug 'vim-latex/vim-latex'
@@ -170,6 +183,7 @@ let g:Tex_Leader2 = ','
 let g:Tex_DefaultTargetFormat = 'pdf'
 
 Plug 'guns/xterm-color-table'
+
 
 
 " 
@@ -343,6 +357,9 @@ command! W :w
 cnoremap W! w !sudo tee % >/dev/null
 cnoremap w!! w !sudo tee % >/dev/null
 
+" Close all buffers except this one
+command! BufOnly silent! execute "%bd|e#|bd#" 
+
 " 
 
 " Function keys 
@@ -374,8 +391,6 @@ inoremap <F7> <ESC>:grep  *<left><left>
 nnoremap <F7>      :grep  *<left><left>
 nnoremap gr :grep <cword> *<CR>
 nnoremap Gr :grep <cword> %:p:h/*<CR>
-" nnoremap gr :grep '\b<cword>\b' *<CR>
-" nnoremap Gr :grep '\b<cword>\b' %:p:h/*<CR>
 
 "inoremap <F8> <ESC>
 "nnoremap <F8>

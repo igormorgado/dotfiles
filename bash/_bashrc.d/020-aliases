@@ -46,10 +46,11 @@ alias dotpull="cd ~/dotfiles; git pull ; cd -"
 alias dotpush="cd ~/dotfiles; git push ; cd -"
 
 alias gplog="git log --oneline --graph --decorate --all"
+alias vimgit='vim $(git diff --name-only stage | grep -v development.ini)' 
 
 alias cggprx='proxy_on 165.225.34.32:80 imorgado'
 
-alias realias='source ~/.bash_aliases'
+alias realias='source ~/.bashrc.d/020-aliases'
 
 alias cd=cd_func
 

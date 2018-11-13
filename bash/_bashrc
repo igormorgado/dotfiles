@@ -186,23 +186,43 @@ export BACKGROUND COLOR
 ### PS1
 ###############
 
+VIRTUAL_ENV_DISABLE_PROMPT=1
+
+function virtualenv_info(){
+    # Get Virtual Env
+    if [[ -n "$VIRTUAL_ENV" ]]; then
+        # Strip out the path and just leave the env name
+        venv="${VIRTUAL_ENV##*/}"
+    else
+        # In case you don't have one activated
+        venv=''
+    fi
+    [[ -n "$venv" ]] && echo "(venv:$venv) "
+}
+
+# disable the default virtualenv prompt change
+export VIRTUAL_ENV_DISABLE_PROMPT=1
+
+VENV="\$(virtualenv_info)"
+
 # Colorize term (no exceptions for now)
 if ${COLOR_ENVIRONMENT}; then
-	PS1="${debian_chroot:+($debian_chroot)}\[${BLUE}\]\u\[${GREEN}\]@\[${BLUE}\]\h\[${CRST}\]:\[${RED}\]\w\[${CRST}\] ( \$(lsbytesum) )\n"
+	PS1="${debian_chroot:+($debian_chroot)}\[${BLUE}\]\u\[${GREEN}\]@\[${BLUE}\]\h\[${CRST}\]:\[${RED}\]\w\[${CRST}\] ( \$(lsbytesum) ) "
 else
-	PS1="${debian_chroot:+($debian_chroot)}\u\@\h:\w ( \$(lsbytesum) )\n"
+	PS1="${debian_chroot:+($debian_chroot)}\u\@\h:\w ( \$(lsbytesum) ) "
 fi
 
 # Add git and svn branch names
 [ -x "$(which git)" ] && PS1="$PS1\$(parse_git_branch)"
 [ -x "$(which svn)" ] && PS1="$PS1\$(parse_svn_branch)"
 
+PS1="${PS1} ${VENV}"
 
 # Add last status and colorize
 if ${COLOR_ENVIRONMENT}; then
-	PS1="${PS1}\[\$prevCmd\]\$\[$CRST\] "
+	PS1="${PS1}\n\[\$prevCmd\]\$\[$CRST\] "
 else
-	PS1="${PS1}\$ "
+	PS1="${PS1}\n\$ "
 fi
 
 PROMPT_COMMAND=bash_prompt_command
@@ -269,5 +289,6 @@ done
 unset file
 export ELM_SCALE=2
 
+export WINEARCH=win32
 # vim: foldmethod=marker:ft=sh:
 

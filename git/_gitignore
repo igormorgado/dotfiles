@@ -708,6 +708,7 @@ TSWLatexianTemp*
 # Pcloud bin
 pcloud
 
-# Geru stuff
-*local_prod.ini
-local.ini
+*egg-info*
+*egg-info*/
+
+tmp/

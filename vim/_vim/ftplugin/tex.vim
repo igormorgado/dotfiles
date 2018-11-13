@@ -23,7 +23,7 @@ setlocal grepprg=grep\ -nH\ $*
 let g:Tex_DefaultTargetFormat = 'pdf'
 let g:Tex_CompileRule_dvi = 'latex -interaction=nonstopmode -src-specials $*'
 let g:Tex_CompileRule_pdf = 'pdflatex -interaction=nonstopmode $*'
-let g:Tex_MultipleCompileFormats = 'dvi,pdf'
+let g:Tex_MultipleCompileFormats = 'pdf'
 
 setlocal makeprg=pdflatex\ %
 

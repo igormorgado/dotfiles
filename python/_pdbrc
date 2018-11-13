@@ -8,6 +8,3 @@
 
 # If ~/.pdbrc.py is missing, you get an error message (which doesn't
 # hurt).
-
-import os
-execfile(os.path.expanduser("~/.pdbrc.py"))
