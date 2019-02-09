@@ -185,9 +185,6 @@ let g:Tex_Leader = '`'
 let g:Tex_Leader2 = ','
 let g:Tex_DefaultTargetFormat = 'pdf'
 
-Plug 'guns/xterm-color-table'
-
-
 
 " 
 " " TO LEARN

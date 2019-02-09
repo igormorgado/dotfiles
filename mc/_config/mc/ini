@@ -82,6 +82,8 @@ editor_stop_format_chars=-+*\\,.;:&>
 mcview_eof=
 ignore_ftp_chattr_errors=true
 
+safe_overwrite=false
+
 [Layout]
 message_visible=1
 keybar_visible=1

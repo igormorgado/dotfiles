@@ -27,16 +27,15 @@ setlocal fileformat=unix
 setlocal encoding=utf-8
 
 
-if executable('gcc')
-    compiler gcc
-    let current_compiler = "gcc"
-    inoremap <buffer> <F5> <ESC>:w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
-    nnoremap <buffer> <F5> :w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
-endif
 
 if filereadable('Makefile*') 
     inoremap <buffer> <F5> <ESC>:w <bar> :make <CR>
     nnoremap <buffer> <F5> :w <bar> :make<CR>
+elseif executable('gcc')
+    compiler gcc
+    let current_compiler = "gcc"
+    inoremap <buffer> <F5> <ESC>:w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
+    nnoremap <buffer> <F5> :w <bar> :!gcc -Wall -Wextra -Werror -pedantic % -o %< && ./%< <CR>
 endif
 
 let fname = expand('<afile>:p:h') . '/types.vim'
