@@ -1,9 +1,7 @@
 " Line wrap
-setlocal nocompatible
 setlocal nowrap
 setlocal textwidth=79
 setlocal colorcolumn=79
-setlocal cursorline
 
 " Ident
 setlocal autoindent
@@ -26,9 +24,7 @@ setlocal foldlevel=99
 setlocal fileformat=unix
 setlocal encoding=utf-8
 
-
-
-if filereadable('Makefile*') 
+if filereadable("Makefile") 
     inoremap <buffer> <F5> <ESC>:w <bar> :make <CR>
     nnoremap <buffer> <F5> :w <bar> :make<CR>
 elseif executable('gcc')
@@ -43,32 +39,33 @@ if filereadable(fname)
     exe 'so ' . fname
 endif
 
-" To build cctree.out file:
-" Install cscope
-" In source dir run cscope -b -k -R
-" Shortcuts:
-"   <C-\><
-"   <C-\>>
-"   <C-\>=
-"   <C-\>-
-if exists('loaded_cctree')
-
-    let g:CCTreeDisplayMode=2
-    let g:CCTreeRecursiveDepth=5
-    let g:CCTreeUseUTF8Symbols=1
-
-    if filereadable("cscope.out") && !filereadable("cctree.out")
-        execute ':CCTreeLoadDB cscope.out'
-        execute ':CCTreeSaveXRefDB cctree.out'
-        execute ':call delete("cscope.out")'
-        echom 'Converted CCTree'
-    endif
-
-    if filereadable("cctree.out")
-        augroup loadcctree
-            autocmd!
-            autocmd VimEnter,BufNewFile,BufReadPost *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out
-        augroup END
-    endif
-endif
+" Using gtags-scope with guttentags for now, lets check
+" " To build cctree.out file:
+" " Install cscope
+" " In source dir run cscope -b -k -R
+" " Shortcuts:
+" "   <C-\><
+" "   <C-\>>
+" "   <C-\>=
+" "   <C-\>-
+" if exists('loaded_cctree')
+" 
+"     let g:CCTreeDisplayMode=2
+"     let g:CCTreeRecursiveDepth=5
+"     let g:CCTreeUseUTF8Symbols=1
+" 
+"     if filereadable("cscope.out") && !filereadable("cctree.out")
+"         execute ':CCTreeLoadDB cscope.out'
+"         execute ':CCTreeSaveXRefDB cctree.out'
+"         execute ':call delete("cscope.out")'
+"         echom 'Converted CCTree'
+"     endif
+" 
+"     if filereadable("cctree.out")
+"         augroup loadcctree
+"             autocmd!
+"             autocmd VimEnter,BufNewFile,BufReadPost *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out
+"         augroup END
+"     endif
+" endif
 
