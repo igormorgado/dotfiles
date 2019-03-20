@@ -2,4 +2,4 @@
 	email = morgado.igor@gmail.com
 	name = Igor Morgado
 [core]
-	excludesfile = /home/igor/.gitignore
+	excludesfile = /home/igormorgado/.gitignore

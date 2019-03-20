@@ -40,7 +40,7 @@ Plug 'davidhalter/jedi-vim'
 Plug 'nvie/vim-flake8'
 	 
 " Latex dev
-Plug 'vim-latex/vim-latex'
+" Plug 'vim-latex/vim-latex'
 
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""
