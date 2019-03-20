@@ -554,6 +554,11 @@ let &t_Cs = "\e[4:3m"
 let &t_Ce = "\e[4:0m"
 hi clear SpellBad
 hi SpellBad     gui=undercurl guisp=red term=underline cterm=underline ctermfg=red 
+"SpellBad	word not recognized			|hl-SpellBad|
+"SpellCap	word not capitalised			|hl-SpellCap|
+"SpellRare	rare word				|hl-SpellRare|
+"SpellLocal	wrong spelling for selected region	|hl-SpellLocal|
+
 
 
 "

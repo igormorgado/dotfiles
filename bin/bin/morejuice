@@ -1,0 +1,31 @@
+#!/usr/bin/env python3
+
+import os
+
+
+pci_devices = ["0000:00:00.0", "0000:00:05.0", "0000:00:08.0", "0000:00:14.0",
+               "0000:00:14.2", "0000:00:14.3", "0000:00:16.4", "0000:00:1c.0",
+               "0000:00:1f.0", "0000:00:1f.2", "0000:00:1f.3", "0000:02:00.0"] 
+
+i2c_devices = ['i2c-4', 'i2c-5']
+
+sys_bus = os.path.join('/', 'sys', 'bus')
+
+for dev in pci_devices:
+    power_control = os.path.join('power','control')
+    fpath = os.path.join(sys_bus, 'pci', 'devices', dev, power_control)
+    print(f"Activating {dev} at {fpath}")
+    with open(fpath, 'w') as fd:
+        fd.write('auto')
+
+for dev in i2c_devices:
+    power_control = os.path.join('device', 'power','control')
+    fpath = os.path.join(sys_bus, 'i2c', 'devices', dev, power_control)
+    print(f"Activating {dev} at {fpath}")
+    with open(fpath, 'w') as fd:
+        fd.write('auto')
+
+
+
+
+
