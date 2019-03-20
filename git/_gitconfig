@@ -3,3 +3,5 @@
 	name = Igor Morgado
 [core]
 	excludesfile = /home/igormorgado/.gitignore
+[credential]
+	helper = store --file ~/.git-credentials
