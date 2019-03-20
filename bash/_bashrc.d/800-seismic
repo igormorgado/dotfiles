@@ -1,6 +1,0 @@
-CWPROOT=${HOME}/.local/su43r3
-
-if [ -d ${CWPROOT} ]; then
-	export CWPROOT
-	addpath $CWPROOT/bin
-fi

@@ -1,3 +1,5 @@
+" vim: set nolinebreak nospell:
+
 " Reset confs
 set nocompatible
 filetype off
@@ -29,8 +31,6 @@ Plug 'igormorgado/Conque-GDB'
 Plug 'ajh17/VimCompletesMe'
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'skywind3000/gutentags_plus'
-" Plug 'hari-rangarajan/CCTree'
-" Plug 'hari-rangarajan/ccglue'
 Plug 'majutsushi/tagbar'
 
 " Python Dev
@@ -40,7 +40,11 @@ Plug 'davidhalter/jedi-vim'
 Plug 'nvie/vim-flake8'
 	 
 " Latex dev
-" Plug 'vim-latex/vim-latex'
+Plug 'lervag/vimtex'
+
+" Latex SpellCheck
+Plug 'inkarkat/vim-ingo-library'
+Plug 'inkarkat/vim-SpellCheck'
 
 call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""
@@ -65,7 +69,8 @@ else
 endif
 
 
-silent! set listchars=tab>\ ,eol:¬
+set showbreak=↪\ 
+set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 
 " ==========================================================
 let mapleader=" "
@@ -95,17 +100,17 @@ vnoremap <C-c> "+y
 vnoremap <C-x> "+d
 
 " Default Editing
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
+set tabstop=8
+set softtabstop=8
+set shiftwidth=8
 set noexpandtab
 
 " Navigating
-set colorcolumn=110
+set colorcolumn=80
 set viminfo^=%
 set scrolloff=20
-set colorcolumn=110
 set cursorcolumn
+set modeline
 
 " Indent
 set shiftround
@@ -118,7 +123,9 @@ set hlsearch
 set incsearch
 
 " Menu
-set wildmode=longest:list,full
+set wildmenu
+set wildmode=longest:full,full
+
 set wildignore+=tags,cscope.out,*.o,*~,*.pyc,.tags,*.exe,*.obj,*.bak,cctree.out
 set wildignorecase
 
@@ -130,7 +137,8 @@ set directory=~/.tmp/vim,~/tmp/vim
 set undofile
 set undodir=~/.tmp/vim,~/tmp/vim
 set writebackup
-" set path=.,**
+
+
 
 " Terminal settings
 set title
@@ -221,6 +229,19 @@ command! BufOnly silent! execute "%bd|e#|bd#"
 
 " Function keys
 " ======================================================================
+" Standard functions keys in APPS
+" <F1> Help
+" <F2> Formula/Cel
+" <F3> Snippet
+" <F4> 
+" <F5> Build/Execute/Refresh
+" <F6> Search
+" <F7> SpellCheck
+" <F8>
+" <F9> Side Bar
+" <F10>
+" <F11> WINDOW FULL SCREEN (do not change)
+" <F12> QuickFix Next
 
 " Buffers
 inoremap <F2> <ESC>:buffers<CR>:buffer<Space>
@@ -236,26 +257,26 @@ vnoremap <F4>      :Texec<CR>j
 
 " Often used to build stuff inside each filetype
 " Customized in filetypes
-set makeprg=make\ -j4
-inoremap <F5> <ESC>:make!<cr>
-nnoremap <F5> :make!<cr>
+" set makeprg=make\ -j4
+" inoremap <F5> <ESC>:make!<cr>
+" nnoremap <F5> :make!<cr>
 
-" Exec bin generated?
-"inoremap <F6> <ESC>
-"nnoremap <F6>
 
 " Need to improve vimgrep
 set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ --exclude-dir\ '*venv*'\ -Inr
-inoremap <F7> <ESC>:grep  *<left><left>
-nnoremap <F7>      :grep  *<left><left>
+inoremap <F6> <ESC>:grep  *<left><left>
+nnoremap <F6>      :grep  *<left><left>
 nnoremap gr :grep <cword> *<CR>
 nnoremap Gr :grep <cword> %:p:h/*<CR>
 
-inoremap <F8> <ESC>:TagbarToggle<CR>
-nnoremap <F8> :TagbarToggle<CR>
+inoremap <F7> <ESC>:SpellCheck<CR>
+nnoremap <F7> :SpellCheck<CR>
 
-"inoremap <F9> <ESC>
-"nnoremap <F9>
+"inoremap <F8> <ESC>
+"nnoremap <F8>
+
+inoremap <F9> <ESC>:TagbarToggle<CR>
+nnoremap <F9> :TagbarToggle<CR>
 
 "inoremap <F10> <ESC>
 "nnoremap <F10>
@@ -263,20 +284,20 @@ nnoremap <F8> :TagbarToggle<CR>
 " Quickfix navigation
 " Maybe start to use only unimpaired shortcuts
 " q[ q] b[ b]
-inoremap   <F11> <ESC>:cprev<CR>
-nnoremap   <F11>      :cprev<CR>
+"inoremap   <F11> <ESC>:cprev<CR>
+"nnoremap   <F11>      :cprev<CR>
 
 inoremap   <F12> <ESC>:cnext<CR>
 nnoremap   <F12>      :cnext<CR>
 
-inoremap <C-F11> <ESC>:cpfile<CR>
-nnoremap <C-F11>      :cpfile<CR>
+"inoremap <C-F11> <ESC>:cpfile<CR>
+"nnoremap <C-F11>      :cpfile<CR>
 
 inoremap <C-F12> <ESC>:cnfile<CR>
 nnoremap <C-F12>      :cnfile<CR>
 
-inoremap <S-F11> <ESC>:colder<CR>
-nnoremap <S-F11>      :colder<CR>
+"inoremap <S-F11> <ESC>:colder<CR>
+"nnoremap <S-F11>      :colder<CR>
 
 inoremap <S-F12> <ESC>:cnewer<CR>
 nnoremap <S-F12>      :cnewer<CR>
@@ -526,6 +547,15 @@ iabbrev iipdb import ipdb; ipdb.set_trace()
 " Enable Digraphs with C-D 
 inoremap <C-D> <C-K>
 
+" spell check settings
+set spelllang=pt
+set spellfile=~/.vim/spell/pt.utf-8.add
+let &t_Cs = "\e[4:3m"
+let &t_Ce = "\e[4:0m"
+hi clear SpellBad
+hi SpellBad     gui=undercurl guisp=red term=underline cterm=underline ctermfg=red 
+
+
 "
 " DISABLED FOR NOW
 " 
@@ -545,13 +575,11 @@ inoremap <C-D> <C-K>
 " let g:SimpylFold_fold_import = 1
 " let g:SimpylFold_docstring_preview = 1
 " let g:SimpylFold_fold_docstring = 0
-	 
 
 " augroup vflake8
 "     autocmd FileType python map <buffer> <F5> :call Flake8()<CR>
 " "   autocmd BufWritePost *.py call Flake8()
 " augroup END
-
 " let g:flake8_show_in_gutter=1  " show
 " let g:flake8_show_in_file=1  " show
 " let g:flake8_error_marker='EE'     " set error marker to 'EE'
@@ -559,19 +587,3 @@ inoremap <C-D> <C-K>
 " let g:flake8_pyflake_marker='WP'     " disable PyFlakes warnings
 " let g:flake8_complexity_marker='CC'  " disable McCabe complexity warnings
 " let g:flake8_naming_marker='NN'      " disable naming warnings
-
-" " check after/tex.vim
-" " Is up here to clean the mapping of C-j and F5
-" imap <C-s> <Plug>IMAP_JumpForward
-" imap <C-s> <Plug>IMAP_JumpForward
-" map <C-s> <Plug>IMAP_JumpForward
-" map <C-s> <Plug>IMAP_JumpForward
-" " nmap <C-d> <Plug>IMAP_JumpForward
-" " nmap <C-d> <Plug>IMAP_JumpForward
-" " vmap <C-d> <Plug>IMAP_JumpForward
-" " vmap <C-d> <Plug>IMAP_JumpForward
-" let g:tex_flavor = "latex" 
-" let g:Tex_Leader = '`'
-" let g:Tex_Leader2 = ','
-" let g:Tex_DefaultTargetFormat = 'pdf'
-
