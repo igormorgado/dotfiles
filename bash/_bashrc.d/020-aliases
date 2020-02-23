@@ -113,6 +113,6 @@ alias apt-get='apt-get --force-yes -y'
 alias whome='cd /c/Users/morga'
 alias cyg-get="/c/root/setup -q -P"
 
-alias act='source venv/bin/activate'
+alias venv='source venv/bin/activate'
 
 # vim: ft=sh:

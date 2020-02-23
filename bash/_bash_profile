@@ -3,3 +3,5 @@
 [ -f "${HOME}/.bashrc" ] && source "${HOME}/.bashrc"
 
 # vim: foldmethod=marker:ft=sh:
+
+export PATH="$HOME/.cargo/bin:$PATH"

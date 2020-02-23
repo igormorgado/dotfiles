@@ -1,3 +1,4 @@
+/*
 input {
   border: 2px inset white;
   background-color: white;
@@ -49,4 +50,10 @@ body {
   margin: 8px;
   -moz-appearance: none !important;
 }
+*/
 
+input:not(.urlbar-input):not(.textbox-input):not(.form-control):not([type='checkbox']):not([type='radio']), textarea, select {
+    -moz-appearance: none !important;
+    background-color: #eee;
+    color: #111;
+}
