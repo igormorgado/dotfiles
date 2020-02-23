@@ -84,6 +84,8 @@ done
 addpath "${HOME}"/bin
 addpath "${HOME}"/usr/bin
 addpath "${HOME}"/.local/bin
+addpath "${HOME}"/.local/opt/pycharm-2019.2.3/bin
+
 addpath /Applications/MacVim.app/Contents/MacOS/
 addpath "/c/Anaconda"
 addpath "/c/Anaconda2"
