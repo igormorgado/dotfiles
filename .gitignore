@@ -1,10 +1,11 @@
 rpcs3
-pcloud
+bin/pcloud
 gotr
 gcp/
 python/_ipython/_ipython
 python/_ipython/profile_default/db/
 ssh/
+bin/bin/pcloud
 
 # SSH Stuff
 *authorized_keys*
