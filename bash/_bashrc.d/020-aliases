@@ -35,7 +35,7 @@ alias pb="pastebinit -b paste.ubuntu.com"
 alias inst1='ssh 104.154.20.1'
 
 
-alias bvim="vim -u ~/.vim/practical.vim"
+# alias vim="nvim"
 alias bespeak="espeak -v pt"
 alias fala='while :; do read LINE; espeak -v pt "${LINE}" 2> /dev/null;done'
 
@@ -114,5 +114,7 @@ alias whome='cd /c/Users/morga'
 alias cyg-get="/c/root/setup -q -P"
 
 alias venv='source venv/bin/activate'
+alias gdb='gdb -q'
+alias ue4ed='/home/igor/src/UnrealEngine/Engine/Binaries/Linux/UE4Editor'
 
 # vim: ft=sh:

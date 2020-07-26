@@ -68,9 +68,9 @@ $if Bash
 $endif
 
 # VI FTW
-set editing-mode vi
-set keymap vi-command
-set keymap vi-insert
+# set editing-mode vi
+# set keymap vi-command
+# set keymap vi-insert
 "\C-x\C-r": re-read-init-file
 
 "\C-r": reverse-search-history

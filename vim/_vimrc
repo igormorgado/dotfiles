@@ -1,181 +1,271 @@
-" vim: set nolinebreak nospell:
+" VIM CONFIGURATION FILE
+"
+" TODO: Organize better to be readeable in screens without syntax higtlight
+"
 
-" Reset confs
+
+" Every vimrc file should set vim to nocompatible mode, lets move to
+" 1980s. The future is now!
 set nocompatible
-filetype off
 
-"""""""""""""""""""""""""""""""""""""""""""""""
-" Plugged
+" Plug-in management {{{
+"
+" Load plugins and configure them
+"
+" To install plugins call
+" :PlugInstall
+
+let g:plug_timeout=600
 call plug#begin('~/.vim/plugged')
 
-Plug 'igormorgado/flattened'
+" {{{ My vim hints
 Plug 'igormorgado/vim-hints'
-Plug 'igormorgado/vim-tbone'
+" }}}
 
-" Vim Enhancement
-Plug 'kshenoy/vim-signature'
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-flagship'
-Plug 'tpope/vim-surround'
+" NetRW settings {{{
 Plug 'tpope/vim-vinegar'
-Plug 'christoomey/vim-tmux-navigator'
+" }}}
 
-" General development
-Plug 'romainl/vim-qf'
-Plug 'tpope/vim-fugitive'
-Plug 'tpope/vim-markdown'
-Plug 'tpope/vim-eunuch'
+" Gruvbox colorscheme {{{
+Plug 'morhetz/gruvbox'
+if has('nvim')
+    " Enable Truetype GUI colors in terminal
+    set termguicolors
+else
+    let g:gruvbox_termcolors=256
+endif
+" Enable italics
+let g:gruvbox_italic=1
+" }}}
 
-" C development
-Plug 'igormorgado/Conque-GDB'
-Plug 'ajh17/VimCompletesMe'
+" Pair shortcuts {{{
+" unimpaired
+" Files : ]a [a
+" Buffers:  ]b [b
+" Checklist: ]q [q
+" Moveline: ]e [e
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-repeat'
+" }}}
+
+" Tags support {{{
+"
+" Gutentags makes update of tags database automatic while plus also uses cscope
+" to get better insight
 Plug 'ludovicchabant/vim-gutentags'
+" Enable ctags and gtags
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+" Exclude some files
+" let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
+" Set cache dir to a hidden location
+let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
+" Identify common build files. Remember to correctly configure each builder in
+" each filetype (or make a global one ?)
+let g:gutentags_project_root=[ 'meson.build', 'Makefile', 'setup.py', 'Makefile.am', 'CMake', '.root' ]
+" Gutentags_plus need this sometimes
+let g:gutentags_define_advanced_commands = 1
+
 Plug 'skywind3000/gutentags_plus'
+" let g:gutentags_plus_switch = 1
+
+" Friendly lateral bar to show code objects mapped to <F3>
 Plug 'majutsushi/tagbar'
+let g:tagbar_left = 1
+let g:tagbar_width = 30
+let g:tagbar_autopreview = 1
+"}}}
 
-" Python Dev
-" Need to learn more about these plugins
-Plug 'davidhalter/jedi-vim'
-"Plug 'tmhedberg/SimpylFold'
-Plug 'nvie/vim-flake8'
-	 
-" Latex dev
-Plug 'lervag/vimtex'
+" YCM {{{
+Plug 'ycm-core/YouCompleteMe'
+let g:ycm_auto_trigger = 1
+let g:ycm_max_num_candidates = 10
+let g:ycm_max_identifier_candidates = 10
+" let g:ycm_error_symbol = '🔴'
+let g:ycm_error_symbol = '💩'
+let g:ycm_warning_symbol = '🟡'
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_always_populate_location_list = 1
+"let g:ycm_min_num_identifier_candidate_chars = 2
 
-" Latex SpellCheck
-Plug 'inkarkat/vim-ingo-library'
-Plug 'inkarkat/vim-SpellCheck'
+" Why can't I remap to <C-tab>
+" let g:ycm_key_invoke_completion = '<C-tab>'
+" Disable hover by time and enable it by key only
+let g:ycm_auto_hover = ''
+" Why do not works with <leader>D for example?
+nmap <F3> <plug>(YCMHover)
+" }}}
+
+" GIT management {{{
+Plug 'tpope/vim-fugitive'
+" GitGutter shows marks on VimGutter regarding status
+" GitGutterToggle
+" GitGutterSignsToggle
+" GitGutterLineHighlightsToggle
+" GitGutterQuickFix
+" <Leader>hs stage hunk
+" <Leader>hu undo stage
+" {RANGE}GitGutterStageHunk
+" more @ https://github.com/airblade/vim-gitgutter
+Plug 'airblade/vim-gitgutter'
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+" }}}
+
+" Vim Sign column {{{
+" m,    place next mark
+" ]` [`  NExt/Prev mark
+" `] `[  Next/Prev mark alphabetically
+Plug 'kshenoy/vim-signature'
+" Always display the Sign Column.
+set signcolumn=yes
+" }}}
+
+" Valgrind
+" Valgrind binaryname
+" TODO: Find a way to integrate with meson and makefile
+Plug 'igormorgado/valgrind.vim'
+
+" MArkdown editin and vieeweing
+Plug 'tpope/vim-markdown'
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
 
 call plug#end()
-"""""""""""""""""""""""""""""""""""""""""""""""
-" Load vim man Plugin
-runtime ftplugin/man.vim
-set keywordprg=:Man
+"}}}
 
-if has('gui_running')
-	set guioptions-=m
-	set guioptions-=T
-	set guioptions-=e
-	set t_Co=256
-endif
-
+" Color scheme configuration {{{
+" Read ENVVARS BACKGROUND preference
 let BACKGROUND=$BACKGROUND
 if BACKGROUND=='light'
-	silent! colorscheme flattened_light
-	set background=light
+    set background=light
 else
-	silent! colorscheme flattened_dark
-	set background=dark
+    set background=dark
 endif
 
+" Use Gruvbox colorscheme
+colorscheme gruvbox
+" Enable syntax
+syntax on
 
-set showbreak=↪\ 
-set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
 
-" ==========================================================
-let mapleader=" "
-let maplocalleader=" "
+" Set gui font
+if has("gui_running")
+  if has("gui_gtk3")
+    set guifont=Fixedsys\ Excelsior\ Mono\ 12
+  endif
+endif
+" }}}
 
-" Window
-set mouse=a
+" Sane default buffer settings {{{
 
-" Composing
-set undolevels=1000
-set linebreak
-set wrap
-set virtualedit=block
-set cursorline
-set conceallevel=0
+" As a text editor VIM should handle by default every kind of text document
+" availabe with the greatest confort possible therefore some standard sane
+" configurations should be set by default
+"
+" UTF-8 is the new ASCII
+set encoding=utf-8
+" FIleformat is UNIX
+set fileformat=unix
 
-" Numbering
-set numberwidth=5
-set number
-set relativenumber
-
-" Share X and Mouse clipboard with Vim
-" set clipboard^=unnamedplus
-" or:
-inoremap <C-v> <ESC>"+pa
-vnoremap <C-c> "+y
-vnoremap <C-x> "+d
-
-" Default Editing
+" TABS are tabs, and should be elegantly 8 spaced (this isn't HTML)
 set tabstop=8
-set softtabstop=8
 set shiftwidth=8
+set softtabstop=8
 set noexpandtab
-
-" Navigating
-set colorcolumn=80
-set viminfo^=%
-set scrolloff=20
-set cursorcolumn
-set modeline
-
-" Indent
 set shiftround
 
-" Search
-set showmatch
-set matchpairs+=<:>
+" A standard terminal has 80 column wide (you can go bigger, but stick with
+" it. But it should not wrap if screen is smaller, otherwise things get weird
+set nowrap
+" Do not break words when wrapping (if wrapping)
+set linebreak
+" Make wrap breaks more readeable
+set showbreak=↪\
+set textwidth=79
+set colorcolumn=79
+" Try to keep part of file visible
+set scrolloff=8
+" }}}
+
+" VIM default filetype handling {{{
+
+" Enables filetype handling
+filetype on
+" Loads the filetype indentation at $VIMRUNTIME/indent
+" |C-indenting|
+filetype indent on
+" Loads the file im $VIMRUNTIME/filetype.vim
+filetype plugin on
+" This changes the keybinding started to space bar, since is simpler and bigger
+let mapleader=" "
+let maplocalleader=" "
+" }}}
+
+" Buffer manipulation {{{
+
+" Read modelines if they are set
+set modeline
+" Display a marker for cursor position in buffer
+set cursorline
+set cursorcolumn
+" Try not interpret any special characters
+set conceallevel=0
+" Set special characters
+set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
+" Toogle special characters on key
+nnoremap <leader>l :set list!<cr>
+" Undo is never enough
+set undolevels=1000
+" Enable move inside invisible chars for manipulation
+set virtualedit=block
+" Searching
 set smartcase
 set hlsearch
 set incsearch
+set ignorecase
+" Disable mouse. THIS. IS. VIM!
+set mouse=
+" Map standard commands to system clipboard (LAME!)
+inoremap <C-v> <ESC>"+pa
+vnoremap <C-c> "+y
+vnoremap <C-x> "+d
+" }}}
 
-" Menu
+" Vim window setting {{{
+" Enable wild menu
 set wildmenu
 set wildmode=longest:full,full
-
-set wildignore+=tags,cscope.out,*.o,*~,*.pyc,.tags,*.exe,*.obj,*.bak,cctree.out
+set wildignore+=*.bak
+set wildignore+=*.o,*~,*.pyc,*.obj
+set wildignore+=tags,cscope.out,.tags,cctree.out
+set wildignore+=*.exe,a.out
 set wildignorecase
-
-" File handling
-set backup
-set backupdir=~/.tmp/vim,~/tmp/vim
-set swapfile
-set directory=~/.tmp/vim,~/tmp/vim
-set undofile
-set undodir=~/.tmp/vim,~/tmp/vim
-set writebackup
-
-
-
-" Terminal settings
-set title
-set titleold=""
-
-" Split windows
+" Set path locations while finding
+set path=.,/usr/include,/usr/local/include,src/include,include,../include,../lib/,**,,
+" New splits are below and right (instead defaul top left)
 set splitbelow
 set splitright
-
-" Buffers
-set hidden
-
-" Tags
-set tags=.tags;tags;${HOME}
-
-" Project local files
-set exrc
-set secure
-
-" General VIM Setup
+""  A complicated status bar configuration
 set laststatus=2
-set showtabline=2
+set showtabline=1
 " Status line color (changed for a simpler than informative for many buffer views)
 if has("statusline")
     set statusline =              " clear
-    " set statusline+=\ %02n        " leading zero 2 digit buffer number
     set statusline+=\ %#FileName#    " Color
     set statusline+=\ %<%F        " file full path, truncate
     set statusline+=\ %*
-    set statusline+=\ %r          " read only flag '[RO]'
-    set statusline+=\ %m          " modified flag '[+]' if modifiable
+    set statusline+=%m          " modified flag '[+]' if modifiable
     set statusline+=\ %h          " help flag '[Help]'
-    "set statusline+=\ %{fugitive#statusline()}    " GIT Branch
+    set statusline+=%r          " read only flag '[RO]'
+if exists("g:loaded_fugitive")
+    set statusline+=\ %{fugitive#statusline()}    " GIT Branch
+endif
+" if exists("g:loaded_gutentags")
     set statusline+=\ %{gutentags#statusline()}
+" endif
     set statusline+=%=            " left/right separation point
-    " set statusline+=\ \|\ %{&ff}  " fileformat
-    " set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
+    set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
+    set statusline+=\ \|\ %{&ff}  " fileformat
+    " Display ascii value of actual character under cursor
     " set statusline+=\ \|\ [%03b   " decimal byte
     " set statusline+=\ x%02B]      " hex byte ' \x62'
     set statusline+=\ (%04v,%04l)\  " (x,y)
@@ -184,163 +274,114 @@ if has("statusline")
     " set statusline+=\ %L          " line/lines
     " set statusline+=\ lines
 endif
+" Numbering
+set numberwidth=5
+set number
+set relativenumber
+augroup numbering
+    autocmd!
+    autocmd InsertLeave * :set relativenumber
+    autocmd InsertEnter * :set norelativenumber
+augroup END
+" }}}
 
+" Function keys {{{
+" ======================================================================
+" Standard functions keys in APPS
+" <F1> Help
+" <F2>
+" <F3>
+" <F4>
+" <F5> Build/Execute/Refresh
+" <F6>
+" <F7>
+" <F8>
+" <F9> Tagbar
+" <F10>
+" <F11> DO NOT REMAP THIS
+" <F12>
 
+" Fast Buffers access
+inoremap <F2> <ESC>:buffers<CR>:buffer<Space>
+nnoremap <F2>      :buffers<CR>:buffer<Space>
 
-" Maps/Macros
-" ================================================
+"" Find files
+"inoremap <F3>
+"nnoremap <F3>
+"vnoremap <F3>
+"
+"inoremap <F4> <ESC>:Texec<CR>j<Insert>
+"nnoremap <F4>      :Texec<CR>j
+"vnoremap <F4>      :Texec<CR>j
 
-" Lazyness
+inoremap <F5> <ESC>:make!<cr>
+nnoremap <F5> :make!<cr>
+vnoremap <F5> :make!<cr>
+
+"set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ --exclude-dir\ '*venv*'\ -Inr
+"inoremap <F6> <ESC>:grep  *<left><left>
+"nnoremap <F6>      :grep  *<left><left>
+"nnoremap gr :grep <cword> *<CR>
+"nnoremap Gr :grep <cword> %:p:h/*<CR>
+"
+"" Check if spellcheck
+"inoremap <F7> <ESC>:SpellCheck<CR>
+"nnoremap <F7> :SpellCheck<CR>
+"
+"inoremap <F8> <ESC>
+"nnoremap <F8>
+"vnoremap <F8>
+"
+"" Check if tagbar
+inoremap <F9> <ESC>:TagbarToggle<CR>
+nnoremap <F9> :TagbarToggle<CR>
+"
+"inoremap <F10> <ESC>
+"nnoremap <F10>
+"vnoremap <F10>
+"
+"inoremap <F11> <ESC>
+"nnoremap <F11>
+"vnoremap <F11>
+"
+"inoremap <F12> <ESC>
+"nnoremap <F12>
+"vnoremap <F12>
+"}}}
+
+" Lazyness and confort keys {{{
+
 " Pressing j then k quicly in insert mode leaves insert mode.
 inoremap jk <esc>
-
-" Quit on triple ESC
+" Quit on triple ESC (RAGE MODE)
 nnoremap <ESC><ESC><ESC> :q<CR>
-
-" split window vertically
-nnoremap <leader>w <C-w>v<C-w>l
-
-" Add files to buffers
-nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%p:h'))<cr>/*<C-d>
-" Find a file
-nnoremap <leader>f :find *
-" Show special characters
-nnoremap <leader>l :set list!<cr>
-" Edit vim rc
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-" Edit filetype vim config file
-nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
 " Clean search
 nnoremap <leader>/ :nohlsearch<cr>
 " Open/close fold
 nnoremap <leader><space> za
-" Space strip all
-nnoremap _$ :call Preserve("%s/\\s\\+$//e")<CR>
-" Identall
-nnoremap _= :call Preserve("normal gg=G")<CR>
+"" Edit vim rc
+"nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+" Changed in neovim since the $MYVIMRC is mapped to
+" ~/.config/neovim/init.vim
+nnoremap <leader>ev :vsplit ~/.vimrc<cr>
+"" Edit filetype vim config file
+nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
 " W use capital w to write too..
 command! W :w
 " sudo write this
 cnoremap W! w !sudo tee % >/dev/null
 cnoremap w!! w !sudo tee % >/dev/null
+" }}}
 
-" Close all buffers except this one
-command! BufOnly silent! execute "%bd|e#|bd#"
-
-" Function keys
-" ======================================================================
-" Standard functions keys in APPS
-" <F1> Help
-" <F2> Formula/Cel
-" <F3> Snippet
-" <F4> 
-" <F5> Build/Execute/Refresh
-" <F6> Search
-" <F7> SpellCheck
-" <F8>
-" <F9> Side Bar
-" <F10>
-" <F11> WINDOW FULL SCREEN (do not change)
-" <F12> QuickFix Next
-
-" Buffers
-inoremap <F2> <ESC>:buffers<CR>:buffer<Space>
-nnoremap <F2>      :buffers<CR>:buffer<Space>
-
-" inoremap <F3>
-" nnoremap <F3>
-
-" Push the current line to the other tmux screen (interactive)
-inoremap <F4> <ESC>:Texec<CR>j<Insert>
-nnoremap <F4>      :Texec<CR>j
-vnoremap <F4>      :Texec<CR>j
-
-" Often used to build stuff inside each filetype
-" Customized in filetypes
-" set makeprg=make\ -j4
-" inoremap <F5> <ESC>:make!<cr>
-" nnoremap <F5> :make!<cr>
-
-
-" Need to improve vimgrep
-set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ --exclude-dir\ '*venv*'\ -Inr
-inoremap <F6> <ESC>:grep  *<left><left>
-nnoremap <F6>      :grep  *<left><left>
-nnoremap gr :grep <cword> *<CR>
-nnoremap Gr :grep <cword> %:p:h/*<CR>
-
-inoremap <F7> <ESC>:SpellCheck<CR>
-nnoremap <F7> :SpellCheck<CR>
-
-"inoremap <F8> <ESC>
-"nnoremap <F8>
-
-inoremap <F9> <ESC>:TagbarToggle<CR>
-nnoremap <F9> :TagbarToggle<CR>
-
-"inoremap <F10> <ESC>
-"nnoremap <F10>
-
-" Quickfix navigation
-" Maybe start to use only unimpaired shortcuts
-" q[ q] b[ b]
-"inoremap   <F11> <ESC>:cprev<CR>
-"nnoremap   <F11>      :cprev<CR>
-
-inoremap   <F12> <ESC>:cnext<CR>
-nnoremap   <F12>      :cnext<CR>
-
-"inoremap <C-F11> <ESC>:cpfile<CR>
-"nnoremap <C-F11>      :cpfile<CR>
-
-inoremap <C-F12> <ESC>:cnfile<CR>
-nnoremap <C-F12>      :cnfile<CR>
-
-"inoremap <S-F11> <ESC>:colder<CR>
-"nnoremap <S-F11>      :colder<CR>
-
-inoremap <S-F12> <ESC>:cnewer<CR>
-nnoremap <S-F12>      :cnewer<CR>
+" NETRW navigation configuration {{{
 "
-
-" Setup TMUX Navigator
-let g:tmux_navigator_save_on_switch = 2
-let g:tmux_navigator_disable_when_zoomed = 1
-let g:tmux_navigator_no_mappings = 1
-" Standard <C-\> conflicts with vim-CScope"
-" These keys are not working inside CCTree split
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
-inoremap <silent> <C-h> <ESC>:TmuxNavigateLeft<cr>
-inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>
-inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>
-inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>
-inoremap <silent> <C-g> <ESC>:TmuxNavigatePrevious<cr>
-
-
-" romainl/vim-qf
-" Inside QF window
-"    s - open entry in a new horizontal window
-"    v - open entry in a new vertical window
-"    t - open entry in a new tab
-"    o - open entry and come back
-"    O - open entry and close the location/quickfix window
-"    p - open entry in a preview window
-" nmap C <Plug>qf_qf_switch
-" nmap <leader>c <Plug>qf_qf_stay_toggle
-let g:qf_mapping_ack_style = 1
-let g:qf_statusline = {}
-let g:qf_statusline.before = '%<\ '
-let g:qf_statusline.after = '\ %f%=%l\/%-6L\ \ \ \ \ '
-
-
-" tpope/vim-markdown
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
-
-" tpope/vim-vinegar
+" Checkout {netrw-browse-maps}
+" Some shortcuts:
+"   gh  hide/show system files
+" Common keys:
+"	<CR>		Open file in same split
+"	v		Open file in vertical split
+"	t		Open file in new tab
 let g:netrw_list_hide  = '\(^\|\s\s\)\zs\.\S\+'
 let g:netrw_list_hide .= '\.pyc$,'
 let g:netrw_list_hide .= '\.o$,\.obj$'
@@ -348,247 +389,189 @@ let g:netrw_list_hide .= '\.a$,\.so$,\.lib$,\.dll$,'
 let g:netrw_list_hide .= '\.pyc\s\+,'
 let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+'
 let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
+" }}}
 
+" Vim Special files handling {{{
+"
+" This keep all ugly vim files in a separated lhh0
+set backup
+set backupdir=~/.tmp/vim,~/tmp/vim
+set swapfile
+set directory=~/.tmp/vim,~/tmp/vim
+set undofile
+set undodir=~/.tmp/vim,~/tmp/vim
+set writebackup
+set viminfo^=%
+" Tags
+set tags=.tags;tags;${HOME}
+set tags+=~/.config/nvim/systags
+" }}}
 
-" Gutentags
-let g:gutentags_modules = ['ctags', 'gtags_cscope']
-let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
-let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
-let g:gutentags_project_root=[ 'vMakefile.include', 'Makefile', 'setup.py', 'Makefile.am', 'CMake', '.root' ]
-
-" let g:gutentags_define_advanced_commands = 1 
-
-" Gutentags Plus
-let g:gutentags_plus_switch = 1
-let g:gutentags_plus_nomap = 1
-noremap <silent> <leader>gs :GscopeFind s <C-R><C-W><cr>
-noremap <silent> <leader>gg :GscopeFind g <C-R><C-W><cr>
-noremap <silent> <leader>gc :GscopeFind c <C-R><C-W><cr>
-noremap <silent> <leader>gt :GscopeFind t <C-R><C-W><cr>
-noremap <silent> <leader>ge :GscopeFind e <C-R><C-W><cr>
-noremap <silent> <leader>gf :GscopeFind f <C-R>=expand("<cfile>")<cr><cr>
-noremap <silent> <leader>gi :GscopeFind i <C-R>=expand("<cfile>")<cr><cr>
-noremap <silent> <leader>gd :GscopeFind d <C-R><C-W><cr>
-noremap <silent> <leader>ga :GscopeFind a <C-R><C-W><cr>
-
-
-" CCTree and Cscope
-" let g:CCTreeKeyHilightTree = '<C-t>'
-" let g:CCTreeCscopeDb = "cscope.out"
-" let g:CCTreeMinVisibleDepth = 3
-" " Can be top/bottom right/left
-" let g:CCTreeOrientation = "topleft"
-" let g:CCTreeWindowVertical = 1
-" " 1 compact 2: normal 3: wide
-" let g:CCTreeDisplayMode = 2
-" let g:CCTreeHilightCallTree = 1
-
-
-" Tagbar
-let g:tagbar_left = 1
-let g:tagbar_width = 30
-let g:tagbar_autopreview = 1
-
-
-
-" Functions 
-" ======================================================================
-
-" Only works with X enabled vim version as (vim-gtk)
-function! EasyVim()
-	inoremap <C-v> <ESC>"+pa
-	vnoremap <C-c> "+y
-	vnoremap <C-d> "+d
-endfunction
-
-
-function! HardVim()
-	nnoremap <up> <nop>
-	nnoremap <down> <nop>
-	nnoremap <left> <nop>
-	nnoremap <right> <nop>
-	inoremap <up> <nop>
-	inoremap <down> <nop>
-	inoremap <left> <nop>
-	inoremap <right> <nop>
-endfunction
-
-
-function! Preserve(command)
-	" Preparation: save last search, and cursor position.
-	let _s=@/
-	let l = line(".")
-	let c = col(".")
-	" Do the business:
-	execute a:command
-	" Clean up: restore previous search history, and cursor position
-	let @/=_s
-	call cursor(l, c)
-endfunction
-
-
-function! FoldText()
-	let l:lpadding = &fdc
-	redir => l:signs
-	execute 'silent sign place buffer='.bufnr('%')
-	redir End
-	let l:lpadding += l:signs =~ 'id=' ? 2 : 0
-
-	if exists("+relativenumber")
-		if (&number)
-			let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
-		elseif (&relativenumber)
-			let l:lpadding += max([&numberwidth, strlen(v:foldstart - line('w0')), strlen(line('w$') - v:foldstart), strlen(v:foldstart)]) + 1
-		endif
-	else
-		if (&number)
-			let l:lpadding += max([&numberwidth, strlen(line('$'))]) + 1
-		endif
-	endif
-
-	" expand tabs
-	let l:start = substitute(getline(v:foldstart), '\t', repeat(' ', &tabstop), 'g')
-	let l:end = substitute(substitute(getline(v:foldend), '\t', repeat(' ', &tabstop), 'g'), '^\s*', '', 'g')
-
-	let l:info = ' (' . (v:foldend - v:foldstart) . ')'
-	let l:infolen = strlen(substitute(l:info, '.', 'x', 'g'))
-	let l:width = winwidth(0) - l:lpadding - l:infolen
-
-	let l:separator = ' … '
-	let l:separatorlen = strlen(substitute(l:separator, '.', 'x', 'g'))
-	let l:start = strpart(l:start , 0, l:width - strlen(substitute(l:end, '.', 'x', 'g')) - l:separatorlen)
-	let l:text = l:start . ' … ' . l:end
-
-	return l:text . repeat(' ', l:width - strlen(substitute(l:text, ".", "x", "g"))) . l:info
-endfunction
-
-" # Function to permanently delete views created by 'mkview'
-function! MyDeleteView()
-    let path = fnamemodify(bufname('%'),':p')
-    " vim's odd =~ escaping for /
-    let path = substitute(path, '=', '==', 'g')
-    if empty($HOME)
-    else
-        let path = substitute(path, '^'.$HOME, '\~', '')
-    endif
-    let path = substitute(path, '/', '=+', 'g') . '='
-    " view directory
-    let path = &viewdir.'/'.path
-    call delete(path)
-    echo "Deleted: ".path
-endfunction
-
-" # Command Delview (and it's abbreviation 'delview')
-command! Delview call MyDeleteView()
-" Lower-case user commands: http://vim.wikia.com/wiki/Replace_a_builtin_command_using_cabbrev
-cabbrev delview <c-r>=(getcmdtype()==':' && getcmdpos()==1 ? 'Delview' : 'delview')<CR>
-
-
-augroup c_project
-	autocmd!
-	autocmd BufRead,BufNewFile *.h,*.c set filetype=c.doxygen
-augroup END
-
-" Search in these paths when `gf` or `C-W C-F`
-let &path.='src/include,include'
-
+" Misc settings often invisible {{{
 if has("autocmd")
 
-	" Reload $MYVIMRC when writing it
-	augroup reload_vimrc
-		autocmd!
-		autocmd bufwritepost $MYVIMRC source $MYVIMRC
-	augroup END
+    " correctly identify some files
+    augroup filetypes
+        autocmd!
+        autocmd BufNewFile,BufRead *.xhtml setlocal ft=html
+        autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2   setlocal ft=html
+        autocmd BufNewFile,BufRead *.cu,*.cuh,*.h set filetype=c
+    augroup END
 
-	" Autosave all when changing focus also ident when savin code.
-	"augroup autosave
-	"	autocmd!
-	"	autocmd BufNewFile * :write
-	"	autocmd FocusLost * :wa
-	"	" autocmd BufWritePre *.py,*.js,*.c :call Preserve("%s/\\s\\+$//e")<CR>
-	"augroup END
-
-	" Return to last edit position when opening files (You want this!)
-	augroup openingbuffer
-		autocmd!
-		autocmd BufReadPost *
-					\ if line("'\"") > 0 && line("'\"") <= line("$") |
-					\   exe "normal! g`\"" |
-					\ endif |
-	augroup END
-
-	" Do my lovely numbering
-	augroup numbering
-		autocmd!
-        if !exists("g:writeroommode=1")
-		    autocmd BufEnter,FocusGained,InsertLeave * :set relativenumber
-		    autocmd BufLeave,FocusLost,InsertEnter * :set norelativenumber
-        endif
-	augroup END
-
-	" Set some uncommon filetymes correctly
-	augroup filetypes
-		autocmd!
-		autocmd BufNewFile,BufRead *.xhtml  setlocal ft=html
-		autocmd BufNewFile,BufRead *.mako,*.mak,*.jinja2   setlocal ft=html
-		autocmd BufNewFile,BufRead *.cu,*.cuh set filetype=cpp
-		autocmd BufNewFile,BufRead vMakefile.include set filetype=make
-	augroup END
-
+    " When editing a file, always jump to the last cursor position
+    augroup lastposition
+        autocmd!
+        autocmd BufReadPost *
+        \ if line("'\"") > 0 && line ("'\"") <= line("$") |
+        \   exe "normal! g'\"" |
+        \ endif
+      augroup END
 endif
-" 
-
-" Abbreviations 
-" =====================================================================
-iabbrev migor morgado.igor@gmail.com
-iabbrev intmain int main(int argc, char *argv[]) {
-iabbrev iipdb import ipdb; ipdb.set_trace()
-
-" Enable Digraphs with C-D 
-inoremap <C-D> <C-K>
-
-" spell check settings
-set spelllang=pt
-set spellfile=~/.vim/spell/pt.utf-8.add
-let &t_Cs = "\e[4:3m"
-let &t_Ce = "\e[4:0m"
-hi clear SpellBad
-hi SpellBad     gui=undercurl guisp=red term=underline cterm=underline ctermfg=red 
-"SpellBad	word not recognized			|hl-SpellBad|
-"SpellCap	word not capitalised			|hl-SpellCap|
-"SpellRare	rare word				|hl-SpellRare|
-"SpellLocal	wrong spelling for selected region	|hl-SpellLocal|
+" }}}
 
 
 
+" OLD CONFIGS {{{
+
+"""""""""""""""""""""""""""""""""""""""""""""""
+
+" TMUX MANAGEMENT
+"Plug 'igormorgado/vim-tbone'
+"Plug 'tpope/vim-tbone'
+"Plug 'christoomey/vim-tmux-navigator'
+
+" Coding
+"Plug 'igormorgado/Conque-GDB'
 "
-" DISABLED FOR NOW
-" 
-" Folding 
-"if has("folding")
-"	set foldenable        " enable folding
-"	set foldtext=FoldText()
-"endif
-" 
+"
 
-" let g:jedi#use_splits_not_buffers = "bottom"
-" let g:jedi#use_tabs_not_buffers = 1
-" let g:jedi#popup_on_dot = 0
-" let g:jedi#popup_select_first = 0
-" let g:jedi#show_call_signatures = "1"
- 
-" let g:SimpylFold_fold_import = 1
-" let g:SimpylFold_docstring_preview = 1
-" let g:SimpylFold_fold_docstring = 0
+"" Vim Enhancement
+"Plug 'tpope/vim-eunuch'
+"Plug 'tpope/vim-flagship'
+"Plug 'tpope/vim-surround'
+"
+" Plug 'romainl/vim-qf'
+"
+"" C development
+"Plug 'igankevich/mesonic'
+"
+"" Python Dev
+"" Need to learn more about these plugins
+"Plug 'davidhalter/jedi-vim'
+""Plug 'tmhedberg/SimpylFold'
+"Plug 'nvie/vim-flake8'
+"
+"" Latex dev
+"Plug 'lervag/vimtex'
+"
+"" Latex SpellCheck
+"Plug 'inkarkat/vim-ingo-library'
+"Plug 'inkarkat/vim-SpellCheck'
 
-" augroup vflake8
-"     autocmd FileType python map <buffer> <F5> :call Flake8()<CR>
-" "   autocmd BufWritePost *.py call Flake8()
-" augroup END
-" let g:flake8_show_in_gutter=1  " show
-" let g:flake8_show_in_file=1  " show
-" let g:flake8_error_marker='EE'     " set error marker to 'EE'
-" let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
-" let g:flake8_pyflake_marker='WP'     " disable PyFlakes warnings
-" let g:flake8_complexity_marker='CC'  " disable McCabe complexity warnings
-" let g:flake8_naming_marker='NN'      " disable naming warnings
+"" split window vertically
+"nnoremap <leader>w <C-w>v<C-w>l
+"" Add files to buffers
+"nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%p:h'))<cr>/*<C-d>
+"" Find a file
+"nnoremap <leader>f :find *
+"" Close all buffers except this one
+"command! BufOnly silent! execute "%bd|e#|bd#"
+"
+"" Setup TMUX Navigator
+"let g:tmux_navigator_save_on_switch = 2
+"let g:tmux_navigator_disable_when_zoomed = 1
+"let g:tmux_navigator_no_mappings = 1
+"" Standard <C-\> conflicts with vim-CScope"
+"" These keys are not working inside CCTree split
+"nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+"nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+"nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+"nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+"nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
+"inoremap <silent> <C-h> <ESC>:TmuxNavigateLeft<cr>
+"inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>
+"inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>
+"inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>
+"inoremap <silent> <C-g> <ESC>:TmuxNavigatePrevious<cr>
+"tnoremap <silent> <C-h> <C-W> h
+"tnoremap <silent> <C-j> <C-W> j
+"tnoremap <silent> <C-k> <C-W> k
+"tnoremap <silent> <C-l> <C-W> l
+"tnoremap <silent> <C-g> <C-W> <C-W>
+"
+"
+"" romainl/vim-qf
+"" Inside QF window
+""    s - open entry in a new horizontal window
+""    v - open entry in a new vertical window
+""    t - open entry in a new tab
+""    o - open entry and come back
+""    O - open entry and close the location/quickfix window
+""    p - open entry in a preview window
+"" nmap C <Plug>qf_qf_switch
+"" nmap <leader>c <Plug>qf_qf_stay_toggle
+"let g:qf_mapping_ack_style = 1
+"let g:qf_statusline = {}
+"let g:qf_statusline.before = '%<\ '
+"let g:qf_statusline.after = '\ %f%=%l\/%-6L\ \ \ \ \ '
+"
+"
+"
+"
+"" CCTree and Cscope
+"" let g:CCTreeKeyHilightTree = '<C-t>'
+"" let g:CCTreeCscopeDb = "cscope.out"
+"" let g:CCTreeMinVisibleDepth = 3
+"" " Can be top/bottom right/left
+"" let g:CCTreeOrientation = "topleft"
+"" let g:CCTreeWindowVertical = 1
+"" " 1 compact 2: normal 3: wide
+"" let g:CCTreeDisplayMode = 2
+"" let g:CCTreeHilightCallTree = 1
+"
+"
+"" Tagbar
+"
+"
+"
+"
+"    " If there's a `meson.build` file, use meson for linting.
+"    autocmd FileType c call ConsiderMesonForLinting()
+"    function ConsiderMesonForLinting()
+"        if filereadable('meson.build')
+"            let g:syntastic_c_checkers = ['meson']
+"        endif
+"    endfunction
+"
+"
+""
+"
+"" Abbreviations
+"" =====================================================================
+"iabbrev migor morgado.igor@gmail.com
+"
+"" Enable Digraphs with C-D
+"inoremap <C-D> <C-K>
+"
+"" let g:jedi#use_splits_not_buffers = "bottom"
+"" let g:jedi#use_tabs_not_buffers = 1
+"" let g:jedi#popup_on_dot = 0
+"" let g:jedi#popup_select_first = 0
+"" let g:jedi#show_call_signatures = "1"
+"
+"" let g:SimpylFold_fold_import = 1
+"" let g:SimpylFold_docstring_preview = 1
+"" let g:SimpylFold_fold_docstring = 0
+"
+"" augroup vflake8
+""     autocmd FileType python map <buffer> <F5> :call Flake8()<CR>
+"" "   autocmd BufWritePost *.py call Flake8()
+"" augroup END
+"" let g:flake8_show_in_gutter=1  " show
+"" let g:flake8_show_in_file=1  " show
+"" let g:flake8_error_marker='EE'     " set error marker to 'EE'
+"" let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
+"" let g:flake8_pyflake_marker='WP'     " disable PyFlakes warnings
+"" let g:flake8_complexity_marker='CC'  " disable McCabe complexity warnings
+"" let g:flake8_naming_marker='NN'      " disable naming warnings
+" }}}

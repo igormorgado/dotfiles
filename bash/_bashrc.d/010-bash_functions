@@ -45,6 +45,10 @@ function addlibpath() {
 	[ -d "${1}" ] && export LD_LIBRARY_PATH=${1}:${LD_LIBRARY_PATH}
 }
 
+function applibpath() {
+	[[ ":${LD_LIBRARY_PATH}:" == *":$1:"* ]] && return
+	[ -d "${1}" ] && export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${1}
+}
 
 function addrunpath() {
 	[[ ":${LD_RUN_PATH}:" == *":$1:"* ]] && return
@@ -172,7 +176,7 @@ function testface() {
 }
 
 function testUTF8() {
-	curl http://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-demo.txt
+	curl https://www.cl.cam.ac.uk/~mgk25/ucs/examples/UTF-8-demo.txt
 }
 
 setBackgroundColor()

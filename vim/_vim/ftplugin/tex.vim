@@ -1,1 +1,0 @@
-" Tex configuration and shortcuts
