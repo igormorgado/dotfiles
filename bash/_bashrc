@@ -288,7 +288,7 @@ for file in ${HOME}/.bashrc.d/[123456789]*;do
 	source "${file}"
 done
 unset file
-export ELM_SCALE=2
+# export ELM_SCALE=2
 
 export WINEARCH=win32
 # vim: foldmethod=marker:ft=sh:

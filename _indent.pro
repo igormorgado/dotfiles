@@ -1,0 +1,26 @@
+--line-length 78
+--tab-size 4
+--no-tabs
+--blank-before-sizeof
+--blank-lines-after-commas
+--blank-lines-after-declarations
+--blank-lines-after-procedures
+--brace-indent 0
+--braces-after-func-def-line
+--braces-after-struct-decl-line
+--break-before-boolean-operator
+--break-function-decl-args
+--case-brace-indentation 0
+--case-indentation 0
+--continue-at-parentheses
+--declaration-indentation 16
+--indent-label 0
+--no-blank-lines-after-commas
+--no-parameter-indentation
+--no-space-after-parentheses
+--preprocessor-indentation 2
+--space-after-cast
+--space-after-for
+--space-after-if
+--space-after-procedure-calls
+--space-after-while
