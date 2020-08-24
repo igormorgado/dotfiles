@@ -1,0 +1,4 @@
+set breakpoint pending on
+set confirm off
+set disassembly-flavor intel
+
