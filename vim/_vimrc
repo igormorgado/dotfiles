@@ -49,9 +49,25 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 " }}}
 
+" Send to terminal! {{{
+"Plug 'habamax/vim-sendtoterm'
+"nmap <leader>rr <Plug>(SentToTermLine)j
+" Default map C-v C-v
+Plug 'jpalardy/vim-slime'
+let g:slime_target='vimterminal'
+let g:slime_vimterminal_config={"term_finish": "close"}
+"
+"let g:slime_no_mappings = 1
+"nmap <Leader>s <Plug>SlimeLineSend
+"nmap <Leader>ss <Plug>SlimeParagraphSend
+"xmap <Leader>s <Plug>SlimeRegionSend
+
+" }}}
+
 "Julia support {{{
 Plug 'JuliaEditorSupport/julia-vim'
 Plug 'mroavi/vim-julia-cell', { 'for': 'julia' }
+let g:julia_cell_delimit_cells_by='tags'
 " }}}
 
 
@@ -118,12 +134,6 @@ nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
 " }}}
 
-" Send to terminal! {{{
-"Plug 'habamax/vim-sendtoterm'
-"nmap <leader>rr <Plug>(SentToTermLine)j
-Plug 'jpalardy/vim-slime'
-
-" }}}
 
 " Vim Sign column {{{
 " m,    place next mark
