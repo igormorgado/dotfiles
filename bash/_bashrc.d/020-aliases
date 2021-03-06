@@ -117,4 +117,6 @@ alias venv='source venv/bin/activate'
 alias gdb='gdb -q'
 alias ue4ed='/home/igor/src/UnrealEngine/Engine/Binaries/Linux/UE4Editor'
 
+alias icat="kitty +kitten icat"
+
 # vim: ft=sh:

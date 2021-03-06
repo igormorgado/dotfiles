@@ -40,6 +40,39 @@ set omnifunc=syntaxcomplete#Complete
 set completeopt=longest,menuone,preview
 
 
+nnoremap <Leader>oc :e %<.c<CR>
+nnoremap <Leader>oC :e %<.cpp<CR>
+nnoremap <Leader>oh :e %<.h<CR>
+
+" GDB stuff
+packadd termdebug
+let g:termdebug_popup = 1
+let g:termdebug_wide = 1
+
+" Where 'where'  is any gdb command
+" map ,w :call TermDebugSendCommand('where')<CR>
+" Try this approach and create some nice vim functions.
+
+" Make
+inoremap <F4> <ESC>:make<CR>i
+nnoremap <F4> :make<CR>
+
+" Run debug
+inoremap <F5> <ESC>:Termdebug %:r<CR>:Source<CR>:Break<CR>:Run<CR>i
+nnoremap <F5> :Termdebug %:r<CR>:Source<CR>:Break<CR>:Run<CR>
+
+" Insert Breakpoint
+inoremap <F9> <ESC>:Break<CR>i
+nnoremap <F9> :Break<CR>
+
+" Step over / Next
+inoremap <F10> <ESC>:Over<CR>i
+nnoremap <F10>      :Over<CR>
+"
+" Step into
+inoremap <F11> <ESC>:Step<CR>i
+nnoremap <F11>      :Step<CR>
+
 if (filereadable("Makefile") || filereadable("makefile"))
     setlocal makeprg=make
 elseif filereadable("meson.build")

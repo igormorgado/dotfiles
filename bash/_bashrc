@@ -89,6 +89,7 @@ addpath /Applications/MacVim.app/Contents/MacOS/
 addpath "/c/Anaconda"
 addpath "/c/Anaconda2"
 addpath "/c/Anaconda3"
+addpath "${HOME}"/.local/opt/Zotero_linux-x86_64
 
 # Disable logouts
 export TMOUT=
@@ -283,6 +284,11 @@ fi
 # }}}
 
 
+if [ "${TERM}" == "xterm-kitty" ]
+then
+    source <(kitty + complete setup bash)
+fi
+
 # Run all files greater than 99 on ~/.bashrc.d/
 for file in ${HOME}/.bashrc.d/[123456789]*;do
 	source "${file}"
@@ -290,6 +296,6 @@ done
 unset file
 # export ELM_SCALE=2
 
-export WINEARCH=win32
+#export WINEARCH=win
 # vim: foldmethod=marker:ft=sh:
 

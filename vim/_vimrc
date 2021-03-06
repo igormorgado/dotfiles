@@ -49,6 +49,12 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
 " }}}
 
+"Julia support {{{
+Plug 'JuliaEditorSupport/julia-vim'
+Plug 'mroavi/vim-julia-cell', { 'for': 'julia' }
+" }}}
+
+
 " Tags support {{{
 "
 " Gutentags makes update of tags database automatic while plus also uses cscope
@@ -77,23 +83,23 @@ let g:tagbar_autopreview = 1
 "}}}
 
 " YCM {{{
-Plug 'ycm-core/YouCompleteMe'
-let g:ycm_auto_trigger = 1
-let g:ycm_max_num_candidates = 10
-let g:ycm_max_identifier_candidates = 10
-" let g:ycm_error_symbol = '🔴'
-let g:ycm_error_symbol = '💩'
-let g:ycm_warning_symbol = '🟡'
-let g:ycm_min_num_of_chars_for_completion = 2
-let g:ycm_always_populate_location_list = 1
-"let g:ycm_min_num_identifier_candidate_chars = 2
-
-" Why can't I remap to <C-tab>
-" let g:ycm_key_invoke_completion = '<C-tab>'
-" Disable hover by time and enable it by key only
-let g:ycm_auto_hover = ''
-" Why do not works with <leader>D for example?
-nmap <F3> <plug>(YCMHover)
+" Plug 'ycm-core/YouCompleteMe'
+" let g:ycm_auto_trigger = 1
+" let g:ycm_max_num_candidates = 10
+" let g:ycm_max_identifier_candidates = 10
+" " let g:ycm_error_symbol = '🔴'
+" let g:ycm_error_symbol = '💩'
+" let g:ycm_warning_symbol = '🟡'
+" let g:ycm_min_num_of_chars_for_completion = 2
+" let g:ycm_always_populate_location_list = 1
+" "let g:ycm_min_num_identifier_candidate_chars = 2
+" 
+" " Why can't I remap to <C-tab>
+" " let g:ycm_key_invoke_completion = '<C-tab>'
+" " Disable hover by time and enable it by key only
+" let g:ycm_auto_hover = ''
+" " Why do not works with <leader>D for example?
+" nmap <F3> <plug>(YCMHover)
 " }}}
 
 " GIT management {{{
@@ -113,8 +119,10 @@ nmap [h <Plug>(GitGutterPrevHunk)
 " }}}
 
 " Send to terminal! {{{
-Plug 'habamax/vim-sendtoterm'
-nmap <leader>rr <Plug>(SentToTermLine)j
+"Plug 'habamax/vim-sendtoterm'
+"nmap <leader>rr <Plug>(SentToTermLine)j
+Plug 'jpalardy/vim-slime'
+
 " }}}
 
 " Vim Sign column {{{
@@ -139,6 +147,12 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
 
 " Vim Color Codes Highlighrt {{{
 Plug 'chrisbra/Colorizer'
+" }}}
+
+" Tmux navigation {{{
+Plug 'igormorgado/vim-tbone'
+"Plug 'tpope/vim-tbone'
+Plug 'christoomey/vim-tmux-navigator'
 " }}}
 call plug#end()
 "}}}
@@ -217,7 +231,7 @@ let maplocalleader=" "
 set modeline
 " Display a marker for cursor position in buffer
 set cursorline
-" set cursorcolumn
+set cursorcolumn
 " Try not interpret any special characters
 set conceallevel=0
 " Set special characters
@@ -234,7 +248,7 @@ set hlsearch
 set incsearch
 set ignorecase
 " Disable mouse. THIS. IS. VIM!
-set mouse=
+set mouse=a
 " Map standard commands to system clipboard (LAME!)
 inoremap <C-v> <ESC>"+pa
 vnoremap <C-c> "+y
@@ -406,6 +420,8 @@ command! W :w
 " sudo write this
 cnoremap W! w !sudo tee % >/dev/null
 cnoremap w!! w !sudo tee % >/dev/null
+" CLose all bufffers
+"nnoremap <leader>ca :w<bar>%bd<bar>e#<bar>bd#<CR>
 " }}}
 
 " NETRW navigation configuration {{{
@@ -471,9 +487,6 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""
 
 " TMUX MANAGEMENT
-"Plug 'igormorgado/vim-tbone'
-"Plug 'tpope/vim-tbone'
-"Plug 'christoomey/vim-tmux-navigator'
 
 " Coding
 "Plug 'igormorgado/Conque-GDB'
