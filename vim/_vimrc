@@ -70,6 +70,10 @@ Plug 'mroavi/vim-julia-cell', { 'for': 'julia' }
 let g:julia_cell_delimit_cells_by='tags'
 " }}}
 
+"Python support {{{
+Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
+let g:slime_python_ipython = 1
+"}}}
 
 " Tags support {{{
 "
@@ -134,7 +138,6 @@ nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
 " }}}
 
-
 " Vim Sign column {{{
 " m,    place next mark
 " ]` [`  NExt/Prev mark
@@ -155,6 +158,11 @@ Plug 'tpope/vim-markdown'
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
 " }}}
 
+" Vim XML
+Plug 'othree/xml.vim'
+Plug 'chrisbra/vim-xml-runtime'
+
+
 " Vim Color Codes Highlighrt {{{
 Plug 'chrisbra/Colorizer'
 " }}}
@@ -164,6 +172,9 @@ Plug 'igormorgado/vim-tbone'
 "Plug 'tpope/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
 " }}}
+
+" Kitty navigation
+Plug 'knubie/vim-kitty-navigator'
 call plug#end()
 "}}}
 

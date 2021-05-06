@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 if ${COLOR_ENVIRONMENT}; then
   alias dir='ls --color --format=vertical'
-  alias ls="ls --color"
-  alias ll="ls --color -l"
+  alias ls="ls --color --hyperlink=auto"
+  alias ll="ls --color -l --hyperlink=auto"
   alias grep='grep --color=auto'
   alias fgrep='fgrep --color=auto'
   alias egrep='egrep --color=auto'
 else
-  alias ls="ls -F"
-  alias ll="ls -lF"
+  alias ls="ls -F --hyperlink=auto"
+  alias ll="ls -lF --hyperlink=auto"
 fi
 
 alias cscp="cscope -k -b -c -R; rm -f cctree.out"
@@ -119,4 +119,5 @@ alias ue4ed='/home/igor/src/UnrealEngine/Engine/Binaries/Linux/UE4Editor'
 
 alias icat="kitty +kitten icat"
 
+alias zeroad="flatpak run com.play0ad.zeroad"
 # vim: ft=sh:

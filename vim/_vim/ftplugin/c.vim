@@ -86,7 +86,6 @@ augroup trailspaces
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
 
-
 " inoremap <expr> <CR>  pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 "
 " inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
