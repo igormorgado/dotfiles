@@ -1,3 +1,5 @@
 # export ELM_SCALE=2
 #export ECORE_IMF_MODULE="xim"
 export XMODIFIERS="@im=none"
+
+cbonsai -p

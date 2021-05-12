@@ -68,7 +68,7 @@ $if Bash
 $endif
 
 # VI FTW
-# set editing-mode vi
+set editing-mode vi
 # set keymap vi-command
 # set keymap vi-insert
 "\C-x\C-r": re-read-init-file
@@ -76,12 +76,24 @@ $endif
 "\C-r": reverse-search-history
 
 $if mode=vi
+set show-mode-in-prompt on
+# set vi-ins-mode-string "+"
+# set vi-cmd-mode-string ":"
+# \1 \2 : begin and end of escape sequence
+# \e[5 bar mode
+# \e[1 block mode
+# \e]12;color set color
+# \a bell/beep why is needed?
+#
+#infocmp -L -1 or infocmp -L 1 xterm  to display ansi codes
+# set vi-ins-mode-string \1\e[5 q\e]12;green\a\2
+# set vi-cmd-mode-string \1\e[1 q\e]12;orange\a\2
 
 set keymap vi-command
-Control-l: clear-screen
+Control-t: clear-screen
 
 set keymap vi-insert
-Control-l: clear-screen
+Control-t: clear-screen
 
 # Edit options before rerunning previous command, eg: ls a b c -> ls -al a b c
 "\C-o": "\e-0eli "

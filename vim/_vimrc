@@ -32,7 +32,9 @@ if has('nvim')
     " Enable Truetype GUI colors in terminal
     set termguicolors
 else
-    let g:gruvbox_termcolors=256
+    "How to check if is running on linux console?
+    let g:gruvbox_termcolors=16
+    "let g:gruvbox_termcolors=256
 endif
 " Enable italics
 let g:gruvbox_italic=1
@@ -168,8 +170,8 @@ Plug 'chrisbra/Colorizer'
 " }}}
 
 " Tmux navigation {{{
-Plug 'igormorgado/vim-tbone'
 "Plug 'tpope/vim-tbone'
+Plug 'igormorgado/vim-tbone'
 Plug 'christoomey/vim-tmux-navigator'
 " }}}
 
