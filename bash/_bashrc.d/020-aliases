@@ -114,6 +114,8 @@ alias whome='cd /c/Users/morga'
 alias cyg-get="/c/root/setup -q -P"
 
 alias venv='source venv/bin/activate'
+alias actv='source venv/bin/activate'
+alias activate='source venv/bin/activate'
 alias gdb='gdb -q'
 alias ue4ed='/home/igor/src/UnrealEngine/Engine/Binaries/Linux/UE4Editor'
 

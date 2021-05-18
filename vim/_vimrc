@@ -1,47 +1,69 @@
 " VIM CONFIGURATION FILE
-"
-" TODO: Organize better to be readeable in screens without syntax higtlight
-"
 
-
-" Every vimrc file should set vim to nocompatible mode, lets move to
-" 1980s. The future is now!
+" Every vimrc file should set vim to nocompatible mode {{{1
+" Let's move to 80s. The future is now!
 set nocompatible
+" }}}1
 
-" Plug-in management {{{
-"
-" Load plugins and configure them
-"
+" DEBUG (when necessary) {{{1
+"set verbose=4
+"set verbosefile=~/tmp/vimload
+" }}}1
+
+" Vim truecolor {{{1
+" Reference: https://gist.github.com/XVilka/8346728
+" Think about: Do we REALLY need true color in vim?
+" PRO: Using true color removes the need to change term palletes
+" CON: Not every application supports it (linux tty)
+" PRO: More colors
+" CON: Useless colors
+if $COLORTERM ==? 'truecolor' || $COLORTERM ==? '24bit' || has("gui")
+	set termguicolors
+	let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+	let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+endif
+" }}}
+
+" Plug-in load and settings {{{1
 " To install plugins call
 " :PlugInstall
-
-let g:plug_timeout=600
 call plug#begin('~/.vim/plugged')
 
-" {{{ My vim hints
+" My vim hints {{{2
 Plug 'igormorgado/vim-hints'
-" }}}
+" }}}2
 
-" NetRW settings {{{
-Plug 'tpope/vim-vinegar'
-" }}}
-
-" Gruvbox colorscheme {{{
+" Gruvbox colorscheme {{{2
+" TODO: Need to handle colors in linux console correctly =(
 Plug 'morhetz/gruvbox'
-if has('nvim')
-    " Enable Truetype GUI colors in terminal
-    set termguicolors
-else
-    "How to check if is running on linux console?
-    let g:gruvbox_termcolors=16
-    "let g:gruvbox_termcolors=256
-endif
-" Enable italics
-let g:gruvbox_italic=1
-" let g:gruvbox_termcolors=16
-" }}}
 
-" Pair shortcuts {{{
+if $TERM ==# 'linux'
+    let g:gruvbox_termcolors=16
+else
+	" Possible values soft medium hard
+	let g:gruvbox_contrast_dark = 'medium'
+	let g:gruvbox_contrast_light = 'medium'
+endif
+" }}}2
+
+" Vim drawer {{{2
+" Disable netrw :'(
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
+" https://github.com/justinmk/vim-dirvish
+Plug 'justinmk/vim-dirvish'
+Plug 'tpope/vim-eunuch'
+" ]f [f  next/prev file
+Plug 'kristijanhusak/vim-dirvish-git'
+" }}}2
+
+" Send to terminal! {{{2
+Plug 'jpalardy/vim-slime'
+let g:slime_target='vimterminal'
+let g:slime_vimterminal_config={"term_finish": "close"}
+" }}}2
+
+" Pair shortcuts {{{2
 " unimpaired
 " Files : ]a [a
 " Buffers:  ]b [b
@@ -49,85 +71,61 @@ let g:gruvbox_italic=1
 " Moveline: ]e [e
 Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-repeat'
-" }}}
+" }}}2
 
-" Send to terminal! {{{
-"Plug 'habamax/vim-sendtoterm'
-"nmap <leader>rr <Plug>(SentToTermLine)j
-" Default map C-v C-v
-Plug 'jpalardy/vim-slime'
-let g:slime_target='vimterminal'
-let g:slime_vimterminal_config={"term_finish": "close"}
-"
-"let g:slime_no_mappings = 1
-"nmap <Leader>s <Plug>SlimeLineSend
-"nmap <Leader>ss <Plug>SlimeParagraphSend
-"xmap <Leader>s <Plug>SlimeRegionSend
 
-" }}}
+" Vim Sign column {{{2
+" m,    place next mark
+" ]` [`  Next/Prev mark
+" `] `[  Next/Prev mark alphabetically
+Plug 'kshenoy/vim-signature'
+" Always display the Sign Column.
+set signcolumn=yes
+" }}}2
 
-"Julia support {{{
-Plug 'JuliaEditorSupport/julia-vim'
-Plug 'mroavi/vim-julia-cell', { 'for': 'julia' }
-let g:julia_cell_delimit_cells_by='tags'
-" }}}
+" Window multiplexer navigation {{{2
 
-"Python support {{{
-Plug 'hanschen/vim-ipython-cell', { 'for': 'python' }
-let g:slime_python_ipython = 1
-"}}}
+" Kitty navigation {{{3
+" For system configuration check https://github.com/knubie/vim-kitty-navigator
+Plug 'knubie/vim-kitty-navigator'
+if $TERM !~? "kitty"
+    let g:kitty_navigator_no_mappings = 1
+endif
+" }}}3
 
-" Tags support {{{
-"
-" Gutentags makes update of tags database automatic while plus also uses cscope
-" to get better insight
-Plug 'ludovicchabant/vim-gutentags'
-" Enable ctags and gtags
-let g:gutentags_modules = ['ctags', 'gtags_cscope']
-" Exclude some files
-" let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
-" Set cache dir to a hidden location
-let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
-" Identify common build files. Remember to correctly configure each builder in
-" each filetype (or make a global one ?)
-let g:gutentags_project_root=[ 'meson.build', 'Makefile', 'setup.py', 'Makefile.am', 'CMake', '.root' ]
-" Gutentags_plus need this sometimes
-let g:gutentags_define_advanced_commands = 1
+" Tmux navigation {{{3
+" Need additinal settings https://github.com/christoomey/vim-tmux-navigator
+Plug 'christoomey/vim-tmux-navigator'
+if empty($TMUX)
+	let g:tmux_navigator_no_mappings = 1
+else
+	let g:tmux_navigator_save_on_switch = 1
+	let g:tmux_navigator_disable_when_zoomed = 1
+endif
+" }}}3
 
-Plug 'skywind3000/gutentags_plus'
-" let g:gutentags_plus_switch = 1
+" }}}2
 
-" Friendly lateral bar to show code objects mapped to <F3>
-Plug 'majutsushi/tagbar'
-let g:tagbar_left = 1
-let g:tagbar_width = 30
-let g:tagbar_autopreview = 1
-"}}}
+" Development general {{{2
 
-" YCM {{{
-" Plug 'ycm-core/YouCompleteMe'
-" let g:ycm_auto_trigger = 1
-" let g:ycm_max_num_candidates = 10
-" let g:ycm_max_identifier_candidates = 10
-" " let g:ycm_error_symbol = '🔴'
-" let g:ycm_error_symbol = '💩'
-" let g:ycm_warning_symbol = '🟡'
-" let g:ycm_min_num_of_chars_for_completion = 2
-" let g:ycm_always_populate_location_list = 1
-" "let g:ycm_min_num_identifier_candidate_chars = 2
-" 
-" " Why can't I remap to <C-tab>
-" " let g:ycm_key_invoke_completion = '<C-tab>'
-" " Disable hover by time and enable it by key only
-" let g:ycm_auto_hover = ''
-" " Why do not works with <leader>D for example?
-" nmap <F3> <plug>(YCMHover)
-" }}}
+" Markdown editin and vieweing {{{3
+Plug 'tpope/vim-markdown'
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
+" }}}3
 
-" GIT management {{{
+" Vim Color Codes Highlight {{{3
+" Needs golang
+Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+if &termguicolors
+	let g:Hexokinase_hilighters = ['foregroundfull']
+endif
+" }}}3
+
+" GIT management {{{3
 Plug 'tpope/vim-fugitive'
-" GitGutter shows marks on VimGutter regarding status
-" GitGutterToggle
+" }}}3
+
+" GitGutter shows marks on VimGutter regarding status {{{3
 " GitGutterSignsToggle
 " GitGutterLineHighlightsToggle
 " GitGutterQuickFix
@@ -138,49 +136,23 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 nmap ]h <Plug>(GitGutterNextHunk)
 nmap [h <Plug>(GitGutterPrevHunk)
-" }}}
+" }}}3
 
-" Vim Sign column {{{
-" m,    place next mark
-" ]` [`  NExt/Prev mark
-" `] `[  Next/Prev mark alphabetically
-Plug 'kshenoy/vim-signature'
-" Always display the Sign Column.
-set signcolumn=yes
-" }}}
+" }}}2
 
-" Build and debug {{{
-" Valgrind binaryname
-" TODO: Find a way to integrate with meson and makefile
-Plug 'igormorgado/valgrind.vim'
-" }}}
+" Development Python {{{2
+" }}}2
 
-" Markdown editin and vieeweing {{{
-Plug 'tpope/vim-markdown'
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
-" }}}
+" Development Bash {{{2
+" }}}2
 
-" Vim XML
-Plug 'othree/xml.vim'
-Plug 'chrisbra/vim-xml-runtime'
+" Development C {{{2
+" }}}2
 
-
-" Vim Color Codes Highlighrt {{{
-Plug 'chrisbra/Colorizer'
-" }}}
-
-" Tmux navigation {{{
-"Plug 'tpope/vim-tbone'
-Plug 'igormorgado/vim-tbone'
-Plug 'christoomey/vim-tmux-navigator'
-" }}}
-
-" Kitty navigation
-Plug 'knubie/vim-kitty-navigator'
 call plug#end()
-"}}}
+" }}}1
 
-" Color scheme configuration {{{
+" Color scheme configuration {{{1
 " Read ENVVARS BACKGROUND preference
 let BACKGROUND=$BACKGROUND
 if BACKGROUND=='light'
@@ -193,17 +165,24 @@ endif
 colorscheme gruvbox
 " Enable syntax
 syntax on
+" }}}1
 
-
-" Set gui font
+" Gvim config {{{1
 if has("gui_running")
-  if has("gui_gtk3")
-    set guifont=Fixedsys\ Excelsior\ Mono\ 12
-  endif
+	" Remove toolbar and menubar
+	set guioptions-=Tm 
+	set lines=32 columns=110 linespace=0
+if has("gui_gtk3")
+    set guifont=Fira\ Code\ weight\=453\ 12
 endif
-" }}}
+endif
+" }}}1
 
-" Sane default buffer settings {{{
+" 
+" TODO: Reorganize Default settings, Filetype handling, Special fillers and
+" buffer manipulation
+" 
+" Sane default buffer settings {{{1
 
 " As a text editor VIM should handle by default every kind of text document
 " availabe with the greatest confort possible therefore some standard sane
@@ -215,9 +194,9 @@ set encoding=utf-8
 set fileformat=unix
 
 " TABS are tabs, and should be elegantly 8 spaced (this isn't HTML)
-set tabstop=8
-set shiftwidth=8
-set softtabstop=8
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set noexpandtab
 set shiftround
 
@@ -232,23 +211,39 @@ set textwidth=79
 set colorcolumn=79
 " Try to keep part of file visible
 set scrolloff=8
-" }}}
+" }}}1
 
-" VIM default filetype handling {{{
+" Filetype handling {{{1
 
 " Enables filetype handling
 filetype on
 " Loads the filetype indentation at $VIMRUNTIME/indent
 " |C-indenting|
 filetype indent on
-" Loads the file im $VIMRUNTIME/filetype.vim
+" Loads the file im $VIMRUNTIME/ftplugin/filetype.vim
 filetype plugin on
 " This changes the keybinding started to space bar, since is simpler and bigger
-let mapleader=" "
-let maplocalleader=" "
-" }}}
+let mapleader=' '
+let maplocalleader='\'
+" }}}1
 
-" Buffer manipulation {{{
+" Special files handling {{{1
+"
+" This keep all ugly vim files in a separated lhh0
+set backup
+set backupdir=~/.tmp/vim,~/tmp/vim
+set swapfile
+set directory=~/.tmp/vim,~/tmp/vim
+set undofile
+set undodir=~/.tmp/vim,~/tmp/vim
+set writebackup
+set viminfo^=%
+" Tags
+set tags=.tags;tags;${HOME}
+set tags+=~/.config/nvim/systags
+" }}}1
+
+" Buffer manipulation {{{1
 
 " Read modelines if they are set
 set modeline
@@ -270,12 +265,13 @@ set smartcase
 set hlsearch
 set incsearch
 set ignorecase
+set autowriteall
 " Disable mouse. THIS. IS. VIM!
 set mouse=a
 " Map standard commands to system clipboard (LAME!)
-inoremap <C-v> <ESC>"+pa
-vnoremap <C-c> "+y
-vnoremap <C-x> "+d
+"inoremap <C-v> <ESC>"+pa
+"vnoremap <C-c> "+y
+"vnoremap <C-x> "+d
 
 " Window resize shortcut
 nnoremap <silent> <Leader>= <C-w>=
@@ -289,19 +285,9 @@ nnoremap gr :grep <cword> *<CR>
 nnoremap Gr :grep <cword> %:p:h/*<CR>
 nnoremap gR :grep '\b<cword>\b' *<CR>
 nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
-" }}}
+" }}}1
 
-" Vim terminal {{{
-" Paste buffer with shifg insert
-" :he terminal-typing
-" :he Terminal-mode
-" C-\ C-M  (enter terminal-normal)
-" i  (enter terminal-insert mode)
-"
-tmap <S-Insert> <C-w>"+
-" }}}
-
-" Vim window setting {{{
+" Vim window setting {{{1
 " Enable wild menu
 set wildmenu
 set wildmode=longest:full,full
@@ -315,10 +301,25 @@ set path=.,/usr/include,/usr/local/include,src/include,include,../include,../lib
 " New splits are below and right (instead defaul top left)
 set splitbelow
 set splitright
-""  A complicated status bar configuration
-set laststatus=2
+
+" Buffer numbering
+set numberwidth=5
+set number
+set relativenumber
+augroup numbering
+    autocmd!
+    autocmd InsertLeave * :set relativenumber
+    autocmd InsertEnter * :set norelativenumber
+augroup END
+
+" Only display tab lines if exists at least two
 set showtabline=1
-" Status line color (changed for a simpler than informative for many buffer views)
+" }}}
+
+" Status Line configuration {{{1
+
+" Two lines status bar
+set laststatus=2
 if has("statusline")
     set statusline =              " clear
     set statusline+=\ %#FileName#    " Color
@@ -327,12 +328,12 @@ if has("statusline")
     set statusline+=%m          " modified flag '[+]' if modifiable
     set statusline+=\ %h          " help flag '[Help]'
     set statusline+=%r          " read only flag '[RO]'
-" if exists("g:loaded_fugitive")
+if exists("g:loaded_fugitive")
     set statusline+=\ %{fugitive#statusline()}    " GIT Branch
-" endif
-" if exists("g:loaded_gutentags")
+endif
+if exists("g:loaded_gutentags")
     set statusline+=\ %{gutentags#statusline()}
-" endif
+endif
     set statusline+=%=            " left/right separation point
     set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
     set statusline+=\ \|\ %{&ff}  " fileformat
@@ -345,18 +346,51 @@ if has("statusline")
     " set statusline+=\ %L          " line/lines
     " set statusline+=\ lines
 endif
-" Numbering
-set numberwidth=5
-set number
-set relativenumber
-augroup numbering
-    autocmd!
-    autocmd InsertLeave * :set relativenumber
-    autocmd InsertEnter * :set norelativenumber
-augroup END
 " }}}
 
-" Function keys {{{
+" Vim terminal {{{1
+" Paste buffer with shift insert
+" :he terminal-typing
+" :he Terminal-mode
+" C-\ C-M  (enter terminal-normal)
+" i  (enter terminal-insert mode)
+"
+ if &termguicolors
+    let g:terminal_ansi_colors = [
+        \ "#282828",
+		\ "#cc241d",
+		\ "#98971a",
+		\ "#d79921",
+		\ "#458588",
+		\ "#b16286",
+		\ "#689d6a",
+		\ "#a89984",
+		\ "#928374",
+		\ "#fb4934",
+		\ "#b8bb26",
+		\ "#fabd2f",
+		\ "#83a598",
+		\ "#d3869b",
+		\ "#8ec07c",
+		\ "#ebdbb2"]
+endif
+
+" TODO: These keys should call correctly tmux or kitty window mappings
+tnoremap <S-Insert> <C-w>"+
+if $TERM =~? "kitty"
+    tnoremap <silent> <C-h> <C-w>:KittyNavigateLeft<cr>
+    tnoremap <silent> <C-j> <C-w>:KittyNavigateDown<cr>
+    tnoremap <silent> <C-k> <C-w>:KittyNavigateUp<cr>
+    tnoremap <silent> <C-l> <C-w>:KittyNavigateRight<cr>
+elseif !empty($TMUX)
+    tnoremap <silent> <C-h> <C-w>:TmuxNavigateLeft<cr>
+    tnoremap <silent> <C-j> <C-w>:TmuxNavigateDown<cr>
+    tnoremap <silent> <C-k> <C-w>:TmuxNavigateUp<cr>
+    tnoremap <silent> <C-l> <C-w>:TmuxNavigateRight<cr>
+endif
+" }}}
+
+" Function keys {{{1
 " ======================================================================
 " Standard functions keys in APPS
 " <F1> Help
@@ -385,9 +419,9 @@ nnoremap <F2>      :buffers<CR>:buffer<Space>
 "nnoremap <F4>      :Texec<CR>j
 "vnoremap <F4>      :Texec<CR>j
 
-inoremap <F5> <ESC>:make!<cr>
-nnoremap <F5> :make!<cr>
-vnoremap <F5> :make!<cr>
+" inoremap <F5> <ESC>:make!<cr>
+" nnoremap <F5> :make!<cr>
+" vnoremap <F5> :make!<cr>
 "nnoremap <S-F5> :Valgrind build/%<cr>
 
 "set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ --exclude-dir\ '*venv*'\ -Inr
@@ -405,8 +439,8 @@ vnoremap <F5> :make!<cr>
 "vnoremap <F8>
 "
 "" Check if tagbar
-inoremap <F9> <ESC>:TagbarToggle<CR>
-nnoremap <F9> :TagbarToggle<CR>
+" inoremap <F9> <ESC>:TagbarToggle<CR>
+" nnoremap <F9> :TagbarToggle<CR>
 "
 "inoremap <F10> <ESC>
 "nnoremap <F10>
@@ -421,10 +455,8 @@ nnoremap <F9> :TagbarToggle<CR>
 "vnoremap <F12>
 "}}}
 
-" Lazyness and confort keys {{{
+" Lazyness and confort keys {{{1
 
-" Pressing j then k quicly in insert mode leaves insert mode.
-inoremap jk <esc>
 " Quit on triple ESC (RAGE MODE)
 nnoremap <ESC><ESC><ESC> :q<CR>
 " Clean search
@@ -447,40 +479,6 @@ cnoremap w!! w !sudo tee % >/dev/null
 "nnoremap <leader>ca :w<bar>%bd<bar>e#<bar>bd#<CR>
 " }}}
 
-" NETRW navigation configuration {{{
-"
-" Checkout {netrw-browse-maps}
-" Some shortcuts:
-"   gh  hide/show system files
-" Common keys:
-"	<CR>		Open file in same split
-"	v		Open file in vertical split
-"	t		Open file in new tab
-let g:netrw_list_hide  = '\(^\|\s\s\)\zs\.\S\+'
-let g:netrw_list_hide .= '\.pyc$,'
-let g:netrw_list_hide .= '\.o$,\.obj$'
-let g:netrw_list_hide .= '\.a$,\.so$,\.lib$,\.dll$,'
-let g:netrw_list_hide .= '\.pyc\s\+,'
-let g:netrw_list_hide .= '\.o\s\+,\.obj\s\+'
-let g:netrw_list_hide .= '\.a\s\+,\.so\s\+,\.lib\s\+,\.dll\s\+,'
-" }}}
-
-" Vim Special files handling {{{
-"
-" This keep all ugly vim files in a separated lhh0
-set backup
-set backupdir=~/.tmp/vim,~/tmp/vim
-set swapfile
-set directory=~/.tmp/vim,~/tmp/vim
-set undofile
-set undodir=~/.tmp/vim,~/tmp/vim
-set writebackup
-set viminfo^=%
-" Tags
-set tags=.tags;tags;${HOME}
-set tags+=~/.config/nvim/systags
-" }}}
-
 " Misc settings often invisible {{{
 if has("autocmd")
 
@@ -497,98 +495,18 @@ if has("autocmd")
         autocmd!
         autocmd BufReadPost *
         \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-        \   exe "normal! g'\"" |
+        \   execute "normal! g'\"" |
         \ endif
       augroup END
 endif
 " }}}
 
+" OLD CONFIGS {{{1
 
-
-" OLD CONFIGS {{{
-
-"""""""""""""""""""""""""""""""""""""""""""""""
-
-" TMUX MANAGEMENT
-
-" Coding
-"Plug 'igormorgado/Conque-GDB'
+" Code plugins {{{2
 "
-"
-
-"" Vim Enhancement
-"Plug 'tpope/vim-eunuch'
-"Plug 'tpope/vim-flagship'
-"Plug 'tpope/vim-surround'
-"
-"
-"" C development
-"Plug 'igankevich/mesonic'
-"
-"" Python Dev
-"" Need to learn more about these plugins
-"Plug 'davidhalter/jedi-vim'
-""Plug 'tmhedberg/SimpylFold'
-"Plug 'nvie/vim-flake8'
-"
-"" Latex dev
-"Plug 'lervag/vimtex'
-"
-"" Latex SpellCheck
-"Plug 'inkarkat/vim-ingo-library'
-"Plug 'inkarkat/vim-SpellCheck'
-
-"" split window vertically
-"nnoremap <leader>w <C-w>v<C-w>l
-"" Add files to buffers
-"nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%p:h'))<cr>/*<C-d>
-"" Find a file
-"nnoremap <leader>f :find *
-"" Close all buffers except this one
-"command! BufOnly silent! execute "%bd|e#|bd#"
-"
-"" Setup TMUX Navigator
-"let g:tmux_navigator_save_on_switch = 2
-"let g:tmux_navigator_disable_when_zoomed = 1
-"let g:tmux_navigator_no_mappings = 1
-"" Standard <C-\> conflicts with vim-CScope"
-"" These keys are not working inside CCTree split
-"nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-"nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-"nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-"nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
-"nnoremap <silent> <C-g> :TmuxNavigatePrevious<cr>
-"inoremap <silent> <C-h> <ESC>:TmuxNavigateLeft<cr>
-"inoremap <silent> <C-j> <ESC>:TmuxNavigateDown<cr>
-"inoremap <silent> <C-k> <ESC>:TmuxNavigateUp<cr>
-"inoremap <silent> <C-l> <ESC>:TmuxNavigateRight<cr>
-"inoremap <silent> <C-g> <ESC>:TmuxNavigatePrevious<cr>
-"tnoremap <silent> <C-h> <C-W> h
-"tnoremap <silent> <C-j> <C-W> j
-"tnoremap <silent> <C-k> <C-W> k
-"tnoremap <silent> <C-l> <C-W> l
-"tnoremap <silent> <C-g> <C-W> <C-W>
-"
-"
-"" romainl/vim-qf
-"" Inside QF window
-""    s - open entry in a new horizontal window
-""    v - open entry in a new vertical window
-""    t - open entry in a new tab
-""    o - open entry and come back
-""    O - open entry and close the location/quickfix window
-""    p - open entry in a preview window
-Plug 'romainl/vim-qf'
-"" nmap C <Plug>qf_qf_switch
-"" nmap <leader>c <Plug>qf_qf_stay_toggle
-"let g:qf_mapping_ack_style = 1
-let g:qf_statusline = {}
-let g:qf_statusline.before = '%<\ '
-let g:qf_statusline.after = '\ %f%=%l\/%-6L\ \ \ \ \ '
-"
-"
-"
-"
+" C {{{3
+"" Tagbar
 "" CCTree and Cscope
 "" let g:CCTreeKeyHilightTree = '<C-t>'
 "" let g:CCTreeCscopeDb = "cscope.out"
@@ -599,13 +517,40 @@ let g:qf_statusline.after = '\ %f%=%l\/%-6L\ \ \ \ \ '
 "" " 1 compact 2: normal 3: wide
 "" let g:CCTreeDisplayMode = 2
 "" let g:CCTreeHilightCallTree = 1
+" Tags support 
+" Gutentags makes update of tags database automatic while plus also uses cscope
+" to get better insight
+"Plug 'ludovicchabant/vim-gutentags'
+"" Enable ctags and gtags
+"let g:gutentags_modules = ['ctags', 'gtags_cscope']
+"" Exclude some files
+"" let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
+"" Set cache dir to a hidden location
+"let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
+"" Identify common build files. Remember to correctly configure each builder in
+"" each filetype (or make a global one ?)
+"let g:gutentags_project_root=[ 'meson.build', 'Makefile', 'setup.py', 'Makefile.am', 'CMake', '.root' ]
+"" Gutentags_plus need this sometimes
+"let g:gutentags_define_advanced_commands = 1
 "
-"
-"" Tagbar
-"
-"
-"
-"
+"Plug 'skywind3000/gutentags_plus'
+" let g:gutentags_plus_switch = 1
+
+" Friendly lateral bar to show code objects mapped to <F3>
+"Plug 'majutsushi/tagbar'
+"let g:tagbar_left = 1
+"let g:tagbar_width = 30
+"let g:tagbar_autopreview = 1
+
+
+" Build and debug 
+" Valgrind binaryname
+" TODO: Find a way to integrate with meson and makefile
+"Plug 'igormorgado/valgrind.vim'
+" }}}
+
+" Meson {{{
+"Plug 'igankevich/mesonic'
 "    " If there's a `meson.build` file, use meson for linting.
 "    autocmd FileType c call ConsiderMesonForLinting()
 "    function ConsiderMesonForLinting()
@@ -613,17 +558,12 @@ let g:qf_statusline.after = '\ %f%=%l\/%-6L\ \ \ \ \ '
 "            let g:syntastic_c_checkers = ['meson']
 "        endif
 "    endfunction
-"
-"
-""
-"
-"" Abbreviations
-"" =====================================================================
-"iabbrev migor morgado.igor@gmail.com
-"
-"" Enable Digraphs with C-D
-"inoremap <C-D> <C-K>
-"
+" }}}
+
+" Python {{{
+"Plug 'davidhalter/jedi-vim'
+""Plug 'tmhedberg/SimpylFold'
+"Plug 'nvie/vim-flake8'
 "" let g:jedi#use_splits_not_buffers = "bottom"
 "" let g:jedi#use_tabs_not_buffers = 1
 "" let g:jedi#popup_on_dot = 0
@@ -646,3 +586,32 @@ let g:qf_statusline.after = '\ %f%=%l\/%-6L\ \ \ \ \ '
 "" let g:flake8_complexity_marker='CC'  " disable McCabe complexity warnings
 "" let g:flake8_naming_marker='NN'      " disable naming warnings
 " }}}
+
+" Latex  {{{
+"Plug 'inkarkat/vim-ingo-library'
+"Plug 'inkarkat/vim-SpellCheck'
+" }}}
+
+" XML {{{3
+"Plug 'othree/xml.vim'
+"Plug 'chrisbra/vim-xml-runtime'
+" }}}
+
+" }}}2
+
+" Other stuff {{{2
+" Add files to buffers
+"nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%p:h'))<cr>/*<C-d>
+"" Find a file
+"nnoremap <leader>f :find *
+"" Close all buffers except this one
+"command! BufOnly silent! execute "%bd|e#|bd#"
+"
+"" Abbreviation
+" Create abbrevs for typos
+"" =====================================================================
+"iabbrev migor morgado.igor@gmail.com
+" }}}2
+
+"}}}1
+

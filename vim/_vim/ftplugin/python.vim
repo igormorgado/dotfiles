@@ -1,55 +1,36 @@
+" File format
+setlocal fileformat=unix
+setlocal encoding=utf-8
+
+" Spacing
 setlocal tabstop=4
 setlocal shiftwidth=4
 setlocal softtabstop=4
 setlocal expandtab
 
-" File format
-setlocal fileformat=unix
-setlocal encoding=utf-8
-
-" Columns
+" Buffer limits
 setlocal nowrap
-setlocal textwidth=92
-setlocal colorcolumn=93
+setlocal nolinebreak
+setlocal textwidth=0
+setlocal colorcolumn=100
 
-let g:slime_dont_ask_default=0
-let g:slime_vimterminal_cmd="ipython3 --matplotlib"
+function! SlimeExecuteAndJump()
+    call slime#send(getline(".") . "\r")
+    call search('^\S', "Wz")
+endfunction
 
-nnoremap <F5> :w<CR>:IPythonCellRun<CR>
-inoremap <F5> <ESC>:w<CR>:IPythonCellRun<CR>
+if !empty(g:slime_target)
+    let g:slime_vimterminal_cmd = "ipython3 --matplotlib"
+    let g:slime_python_ipython = 1
+    " This makes loading toooo slow
+    "let g:slime_dispatch_ipython_pause = 1000
+    let g:slime_cell_delimiter = "#%%"
+    let g:slime_no_mappings = 1
+    nmap <Leader>gv <Plug>SlimeConfig
+    xmap <Leader>g <Plug>SlimeRegionSend
+    nmap <Leader>g <Plug>SlimeParagraphSend
 
-nnoremap <S-F5> :w<CR>:IPythonCellExecuteCellJump<CR>
-inoremap <S-F5> <ESC>:w<CR>:IPythonCellExecuteCellJump<CR>
-
-" map <Leader>s to start IPython
-nnoremap <Leader>ps :SlimeSend1 ipython --matplotlib<CR>
-
-nnoremap <Leader>pr :IPythonCellRun<CR>
-nnoremap <Leader>pR :IPythonCellRunTime<CR>
-nnoremap <Leader>pc :IPythonCellExecuteCell<CR>
-nnoremap <Leader>pC :IPythonCellExecuteCellJump<CR>
-nnoremap <Leader>pl :IPythonCellClear<CR>
-nnoremap <Leader>px :IPythonCellClose<CR>
-nnoremap <Leader>p[ :IPythonCellPrevCell<CR>
-nnoremap <Leader>p] :IPythonCellNextCell<CR>
-nnoremap <Leader>pp :IPythonCellPrevCell<CR>
-nnoremap <Leader>pn :IPythonCellNextCell<CR>
-
-"" map [c and ]c to jump to the previous and next cell header
-"nnoremap [c :IPythonCellPrevCell<CR>
-"nnoremap ]c :IPythonCellNextCell<CR>
-
-" map <Leader>h to send the current line or current selection to IPython
-nmap <Leader>ph <Plug>SlimeLineSend
-xmap <Leader>ph <Plug>SlimeRegionSend
-
-" map <Leader>Q to restart ipython
-nnoremap <Leader>pQ :IPythonCellRestart<CR>
-
-" map <Leader>d to start debug mode
-nnoremap <Leader>pd :SlimeSend1 %debug<CR>
-
-" map <Leader>q to exit debug mode or IPython
-nnoremap <Leader>pq :SlimeSend1 exit<CR>
-
-iabbrev ipdb import ipdb;ipdb.set_trace()
+    nmap <silent> <Leader>gg :call SlimeExecuteAndJump()<cr>
+    "nmap <silent> <Leader>gg <plug>SlimeLineSend:call search('^\S')<CR>
+    nmap <silent> <Leader>gc <Plug>SlimeSendCell:call search("^" . g:slime_cell_delimiter, "W")<cr>
+endif
