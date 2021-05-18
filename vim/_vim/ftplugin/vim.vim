@@ -1,15 +1,20 @@
-" Tab configuration
+" File format
+setlocal fileformat=unix
+setlocal encoding=utf-8
+
+" Spacing
 setlocal tabstop=4
 setlocal softtabstop=4
 setlocal shiftwidth=4
-
-" Wrapping
-set nowrap
-
-" Ident
-setlocal autoindent
-setlocal smartindent
 setlocal expandtab
+
+" Buffer limits
+setlocal nowrap
+setlocal nolinebreak
+setlocal textwidth=0
+setlocal colorcolumn=80
+
+" Folding
 setlocal foldmethod=marker
 
 

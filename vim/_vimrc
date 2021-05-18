@@ -1,294 +1,130 @@
 " VIM CONFIGURATION FILE
 
-" Every vimrc file should set vim to nocompatible mode {{{1
+" Initial settings {{{1
+if v:version < 600 | finish | endif
+
+" DEBUG (when necessary) 
+"set verbose=4
+"set verbosefile=~/tmp/vim_debug.log
+
+if $VIM_BARE
+    set noloadplugins
+    finish
+endif
+
+" Every vimrc file should set vim to nocompatible mode 
 " Let's move to 80s. The future is now!
 set nocompatible
-" }}}1
 
-" DEBUG (when necessary) {{{1
-"set verbose=4
-"set verbosefile=~/tmp/vimload
-" }}}1
+" Toggle paste status
+set pastetoggle=<F2>
 
-" Vim truecolor {{{1
-" Reference: https://gist.github.com/XVilka/8346728
-" Think about: Do we REALLY need true color in vim?
-" PRO: Using true color removes the need to change term palletes
-" CON: Not every application supports it (linux tty)
-" PRO: More colors
-" CON: Useless colors
-if $COLORTERM ==? 'truecolor' || $COLORTERM ==? '24bit' || has("gui")
-	set termguicolors
-	let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
-	let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
-endif
-" }}}
+" Disable netrw
+let g:loaded_netrw       = 1
+let g:loaded_netrwPlugin = 1
+
+" Filetype handling
+" Enables filetype handling
+filetype on
+" Loads the filetype indentation at $VIMRUNTIME/indent
+filetype indent on
+" Loads the file im $VIMRUNTIME/ftplugin/filetype.vim
+filetype plugin on
+" }}}1
 
 " Plug-in load and settings {{{1
 " To install plugins call
 " :PlugInstall
 call plug#begin('~/.vim/plugged')
+    Plug 'airblade/vim-gitgutter'
+    Plug 'christoomey/vim-tmux-navigator'
+    Plug 'igormorgado/vim-hints'
+    Plug 'jpalardy/vim-slime'
+    Plug 'justinmk/vim-dirvish'
+    Plug 'knubie/vim-kitty-navigator'
+    Plug 'kristijanhusak/vim-dirvish-git'
+    Plug 'kshenoy/vim-signature'
+    Plug 'morhetz/gruvbox'
+    " Needs golang
+    Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
+    Plug 'tpope/vim-eunuch'
+    Plug 'tpope/vim-fugitive'
+    Plug 'tpope/vim-markdown'
+    Plug 'tpope/vim-repeat'
+    Plug 'tpope/vim-unimpaired'
+    Plug 'ludovicchabant/vim-gutentags'
+    " Need cscope
+    Plug 'skywind3000/gutentags_plus'
+    " Need ccglue
+    Plug 'hari-rangarajan/CCTree'
+    Plug 'majutsushi/tagbar'
+    Plug 'igormorgado/valgrind.vim'
 
-" My vim hints {{{2
-Plug 'igormorgado/vim-hints'
-" }}}2
-
-" Gruvbox colorscheme {{{2
-" TODO: Need to handle colors in linux console correctly =(
-Plug 'morhetz/gruvbox'
-
-if $TERM ==# 'linux'
-    let g:gruvbox_termcolors=16
-else
-	" Possible values soft medium hard
-	let g:gruvbox_contrast_dark = 'medium'
-	let g:gruvbox_contrast_light = 'medium'
-endif
-" }}}2
-
-" Vim drawer {{{2
-" Disable netrw :'(
-let g:loaded_netrw       = 1
-let g:loaded_netrwPlugin = 1
-" https://github.com/justinmk/vim-dirvish
-Plug 'justinmk/vim-dirvish'
-Plug 'tpope/vim-eunuch'
-" ]f [f  next/prev file
-Plug 'kristijanhusak/vim-dirvish-git'
-" }}}2
-
-" Send to terminal! {{{2
-Plug 'jpalardy/vim-slime'
-let g:slime_target='vimterminal'
-let g:slime_vimterminal_config={"term_finish": "close"}
-" }}}2
-
-" Pair shortcuts {{{2
-" unimpaired
-" Files : ]a [a
-" Buffers:  ]b [b
-" Checklist: ]q [q
-" Moveline: ]e [e
-Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-repeat'
-" }}}2
-
-
-" Vim Sign column {{{2
-" m,    place next mark
-" ]` [`  Next/Prev mark
-" `] `[  Next/Prev mark alphabetically
-Plug 'kshenoy/vim-signature'
-" Always display the Sign Column.
-set signcolumn=yes
-" }}}2
-
-" Window multiplexer navigation {{{2
-
-" Kitty navigation {{{3
-" For system configuration check https://github.com/knubie/vim-kitty-navigator
-Plug 'knubie/vim-kitty-navigator'
-if $TERM !~? "kitty"
-    let g:kitty_navigator_no_mappings = 1
-endif
-" }}}3
-
-" Tmux navigation {{{3
-" Need additinal settings https://github.com/christoomey/vim-tmux-navigator
-Plug 'christoomey/vim-tmux-navigator'
-if empty($TMUX)
-	let g:tmux_navigator_no_mappings = 1
-else
-	let g:tmux_navigator_save_on_switch = 1
-	let g:tmux_navigator_disable_when_zoomed = 1
-endif
-" }}}3
-
-" }}}2
-
-" Development general {{{2
-
-" Markdown editin and vieweing {{{3
-Plug 'tpope/vim-markdown'
-let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
-" }}}3
-
-" Vim Color Codes Highlight {{{3
-" Needs golang
-Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
-if &termguicolors
-	let g:Hexokinase_hilighters = ['foregroundfull']
-endif
-" }}}3
-
-" GIT management {{{3
-Plug 'tpope/vim-fugitive'
-" }}}3
-
-" GitGutter shows marks on VimGutter regarding status {{{3
-" GitGutterSignsToggle
-" GitGutterLineHighlightsToggle
-" GitGutterQuickFix
-" <Leader>hs stage hunk
-" <Leader>hu undo stage
-" {RANGE}GitGutterStageHunk
-" more @ https://github.com/airblade/vim-gitgutter
-Plug 'airblade/vim-gitgutter'
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
-" }}}3
-
-" }}}2
-
-" Development Python {{{2
-" }}}2
-
-" Development Bash {{{2
-" }}}2
-
-" Development C {{{2
-" }}}2
-
+    " Python
+    "Plug 'davidhalter/jedi-vim'
+    "Plug 'tmhedberg/SimpylFold'
+    "Plug 'nvie/vim-flake8'
+    " Latex
+    "Plug 'inkarkat/vim-ingo-library'
+    "Plug 'inkarkat/vim-SpellCheck'
+    " Meson
+    "Plug 'igankevich/mesonic'
+    " XML
+    "Plug 'othree/xml.vim'
+    "Plug 'chrisbra/vim-xml-runtime'
 call plug#end()
+
 " }}}1
 
-" Color scheme configuration {{{1
-" Read ENVVARS BACKGROUND preference
-let BACKGROUND=$BACKGROUND
-if BACKGROUND=='light'
-    set background=light
-else
-    set background=dark
-endif
-
-" Use Gruvbox colorscheme
-colorscheme gruvbox
-" Enable syntax
-syntax on
+" Vim special files {{{1
+set backup
+set backupdir=~/.tmp/vim,~/tmp/vim,/tmp/$USER/vim
+set swapfile
+set directory=~/.tmp/vim,~/tmp/vim,/tmp/$USER/vim
+set undofile
+set undodir=~/.tmp/vim,~/tmp/vim,/tmp/$USER/vim
+set writebackup
+set viminfo^=%
+set tags=.tags;tags;$HOME
 " }}}1
 
-" Gvim config {{{1
-if has("gui_running")
-	" Remove toolbar and menubar
-	set guioptions-=Tm 
-	set lines=32 columns=110 linespace=0
-if has("gui_gtk3")
-    set guifont=Fira\ Code\ weight\=453\ 12
-endif
-endif
-" }}}1
-
-" 
-" TODO: Reorganize Default settings, Filetype handling, Special fillers and
-" buffer manipulation
-" 
-" Sane default buffer settings {{{1
-
-" As a text editor VIM should handle by default every kind of text document
-" availabe with the greatest confort possible therefore some standard sane
-" configurations should be set by default
-"
-" UTF-8 is the new ASCII
+" Other many settings (TO ORGANIZE) {{{1
 set encoding=utf-8
-" FIleformat is UNIX
 set fileformat=unix
-
-" TABS are tabs, and should be elegantly 8 spaced (this isn't HTML)
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set signcolumn=yes
+ 
+set tabstop=8
+set shiftwidth=8
+set softtabstop=8
 set noexpandtab
 set shiftround
 
-" A standard terminal has 80 column wide (you can go bigger, but stick with
-" it. But it should not wrap if screen is smaller, otherwise things get weird
 set nowrap
+ 
 " Do not break words when wrapping (if wrapping)
 set linebreak
+ 
 " Make wrap breaks more readeable
 set showbreak=↪\
-set textwidth=79
-set colorcolumn=79
-" Try to keep part of file visible
+set textwidth=80
+set colorcolumn=80
+ 
 set scrolloff=8
-" }}}1
-
-" Filetype handling {{{1
-
-" Enables filetype handling
-filetype on
-" Loads the filetype indentation at $VIMRUNTIME/indent
-" |C-indenting|
-filetype indent on
-" Loads the file im $VIMRUNTIME/ftplugin/filetype.vim
-filetype plugin on
-" This changes the keybinding started to space bar, since is simpler and bigger
-let mapleader=' '
-let maplocalleader='\'
-" }}}1
-
-" Special files handling {{{1
-"
-" This keep all ugly vim files in a separated lhh0
-set backup
-set backupdir=~/.tmp/vim,~/tmp/vim
-set swapfile
-set directory=~/.tmp/vim,~/tmp/vim
-set undofile
-set undodir=~/.tmp/vim,~/tmp/vim
-set writebackup
-set viminfo^=%
-" Tags
-set tags=.tags;tags;${HOME}
-set tags+=~/.config/nvim/systags
-" }}}1
-
-" Buffer manipulation {{{1
-
-" Read modelines if they are set
+set sidescroll=8
+ 
 set modeline
-" Display a marker for cursor position in buffer
 set cursorline
 set cursorcolumn
-" Try not interpret any special characters
 set conceallevel=0
-" Set special characters
 set listchars=tab:→\ ,eol:↲,nbsp:␣,trail:•,extends:⟩,precedes:⟨
-" Toogle special characters on key
-nnoremap <leader>l :set list!<cr>
-" Undo is never enough
+
 set undolevels=1000
-" Enable move inside invisible chars for manipulation
 set virtualedit=block
-" Searching
 set smartcase
 set hlsearch
 set incsearch
 set ignorecase
-set autowriteall
-" Disable mouse. THIS. IS. VIM!
-set mouse=a
-" Map standard commands to system clipboard (LAME!)
-"inoremap <C-v> <ESC>"+pa
-"vnoremap <C-c> "+y
-"vnoremap <C-x> "+d
-
-" Window resize shortcut
-nnoremap <silent> <Leader>= <C-w>=
-nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
-nnoremap <silent> <Leader>> :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
-nnoremap <silent> <Leader>< :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
-
-" Find current word
-nnoremap gr :grep <cword> *<CR>
-nnoremap Gr :grep <cword> %:p:h/*<CR>
-nnoremap gR :grep '\b<cword>\b' *<CR>
-nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
-" }}}1
-
-" Vim window setting {{{1
-" Enable wild menu
+set mouse=
 set wildmenu
 set wildmode=longest:full,full
 set wildignore+=*.bak
@@ -296,11 +132,10 @@ set wildignore+=*.o,*~,*.pyc,*.obj
 set wildignore+=tags,cscope.out,.tags,cctree.out
 set wildignore+=*.exe,a.out
 set wildignorecase
-" Set path locations while finding
-set path=.,/usr/include,/usr/local/include,src/include,include,../include,../lib/,**,,
-" New splits are below and right (instead defaul top left)
+set path=.,,
 set splitbelow
 set splitright
+set showtabline=1
 
 " Buffer numbering
 set numberwidth=5
@@ -308,17 +143,13 @@ set number
 set relativenumber
 augroup numbering
     autocmd!
-    autocmd InsertLeave * :set relativenumber
-    autocmd InsertEnter * :set norelativenumber
+    autocmd InsertLeave * :setlocal relativenumber
+    autocmd InsertEnter * :setlocal norelativenumber
 augroup END
 
-" Only display tab lines if exists at least two
-set showtabline=1
-" }}}
-
+" }}}1
+ 
 " Status Line configuration {{{1
-
-" Two lines status bar
 set laststatus=2
 if has("statusline")
     set statusline =              " clear
@@ -337,151 +168,12 @@ endif
     set statusline+=%=            " left/right separation point
     set statusline+=\ \|\ %{strlen(&ft)?&ft:'none'}      " filetype
     set statusline+=\ \|\ %{&ff}  " fileformat
-    " Display ascii value of actual character under cursor
-    " set statusline+=\ \|\ [%03b   " decimal byte
-    " set statusline+=\ x%02B]      " hex byte ' \x62'
     set statusline+=\ (%04v,%04l)\  " (x,y)
-    " set statusline+=\ \|\ %P    " percent of file
-    " set statusline+=\ of
-    " set statusline+=\ %L          " line/lines
-    " set statusline+=\ lines
 endif
-" }}}
+" }}}1
 
-" Vim terminal {{{1
-" Paste buffer with shift insert
-" :he terminal-typing
-" :he Terminal-mode
-" C-\ C-M  (enter terminal-normal)
-" i  (enter terminal-insert mode)
-"
- if &termguicolors
-    let g:terminal_ansi_colors = [
-        \ "#282828",
-		\ "#cc241d",
-		\ "#98971a",
-		\ "#d79921",
-		\ "#458588",
-		\ "#b16286",
-		\ "#689d6a",
-		\ "#a89984",
-		\ "#928374",
-		\ "#fb4934",
-		\ "#b8bb26",
-		\ "#fabd2f",
-		\ "#83a598",
-		\ "#d3869b",
-		\ "#8ec07c",
-		\ "#ebdbb2"]
-endif
-
-" TODO: These keys should call correctly tmux or kitty window mappings
-tnoremap <S-Insert> <C-w>"+
-if $TERM =~? "kitty"
-    tnoremap <silent> <C-h> <C-w>:KittyNavigateLeft<cr>
-    tnoremap <silent> <C-j> <C-w>:KittyNavigateDown<cr>
-    tnoremap <silent> <C-k> <C-w>:KittyNavigateUp<cr>
-    tnoremap <silent> <C-l> <C-w>:KittyNavigateRight<cr>
-elseif !empty($TMUX)
-    tnoremap <silent> <C-h> <C-w>:TmuxNavigateLeft<cr>
-    tnoremap <silent> <C-j> <C-w>:TmuxNavigateDown<cr>
-    tnoremap <silent> <C-k> <C-w>:TmuxNavigateUp<cr>
-    tnoremap <silent> <C-l> <C-w>:TmuxNavigateRight<cr>
-endif
-" }}}
-
-" Function keys {{{1
-" ======================================================================
-" Standard functions keys in APPS
-" <F1> Help
-" <F2>
-" <F3>
-" <F4>
-" <F5> Build/Execute/Refresh
-" <F6>
-" <F7>
-" <F8>
-" <F9> Tagbar
-" <F10>
-" <F11> DO NOT REMAP THIS
-" <F12>
-
-" Fast Buffers access
-inoremap <F2> <ESC>:buffers<CR>:buffer<Space>
-nnoremap <F2>      :buffers<CR>:buffer<Space>
-
-"" Find files
-"inoremap <F3>
-"nnoremap <F3>
-"vnoremap <F3>
-"
-"inoremap <F4> <ESC>:Texec<CR>j<Insert>
-"nnoremap <F4>      :Texec<CR>j
-"vnoremap <F4>      :Texec<CR>j
-
-" inoremap <F5> <ESC>:make!<cr>
-" nnoremap <F5> :make!<cr>
-" vnoremap <F5> :make!<cr>
-"nnoremap <S-F5> :Valgrind build/%<cr>
-
-"set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ --exclude-dir\ '*venv*'\ -Inr
-"inoremap <F6> <ESC>:grep  *<left><left>
-"nnoremap <F6>      :grep  *<left><left>
-"nnoremap gr :grep <cword> *<CR>
-"nnoremap Gr :grep <cword> %:p:h/*<CR>
-"
-"" Check if spellcheck
-"inoremap <F7> <ESC>:SpellCheck<CR>
-"nnoremap <F7> :SpellCheck<CR>
-"
-"inoremap <F8> <ESC>
-"nnoremap <F8>
-"vnoremap <F8>
-"
-"" Check if tagbar
-" inoremap <F9> <ESC>:TagbarToggle<CR>
-" nnoremap <F9> :TagbarToggle<CR>
-"
-"inoremap <F10> <ESC>
-"nnoremap <F10>
-"vnoremap <F10>
-"
-"inoremap <F11> <ESC>
-"nnoremap <F11>
-"vnoremap <F11>
-"
-"inoremap <F12> <ESC>
-"nnoremap <F12>
-"vnoremap <F12>
-"}}}
-
-" Lazyness and confort keys {{{1
-
-" Quit on triple ESC (RAGE MODE)
-nnoremap <ESC><ESC><ESC> :q<CR>
-" Clean search
-nnoremap <leader>/ :nohlsearch<cr>
-" Open/close fold
-nnoremap <leader><space> za
-"" Edit vim rc
-"nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-" Changed in neovim since the $MYVIMRC is mapped to
-" ~/.config/neovim/init.vim
-nnoremap <leader>ev :vsplit ~/.vimrc<cr>
-"" Edit filetype vim config file
-nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
-" W use capital w to write too..
-command! W :w
-" sudo write this
-cnoremap W! w !sudo tee % >/dev/null
-cnoremap w!! w !sudo tee % >/dev/null
-" CLose all bufffers
-"nnoremap <leader>ca :w<bar>%bd<bar>e#<bar>bd#<CR>
-" }}}
-
-" Misc settings often invisible {{{
+" Misc settings often invisible {{{1
 if has("autocmd")
-
     " correctly identify some files
     augroup filetypes
         autocmd!
@@ -499,119 +191,323 @@ if has("autocmd")
         \ endif
       augroup END
 endif
-" }}}
+" }}}1
 
-" OLD CONFIGS {{{1
+" Color scheme configuration {{{1
 
-" Code plugins {{{2
+" Vim truecolor 
+" Reference: https://gist.github.com/XVilka/8346728
+" Think about: Do we REALLY need true color in vim?
+" PRO: Using true color removes the need to change term palletes
+" CON: Not every application supports it (linux tty)
+" PRO: More colors
+" CON: Useless colors
+
+if $TERM =~? 'linux'
+    set t_Co=16
+elseif ($COLORTERM ==? 'truecolor' || $COLORTERM ==? '24bit' || has("gui"))
+    set termguicolors
+    let &t_8f = "\<Esc>[38:2:%lu:%lu:%lum"
+    let &t_8b = "\<Esc>[48:2:%lu:%lu:%lum"
+endif
+
+" Read ENVVARS BACKGROUND preference
+let BACKGROUND = $BACKGROUND
+if BACKGROUND == 'light'
+    set background=light
+else
+    set background=dark
+endif
+
+" Use Gruvbox colorscheme
+colorscheme gruvbox
+" Enable syntax
+syntax on
+
+if has("gui_running")
+    " Remove toolbar and menubar
+    set guioptions-=Tm 
+    set lines=32 columns=110 linespace=0
+    if has("gui_gtk3")
+        set guifont=Fira\ Code\ weight\=453\ 12
+    endif
+endif
+ 
+if $TERM ==# 'linux'
+    let g:gruvbox_termcolors=16
+else
+    " Possible values soft medium hard
+    let g:gruvbox_contrast_dark = 'medium'
+    let g:gruvbox_contrast_light = 'medium'
+endif
+ 
+if &termguicolors
+    let g:Hexokinase_hilighters = ['foregroundfull']
+    let g:terminal_ansi_colors = [
+                \ "#282828",
+                \ "#cc241d",
+                \ "#98971a",
+                \ "#d79921",
+                \ "#458588",
+                \ "#b16286",
+                \ "#689d6a",
+                \ "#a89984",
+                \ "#928374",
+                \ "#fb4934",
+                \ "#b8bb26",
+                \ "#fabd2f",
+                \ "#83a598",
+                \ "#d3869b",
+                \ "#8ec07c",
+                \ "#ebdbb2"]
+endif
+
+" }}}1
+
+" Plugin settings {{{1
+
+" Slime configuration {{{2
+let g:slime_target='vimterminal'
+let g:slime_vimterminal_config={"term_finish": "close"}
+" }}}2
+
+" Kitty navigation {{{2
+" For system configuration check https://github.com/knubie/vim-kitty-navigator
+if $TERM !~? "kitty"
+    let g:kitty_navigator_no_mappings = 1
+endif
+" }}}2
+
+" Tmux navigation {{{2
+" Need additinal settings https://github.com/christoomey/vim-tmux-navigator
+if empty($TMUX)
+    let g:tmux_navigator_no_mappings = 1
+else
+    let g:tmux_navigator_save_on_switch = 1
+    let g:tmux_navigator_disable_when_zoomed = 1
+endif
+" }}}2
+ 
+" Markdown editing and vieweing {{{2
+let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
+" }}}2
+
+" C Tags management {{{2
+let g:gutentags_modules = ['ctags', 'gtags_cscope']
+let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
+let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
+let g:gutentags_project_root=[ 'meson.build', 'Makefile', 'setup.py', 'Makefile.am', 'CMake', '.root' ]
+let g:gutentags_define_advanced_commands = 1
+let g:gutentags_plus_switch = 1
+let g:CCTreeKeyHilightTree = '<C-t>'
+let g:CCTreeCscopeDb = "cscope.out"
+let g:CCTreeMinVisibleDepth = 3
+let g:CCTreeOrientation = "topleft"
+let g:CCTreeWindowVertical = 1
+let g:CCTreeDisplayMode = 2
+let g:CCTreeHilightCallTree = 1
+let g:tagbar_left = 1
+let g:tagbar_width = 30
+let g:tagbar_autopreview = 1
+" }}}2
+
+" }}}1
+
+" Mappings {{{1
+
+" GitGutter
+" GitGutter shows marks on VimGutter regarding status
+" GitGutterSignsToggle
+" GitGutterLineHighlightsToggle
+" GitGutterQuickFix
+" <Leader>hs stage hunk
+" <Leader>hu undo stage
+" {RANGE}GitGutterStageHunk
+" more @ https://github.com/airblade/vim-gitgutter
+
+" Vim terminal 
+" C-\ C-M  (enter terminal-normal)
+" i  (enter terminal-insert mode)
+
+" vim-unimpaired
+" Files		]a [a
+" Buffers	]b [b
+" Checklist	]q [q
+" Moveline	]e [e
+
+" Vim Sign column 
+" m,		place next mark
+" ]` [`		Next/Prev mark
+" `] `[		Next/Prev mark alphabetically
+
+" Gutentags
+" <leader>cs 	Find symbol (reference) under cursor
+" <leader>cg 	Find symbol definition under cursor
+" <leader>cd 	Functions called by this function
+" <leader>cc 	Functions calling this function
+" <leader>ct 	Find text string under cursor
+" <leader>ce 	Find egrep pattern under cursor
+" <leader>cf 	Find file name under cursor
+" <leader>ci 	Find files #including the file name under cursor
+" <leader>ca 	Find places where current symbol is assigned
+" <leader>cz 	Find current word in ctags database
+ 
+let mapleader=' '
+let maplocalleader='\'
+
+" Many mappings {{{2
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+
+" Close all buffers except this one
+command! BufOnly silent! execute "%bd|e#|bd#"
+
+nnoremap <ESC><ESC><ESC> :q<CR>
+nnoremap <leader>/ :nohlsearch<cr>
+nnoremap <leader><space> za
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
+command! W :w
+cnoremap W! w !sudo tee % >/dev/null
+cnoremap w!! w !sudo tee % >/dev/null
+nnoremap <leader>l :setlocal list!<cr>
+inoremap <C-v> <ESC>"+pa
+vnoremap <C-c> "+y
+vnoremap <C-x> "+d
+ 
+" Find current word
+nnoremap gr :grep <cword> *<CR>
+nnoremap Gr :grep <cword> %:p:h/*<CR>
+nnoremap gR :grep '\b<cword>\b' *<CR>
+nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
+
+" Delete all other buffers
+nnoremap <leader>ca :w<bar>%bd<bar>e#<bar>bd#<CR>
+" }}}2
+
+" Window {{{2
+nnoremap <silent> <Leader>= <C-w>=
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap <silent> <Leader>> :exe "vertical resize " . (winwidth(0) * 3/2)<CR>
+nnoremap <silent> <Leader>< :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
+" }}}2
+
+" Vim Terminal + Kitty/Tmux Navigator {{{2
+tnoremap <S-Insert> <C-w>"+
+if $TERM =~? "kitty"
+    tnoremap <silent> <C-h> <C-w>:KittyNavigateLeft<cr>
+    tnoremap <silent> <C-j> <C-w>:KittyNavigateDown<cr>
+    tnoremap <silent> <C-k> <C-w>:KittyNavigateUp<cr>
+    tnoremap <silent> <C-l> <C-w>:KittyNavigateRight<cr>
+elseif !empty($TMUX)
+    tnoremap <silent> <C-h> <C-w>:TmuxNavigateLeft<cr>
+    tnoremap <silent> <C-j> <C-w>:TmuxNavigateDown<cr>
+    tnoremap <silent> <C-k> <C-w>:TmuxNavigateUp<cr>
+    tnoremap <silent> <C-l> <C-w>:TmuxNavigateRight<cr>
+endif
+" }}}2
+
+" " Function keys {{{2
+" " ======================================================================
+" " Standard functions keys in APPS
+" " <F1> Help
+" " <F2> Toggle Pastee
+" " <F3> Show Buffers
+" " <F4>
+" " <F5> Build/Execute/Refresh
+" " <F6>
+" " <F7>
+" " <F8>
+" " <F9> Tagbar
+" " <F10>
+" " <F11> DO NOT REMAP THIS: Why?
+" " <F12>
 "
-" C {{{3
-"" Tagbar
-"" CCTree and Cscope
-"" let g:CCTreeKeyHilightTree = '<C-t>'
-"" let g:CCTreeCscopeDb = "cscope.out"
-"" let g:CCTreeMinVisibleDepth = 3
-"" " Can be top/bottom right/left
-"" let g:CCTreeOrientation = "topleft"
-"" let g:CCTreeWindowVertical = 1
-"" " 1 compact 2: normal 3: wide
-"" let g:CCTreeDisplayMode = 2
-"" let g:CCTreeHilightCallTree = 1
-" Tags support 
-" Gutentags makes update of tags database automatic while plus also uses cscope
-" to get better insight
-"Plug 'ludovicchabant/vim-gutentags'
-"" Enable ctags and gtags
-"let g:gutentags_modules = ['ctags', 'gtags_cscope']
-"" Exclude some files
-"" let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
-"" Set cache dir to a hidden location
-"let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
-"" Identify common build files. Remember to correctly configure each builder in
-"" each filetype (or make a global one ?)
-"let g:gutentags_project_root=[ 'meson.build', 'Makefile', 'setup.py', 'Makefile.am', 'CMake', '.root' ]
-"" Gutentags_plus need this sometimes
-"let g:gutentags_define_advanced_commands = 1
+" Fast Buffers access
+inoremap <F3> <ESC>:buffers<CR>:buffer<Space>
+nnoremap <F3>      :buffers<CR>:buffer<Space>
 "
-"Plug 'skywind3000/gutentags_plus'
-" let g:gutentags_plus_switch = 1
+" " Find files
+" inoremap <F3>
+" nnoremap <F3>
+" vnoremap <F3>
+"
+" inoremap <F4> 
+" nnoremap <F4>
+" vnoremap <F4>
+"
+" inoremap <F5> <ESC>:make!<cr>
+" nnoremap <F5> :make!<cr>
+" vnoremap <F5> :make!<cr>
+" nnoremap <S-F5> :Valgrind build/%<cr>
+"
+" set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ --exclude-dir\ '*venv*'\ -Inr
+" inoremap <F6> <ESC>:grep  *<left><left>
+" nnoremap <F6>      :grep  *<left><left>
+" nnoremap gr :grep <cword> *<CR>
+" nnoremap Gr :grep <cword> %:p:h/*<CR>
+"
+" " Check if spellcheck
+" inoremap <F7> <ESC>:SpellCheck<CR>
+" nnoremap <F7> :SpellCheck<CR>
+"
+" inoremap <F8> <ESC>
+" nnoremap <F8>
+" vnoremap <F8>
+"
+" " Check if tagbar
+inoremap <F9> <ESC>:TagbarToggle<CR>
+nnoremap <F9> :TagbarToggle<CR>
+"
+"inoremap <F10> <ESC>
+"nnoremap <F10>
+"vnoremap <F10>
+"
+"inoremap <F11> <ESC>
+"nnoremap <F11>
+"vnoremap <F11>
+"
+"inoremap <F12> <ESC>
+"nnoremap <F12>
+"vnoremap <F12>
+" }}}2
 
-" Friendly lateral bar to show code objects mapped to <F3>
-"Plug 'majutsushi/tagbar'
-"let g:tagbar_left = 1
-"let g:tagbar_width = 30
-"let g:tagbar_autopreview = 1
+" }}}1
 
+" " OLD CONFIGS {{{1
 
-" Build and debug 
-" Valgrind binaryname
-" TODO: Find a way to integrate with meson and makefile
-"Plug 'igormorgado/valgrind.vim'
-" }}}
-
-" Meson {{{
-"Plug 'igankevich/mesonic'
-"    " If there's a `meson.build` file, use meson for linting.
+" " Meson {{{3
+" " If there's a `meson.build` file, use meson for linting.
 "    autocmd FileType c call ConsiderMesonForLinting()
 "    function ConsiderMesonForLinting()
 "        if filereadable('meson.build')
 "            let g:syntastic_c_checkers = ['meson']
 "        endif
 "    endfunction
-" }}}
+" " }}}3
 
-" Python {{{
-"Plug 'davidhalter/jedi-vim'
-""Plug 'tmhedberg/SimpylFold'
-"Plug 'nvie/vim-flake8'
-"" let g:jedi#use_splits_not_buffers = "bottom"
-"" let g:jedi#use_tabs_not_buffers = 1
-"" let g:jedi#popup_on_dot = 0
-"" let g:jedi#popup_select_first = 0
-"" let g:jedi#show_call_signatures = "1"
-"
-"" let g:SimpylFold_fold_import = 1
-"" let g:SimpylFold_docstring_preview = 1
-"" let g:SimpylFold_fold_docstring = 0
-"
-"" augroup vflake8
-""     autocmd FileType python map <buffer> <F5> :call Flake8()<CR>
-"" "   autocmd BufWritePost *.py call Flake8()
-"" augroup END
-"" let g:flake8_show_in_gutter=1  " show
-"" let g:flake8_show_in_file=1  " show
-"" let g:flake8_error_marker='EE'     " set error marker to 'EE'
-"" let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
-"" let g:flake8_pyflake_marker='WP'     " disable PyFlakes warnings
-"" let g:flake8_complexity_marker='CC'  " disable McCabe complexity warnings
-"" let g:flake8_naming_marker='NN'      " disable naming warnings
-" }}}
-
-" Latex  {{{
-"Plug 'inkarkat/vim-ingo-library'
-"Plug 'inkarkat/vim-SpellCheck'
-" }}}
-
-" XML {{{3
-"Plug 'othree/xml.vim'
-"Plug 'chrisbra/vim-xml-runtime'
-" }}}
-
-" }}}2
-
-" Other stuff {{{2
-" Add files to buffers
-"nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%p:h'))<cr>/*<C-d>
-"" Find a file
-"nnoremap <leader>f :find *
-"" Close all buffers except this one
-"command! BufOnly silent! execute "%bd|e#|bd#"
-"
-"" Abbreviation
-" Create abbrevs for typos
-"" =====================================================================
-"iabbrev migor morgado.igor@gmail.com
-" }}}2
+" " Python {{{3
+" let g:jedi#use_splits_not_buffers = "bottom"
+" let g:jedi#use_tabs_not_buffers = 1
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#popup_select_first = 0
+" let g:jedi#show_call_signatures = "1"
+" let g:SimpylFold_fold_import = 1
+" let g:SimpylFold_docstring_preview = 1
+" let g:SimpylFold_fold_docstring = 0
+" augroup vflake8
+"     autocmd FileType python map <buffer> <F5> :call Flake8()<CR>
+"     autocmd BufWritePost *.py call Flake8()
+" augroup END
+" let g:flake8_show_in_gutter=1  " show
+" let g:flake8_show_in_file=1  " show
+" let g:flake8_error_marker='EE'     " set error marker to 'EE'
+" let g:flake8_warning_marker='WW'   " set warning marker to 'WW'
+" let g:flake8_pyflake_marker='WP'     " disable PyFlakes warnings
+" let g:flake8_complexity_marker='CC'  " disable McCabe complexity warnings
+" let g:flake8_naming_marker='NN'      " disable naming warnings
+" " }}}3
 
 "}}}1
 
