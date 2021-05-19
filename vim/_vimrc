@@ -1,4 +1,7 @@
 " VIM CONFIGURATION FILE
+" vim: set ft=vim
+"
+" TODO: Master vim grep
 
 " Initial settings {{{1
 if v:version < 600 | finish | endif
@@ -14,7 +17,9 @@ endif
 
 " Every vimrc file should set vim to nocompatible mode 
 " Let's move to 80s. The future is now!
-set nocompatible
+if has('vim_starting')
+    set nocompatible
+endif 
 
 " Toggle paste status
 set pastetoggle=<F2>
@@ -42,9 +47,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'jpalardy/vim-slime'
     Plug 'justinmk/vim-dirvish'
     Plug 'knubie/vim-kitty-navigator'
+    Plug 'mrossinek/vim-dirgutter'
     Plug 'kristijanhusak/vim-dirvish-git'
     Plug 'kshenoy/vim-signature'
     Plug 'morhetz/gruvbox'
+    Plug 'romainl/vim-qf'
     " Needs golang
     Plug 'RRethy/vim-hexokinase', { 'do': 'make hexokinase' }
     Plug 'tpope/vim-eunuch'
@@ -57,6 +64,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'skywind3000/gutentags_plus'
     " Need ccglue
     Plug 'hari-rangarajan/CCTree'
+
     Plug 'majutsushi/tagbar'
     Plug 'igormorgado/valgrind.vim'
 
@@ -219,18 +227,20 @@ else
     set background=dark
 endif
 
-" Use Gruvbox colorscheme
-colorscheme gruvbox
-" Enable syntax
-syntax on
 
-if has("gui_running")
+" Only set the interface when starting
+if has("gui_running") && has('vim_starting')
     " Remove toolbar and menubar
-    set guioptions-=Tm 
+    set guioptions-=T 
+    set guioptions-=m 
     set lines=32 columns=110 linespace=0
+    set mouse=a
+    set clipboard=unnamedplus
     if has("gui_gtk3")
         set guifont=Fira\ Code\ weight\=453\ 12
     endif
+    " Do note enable kitty/tmux motion
+    
 endif
  
 if $TERM ==# 'linux'
@@ -239,10 +249,15 @@ else
     " Possible values soft medium hard
     let g:gruvbox_contrast_dark = 'medium'
     let g:gruvbox_contrast_light = 'medium'
+    let g:gruvbox_italic=1
 endif
  
 if &termguicolors
-    let g:Hexokinase_hilighters = ['foregroundfull']
+    if exists('g:loaded_hexokinase')
+        let g:Hexokinase_hilighters = ['foregroundfull']
+    endif
+    " TODO:  Define soft / hard light / hard color modes in terminal.
+    " TODO:  Set colors using gruvbox internal stuff.
     let g:terminal_ansi_colors = [
                 \ "#282828",
                 \ "#cc241d",
@@ -261,31 +276,55 @@ if &termguicolors
                 \ "#8ec07c",
                 \ "#ebdbb2"]
 endif
+"
+" Use Gruvbox colorscheme
+colorscheme gruvbox
+" Enable syntax
+syntax on
 
 " }}}1
 
 " Plugin settings {{{1
 
 " Slime configuration {{{2
-let g:slime_target='vimterminal'
-let g:slime_vimterminal_config={"term_finish": "close"}
+if exists('loaded_slime')
+    let g:slime_target='vimterminal'
+    let g:slime_vimterminal_config={"term_finish": "close"}
+endif
 " }}}2
 
 " Kitty navigation {{{2
 " For system configuration check https://github.com/knubie/vim-kitty-navigator
-if $TERM !~? "kitty"
-    let g:kitty_navigator_no_mappings = 1
+if exists('g:loaded_kitty_navigator')
+    if $TERM !~? "kitty" || has('gui_running')
+        let g:kitty_navigator_no_mappings = 1
+    endif
 endif
 " }}}2
 
 " Tmux navigation {{{2
 " Need additinal settings https://github.com/christoomey/vim-tmux-navigator
-if empty($TMUX)
-    let g:tmux_navigator_no_mappings = 1
-else
-    let g:tmux_navigator_save_on_switch = 1
-    let g:tmux_navigator_disable_when_zoomed = 1
+
+if exists('g:loaded_tmux_navigator')
+    if empty($TMUX) || has('gui_running')
+        let g:tmux_navigator_no_mappings = 1
+    else
+        let g:tmux_navigator_save_on_switch = 1
+        let g:tmux_navigator_disable_when_zoomed = 1
+    endif
 endif
+" }}}2
+
+" Quickfix {{{2
+if exists('g:loaded_qf')
+    nmap <F4> <Plug><qf_qf_toggle>
+    nmap <buffer> <Left>  <Plug>(qf_older)
+    nmap <buffer> <Right> <Plug>(qf_newer)
+    nmap <buffer> { <Plug>(qf_previous_file)
+    nmap <buffer> } <Plug>(qf_next_file)
+    let g:qf_mapping_ack_style = 1
+endif
+
 " }}}2
  
 " Markdown editing and vieweing {{{2
@@ -293,22 +332,31 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
 " }}}2
 
 " C Tags management {{{2
-let g:gutentags_modules = ['ctags', 'gtags_cscope']
-let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
-let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
-let g:gutentags_project_root=[ 'meson.build', 'Makefile', 'setup.py', 'Makefile.am', 'CMake', '.root' ]
-let g:gutentags_define_advanced_commands = 1
-let g:gutentags_plus_switch = 1
-let g:CCTreeKeyHilightTree = '<C-t>'
-let g:CCTreeCscopeDb = "cscope.out"
-let g:CCTreeMinVisibleDepth = 3
-let g:CCTreeOrientation = "topleft"
-let g:CCTreeWindowVertical = 1
-let g:CCTreeDisplayMode = 2
-let g:CCTreeHilightCallTree = 1
-let g:tagbar_left = 1
-let g:tagbar_width = 30
-let g:tagbar_autopreview = 1
+
+if exists('g:loaded_gutentags')
+    let g:gutentags_modules = ['ctags', 'gtags_cscope']
+    let g:gutentags_ctags_exclude = ['*.css', '*.html', '*.js']
+    let g:gutentags_cache_dir='~/.tmp/vim/gutentags'
+    let g:gutentags_project_root=[ 'meson.build', 'Makefile', 'setup.py', 'Makefile.am', 'CMake', '.root' ]
+    let g:gutentags_define_advanced_commands = 1
+    let g:gutentags_plus_switch = 1
+endif
+
+if exists('g:loaded_cctree')
+    let g:CCTreeKeyHilightTree = '<C-t>'
+    let g:CCTreeCscopeDb = "cscope.out"
+    let g:CCTreeMinVisibleDepth = 3
+    let g:CCTreeOrientation = "topleft"
+    let g:CCTreeWindowVertical = 1
+    let g:CCTreeDisplayMode = 2
+    let g:CCTreeHilightCallTree = 1
+endif
+
+if exists('g:loaded_tagbar')
+    let g:tagbar_left = 1
+    let g:tagbar_width = 30
+    let g:tagbar_autopreview = 1
+endif
 " }}}2
 
 " }}}1
@@ -330,28 +378,29 @@ let g:tagbar_autopreview = 1
 " i  (enter terminal-insert mode)
 
 " vim-unimpaired
-" Files		]a [a
-" Buffers	]b [b
-" Checklist	]q [q
-" Moveline	]e [e
+" Files     ]a [a
+" Buffers   ]b [b
+" Checklist ]q [q
+" Moveline  ]e [e
 
 " Vim Sign column 
-" m,		place next mark
-" ]` [`		Next/Prev mark
-" `] `[		Next/Prev mark alphabetically
+" m,        place next mark
+" ]` [`     Next/Prev mark
+" `] `[     Next/Prev mark alphabetically
 
 " Gutentags
-" <leader>cs 	Find symbol (reference) under cursor
-" <leader>cg 	Find symbol definition under cursor
-" <leader>cd 	Functions called by this function
-" <leader>cc 	Functions calling this function
-" <leader>ct 	Find text string under cursor
-" <leader>ce 	Find egrep pattern under cursor
-" <leader>cf 	Find file name under cursor
-" <leader>ci 	Find files #including the file name under cursor
-" <leader>ca 	Find places where current symbol is assigned
-" <leader>cz 	Find current word in ctags database
+" <leader>cs    Find symbol (reference) under cursor
+" <leader>cg    Find symbol definition under cursor
+" <leader>cd    Functions called by this function
+" <leader>cc    Functions calling this function
+" <leader>ct    Find text string under cursor
+" <leader>ce    Find egrep pattern under cursor
+" <leader>cf    Find file name under cursor
+" <leader>ci    Find files #including the file name under cursor
+" <leader>ca    Find places where current symbol is assigned
+" <leader>cz    Find current word in ctags database
  
+" Map leader must be defined before all mappings
 let mapleader=' '
 let maplocalleader='\'
 
@@ -366,7 +415,7 @@ nnoremap <ESC><ESC><ESC> :q<CR>
 nnoremap <leader>/ :nohlsearch<cr>
 nnoremap <leader><space> za
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
+nnoremap <leader>ef :execute 'normal! vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
 command! W :w
 cnoremap W! w !sudo tee % >/dev/null
 cnoremap w!! w !sudo tee % >/dev/null
@@ -395,7 +444,16 @@ nnoremap <silent> <Leader>< :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 " Vim Terminal + Kitty/Tmux Navigator {{{2
 tnoremap <S-Insert> <C-w>"+
-if $TERM =~? "kitty"
+if has('gui_running')
+    nnoremap <silent> <C-h> <C-w><C-h>
+    nnoremap <silent> <C-j> <C-w><C-j>
+    nnoremap <silent> <C-k> <C-w><C-k>
+    nnoremap <silent> <C-l> <C-w><C-l>
+    tnoremap <silent> <C-h> <C-w><C-h>
+    tnoremap <silent> <C-j> <C-w><C-j>
+    tnoremap <silent> <C-k> <C-w><C-k>
+    tnoremap <silent> <C-l> <C-w><C-l>
+elseif $TERM =~? "kitty"
     tnoremap <silent> <C-h> <C-w>:KittyNavigateLeft<cr>
     tnoremap <silent> <C-j> <C-w>:KittyNavigateDown<cr>
     tnoremap <silent> <C-k> <C-w>:KittyNavigateUp<cr>
@@ -475,9 +533,9 @@ nnoremap <F9> :TagbarToggle<CR>
 
 " }}}1
 
-" " OLD CONFIGS {{{1
+" OLD CONFIGS {{{1
 
-" " Meson {{{3
+" Meson {{{2
 " " If there's a `meson.build` file, use meson for linting.
 "    autocmd FileType c call ConsiderMesonForLinting()
 "    function ConsiderMesonForLinting()
@@ -485,9 +543,9 @@ nnoremap <F9> :TagbarToggle<CR>
 "            let g:syntastic_c_checkers = ['meson']
 "        endif
 "    endfunction
-" " }}}3
+" }}}2
 
-" " Python {{{3
+" Python {{{2
 " let g:jedi#use_splits_not_buffers = "bottom"
 " let g:jedi#use_tabs_not_buffers = 1
 " let g:jedi#popup_on_dot = 0
@@ -507,7 +565,7 @@ nnoremap <F9> :TagbarToggle<CR>
 " let g:flake8_pyflake_marker='WP'     " disable PyFlakes warnings
 " let g:flake8_complexity_marker='CC'  " disable McCabe complexity warnings
 " let g:flake8_naming_marker='NN'      " disable naming warnings
-" " }}}3
+" }}}2
 
 "}}}1
 

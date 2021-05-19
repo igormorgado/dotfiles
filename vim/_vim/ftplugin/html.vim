@@ -6,5 +6,5 @@ setlocal shiftwidth=2
 setlocal autoindent
 setlocal smartindent
 setlocal expandtab
-setlocal foldmethod=syntax
+setlocal foldmethod=indent
 

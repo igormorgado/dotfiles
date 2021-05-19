@@ -22,6 +22,6 @@ if has("autocmd")
 	" Reload $MYVIMRC when writing it
 	augroup reload_vimrc
 		autocmd!
-		autocmd bufwritepost $MYVIMRC source $MYVIMRC
+		autocmd bufwritepost $MYVIMRC source $MYVIMRC | set ft=vim
 	augroup END
 endif

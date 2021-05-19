@@ -14,12 +14,17 @@ setlocal nolinebreak
 setlocal textwidth=0
 setlocal colorcolumn=100
 
-function! SlimeExecuteAndJump()
-    call slime#send(getline(".") . "\r")
-    call search('^\S', "Wz")
-endfunction
+augroup trailspaces
+    autocmd!
+    autocmd BufWritePre * %s/\s\+$//e
+augroup END
 
-if !empty(g:slime_target)
+if exists('loaded_slime')
+    function! SlimeExecuteAndJump()
+        call slime#send(getline(".") . "\r")
+        call search('^\S', "Wz")
+    endfunction
+
     let g:slime_vimterminal_cmd = "ipython3 --matplotlib"
     let g:slime_python_ipython = 1
     " This makes loading toooo slow

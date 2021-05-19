@@ -14,13 +14,13 @@ setlocal nolinebreak
 setlocal textwidth=0
 setlocal colorcolumn=80
 
-function! SlimeExecuteAndJump()
-    call slime#send(getline(".") . "\r")
-    call search('^\S', "Wz")
-endfunction
 
+if exists('g:loaded_slime' )
+    function! SlimeExecuteAndJump()
+        call slime#send(getline(".") . "\r")
+        call search('^\S', "Wz")
+    endfunction
 
-if !empty(g:slime_target)
     let g:slime_vimterminal_cmd = "bash"
     let g:slime_no_mappings = 1
     nmap <Leader>gv <Plug>SlimeConfig
@@ -32,6 +32,11 @@ endif
 if executable('shellcheck')
     setlocal makeprg=shellcheck\ -f\ gcc\ %
 endif
+
+augroup trailspaces
+    autocmd!
+    autocmd BufWritePre * %s/\s\+$//e
+augroup END
 
 augroup shellsave
     au BufWritePost * :silent make | redraw!
