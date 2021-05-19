@@ -40,3 +40,13 @@ secrets
 *.old
 tags
 .tags
+vim/_vim/after/after
+vim/_vim/ftdetect/ftdetect
+vim/_vim/ftplugin/ftplugin
+vim/_vim/indent/indent
+vim/_vim/spell/spell
+vim/_vim/syntax/syntax
+bin/bin/evelauncher
+bin/bin/jhbuild
+bin/bin/potion
+bin/bin/python
