@@ -60,19 +60,19 @@ if [ "$(tput colors)" -gt 0 ] ; then
 	NOUNDER=$(tput rmul)
 	   CRST=$(tput sgr0 )
 	    RST=$(tput op)
-	  
+
 	export BOLD DIM ITALIC UNDER STRIKE REV BLINK NOUNDER CRST RST
-	export BLACK RED GREEN BROWN BLUE PURPLE CYAN LGRAY 
-	export DGRAY LRED LGREEN YELLOW LBLUE LPURPLE LCYAN WHITE 
-	export BBLACK BRED BGREEN BBROWN BBLUE BPURPLE BCYAN BLGRAY 
-	export BDGRAY BLRED BLGREEN BYELLOW BLBLUE BLPURPLE BLCYAN BWHITE 
+	export BLACK RED GREEN BROWN BLUE PURPLE CYAN LGRAY
+	export DGRAY LRED LGREEN YELLOW LBLUE LPURPLE LCYAN WHITE
+	export BBLACK BRED BGREEN BBROWN BBLUE BPURPLE BCYAN BLGRAY
+	export BDGRAY BLRED BLGREEN BYELLOW BLBLUE BLPURPLE BLCYAN BWHITE
 fi
 
 
 [ -f "/etc/profile.d/vte-2.91.sh" ] && source /etc/profile.d/vte-2.91.sh
 
 # Run all files to 99 on ~/.bashrc.d/
-for file in ${HOME}/.bashrc.d/0*;do
+for file in "${HOME}"/.bashrc.d/0*;do
 	source "${file}"
 done
 # }}}
@@ -173,10 +173,10 @@ export BACKGROUND COLOR
 
 # dircolors... make sure that we have a color terminal, dircolors exists, and
 # ls supports it.
-[ -f "${HOME}/.dir_colors" ] && source <(dircolors -b "${HOME}/.dir_colors") 
+[ -f "${HOME}/.dir_colors" ] && source <(dircolors -b "${HOME}/.dir_colors")
 
 # Load Xprofile
-[ -r "${HOME}/.xprofile" ] && [ -n "${DISPLAY}" ] && source "${HOME}/.xprofile" 
+[ -r "${HOME}/.xprofile" ] && [ -n "${DISPLAY}" ] && source "${HOME}/.xprofile"
 
 #}}}
 
@@ -283,6 +283,10 @@ fi
 
 # }}}
 
+if [ "${TERM}" == "linux" ]
+then
+    export TERM="linux-16color"
+fi
 
 if [ "${TERM}" == "xterm-kitty" ]
 then
@@ -290,7 +294,7 @@ then
 fi
 
 # Run all files greater than 99 on ~/.bashrc.d/
-for file in ${HOME}/.bashrc.d/[123456789]*;do
+for file in "${HOME}"/.bashrc.d/[123456789]*;do
 	source "${file}"
 done
 unset file

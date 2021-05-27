@@ -72,88 +72,60 @@
 !XTerm.VT100.colorUL: #eee8d5
 !XTerm.VT100.colorIT: #eee8d5
 
-XTerm*background: #002b36
-XTerm*foreground: #657b83
-XTerm*fadeColor: #002b36
-XTerm*cursorColor: #93a1a1
-XTerm*pointerColorBackground: #586e75
-XTerm*pointerColorForeground: #93a1a1
+XTerm*background: #282828 
+XTerm*foreground: #ebdbb2  
+XTerm*color0:  #282828 
+XTerm*color1:  #cc241d 
+XTerm*color2:  #98971a 
+XTerm*color3:  #d79921 
+XTerm*color4:  #458588 
+XTerm*color5:  #b16286 
+XTerm*color6:  #689d6a 
+XTerm*color7:  #a89984 
+XTerm*color8:  #928374 
+XTerm*color9:  #fb4934 
+XTerm*color10: #b8bb26 
+XTerm*color11: #fabd2f 
+XTerm*color12: #83a598 
+XTerm*color13: #d3869b 
+XTerm*color14: #8ec07c 
+XTerm*color15: #ebdbb2 
 
-!! black dark/light
-XTerm*color0: #073642
-XTerm*color8: #002b36
+XTerm*fadeColor: #928374
+XTerm*cursorColor: #8ec07c
+XTerm*pointerColorBackground: #b8bb26
+XTerm*pointerColorForeground: #8ec97c
 
-!! red dark/light
-XTerm*color1: #dc322f
-XTerm*color9: #cb4b16
-
-!! green dark/light
-XTerm*color2: #859900
-XTerm*color10: #586e75
-
-!! yellow dark/light
-XTerm*color3: #b58900
-XTerm*color11: #657b83
-
-!! blue dark/light
-XTerm*color4: #268bd2
-XTerm*color12: #839496
-
-!! magenta dark/light
-XTerm*color5: #d33682
-XTerm*color13: #6c71c4
-
-!! cyan dark/light
-XTerm*color6: #2aa198
-XTerm*color14: #93a1a1
-
-!! white dark/light
-XTerm*color7: #eee8d5
-XTerm*color15: #fdf6e3
 # 54 "Xresources.solarized" 2
 # 1 "Xresources.solarized_UXTerm" 1
 !!UXTerm.VT100.colorBD: #fdf6e3
 !!UXTerm.VT100.colorUL: #eee8d5
 !!UXTerm.VT100.colorIT: #eee8d5
 
-UXTerm*background: #002b36
-UXTerm*foreground: #657b83
-UXTerm*fadeColor: #002b36
-UXTerm*cursorColor: #93a1a1
-UXTerm*pointerColorBackground: #586e75
-UXTerm*pointerColorForeground: #93a1a1
+UXTerm*background: #282828 
+UXTerm*foreground: #ebdbb2  
+UXTerm*color0:  #282828 
+UXTerm*color1:  #cc241d 
+UXTerm*color2:  #98971a 
+UXTerm*color3:  #d79921 
+UXTerm*color4:  #458588 
+UXTerm*color5:  #b16286 
+UXTerm*color6:  #689d6a 
+UXTerm*color7:  #a89984 
+UXTerm*color8:  #928374 
+UXTerm*color9:  #fb4934 
+UXTerm*color10: #b8bb26 
+UXTerm*color11: #fabd2f 
+UXTerm*color12: #83a598 
+UXTerm*color13: #d3869b 
+UXTerm*color14: #8ec07c 
+UXTerm*color15: #ebdbb2 
 
-!! black dark/light
-UXTerm*color0: #073642
-UXTerm*color8: #002b36
+UXTerm*fadeColor: #928374
+UXTerm*cursorColor: #8ec07c
+UXTerm*pointerColorBackground: #b8bb26
+UXTerm*pointerColorForeground: #8ec97c
 
-!! red dark/light
-UXTerm*color1: #dc322f
-UXTerm*color9: #cb4b16
-
-!! green dark/light
-UXTerm*color2: #859900
-UXTerm*color10: #586e75
-
-!! yellow dark/light
-UXTerm*color3: #b58900
-UXTerm*color11: #657b83
-
-!! blue dark/light
-UXTerm*color4: #268bd2
-UXTerm*color12: #839496
-
-!! magenta dark/light
-UXTerm*color5: #d33682
-UXTerm*color13: #6c71c4
-
-!! cyan dark/light
-UXTerm*color6: #2aa198
-UXTerm*color14: #93a1a1
-
-!! white dark/light
-UXTerm*color7: #eee8d5
-UXTerm*color15: #fdf6e3
 # 55 "Xresources.solarized" 2
 # 8 "Xresources.main" 2
 # 1 "Xresources.pencil" 1
@@ -241,23 +213,40 @@ XTerm.VT100.colorBDMode: false
 !! Font height tunning
 XTerm.scaleHeight: 1.00
 
+Xft.dpi: 110
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
 
-XTerm.VT100.font: terminus-14
-XTerm.VT100.font1: nil2
-XTerm.VT100.font2: terminus-12
-XTerm.VT100.font3: terminus-18
-XTerm.VT100.font4: terminus-22
-XTerm.VT100.font5: terminus-24
-XTerm.VT100.font6: terminus-32
+xterm*faceName:			xft:Fira Code:style=Regular:pixelsize=30:antialias=true
+UXterm*faceName:	        xft:Fira Code:style=Regular:pixelsize=30:antialias=true
+!!XTerm.VT100.font:	xft:Fira Code Regular:style=Regular:size=12
+!!XTerm.VT100.faceName:  Fira Code:style=regular:pixelsize=14:antialias=true:hinting=true
+!!XTerm.VT100.font:      Fira Code:style=regular:pixelsize=14:antialias=true:hinting=true
+!!XTerm.VT100.font1:     xft:Fira Code:style=regular:pixelsize=6:antialias=true:hinting=true
+!!XTerm.VT100.font2:     xft:Fira Code:style=regular:pixelsize=10:antialias=true:hinting=true
+!!XTerm.VT100.font3:     xft:Fira Code:style=regular:pixelsize=18:antialias=true:hinting=true
+!!XTerm.VT100.font4:     xft:Fira Code:style=regular:pixelsize=26:antialias=true:hinting=true
+!!XTerm.VT100.font5:     xft:Fira Code:style=regular:pixelsize=36:antialias=true:hinting=true
+!!XTerm.VT100.font6:     xft:Fira Code:style=regular:pixelsize=48:antialias=true:hinting=true
+!!XTerm.VT100.boldFont:  Fira Code:bold:style=regular:pixelsize=16:antialias=true:hinting=true
+
 
 XTerm.fontMenu.Label: VT Fonts
 XTerm.fontMenu*fontdefault*Label: Default
 XTerm.fontMenu*font1*Label: Unreadable
-XTerm.fontMenu*font2*Label: 12-pt
-XTerm.fontMenu*font3*Label: 18-pt
-XTerm.fontMenu*font4*Label: 22-pt
-XTerm.fontMenu*font5*Label: 24-pt
-XTerm.fontMenu*font6*Label: 32-pt
+XTerm.fontMenu*font2*Label: 10-px
+XTerm.fontMenu*font3*Label: 18-px
+XTerm.fontMenu*font4*Label: 26-px
+XTerm.fontMenu*font5*Label: 36-px
+XTerm.fontMenu*font6*Label: 48-px
+# 17 "Xresources.main" 2
+
+
+
 # 16 "Xresources.main" 2
 # 1 "Xresources.UXTerm" 1
 UXTerm.termName: xterm-256color
@@ -320,20 +309,48 @@ UXTerm.VT100.colorBDMode: false
 UXTerm.scaleHeight: 1.00
 
 
-UXTerm.VT100.font: terminus-14
-UXTerm.VT100.font1: nil2
-UXTerm.VT100.font2: terminus-12
-UXTerm.VT100.font3: terminus-18
-UXTerm.VT100.font4: terminus-22
-UXTerm.VT100.font5: terminus-24
-UXTerm.VT100.font6: terminus-32
+!! UXTerm.VT100.faceName:  Fira Code:style=regular:pixelsize=14:antialias=true:hinting=true
+!! UXTerm.VT100.font:      Fira Code:style=regular:pixelsize=14:antialias=true:hinting=true
+!! UXTerm.VT100.font1:     Fira Code:style=regular:pixelsize=6:antialias=true:hinting=true
+!! UXTerm.VT100.font:	Fira Code,Fira Code Regular:style=Regular,Regular:size=12
+!! UXTerm.VT100.font2:     Fira Code:style=regular:pixelsize=10:antialias=true:hinting=true
+!! UXTerm.VT100.font3:     Fira Code:style=regular:pixelsize=18:antialias=true:hinting=true
+!! UXTerm.VT100.font4:     Fira Code:style=regular:pixelsize=26:antialias=true:hinting=true
+!! UXTerm.VT100.font5:     Fira Code:style=regular:pixelsize=36:antialias=true:hinting=true
+!! UXTerm.VT100.font6:     Fira Code:style=regular:pixelsize=48:antialias=true:hinting=true
+!! UXTerm.VT100.boldFont:  Fira Code:bold:style=regular:pixelsize=16:antialias=true:hinting=true
+
 
 UXTerm.fontMenu.Label: VT Fonts
 UXTerm.fontMenu*fontdefault*Label: Default
 UXTerm.fontMenu*font1*Label: Unreadable
-UXTerm.fontMenu*font2*Label: 12-pt
-UXTerm.fontMenu*font3*Label: 18-pt
-UXTerm.fontMenu*font4*Label: 22-pt
-UXTerm.fontMenu*font5*Label: 24-pt
-UXTerm.fontMenu*font6*Label: 32-pt
+UXTerm.fontMenu*font2*Label: 10-px
+UXTerm.fontMenu*font3*Label: 18-px
+UXTerm.fontMenu*font4*Label: 26-px
+UXTerm.fontMenu*font5*Label: 36-px
+UXTerm.fontMenu*font6*Label: 48-px
 # 17 "Xresources.main" 2
+
+
+!!  Grubox + Fira Code rxvt
+URxvt.font:     xft:Fira Code:style=regular:pixelsize=16:antialias=true:hinting=true
+URxvt.boldFont: xft:Fira Code:bold:style=regular:pixelsize=16:antialias=true:hinting=true
+
+URxvt*background: #282828 
+URxvt*foreground: #ebdbb2  
+URxvt*color0:  #282828 
+URxvt*color1:  #cc241d 
+URxvt*color2:  #98971a 
+URxvt*color3:  #d79921 
+URxvt*color4:  #458588 
+URxvt*color5:  #b16286 
+URxvt*color6:  #689d6a 
+URxvt*color7:  #a89984 
+URxvt*color8:  #928374 
+URxvt*color9:  #fb4934 
+URxvt*color10: #b8bb26 
+URxvt*color11: #fabd2f 
+URxvt*color12: #83a598 
+URxvt*color13: #d3869b 
+URxvt*color14: #8ec07c 
+URxvt*color15: #ebdbb2 

@@ -13,6 +13,7 @@ setlocal tabstop=4
 setlocal shiftwidth=4
 setlocal softtabstop=4
 setlocal expandtab
+setlocal smarttab
 
 " File format
 setlocal fileformat=unix
@@ -23,11 +24,13 @@ setlocal list
 
 " Indent C-indenting
 " |C-indenting|
-setlocal autoindent
-setlocal smartindent
+" setlocal autoindent
+" setlocal smartindent
 setlocal cindent
 setlocal showmatch
-setlocal smarttab
+" C is case sensitive
+setlocal noignorecase
+" setlocal tagcase=match
 
 " Trailing characters are marked as errors
 match errorMsg /\s\+$/
@@ -37,17 +40,27 @@ setlocal signcolumn=yes
 
 " Fold
 setlocal foldmethod=syntax
-setlocal foldcolumn=1
+"setlocal foldcolumn=1
 
-" Completion
-" set omnifunc=syntaxcomplete#Complete
-set completeopt=longest,menuone,preview
+setlocal tags=./tags;tags;
 
-setlocal path+=/usr/include,/usr/local/include,src/include,include,../include,../lib/,**
+"setlocal complete=.,t,w
+"setlocal path=.,,
+"         \src/include,
+"         \include,
+"         \../include,
+"         \../lib/,
+"         \**,
+"        \/usr/include,
+"        \/usr/local/include,
+"          \/usr/include/linux,
+"          \/usr/include/x86_64-linux-gnu/,
+"          \/usr/lib/gcc/x86_64-linux-gnu/10/include,
+
 
 augroup trailspaces
     autocmd!
-    autocmd BufWritePre * %s/\s\+$//e
+    autocmd BufWritePre  <buffer> * %s/\s\+$//e
 augroup END
 
 " Open c-type files...
@@ -55,6 +68,7 @@ nnoremap <Leader>oc :e %<.c<CR>
 nnoremap <Leader>oC :e %<.cpp<CR>
 nnoremap <Leader>oh :e %<.h<CR>
 
+" Unused stuff {{{1
 " Using gtags-scope with guttentags for now, lets check
 " To build cctree.out file:
 " Install cscope
@@ -64,28 +78,28 @@ nnoremap <Leader>oh :e %<.h<CR>
 "   <C-\>>
 "   <C-\>=
 "   <C-\>-
-if exists('loaded_cctree')
+" if exists('loaded_cctree')
+"
+"     let g:CCTreeDisplayMode=2
+"     let g:CCTreeRecursiveDepth=5
+"     let g:CCTreeUseUTF8Symbols=1
+"
+"     if filereadable("cscope.out") && !filereadable("cctree.out")
+"         execute ':CCTreeLoadDB cscope.out'
+"         execute ':CCTreeSaveXRefDB cctree.out'
+"         execute ':call delete("cscope.out")'
+"         echom 'Converted CCTree'
+"     endif
+"
+"     if filereadable("cctree.out")
+"         augroup loadcctree
+"             autocmd!
+"             autocmd VimEnter,BufNewFile,BufReadPost *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out
+"         augroup END
+"     endif
+" endif
 
-    let g:CCTreeDisplayMode=2
-    let g:CCTreeRecursiveDepth=5
-    let g:CCTreeUseUTF8Symbols=1
-
-    if filereadable("cscope.out") && !filereadable("cctree.out")
-        execute ':CCTreeLoadDB cscope.out'
-        execute ':CCTreeSaveXRefDB cctree.out'
-        execute ':call delete("cscope.out")'
-        echom 'Converted CCTree'
-    endif
-
-    if filereadable("cctree.out")
-        augroup loadcctree
-            autocmd!
-            autocmd VimEnter,BufNewFile,BufReadPost *.c,*.h,*.cu,*.cuh,*.cpp,*.hpp :CCTreeLoadXRefDB cctree.out
-        augroup END
-    endif
-endif
-
-" " GDB stuff 
+" " GDB stuff
 " packadd termdebug
 " let g:termdebug_popup = 1
 " let g:termdebug_wide = 1
@@ -122,17 +136,10 @@ endif
 "     setlocal makeprg=gcc\ -o\ a.out\ %
 " endif
 
-" inoremap <expr> <CR>  pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-"
-" inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
-"   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-"
-" inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-"   \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-
 
 "let fname = expand('<afile>:p:h') . '/types.vim'
 "if filereadable(fname)
 "    exe 'so ' . fname
 "endif
+"}}}1
 

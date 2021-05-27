@@ -30,6 +30,7 @@ if exists('loaded_slime')
     " This makes loading toooo slow
     "let g:slime_dispatch_ipython_pause = 1000
     let g:slime_cell_delimiter = "#%%"
+    "let g:slime_cell_delimiter = "# In["
     let g:slime_no_mappings = 1
     nmap <Leader>gv <Plug>SlimeConfig
     xmap <Leader>g <Plug>SlimeRegionSend
