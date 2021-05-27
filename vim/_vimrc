@@ -39,10 +39,10 @@ let g:loaded_netrwPlugin = 1
 " Enables filetype handling
 filetype on
 " Loads the filetype indentation at $VIMRUNTIME/indent
-filetype indent on
 " Loads the file im $VIMRUNTIME/ftplugin/filetype.vim
-filetype plugin on
-"
+filetype plugin indent on
+
+runtime macros/matchit.vim
 
 " Plug-in load
 " To install plugins call
@@ -218,6 +218,12 @@ set shiftround
 
 set nowrap
 
+" Programming minimum
+set autoindent
+set backspace=indent,eol,start
+set hidden
+set ruler
+
 " Do not break words when wrapping (if wrapping)
 set linebreak
 
@@ -251,7 +257,6 @@ set path=.,,
 set splitbelow
 set splitright
 set showtabline=1
-set hidden
 
 " Buffer numbering
 set numberwidth=5
@@ -338,6 +343,7 @@ else
 endif
 
 
+    set clipboard^=unnamedplus
 " Only set the interface when starting
 if has("gui_running") && has('vim_starting')
     " Remove toolbar and menubar
@@ -345,7 +351,6 @@ if has("gui_running") && has('vim_starting')
     set guioptions-=m
     set lines=32 columns=110 linespace=0
     set mouse=a
-    set clipboard=unnamedplus
     if has("gui_gtk3")
         set guifont=Fira\ Code\ weight\=453\ 12
     endif
@@ -403,6 +408,7 @@ set synmaxcol=200
 " if exists('loaded_slime')
     let g:slime_target='vimterminal'
     let g:slime_vimterminal_config={"term_finish": "close"}
+    let g:slime_no_mappings=1
 " endif
 "
 
@@ -538,17 +544,13 @@ nmap [h <Plug>(GitGutterPrevHunk)
 
 
 nnoremap <ESC><ESC><ESC> :q<CR>
-"nnoremap <leader>/ :nohlsearch<cr>
 nnoremap <leader><space> za
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
 command! W :w
-cnoremap W! w !sudo tee % >/dev/null
+cnoremap W!  w !sudo tee % >/dev/null
 cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <leader>l :setlocal list!<cr>
-inoremap <C-v> <ESC>"+pa
-vnoremap <C-c> "+y
-vnoremap <C-x> "+d
 
 " Find current word
 nnoremap gr :grep <cword> *<CR>
@@ -586,7 +588,6 @@ elseif !empty($TMUX)
     tnoremap <silent> <C-j> <C-w>:TmuxNavigateDown<cr>
     tnoremap <silent> <C-k> <C-w>:TmuxNavigateUp<cr>
     tnoremap <silent> <C-l> <C-w>:TmuxNavigateRight<cr>
-" if has('gui_running')
 else
     nnoremap <silent> <C-h> <C-w><C-h>
     nnoremap <silent> <C-j> <C-w><C-j>
@@ -599,12 +600,25 @@ else
 endif
 "
 
-" Autocomplete
-"inoremap <expr> <Up> pumvisible() ? "<C-p>" : "<Up>"
-"inoremap <expr> <Down> pumvisible() ? "<C-n>" : "<Down>"
-"inoremap <expr> <Left> pumvisible() ? "<C-e>" : "<Left>"
-"inoremap <expr> <Right> pumvisible() ? "<C-y>" : "<Right>"
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+inoremap <Up> <NOP>
+inoremap <Down> <NOP>
+inoremap <Left> <NOP>
+inoremap <Right> <NOP>
 
+" Autocomplete
+inoremap <expr> <Tab>   pumvisible() ? "<C-n>" : "<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "<C-p>" : "<S-Tab>"
+inoremap <expr> <Cr>   pumvisible() ? "<C-y>" : "<Cr>"
+inoremap <expr> <Up>    pumvisible() ? "<C-p>"  : ""
+inoremap <expr> <Down>  pumvisible() ? "<C-n>"  : ""
+inoremap <expr> <Left> pumvisible() ? "<C-e>" : ""
+inoremap <expr> <Right> pumvisible() ? "<C-y>" : ""
+
+" C == omnicomplete when "." found
 " let g:AutoComplPop_Behavior = {
 " \ 'c': [ {'command' : "\<C-x>\<C-o>",
 " \       'pattern' : ".",
@@ -618,67 +632,54 @@ endif
 " " ======================================================================
 " " Standard functions keys in APPS
 " " <F1> Help
-" " <F2> Toggle Pastee
+" " <F2> Toggle Paste
 " " <F3> Show Buffers
 " " <F4>
 " " <F5> Build/Execute/Refresh
 " " <F6>
-" " <F7>
+" " <F7> Spellcheck
 " " <F8>
-" " <F9> Tagbar
+" " <F9>
 " " <F10>
-" " <F11> DO NOT REMAP THIS: Why?
+" " <F11>
 " " <F12>
 "
 " Fast Buffers access
 inoremap <F3> <ESC>:buffers<CR>:buffer<Space>
 nnoremap <F3>      :buffers<CR>:buffer<Space>
 tnoremap <F3> <ESC><C-w>:buffers<CR>:buffer<Space>
-"
-" " Find files
-" inoremap <F3>
-" nnoremap <F3>
-" vnoremap <F3>
-"
-" inoremap <F4>
-" nnoremap <F4>
-" vnoremap <F4>
-"
-" inoremap <F5> <ESC>:make!<cr>
-" nnoremap <F5> :make!<cr>
-" vnoremap <F5> :make!<cr>
-" nnoremap <S-F5> :Valgrind build/%<cr>
-"
-" set grepprg=grep\ --exclude-from=$HOME/.grep_ignore\ --exclude-dir\ '.git'\ --exclude-dir\ '*venv*'\ -Inr
-" inoremap <F6> <ESC>:grep  *<left><left>
-" nnoremap <F6>      :grep  *<left><left>
-" nnoremap gr :grep <cword> *<CR>
-" nnoremap Gr :grep <cword> %:p:h/*<CR>
-"
-" " Check if spellcheck
-" inoremap <F7> <ESC>:SpellCheck<CR>
-" nnoremap <F7> :SpellCheck<CR>
-"
-" inoremap <F8> <ESC>
-" nnoremap <F8>
-" vnoremap <F8>
-"
-" " Check if tagbar
-inoremap <F9> <ESC>:TagbarToggle<CR>
-nnoremap <F9> :TagbarToggle<CR>
-"
-"inoremap <F10> <ESC>
-"nnoremap <F10>
-"vnoremap <F10>
-"
-"inoremap <F11> <ESC>
-"nnoremap <F11>
-"vnoremap <F11>
-"
-"inoremap <F12> <ESC>
-"nnoremap <F12>
-"vnoremap <F12>
-"
 
+inoremap <F4> <Nop>
+nnoremap <F4> <Nop>
+vnoremap <F4> <Nop>
 
+"Execute vim make
+inoremap <F5> <ESC>:make!<cr>
+nnoremap <F5> :make!<cr>
+vnoremap <F5> :make!<cr>
+nnoremap <S-F5> <Nop>
 
+inoremap <F6> <Nop>
+nnoremap <F6> <Nop>
+
+inoremap <F7> <ESC>:SpellCheck<CR>
+nnoremap <F7> :SpellCheck<CR>
+
+inoremap <F8> <Nop>
+nnoremap <F8> <Nop>
+vnoremap <F8> <Nop>
+
+inoremap <F9> <Nop>
+nnoremap <F9> <Nop>
+
+inoremap <F10> <Nop>
+nnoremap <F10> <Nop>
+vnoremap <F10> <Nop>
+
+inoremap <F11> <Nop>
+nnoremap <F11> <Nop>
+vnoremap <F11> <Nop>
+
+inoremap <F12> <Nop>
+nnoremap <F12> <Nop>
+vnoremap <F12> <Nop>
