@@ -22,7 +22,7 @@ augroup END
 if exists('loaded_slime')
     function! SlimeExecuteAndJump()
         call slime#send(getline(".") . "\r")
-        call search('^\S', "Wz")
+        call search('^.*\S', "Wz")
     endfunction
 
     let g:slime_vimterminal_cmd = "ipython3 --matplotlib"

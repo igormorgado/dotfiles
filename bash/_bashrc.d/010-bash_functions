@@ -117,36 +117,17 @@ function parse_svn_branch() {
 
 
 function testcolor() {
-    echo -e "
-    0 ${BLACK}BLACK${CRST}        8 ${DGRAY}DGRAY${CRST}
-    1 ${RED}RED${CRST}          9 ${LRED}LRED${CRST}
-    2 ${GREEN}GREEN${CRST}       10 ${LGREEN}LGREEN${CRST}
-    3 ${BROWN}BROWN${CRST}       11 ${YELLOW}YELLOW${CRST}
-    4 ${BLUE}BLUE${CRST}        12 ${LBLUE}LBLUE${CRST}
-    5 ${PURPLE}PURPLE${CRST}      13 ${LPURPLE}LPURPLE${CRST}
-    6 ${CYAN}CYAN${CRST}        14 ${LCYAN}LCYAN${CRST}
-    7 ${LGRAY}LGRAY${CRST}       15 ${WHITE}WHITE${CRST}
-    0 ${BBLACK}BLACK${CRST}        8 ${BDGRAY}DGRAY${CRST}
-    1 ${BRED}RED${CRST}          9 ${BLRED}LRED${CRST}
-    2 ${BGREEN}GREEN${CRST}       10 ${BLGREEN}LGREEN${CRST}
-    3 ${BBROWN}BROWN${CRST}       11 ${BYELLOW}YELLOW${CRST}
-    4 ${BBLUE}BLUE${CRST}        12 ${BLBLUE}LBLUE${CRST}
-    5 ${BPURPLE}PURPLE${CRST}      13 ${BLPURPLE}LPURPLE${CRST}
-    6 ${BCYAN}CYAN${CRST}        14 ${BLCYAN}LCYAN${CRST}
-    7 ${BLGRAY}LGRAY${CRST}       15 ${BWHITE}WHITE${CRST}
-    RESET
-    "
-}
-
-function testcolor256() {
-    if [ $# -eq 0 ]
+    if [[ "${1}" =~ .*h.* ]]
+    then
+        echo "Usage: ${FUNCNAME[0]} [fg|bg]"
+        return
+    fi
+    if [ "${1}" == "fg" ]
     then
         for ((i=0; i<16;i++))
         do
             tput setaf "${i}"
             printf " # %03d # " "${i}"
-            #printf "%03d " "${i}"
-            # (( i % 8  == 7 )) && echo -e "${CRST}"
         done
         echo -e "${CRST}"
         echo
@@ -160,15 +141,14 @@ function testcolor256() {
         for ((i=232; i<256;i++))
         do
             tput setaf "${i}"
-            printf " %03d " "${i}"
-            # (( (i - 232) % 12  == 11 )) && echo -e "${CRST}"
+            printf " %03d  " "${i}"
         done
-    else
+    elif [ "${1}" == "bg" ]
+    then
         for ((i=0; i<16;i++))
         do
             tput setab "${i}"
             printf "   %03d   " "${i}"
-            # (( i % 8  == 7 )) && echo -e "${CRST}"
         done
         echo -e "${CRST}"
         echo
@@ -183,8 +163,29 @@ function testcolor256() {
         do
             tput setab "${i}"
             printf " %03d  " "${i}"
-            # (( (i - 232) % 12  == 11 )) && echo -e "${CRST}"
         done
+    else
+        for ((i=0; i<16;i++))
+        do
+            tput setab "${i}"
+            printf "    "
+            (( i  % 8  == 7 )) && echo -e "${CRST} "
+        done
+        echo -e "${CRST}"
+        for ((i=16; i<232;i++))
+        do
+            tput setab "${i}"
+            printf "  "
+            (( (i - 16) % 6  == 5 )) && echo -ne "${CRST} "
+            (( (i - 16) % 36  == 35 )) && echo -e "${CRST}"
+        done
+        echo -e "${CRST}"
+        for ((i=232; i<256;i++))
+        do
+            tput setab "${i}"
+            printf "   " "${i}"
+        done
+
     fi
    echo -e "${CRST}"
 }
@@ -222,13 +223,15 @@ resetOutput()
 	echo -en "\x1b[0m\n"
 }
 
+
 function testcolorTrue() {
 	awk 'BEGIN{
-		s="/\\/\\/\\/\\/\\"; s=s s s s s s s s;
-		for (colnum = 0; colnum<77; colnum++) {
-			r = 255-(colnum*255/76);
-			g = (colnum*510/76);
-			b = (colnum*255/76);
+		s="HelloWorld"; s=s s s s s s s s s s s s s s s s s s;
+        k=79
+		for (colnum = 0; colnum<=k; colnum++) {
+			r = 255-(colnum*255/k);
+			g = (colnum*510/k);
+			b = (colnum*255/k);
 			if (g>255) g = 510-g;
 			printf "\033[48;2;%d;%d;%dm", r,g,b;
 			printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;

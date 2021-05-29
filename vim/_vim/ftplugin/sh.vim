@@ -18,7 +18,7 @@ setlocal colorcolumn=80
 if exists('g:loaded_slime' )
     function! SlimeExecuteAndJump()
         call slime#send(getline(".") . "\r")
-        call search('^\S', "Wz")
+        call search('^.*\S', "Wz")
     endfunction
 
     let g:slime_vimterminal_cmd = "bash"
@@ -38,6 +38,8 @@ augroup trailspaces
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
 
-augroup shellsave
-    au BufWritePost * :silent make | redraw!
-augroup END
+" How to not execute in /tmp/* files?
+" augroup shellsave
+"     autocmd!
+"     au BufWritePost * :silent make | redraw!
+" augroup END

@@ -177,8 +177,9 @@ call plug#begin('~/.vim/plugged')
     " ...
 
     " Python
-    "Plug 'davidhalter/jedi-vim'
-    "Plug 'tmhedberg/SimpylFold'
+    Plug 'davidhalter/jedi-vim'
+    let g:jedi#use_splits_not_buffers = "top"
+    Plug 'tmhedberg/SimpylFold'
     "Plug 'nvie/vim-flake8'
     " Latex
     "Plug 'inkarkat/vim-ingo-library'
@@ -236,6 +237,8 @@ set scrolloff=8
 set sidescroll=8
 
 set modeline
+" Need to find a coloscheme to cursorline not mess with colors in line.
+" Seems only mess if the background color is set.. nice
 set cursorline
 set cursorcolumn
 set conceallevel=0
@@ -451,7 +454,7 @@ set synmaxcol=200
 " endif
 
 let g:Hexokinase_ftDisabled=['qf', 'json']
-let g:Illuminate_ftblacklist = ['dirvish', 'json']
+let g:Illuminate_ftblacklist = ['dirvish', 'json', 'dircolors']
 let g:Illuminate_highlightUnderCursor = 1
 
 augroup illuminate_augroup
@@ -583,6 +586,10 @@ if $TERM =~? "kitty"
     tnoremap <silent> <C-j> <C-w>:KittyNavigateDown<cr>
     tnoremap <silent> <C-k> <C-w>:KittyNavigateUp<cr>
     tnoremap <silent> <C-l> <C-w>:KittyNavigateRight<cr>
+    inoremap <silent> <C-h> <ESC><C-w>:KittyNavigateLeft<cr>
+    inoremap <silent> <C-j> <ESC><C-w>:KittyNavigateDown<cr>
+    inoremap <silent> <C-k> <ESC><C-w>:KittyNavigateUp<cr>
+    inoremap <silent> <C-l> <ESC><C-w>:KittyNavigateRight<cr>
 elseif !empty($TMUX)
     tnoremap <silent> <C-h> <C-w>:TmuxNavigateLeft<cr>
     tnoremap <silent> <C-j> <C-w>:TmuxNavigateDown<cr>
@@ -597,6 +604,14 @@ else
     tnoremap <silent> <C-j> <C-w><C-j>
     tnoremap <silent> <C-k> <C-w><C-k>
     tnoremap <silent> <C-l> <C-w><C-l>
+    " Substitute useless backspace
+    inoremap <silent> <C-h> <ESC><C-w><C-h>i
+    " Substitute useless ENTERR
+    inoremap <silent> <C-j> <ESC><C-w><C-j>i
+    " Substitute useless digraph
+    inoremap <silent> <C-k> <ESC><C-w><C-k>i
+    " Substitute useless go to normal mode
+    inoremap <silent> <C-l> <ESC><C-w><C-l>i
 endif
 "
 
