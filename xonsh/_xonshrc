@@ -1,12 +1,195 @@
-# XONSH WIZARD START
-# source-bash --sourcer source "echo loading xonsh foreign shell"
-$PROJECT_DIRS=['~/Projects']
-#$PROMPT='\n{env_name:{} }{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE}:{cwd}{branch_color}{curr_branch: {}}{NO_COLOR} \n{BOLD_BLUE}{ret_code_color}{ret_code}{prompt_end}{NO_COLOR} '
-$PROMPT='\n{env_name:{} }{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE}:{cwd}{branch_color}{curr_branch: {}}{NO_COLOR} \n{BOLD_BLUE}{prompt_end}{NO_COLOR} '
-$XONSH_COLOR_STYLE='native'
+import os
+import time
+import builtins
+from xonsh.tools import is_superuser, print_color
 
-xontrib load apt_tabcomplete autoxsh vox vox_tabcomplete avox distributed docker_tabcomplete jedi mpl prompt_ret_code prompt_vi_mode schedule
+xontrib load gitinfo
+xontrib load vox
+xontrib load prompt_vi_mode
+xontrib load prompt_ret_code
 
-# XONSH WIZARD END
+env = builtins.__xonsh__.env
 
-aliases['ackpy']=['ack','--python']
+
+$AUTO_PUSHD = True
+$EDITOR = 'vim'
+$HISTCONTROL='ignoredups:erasedups'
+$MULTILINE_PROMPT=' '
+$PYTHONBREAKPOINT = "ipdb.set_trace"
+$VI_MODE = True
+$XONSH_SHOW_TRACEBACK = False
+$MC_SKIN=$HOME + "/.config/mc/solarized.ini"
+
+$LESS_TERMCAP_mb = "\033[01;31m"     # begin blinking
+$LESS_TERMCAP_md = "\033[01;31m"     # begin bold
+$LESS_TERMCAP_me = "\033[0m"         # end mode
+$LESS_TERMCAP_so = "\033[01;44;36m"  # begin standout-mode (bottom of screen)
+$LESS_TERMCAP_se = "\033[0m"         # end standout-mode
+$LESS_TERMCAP_us = "\033[00;36m"     # begin underline
+$LESS_TERMCAP_ue = "\033[0m"         # end underline
+
+
+$PATH.append('$HOME/bin')
+$PATH.append('$HOME/.local/bin')
+
+# My prompt
+# cols, _ = os.get_terminal_size()
+# if is_superuser():
+#     env['PROMPT_FIELDS']['prompt_end_xonsh'] = "#"
+# else:
+#     env['PROMPT_FIELDS']['prompt_end_xonsh'] = "@"
+#
+# def _date_time_tz():
+#     t = time.strftime('%y-%m-%d %H:%M:%S%z', time.localtime())
+#     return t[:-2] if t[-2:] == '00' else t
+#
+# env['PROMPT_FIELDS']['date_time_tz'] = _date_time_tz
+#
+$TOPBAR_LEFT = '{user}@{hostname}:{cwd}'
+$TOPBAR_RIGHT = '{env_name} {gitstatus} {vi_mode} {date_time_tz}'
+# $TOPBARLEN = ❯ __xonsh__.shell.shell.prompt_formatter()
+
+# #$TOPBAR_SEP = ' ' * ( cols  - len(($TOPBAR_LEFT + $TOPBAR_RIGHT).format(**env['PROMPT_FIELDS'])))
+# $TOPBAR_SEP = ' '
+#
+# $BASE_PROMPT = '{ret_code_color}{ret_code}{prompt_end_xonsh} {RESET}'
+# $PROMPT = '\n' + $TOPBAR_LEFT + $TOPBAR_SEP + $TOPBAR_RIGHT  + '\n' + $BASE_PROMPT
+
+$XONTRIB_PROMPT_BAR_LEFT = '{user#strip}@{hostname#strip}:{cwd_abs#strip#accent}'
+$XONTRIB_PROMPT_BAR_RIGHT = '{env_name} {gitstatus} {vi_mode#section} {date_time_tz}'
+xontrib load prompt_bar
+import builtins
+env["PROMPT"] =  env["PROMPT"].replace(
+         "{WHITE}{prompt_end_xonsh}{RESET}",
+         "{ret_code_color}{ret_code}{prompt_end_xonsh}{RESET}")
+
+env["PROMPT"] = "\n" + env["PROMPT"]
+
+
+from prompt_toolkit.filters import Condition
+from prompt_toolkit.keys import Keys
+from prompt_toolkit.application.current import get_app
+
+@events.on_ptk_create
+def prompt_length(s):
+    prompt_formatter = builtins.__xonsh__.shell.shell.prompt_formatter
+    local_prompt = prompt_formatter(s)
+    sz = len(local_prompt)
+    return sz
+
+@events.on_ptk_create
+def custom_keybindings(bindings, **kwargs):
+    handler = bindings.add
+
+    @Condition
+    def suggestion_available():
+        app = get_app()
+        return (app.current_buffer.suggestion is not None and
+                app.current_buffer.document.is_cursor_at_the_end)
+
+    @handler(Keys.ControlY, filter=suggestion_available)
+    def accept_auto_suggestion(event):
+        b = event.current_buffer
+        suggestion = b.suggestion
+        if suggestion:
+            b.insert_text(suggestion.text)
+
+
+    @handler(Keys.ControlT)
+    def clear_screen(event):
+        clear
+        event.cli.renderer.erase()
+
+
+from xonsh.platform import ON_LINUX
+if ON_LINUX:
+    $MANPAGER = "less -X"
+    $LESS = "--ignore-case --quit-if-one-screen --quit-on-intr FRXQ"
+    aliases['cp'] = ['rsync', '--progress', '--recursive', '--archive']
+    aliases['-'] = 'cd -'
+    aliases['..'] = 'cd ..'
+    aliases['....'] = 'cd ../..'
+    aliases['zeroad'] = "pushd ~/src/0ad/;./binaries/system/pyrogenesis; popd"
+    aliases['venv'] = "vox activate .venv"
+
+    def _md(args, stdin=None):
+        mkdir -p @(args[0])
+        cd @(args[0])
+
+    def _ll(args, stdin=None):
+        ls --group-directories-first -lh --color @(args)
+
+    def _lla(args, stdin=None):
+        ls --group-directories-first -lAh --color @(args)
+
+    aliases['md']  = _md
+    aliases['ll'] = _ll
+    aliases['lll'] = _lla
+    aliases['litcorpt'] = "pushd /home/igor/Projects/litcorpt/ ; vox activate litcorpt; vim"
+
+
+    if $(which /usr/bin/apt):
+	xontrib load apt_tabcomplete
+
+    if 'kitty' in $TERM:
+        xontrib load kitty
+
+# $BASH_COMPLETIONS = '/usr/share/bash-completion/bash_completion'
+# # This is breaking vim-dirvish-git:get_root_git for some rerason the systemlist() not running as expected
+# # $SHELL = os.path.expanduser($HOME + "/.local/bin/xonsh")
+#
+# # xontrib load argcomplete
+# xontrib load cmd_done
+# xontrib load jedi
+# xontrib load autovox
+# xontrib load mpl
+# xontrib load pdb
+#
+# @events.autovox_policy
+# def dotvenv_policy(path, **_):
+#     venv = path / '.venv'
+#     if venv.exists():
+#         return venv
+#
+#def style_from_json(name, jsonfile, base="default"):
+#    import json
+#    from xonsh.tools import register_custom_style
+#    with open(jsonfile) as f:
+#        styledict = json.load(f)
+#    return register_custom_style(name, styledict, base)
+
+# gb = style_from_json("gruvbox", "/home/igor/.xonsh_gruvbox", "monokai")
+# $XONSH_COLOR_STYLE="gruvbox"
+# $PTK_STYLE_OVERRIDES = {}
+
+# events.<TAB>
+# @events.on_chdir
+# def chdir_handler(olddir, newdir):
+#     print(f"{olddir}->{newdir}")
+# events.on_chdir.pop() remove the last handler
+
+# events.doc("never_run_this", """never_run_this(None) -> None
+#
+# fired!
+# """)
+
+# def delete_my_computer():
+#     events.never_run_this.fire()
+#
+# @events.never_run_this
+# def WHO_DID_THIS():
+#     print(f"OMG user {$(whoami).strip()} DELETED YOUR COMPUTER")
+#
+# @events.on_envvar_change
+# def print_env(name, oldvalue, newvalue):
+#     if name not in ["PWD", "OLDPWD"]:
+#         print(f"envar {name} changed {oldvalue} -> {newvalue}")
+
+# @events.on_postcommand
+# def update_rprompt(ts, **kwargs):
+#     $RIGHT_PROMPT = f"{(ts[1] - ts[0]):.4f}s"
+
+
+#cbonsai -p
+
+

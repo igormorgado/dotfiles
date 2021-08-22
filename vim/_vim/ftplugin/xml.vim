@@ -61,6 +61,7 @@ func Eatchar(pat)
    return (c =~ a:pat) ? '' : c
 endfunc
 
+"" GTK4 Objects
 " Elements
 iabbrev xml <?xml version="1.0" encoding="UTF-8"?>=Eatchar('\s')<cr>
 iabbrev childinternal <child internal-child="+++">><ESC>?+++<cr>

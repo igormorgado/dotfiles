@@ -328,26 +328,26 @@ STICKY 42
 
 
 # Unimportant text files
-*#	37
-*~	37
-.log	37
+*#	02;37
+*~	02;37
+.log	02;37
 
 # Unimportant non-text files
-.bak	37
-.BAK	37
-.bkp	37
-.dist	37
-.DIST	37
-.off	37
-.OFF	37
-.old	37
-.OLD	37
-.org_archive	37
-.orig	37
-.ORIG	37
-.swo	37
-.swp	37
-*,v	37
+.bak	02;37
+.BAK	02;37
+.bkp	02;37
+.dist	02;37
+.DIST	02;37
+.off	02;37
+.OFF	02;37
+.old	02;37
+.OLD	02;37
+.org_archive	03;37
+.orig	02;37
+.ORIG	02;37
+.swo	02;37
+.swp	02;37
+*,v	02;37
 
 # For testing
 .ANSI-30-black 30

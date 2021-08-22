@@ -120,5 +120,6 @@ alias ue4ed='/home/igor/src/UnrealEngine/Engine/Binaries/Linux/UE4Editor'
 
 alias icat="kitty +kitten icat"
 
-alias zeroad="flatpak run com.play0ad.zeroad"
+alias zeroad="pushd ~/src/0ad/;./binaries/system/pyrogenesis; popd"
+alias litcorpt="source /home/igor/.virtualenvs/litcorpt/bin/activate; pushd ~/Projects/litcorpt/"
 # vim: ft=sh:

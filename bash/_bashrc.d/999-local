@@ -2,4 +2,4 @@
 #export ECORE_IMF_MODULE="xim"
 export XMODIFIERS="@im=none"
 
-cbonsai -p
+#cbonsai -p

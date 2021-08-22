@@ -52,9 +52,9 @@ if [ "$(tput colors)" -gt 0 ] ; then
 	 BWHITE=$(tput setab 15)
        BOLD=$(tput bold)
 	    DIM=$(tput dim)
-     ITALIC="\e[3m"
+     ITALIC=$(tput sitm)
 	  UNDER=$(tput smul)
-     STRIKE="\e[9m"
+     STRIKE=$(tput ritm)
      	REV=$(tput rev)
 	  BLINK=$(tput blink)
 	NOUNDER=$(tput rmul)
@@ -300,6 +300,9 @@ done
 unset file
 # export ELM_SCALE=2
 
+export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
+export SHELL=/bin/bash
 #export WINEARCH=win
 # vim: foldmethod=marker:ft=sh:
+
 

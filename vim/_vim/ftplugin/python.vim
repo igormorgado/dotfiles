@@ -4,9 +4,10 @@ setlocal encoding=utf-8
 
 " Spacing
 setlocal tabstop=4
-setlocal shiftwidth=4
 setlocal softtabstop=4
+setlocal shiftwidth=4
 setlocal expandtab
+setlocal autoindent
 
 " Buffer limits
 setlocal nowrap
@@ -14,10 +15,18 @@ setlocal nolinebreak
 setlocal textwidth=0
 setlocal colorcolumn=100
 
+let python_highlight_all = 1
+
+let g:python_pep8_indent_multiline_string = 1
+let g:python_pep8_indent_hang_closing = 0
+
 augroup trailspaces
     autocmd!
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
+
+set makeprg=pylint\ --reports=n\ --output-format=parseable\ %:p
+set errorformat=%f:%l:\ %m
 
 if exists('loaded_slime')
     function! SlimeExecuteAndJump()
@@ -38,5 +47,6 @@ if exists('loaded_slime')
 
     nmap <silent> <Leader>gg :call SlimeExecuteAndJump()<cr>
     "nmap <silent> <Leader>gg <plug>SlimeLineSend:call search('^\S')<CR>
-    nmap <silent> <Leader>gc <Plug>SlimeSendCell:call search("^" . g:slime_cell_delimiter, "W")<cr>
+    nmap <silent> <Leader>cc <Plug>SlimeSendCell:call search("^" . g:slime_cell_delimiter, "W")<cr>
 endif
+

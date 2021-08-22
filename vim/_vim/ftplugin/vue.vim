@@ -4,7 +4,7 @@ setlocal shiftwidth=2
 
 " Ident
 setlocal autoindent
-"setlocal smartindent
-setlocal noexpandtab
+setlocal smartindent
+setlocal expandtab
+setlocal foldmethod=indent
 
-let b:ale_fixers = ['prettier', 'eslint']

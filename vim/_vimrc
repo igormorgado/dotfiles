@@ -48,6 +48,12 @@ runtime macros/matchit.vim
 " To install plugins call
 " :PlugInstall
 call plug#begin('~/.vim/plugged')
+    " SUpport for fish
+    Plug 'dag/vim-fish'
+    " Support for vue
+    Plug 'posva/vim-vue'
+    " Support for xonsh file format in vim
+    Plug 'linkinpark342/xonsh-vim'
     " Shows Git information in sign column
     Plug 'airblade/vim-gitgutter'
     " Navigate between tmux and vim windows
@@ -82,10 +88,19 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-repeat'
     " Complementary pairs
     Plug 'tpope/vim-unimpaired'
+    " Commentary operator management
+    Plug 'tpope/vim-commentary'
     " Integrate Valgrind Debugger
     Plug 'igormorgado/valgrind.vim'
     " Auto disable hlsearch
     Plug 'romainl/vim-cool'
+    " Python pep8
+    Plug 'Vimjas/vim-python-pep8-indent'
+    " Linting
+    Plug 'dense-analysis/ale'
+    let g:ale_set_loclist = 0
+    let g:ale_set_quickfix = 1
+    let g:ale_open_list = 1
 
 
     " AUTOCOMPLETE HELPER
@@ -294,7 +309,6 @@ if has("statusline")
     set statusline+=\ (%04v,%04l)\  " (x,y)
 endif
 "
-
 " Misc settings often invisible
 if has("autocmd")
     " correctly identify some files
@@ -462,6 +476,25 @@ augroup illuminate_augroup
     autocmd VimEnter * hi link illuminatedWord StatusLine
 augroup END
 
+augroup LargeFile
+        let g:large_file = 10485760 " 10MB
+
+        " Set options:
+        "   eventignore+=FileType (no syntax highlighting etc
+        "   assumes FileType always on)
+        "   noswapfile (save copy of file)
+        "   bufhidden=unload (save memory when other file is viewed)
+        "   buftype=nowritefile (is read-only)
+        "   undolevels=-1 (no undo possible)
+        au BufReadPre *
+                \ let f=expand("<afile>") |
+                \ if getfsize(f) > g:large_file |
+                        \ set eventignore+=FileType |
+                        \ setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 |
+                \ else |
+                        \ set eventignore-=FileType |
+                \ endif
+augroup END
 "
 
 
@@ -586,15 +619,27 @@ if $TERM =~? "kitty"
     tnoremap <silent> <C-j> <C-w>:KittyNavigateDown<cr>
     tnoremap <silent> <C-k> <C-w>:KittyNavigateUp<cr>
     tnoremap <silent> <C-l> <C-w>:KittyNavigateRight<cr>
-    inoremap <silent> <C-h> <ESC><C-w>:KittyNavigateLeft<cr>
-    inoremap <silent> <C-j> <ESC><C-w>:KittyNavigateDown<cr>
-    inoremap <silent> <C-k> <ESC><C-w>:KittyNavigateUp<cr>
-    inoremap <silent> <C-l> <ESC><C-w>:KittyNavigateRight<cr>
+    vnoremap <silent> <C-h> <esc>:KittyNavigateLeft<cr>
+    vnoremap <silent> <C-j> <esc>:KittyNavigateDown<cr>
+    vnoremap <silent> <C-k> <esc>:KittyNavigateUp<cr>
+    vnoremap <silent> <C-l> <esc>:KittyNavigateRight<cr>
+    inoremap <silent> <C-h> <esc>:KittyNavigateLeft<cr>i
+    inoremap <silent> <C-j> <esc>:KittyNavigateDown<cr>i
+    inoremap <silent> <C-k> <esc>:KittyNavigateUp<cr>i
+    inoremap <silent> <C-l> <esc>:KittyNavigateRight<cr>i
 elseif !empty($TMUX)
     tnoremap <silent> <C-h> <C-w>:TmuxNavigateLeft<cr>
     tnoremap <silent> <C-j> <C-w>:TmuxNavigateDown<cr>
     tnoremap <silent> <C-k> <C-w>:TmuxNavigateUp<cr>
     tnoremap <silent> <C-l> <C-w>:TmuxNavigateRight<cr>
+    vnoremap <silent> <C-h> <esc>:TmuxNavigateLeft<cr>
+    vnoremap <silent> <C-j> <esc>:TmuxNavigateDown<cr>
+    vnoremap <silent> <C-k> <esc>:TmuxNavigateUp<cr>
+    vnoremap <silent> <C-l> <esc>:TmuxNavigateRight<cr>
+    inoremap <silent> <C-h> <esc>:TmuxNavigateLeft<cr>i
+    inoremap <silent> <C-j> <esc>:TmuxNavigateDown<cr>i
+    inoremap <silent> <C-k> <esc>:TmuxNavigateUp<cr>i
+    inoremap <silent> <C-l> <esc>:TmuxNavigateRight<cr>i
 else
     nnoremap <silent> <C-h> <C-w><C-h>
     nnoremap <silent> <C-j> <C-w><C-j>
@@ -691,10 +736,29 @@ inoremap <F10> <Nop>
 nnoremap <F10> <Nop>
 vnoremap <F10> <Nop>
 
-inoremap <F11> <Nop>
-nnoremap <F11> <Nop>
+inoremap <F11> <esc>:bnext<cr>
+inoremap <S-F11> <esc>:bprev<cr>
+nnoremap <F11> :bnext<cr>
+nnoremap <S-F11> :bprev<cr>
 vnoremap <F11> <Nop>
 
+" Using in gnome to map to gTile, hence do not use
 inoremap <F12> <Nop>
 nnoremap <F12> <Nop>
 vnoremap <F12> <Nop>
+
+
+" MISTAKES
+iabbrev gutemberg gutenberg
+iabbrev Gutemberg Gutenberg
+iabbrev GUTEMBERG GUTENBERG
+
+if &shell =~# 'fish$'
+    set shell=/bin/bash
+endif
+
+
+
+"if &shell =~? 'xonsh'
+"    set shell=/home/igor/.local/share/xonsh-vim-read/xonsh-vim-read
+"endif
