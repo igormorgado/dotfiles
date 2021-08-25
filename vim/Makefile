@@ -1,12 +1,13 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
-vimfiles = vimrc ctags
-vimfiledir = after ftplugin spell syntax ftdetect indent
+vimfiles = ctags
+vimfiledir = vimrc after ftplugin spell syntax ftdetect indent
 
 all: vim
 clean: vimclean 
 
 vim:
+	@mkdir -p ${HOME}/.vim
 	@mkdir -p ${HOME}/.tmp/vim/gutentags
 	curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 		https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim

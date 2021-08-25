@@ -1,10 +1,10 @@
 TOPTARGETS := all clean
 
-TERMINAL = 
+TERMINAL = vim
 XWIN = fonts
 EXTRA := todo
 
-PACKS := $(TERMINAL)
+PACKS := vim
 
 
 # TODO
