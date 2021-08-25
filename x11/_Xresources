@@ -1,0 +1,156 @@
+! Some niceties
+! C-M to maximize  window
+! C-R to restore window
+! Mouse selects to clipboard AND primary
+! C-S-C copy
+! C-S-V paste (as windoze expects)
+*VT100.translations: #override \n\\
+    Ctrl <Key>M: 	maximize() \n\\
+    Ctrl Shift <Key>M: 	restore() \n\\
+    Ctrl Alt <Key>S: 	secure() \n\\
+    Ctrl Shift <Key>C: 	copy-selection(CLIPBOARD) \n\\
+    Ctrl Shift <Key>V: 	insert-selection(CLIPBOARD) \n\\
+    <Btn1Up>: 		select-end(PRIMARY, CLIPBOARD, CUT_BUFFER0) \n\\
+    Ctrl Shift <Btn1Up>:      exec-formatted("xdg-open '%t'", PRIMARY) \n
+
+*.termName: xterm-256color
+
+*VT100.utf8:       2
+*VT100.locale: true
+
+!! Number of lines saved
+*VT100.saveLines: 16384
+
+!! No scroolbars please
+*VT100.scrollBar: false
+*VT100.scrollbar.width: 8
+
+*VT100.geometry: 80x24
+
+!! Copy to X clipboard not primary
+*VT100.selectToClipboard: true
+
+*VT100.loginShell: true
+*VT100.eightBitInput: false
+
+! Bell is urgent
+*VT100.bellIsUrgent: true
+
+! Blink Cursor is so OldSchool (Tm)
+*VT100.cursorBlink: True
+
+*VT100.charClass: 33:48,35-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+!! Select URLs too on 3 clicks
+!!UXTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]!#+,./=?@_~-]|(%[[:xdigit:]][[:xdigit:]]))+
+*VT100.on2Clicks:  regex [^/@ \n]+
+*VT100.on3Clicks:  regex [^ \n]+
+*VT100.on4Clicks:  regex [^#$]+
+*VT100.on5Clicks:  line
+
+
+!! ##############################################################
+!! FONTS!
+!! ##############################################################
+
+!! Fonts settings
+*VT100.forceBoxChars : true 
+
+*VT100.boldMode: true
+
+*VT100.colorULMode: false
+*VT100.colorITMode: false
+*VT100.colorBDMode: false
+
+
+
+!! Font selection
+
+!! Font height tunning
+*.scaleHeight: 1.01
+
+Xft.dpi: 110
+Xft.autohint: 1
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
+! TTF Font
+!*VT100.renderFont: true 
+!*faceName:			xft:Fira Mono:pixelsize=14:antialias=true
+!*facesize: 14
+
+! Terminus !
+! *font1: nil2
+XTerm*font: -*-terminus-medium-*-*-*-18-*-*-*-*-*-iso10646-1
+XTerm*font1: -*-terminus-medium-*-*-*-10-*-*-*-*-*-iso10646-1
+XTerm*font2: -*-terminus-medium-*-*-*-14-*-*-*-*-*-iso10646-1
+XTerm*font3: -*-terminus-medium-*-*-*-22-*-*-*-*-*-iso10646-1
+XTerm*font4: -*-terminus-medium-*-*-*-24-*-*-*-*-*-iso10646-1
+XTerm*font5: -*-terminus-medium-*-*-*-32-*-*-*-*-*-iso10646-1
+XTerm*font6: -*-terminus-medium-*-*-*-40-*-*-*-*-*-iso10646-1
+
+UXTerm*font: -*-terminus-medium-*-*-*-18-*-*-*-*-*-iso10646-1
+UXTerm*font1: -*-terminus-medium-*-*-*-10-*-*-*-*-*-iso10646-1
+UXTerm*font2: -*-terminus-medium-*-*-*-14-*-*-*-*-*-iso10646-1
+UXTerm*font3: -*-terminus-medium-*-*-*-22-*-*-*-*-*-iso10646-1
+UXTerm*font4: -*-terminus-medium-*-*-*-24-*-*-*-*-*-iso10646-1
+UXTerm*font5: -*-terminus-medium-*-*-*-32-*-*-*-*-*-iso10646-1
+UXTerm*font6: -*-terminus-medium-*-*-*-40-*-*-*-*-*-iso10646-1
+UXTerm*font7: -*-terminus-medium-*-*-*-48-*-*-*-*-*-iso10646-1
+
+*fontMenu.Label: VT Fonts
+*fontMenu*fontdefault*Label: Default
+*fontMenu*font1*Label: Unreadable
+*fontMenu*font2*Label: 14-px
+*fontMenu*font3*Label: 22-px
+*fontMenu*font4*Label: 24-px
+*fontMenu*font5*Label: 32-px
+*fontMenu*font6*Label: 40-px
+*fontMenu*font7*Label: HUUUGE
+
+
+! Check these colors
+*fadeColor: #002b36
+*pointerColorBackground: #586e75
+*pointerColorForeground: #93a1a1
+
+! special
+*.foreground:   #e3e3e3
+*.background:   #121212
+*.cursorColor:  #e3e3e3
+
+! black
+*.color0:       #121212
+*.color8:       #383838
+
+! red
+*.color1:       #ff7c59
+*.color9:       #b51530
+
+! green
+*.color2:       #48d56b
+*.color10:      #076b47
+
+! yellow
+*.color3:       #ffb94c
+*.color11:      #934305
+
+! blue
+*.color4:       #84a7f2
+*.color12:      #10237a
+
+! magenta
+*.color5:       #ff66e4
+*.color13:      #9700b7
+
+! cyan
+*.color6:       #39e7d8
+*.color14:      #005c7d
+
+! white
+*.color7:       #e3e3e3
+*.color15:      #f1f1f1
+

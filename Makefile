@@ -1,7 +1,7 @@
 TOPTARGETS := all clean
 
-TERMINAL = vim
-XWIN = fonts
+TERMINAL = fish vim
+XWIN = x11 fonts
 EXTRA := todo
 
 PACKS := vim

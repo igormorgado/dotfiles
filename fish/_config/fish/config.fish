@@ -1,7 +1,8 @@
 xrdb ~/.Xresources
 
-set -U fish_user_paths $HOME/bin $HOME/.local/bin $fish_user_paths
-set -gx MC_SKIN /home/igor/.config/mc/solarized.ini
+set EDITOR vim
+#set -U fish_user_paths $HOME/bin $HOME/.local/bin $fish_user_paths
+# set -gx MC_SKIN /home/igor/.config/mc/solarized.ini
 set SHELL /usr/bin/fish
 
 fish_vi_key_bindings
