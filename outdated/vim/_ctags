@@ -1,0 +1,14 @@
+--recurse=yes
+--exclude=.git
+--exclude=vendor/*
+--exclude=node_modules/*
+--exclude=db/*
+--exclude=log/*
+--langmap=c++:+.cu 
+--langmap=c++:+.cuh 
+--langmap=c++:+.CU 
+--langmap=c++:+.CUH 
+--langmap=c++:+.cl 
+--langmap=c++:+.clh 
+--langmap=c++:+.CL 
+--langmap=c++:+.CLH 

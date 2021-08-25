@@ -1,8 +1,8 @@
 TOPTARGETS := all clean
 
-TERMINAL = 
-XWIN = fonts
-EXTRA := todo
+TERMINAL = bin bash vim mc python tmux git pinfo mutt weechat
+XWIN = x11
+EXTRA := alacritty cgg gcp terminology todo
 
 PACKS := $(TERMINAL)
 
@@ -23,10 +23,7 @@ all: $(TERMINAL) $(XWIN)
 
 .PHONY: $(TOPTARGETS) $(PACKS)
 
-debian:
-	grep -v "#" debian_packages.txt | xargs sudo apt-get install -y 
-
-arch:
-	grep -v "#" arch_packages.txt | xargs sudo pacman -S --noconfirm
+debinstall:
+	grep -v "#" packages.txt | xargs sudo apt-get install -y 
 
 

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+FONTPATH="${HOME}/.local/share/fonts"
+FONTFNAME="FiraSans-Bold.otf"
+FONTNAME=${FONTFNAME/.otf/}
+PTOS=( 12 14 16 18 20 22 24 28 32 )
+for pt in ${PTOS[*]}; do
+	echo $pt
+	grub-mkfont -s ${pt} -o /boot/grub/${FONTNAME}_${pt}.pf2 ${FONTPATH}/${FONTFNAME}
+done
