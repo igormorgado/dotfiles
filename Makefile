@@ -1,7 +1,7 @@
 TOPTARGETS := all clean
 
-TERMINAL = fish vim
-XWIN = x11 fonts
+TERMINAL = fish vim tmux
+XWIN = x11 fonts kitty
 EXTRA := todo
 
 PACKS := vim

@@ -412,7 +412,7 @@ if &termguicolors
 endif
 "
 " Use Gruvbox colorscheme
-colorscheme gruvbox
+"colorscheme gruvbox
 " Enable syntax
 syntax on
 set synmaxcol=200
