@@ -1,3 +1,5 @@
 function fish_greeting  --description 'Fish greeting'
-    cbonsai -p
+    if set -q DISPLAY
+        cbonsai -p
+    end
 end

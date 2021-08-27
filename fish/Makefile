@@ -11,16 +11,22 @@ files = _config/fish/functions/fish_greeting.fish \
         _config/fish/functions/fish_prompt.fish \
         _config/fish/functions/fish_right_prompt.fish \
 	_config/fish/functions/fish_user_key_bindings.fish \
-	_config/fish/config.fish
+	_config/fish/config.fish \
+        _dir_colors \
+	_inputrc
 
 all: install
 clean: cleanup
 
+test:
+	$(foreach f,$(files),echo rm ${HOME}/$(patsubst _%,.%,$(f)) ;)
+	$(foreach f,$(dirs), echo rmdir --ignore-fail-on-non-empty $(realpath ${HOME}/$(patsubst _%,.%,$(f))) ;)
+
 install:
 	$(foreach f,$(files),mkdir -p ${HOME}/$(dir $(patsubst _%,.%,$(f))) ;)
-	$(foreach f,$(files),ln -sf $(dir $(mkfile_path))$(f) $(realpath ${HOME}/$(dir $(patsubst _%,.%,$(f)))) ;)
+	$(foreach f,$(files),ln -s $(realpath $(dir $(mkfile_path))$(f)) ${HOME}/$(patsubst _%,.%,$(f)) ;)
 
 cleanup:
-	$(foreach f,$(files),rm  -f ${HOME}/$(patsubst _%,.%,$(f)) ;)
-	$(foreach f,$(dirs),rmdir --ignore-fail-on-non-empty $(realpath ${HOME}/$(dir $(patsubst _%,.%,$(f)))) ;)
+	$(foreach f,$(files),rm ${HOME}/$(patsubst _%,.%,$(f)) ;)
+	$(foreach f,$(dirs),rmdir --ignore-fail-on-non-empty $(realpath ${HOME}/$(patsubst _%,.%,$(f))) ;)
 

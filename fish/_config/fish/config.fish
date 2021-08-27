@@ -16,13 +16,27 @@ set fish_color_prompt green
 set fish_color_git blue
 
 set EDITOR vim
+set GIT_EDITOR vim
 set SHELL /usr/bin/fish
+set NMON vcmknt.
 
-#set -U fish_user_paths $HOME/bin $HOME/.local/bin $fish_user_paths
+export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
+
+fish_add_path $HOME/bin
+fish_add_path $HOME/.local/bin
+
+set -gx PAGER less
 # set -gx MC_SKIN /home/igor/.config/mc/solarized.ini
+#
+if set -q DISPLAY
+    if test -r ~/.Xresources
 
-if test -r ~/.Xresources
-    xrdb ~/.Xresources
+        xrdb ~/.Xresources
+    end
+end
+
+if test -r ~/.dir_colors
+    eval (dircolors $HOME/.dir_colors)
 end
 
 # Aliases
