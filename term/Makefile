@@ -1,17 +1,8 @@
 mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
-dirs = _config/fish/completions \
-       _config/fish/conf.d \
-       _config/fish/functions \
-       _config/fish
-
-files = _config/fish/functions/fish_greeting.fish \
-        _config/fish/functions/fish_mode_prompt.fish \
-        _config/fish/functions/fish_prompt.fish \
-        _config/fish/functions/fish_right_prompt.fish \
-	_config/fish/functions/fish_user_key_bindings.fish \
-	_config/fish/config.fish 
+dirs = 
+files = _dir_colors 
 
 all: install
 clean: cleanup

@@ -1,10 +1,10 @@
 TOPTARGETS := all clean
 
-TERMINAL = fish vim tmux
-XWIN = x11 fonts kitty
-EXTRA := todo
+TERMINAL = term fish tmux
+XWIN = 
+EXTRA := 
 
-PACKS := vim
+PACKS := 
 
 
 # TODO

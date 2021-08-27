@@ -20,14 +20,14 @@ set GIT_EDITOR vim
 set SHELL /usr/bin/fish
 set NMON vcmknt.
 
-export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
+set XLA_FLAGS --xla_gpu_cuda_data_dir=/usr/lib/cuda
 
 fish_add_path $HOME/bin
 fish_add_path $HOME/.local/bin
 
 set -gx PAGER less
 # set -gx MC_SKIN /home/igor/.config/mc/solarized.ini
-#
+
 if set -q DISPLAY
     if test -r ~/.Xresources
 
@@ -36,7 +36,7 @@ if set -q DISPLAY
 end
 
 if test -r ~/.dir_colors
-    eval (dircolors $HOME/.dir_colors)
+    eval (dircolors -c $HOME/.dir_colors)
 end
 
 # Aliases

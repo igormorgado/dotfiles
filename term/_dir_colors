@@ -30,6 +30,7 @@ TERM konsole-256color
 TERM kterm
 TERM linux
 TERM linux-c
+TERM linux-16color
 TERM mach-color
 TERM mlterm
 TERM nxterm
@@ -84,6 +85,23 @@ EIGHTBIT 1
 # Background color codes:
 #   40=black 41=red 42=green 43=yellow 44=blue 45=magenta 46=cyan 47=white
 #
+# Some guidance:
+#
+# RED
+# YELLOW
+# BLUE
+# MAGENTA
+# CYAN
+# WHITE		Ascii text document
+# B RED		
+# GREEN		source code
+# B GREEN	executables
+# B YELLOW
+# B MAGENTA
+# B CYAN
+# B WHITE
+#
+#
 ### By file type
 
 # global default
@@ -91,9 +109,9 @@ NORMAL 00
 # normal file
 FILE 00
 # directory
-DIR 34
+DIR 1;37
 # symbolic link
-LINK 35
+LINK 4;37
 
 # pipe, socket, block device, character device (blue bg)
 FIFO 36
@@ -117,13 +135,14 @@ OTHER_WRITABLE 44;30
 ### By file attributes
 
 # files with execute permission
-EXEC 01;31  # Unix
-.cmd 01;31  # Win
-.exe 01;31  # Win
-.com 01;31  # Win
-.bat 01;31  # Win
-.reg 01;31  # Win
-.app 01;31  # OSX
+EXEC 01;32  # Unix
+.cmd 01;32  # Win
+.exe 01;32  # Win
+.com 01;32  # Win
+.bat 01;32  # Win
+.reg 01;32  # Win
+.app 01;32  # OSX
+.jar 01;32  # Java code
 
 #############################################################################
 ### By extension
@@ -135,10 +154,10 @@ EXEC 01;31  # Unix
 ### Text formats
 
 # Text that we can edit with a regular editor
-.txt 32
-.org 32
-.md 32
-.mkd 32
+.txt 00
+.org 00
+.md 00
+.mkd 00
 
 # Source text
 .h 32
@@ -296,7 +315,6 @@ EXEC 01;31  # Unix
 .gem  1;35
 .gz   1;35
 .iso  1;35
-.jar  1;35
 .msi  1;35  # Win
 .rar  1;35
 .rpm  1;35
