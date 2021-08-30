@@ -58,10 +58,10 @@ setlocal tags=./tags;tags;
 "          \/usr/lib/gcc/x86_64-linux-gnu/10/include,
 
 
-augroup trailspaces
-    autocmd!
-    autocmd BufWritePre  <buffer> * %s/\s\+$//e
-augroup END
+"#augroup trailspaces
+"#    autocmd!
+"#    autocmd BufWritePre <buffer> * %s/\s\+$//e
+"#augroup END
 
 " Open c-type files...
 nnoremap <Leader>oc :e %<.c<CR>

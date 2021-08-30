@@ -143,6 +143,15 @@ highlight    SpecialKey        term=NONE       ctermfg=8        ctermbg=0     ct
 highlight    QuickFixLine      term=NONE       ctermfg=NONE     ctermbg=1     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
 highlight    Terminal          term=NONE       ctermfg=2        ctermbg=13    cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
 
+"
+" PLUGINS
+"
+
+" Illuminated
+highlight illuminatedWord      term=NONE     ctermfg=NONE  ctermbg=8     cterm=bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
+highlight illuminatedCurWord   term=NONE     ctermfg=NONE  ctermbg=8     cterm=bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
+
+
 " COC
 " highlight CocErrorHighlight guifg=#A8334C guibg=NONE guisp=NONE gui=underline
 " highlight CocHintHighlight guifg=#88507D guibg=NONE guisp=NONE gui=underline
@@ -213,3 +222,4 @@ highlight    Terminal          term=NONE       ctermfg=2        ctermbg=13    ct
 " highlight NormalFloat guifg=NONE guibg=#E1DCD9 guisp=NONE gui=NONE
 " highlight FloatBorder guifg=#786D68 guibg=NONE guisp=NONE gui=NONE
 " highlight IndentBlanklineChar term=NONE ctermfg=NONE ctermbg=NONE cterm=NONE guifg=NONE guibg=NONE guisp=NONE gui=NONE
+

@@ -42,6 +42,7 @@ filetype on
 " Loads the file im $VIMRUNTIME/ftplugin/filetype.vim
 filetype plugin indent on
 
+
 runtime macros/matchit.vim
 
 " Plug-in load
@@ -70,8 +71,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'kristijanhusak/vim-dirvish-git'
     " Shows mark information in sign column
     Plug 'kshenoy/vim-signature'
-    " Gruvbox theme
-    Plug 'morhetz/gruvbox'
     " Quickfix enhancements
     Plug 'romainl/vim-qf'
     " Colorize current word occurrence
@@ -92,13 +91,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'igormorgado/valgrind.vim'
     " Auto disable hlsearch
     Plug 'romainl/vim-cool'
-    " Python pep8
-    Plug 'Vimjas/vim-python-pep8-indent'
     " Linting
-    Plug 'dense-analysis/ale'
-    let g:ale_set_loclist = 0
-    let g:ale_set_quickfix = 1
-    let g:ale_open_list = 1
+"    Plug 'dense-analysis/ale'
+"    let g:ale_set_loclist = 0
+"    let g:ale_set_quickfix = 1
+"    let g:ale_open_list = 1
 
 
     " AUTOCOMPLETE HELPER
@@ -190,10 +187,19 @@ call plug#begin('~/.vim/plugged')
     " ...
 
     " Python
+    " Auto completion
     Plug 'davidhalter/jedi-vim'
     let g:jedi#use_splits_not_buffers = "top"
+    " Folding
     Plug 'tmhedberg/SimpylFold'
-    "Plug 'nvie/vim-flake8'
+    " Identation
+    Plug 'Vimjas/vim-python-pep8-indent'
+    " Linting
+    Plug 'ambv/black'
+    " Static Checker
+    Plug 'nvie/vim-flake8'
+    "NEED TO CUSTOMIZE FLAKE8 ... check  https://github.com/nvie/vim-flake8
+
     " Latex
     "Plug 'inkarkat/vim-ingo-library'
     "Plug 'inkarkat/vim-SpellCheck'
@@ -203,7 +209,7 @@ call plug#begin('~/.vim/plugged')
     "Plug 'othree/xml.vim'
     "Plug 'chrisbra/vim-xml-runtime'
 call plug#end()
-"
+
 
 " Settings
 
@@ -274,7 +280,7 @@ set path=.,,
 set splitbelow
 set splitright
 set showtabline=1
-
+" 
 " Buffer numbering
 set numberwidth=5
 set number
@@ -327,9 +333,6 @@ if has("autocmd")
         \ endif
       augroup END
 endif
-"
-
-"
 
 " Color scheme configuration
 
@@ -351,7 +354,6 @@ elseif ($COLORTERM ==? 'truecolor' || $COLORTERM ==? '24bit' || has("gui"))
 endif
 
 
-
 set clipboard^=unnamedplus
 " Only set the interface when starting
 if has("gui_running") && has('vim_starting')
@@ -366,12 +368,12 @@ if has("gui_running") && has('vim_starting')
     " Do note enable kitty/tmux motion
 
 endif
-
+ 
 " Enable syntax
 syntax on
 set synmaxcol=200
 
-"
+
 
 " Plugin settings
 
@@ -414,24 +416,23 @@ set synmaxcol=200
     nmap <buffer> } <Plug>(qf_next_file)
     let g:qf_mapping_ack_style = 1
 " endif
-"
 
+ 
 " Colors
 " if exists('g:loaded_fugitive')
     let g:fugitive_dynamic_colors = 1
 " endif
-
+" 
 let g:Illuminate_ftblacklist = ['dirvish', 'json', 'dircolors']
 let g:Illuminate_highlightUnderCursor = 1
+let g:Illuminate_delay = 2
 
-augroup illuminate_augroup
-    autocmd!
-    autocmd VimEnter * hi link illuminatedWord StatusLine
-augroup END
+colorscheme dark_trial
 
+
+" Faster loads large files
 augroup LargeFile
         let g:large_file = 10485760 " 10MB
-
         " Set options:
         "   eventignore+=FileType (no syntax highlighting etc
         "   assumes FileType always on)
@@ -448,9 +449,8 @@ augroup LargeFile
                         \ set eventignore-=FileType |
                 \ endif
 augroup END
-"
 
-
+ 
 " Clang Autocomplete
 
 " CLANG justmao
@@ -640,22 +640,22 @@ inoremap <expr> <Right> pumvisible() ? "<C-y>" : ""
 " \}
 
 
-
+" 
 " Function keys
-" " ======================================================================
-" " Standard functions keys in APPS
-" " <F1> Help
-" " <F2> Toggle Paste
-" " <F3> Show Buffers
-" " <F4>
-" " <F5> Build/Execute/Refresh
-" " <F6>
-" " <F7> Spellcheck
-" " <F8>
-" " <F9>
-" " <F10>
-" " <F11>
-" " <F12>
+" ======================================================================
+" Standard functions keys in APPS
+" <F1> Help
+" <F2> Toggle Paste
+" <F3> Show Buffers
+" <F4>
+" <F5> Build/Execute/Refresh
+" <F6>
+" <F7> Spellcheck
+" <F8>
+" <F9>
+" <F10>
+" <F11>
+" <F12>
 "
 " Fast Buffers access
 inoremap <F3> <ESC>:buffers<CR>:buffer<Space>
@@ -709,8 +709,8 @@ iabbrev GUTEMBERG GUTENBERG
 if &shell =~# 'fish$'
     set shell=/bin/bash
 endif
-
-
+" 
+" 
 nmap <C-S-P> :call <SID>SynStack()<CR>
 function! <SID>SynStack()
     if !exists("*synstack")
@@ -720,8 +720,7 @@ function! <SID>SynStack()
 endfunc
 
 
-"if &shell =~? 'xonsh'
-"    set shell=/home/igor/.local/share/xonsh-vim-read/xonsh-vim-read
-"endif
+if &shell =~? 'xonsh'
+   set shell=/home/igor/.local/share/xonsh-vim-read/xonsh-vim-read
+endif
 
-colorscheme dark_trial
