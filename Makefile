@@ -1,7 +1,7 @@
 TOPTARGETS := all clean
 
-TERMINAL = term fish tmux
-XWIN = 
+TERMINAL = term fish tmux vim git
+XWIN = fonts x11
 EXTRA := 
 
 PACKS := 
