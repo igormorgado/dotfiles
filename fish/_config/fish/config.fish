@@ -41,3 +41,4 @@ end
 
 # Aliases
 alias cp='rsync --progress --recursive --archive'
+alias ls='ls -F --color=tty'

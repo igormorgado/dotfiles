@@ -45,16 +45,16 @@ if has('terminal')
                 \ ]
 endif
 
-"          Text                                                                                                            
+" Text                                                                                                            
 highlight  Normal      term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE         guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=NONE
 highlight  Bold        term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=bold         guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=bold
 highlight  Italic      term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=italic       guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=italic
 highlight  Underlined  term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=underline    guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=underline
 highlight  Conceal     term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=bold,italic  guifg=NONE     guibg=NONE     guisp=NONE  gui=bold,italic
 
-"           Interface                                                                                                             
+" Interface                                                                                                             
 highlight   ColorColumn       term=NONE       ctermfg=3     ctermbg=NONE  cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   CursorColumn      term=NONE       ctermfg=NONE  ctermbg=8     cterm=NONE       guifg=NONE  guibg=#505050  guisp=NONE  gui=NONE
+highlight   CursorColumn      term=NONE       ctermfg=NONE  ctermbg=8     cterm=NONE       guifg=NONE  guibg=NONE  guisp=NONE  gui=NONE
 highlight   CursorLine        term=underline  ctermfg=NONE  ctermbg=NONE  cterm=underline  guifg=NONE  guibg=NONE     guisp=NONE  gui=underline
 highlight   Cursor            term=NONE       ctermfg=NONE  ctermbg=4     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
 highlight   lCursor           term=NONE       ctermfg=NONE  ctermbg=4     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
@@ -76,7 +76,7 @@ highlight   WildMenu          term=NONE       ctermfg=7     ctermbg=14    cterm=
 highlight   TabLineFill       term=NONE       ctermfg=0     ctermbg=0     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
 highlight   TabLine           term=bold       ctermfg=7     ctermbg=8     cterm=bold       guifg=NONE  guibg=NONE     guisp=NONE  gui=bold
 highlight   TabLineSel        term=bold       ctermfg=7     ctermbg=4     cterm=bold       guifg=NONE  guibg=NONE     guisp=NONE  gui=bold
-highlight   VertSplit         term=NONE       ctermfg=0     ctermbg=7     guifg=NONE       guibg=NONE  guisp=NONE     gui=NONE    
+highlight   VertSplit         term=NONE       ctermfg=0     ctermbg=7     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE    
 highlight   Title             term=NONE       ctermfg=8     ctermbg=4     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
 highlight   Pmenu             term=NONE       ctermfg=NONE  ctermbg=8     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
 highlight   PmenuSel          term=NONE       ctermfg=4     ctermbg=8     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
@@ -84,8 +84,8 @@ highlight   PmenuThumb        term=NONE       ctermfg=7     ctermbg=15    cterm=
 highlight   PmenuSbar         term=NONE       ctermfg=4     ctermbg=15    cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
 
 " Navigation                                                                                               
-highlight   IncSearch   term=NONE     ctermfg=NONE  ctermbg=8     cterm=bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
-highlight   Search      term=NONE     ctermfg=NONE  ctermbg=8     cterm=bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
+highlight   IncSearch   term=NONE     ctermfg=NONE  ctermbg=NONE     cterm=reverse,bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
+highlight   Search      term=NONE     ctermfg=NONE  ctermbg=NONE     cterm=reverse,bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
 highlight   Visual      term=reverse  cterm=NONE    ctermbg=NONE  cterm=reverse  guifg=NONE  guibg=NONE  guisp=NONE  gui=reverse
 highlight!  link        VisualNOS     Visual                                                                         
 
@@ -148,9 +148,8 @@ highlight    Terminal          term=NONE       ctermfg=2        ctermbg=13    ct
 "
 
 " Illuminated
-highlight illuminatedWord      term=NONE     ctermfg=NONE  ctermbg=8     cterm=bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
-highlight illuminatedCurWord   term=NONE     ctermfg=NONE  ctermbg=8     cterm=bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
-
+highlight  illuminatedWord     term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=reverse,bold  guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
+highlight  illuminatedCurWord  term=NONE  ctermfg=3     ctermbg=NONE  cterm=reverse,bold  guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
 
 " COC
 " highlight CocErrorHighlight guifg=#A8334C guibg=NONE guisp=NONE gui=underline
