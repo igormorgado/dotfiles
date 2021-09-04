@@ -268,6 +268,7 @@ set undolevels=1000
 set virtualedit=block
 set hlsearch
 set incsearch
+set ignorecase
 set smartcase
 set wildmenu
 set wildmode=longest:full,full

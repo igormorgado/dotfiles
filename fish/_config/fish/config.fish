@@ -7,6 +7,7 @@ set fish_color_param white
 set fish_color_quote white --italics
 set fish_color_comment white --italics --dim
 set fish_color_selection --reverse
+set fish_color_rightprompt white --italics --dim
 
 set fish_color_user white --dim
 set fish_color_host white --dim

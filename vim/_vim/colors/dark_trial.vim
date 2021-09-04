@@ -46,110 +46,115 @@ if has('terminal')
 endif
 
 " Text                                                                                                            
-highlight  Normal      term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=NONE         guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=NONE
-highlight  Bold        term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=bold         guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=bold
-highlight  Italic      term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=italic       guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=italic
-highlight  Underlined  term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=underline    guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=underline
-highlight  Conceal     term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=bold,italic  guifg=NONE     guibg=NONE     guisp=NONE  gui=bold,italic
+highlight  Normal      term=NONE  ctermfg=7  ctermbg=0  cterm=NONE         guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=NONE
+highlight  Bold        term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=bold         guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
+highlight  Italic      term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=italic       guifg=NONE  guibg=NONE  guisp=NONE  gui=italic
+highlight  Underlined  term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=underline    guifg=NONE  guibg=NONE  guisp=NONE  gui=underline
+highlight  Conceal     term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=bold,italic  guifg=NONE  guibg=NONE  guisp=NONE  gui=bold,italic
 
-" Interface                                                                                                             
-highlight   ColorColumn       term=NONE       ctermfg=3     ctermbg=NONE  cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   CursorColumn      term=NONE       ctermfg=NONE  ctermbg=8     cterm=NONE       guifg=NONE  guibg=NONE  guisp=NONE  gui=NONE
-highlight   CursorLine        term=underline  ctermfg=NONE  ctermbg=NONE  cterm=underline  guifg=NONE  guibg=NONE     guisp=NONE  gui=underline
-highlight   Cursor            term=NONE       ctermfg=NONE  ctermbg=4     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   lCursor           term=NONE       ctermfg=NONE  ctermbg=4     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight!  link              TermCursor      Cursor                                                                              
-highlight!  link              TermCursorNC    lCursor                                                                             
-highlight   NonText           term=NONE       ctermfg=NONE  ctermbg=NONE  cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   EndOfBuffer       term=NONE       ctermfg=NONE  ctermbg=NONE  cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   LineNr            term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   LineNrAbove       term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight!  link              LineNrBelow     LineNrAbove                                                                         
-highlight   CursorLineNr      term=NONE       ctermfg=3     ctermbg=0     cterm=bold       guifg=NONE  guibg=NONE     guisp=NONE  gui=bold
-highlight   SignColumn        term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   FoldColumn        term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   StatusLine        term=NONE       ctermfg=7     ctermbg=4     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   StatusLineNC      term=NONE       ctermfg=8     ctermbg=15    cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   StatusLineTerm    term=NONE       ctermfg=0     ctermbg=4     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   StatusLineTermNC  term=NONE       ctermfg=8     ctermbg=15    cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   WildMenu          term=NONE       ctermfg=7     ctermbg=14    cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   TabLineFill       term=NONE       ctermfg=0     ctermbg=0     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   TabLine           term=bold       ctermfg=7     ctermbg=8     cterm=bold       guifg=NONE  guibg=NONE     guisp=NONE  gui=bold
-highlight   TabLineSel        term=bold       ctermfg=7     ctermbg=4     cterm=bold       guifg=NONE  guibg=NONE     guisp=NONE  gui=bold
-highlight   VertSplit         term=NONE       ctermfg=0     ctermbg=7     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE    
-highlight   Title             term=NONE       ctermfg=8     ctermbg=4     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   Pmenu             term=NONE       ctermfg=NONE  ctermbg=8     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   PmenuSel          term=NONE       ctermfg=4     ctermbg=8     cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   PmenuThumb        term=NONE       ctermfg=7     ctermbg=15    cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
-highlight   PmenuSbar         term=NONE       ctermfg=4     ctermbg=15    cterm=NONE       guifg=NONE  guibg=NONE     guisp=NONE  gui=NONE
+" Interface {{{
+" TODO: I could not find a good match of colors for CursorColumn and
+" CursorLine in cterm mode. HEnce I have used underline. Feel free to
+" recommend better colors to fit this. But I think the 16 color pallete lacks
+" a 5th grey pattern not used in any foreground or background, otherwise some
+" texts become invisible. Reverse isn't also an option since it is used for
+" search, visual and other markings.
+" }}}
+highlight   ColorColumn       term=NONE       ctermfg=3     ctermbg=NONE  cterm=NONE       guifg=#ffb94c  guibg=NONE     guisp=NONE  gui=NONE
+highlight   CursorColumn      term=NONE       ctermfg=NONE  ctermbg=8     cterm=NONE       guifg=NONE     guibg=#303030  guisp=NONE  gui=NONE
+highlight   CursorLine        term=underline  ctermfg=NONE  ctermbg=NONE  cterm=underline  guifg=NONE     guibg=#303030  guisp=NONE  gui=NONE
+highlight   Cursor            term=NONE       ctermfg=NONE  ctermbg=4     cterm=NONE       guifg=NONE     guibg=#84a7f2  guisp=NONE  gui=NONE
+highlight   lCursor           term=NONE       ctermfg=NONE  ctermbg=4     cterm=NONE       guifg=NONE     guibg=#84a7f2  guisp=NONE  gui=NONE
+highlight!  link              TermCursor      Cursor                                                                                 
+highlight!  link              TermCursorNC    lCursor                                                                                
+highlight   NonText           term=NONE       ctermfg=NONE  ctermbg=NONE  cterm=NONE       guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
+highlight   EndOfBuffer       term=NONE       ctermfg=NONE  ctermbg=NONE  cterm=NONE       guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
+highlight   LineNr            term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=#505050  guibg=#121212  guisp=NONE  gui=NONE
+highlight   LineNrAbove       term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=#505050  guibg=#121212  guisp=NONE  gui=NONE
+highlight!  link              LineNrBelow     LineNrAbove                                                                            
+highlight   CursorLineNr      term=NONE       ctermfg=3     ctermbg=0     cterm=bold       guifg=#ffb94c  guibg=#121212  guisp=NONE  gui=bold
+highlight   SignColumn        term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=#505050  guibg=#121212  guisp=NONE  gui=NONE
+highlight   FoldColumn        term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=#505050  guibg=#121212  guisp=NONE  gui=NONE
+highlight   StatusLine        term=NONE       ctermfg=7     ctermbg=4     cterm=NONE       guifg=#f1f1f1  guibg=#84a7f2  guisp=NONE  gui=NONE
+highlight   StatusLineNC      term=NONE       ctermfg=8     ctermbg=15    cterm=NONE       guifg=#505050  guibg=#b3b3b3  guisp=NONE  gui=NONE
+highlight   StatusLineTerm    term=NONE       ctermfg=0     ctermbg=4     cterm=NONE       guifg=#121212  guibg=#84a7f2  guisp=NONE  gui=NONE
+highlight   StatusLineTermNC  term=NONE       ctermfg=8     ctermbg=15    cterm=NONE       guifg=#505050  guibg=#b3b3b3  guisp=NONE  gui=NONE
+highlight   WildMenu          term=NONE       ctermfg=7     ctermbg=14    cterm=NONE       guifg=#f1f1f1  guibg=#005c7d  guisp=NONE  gui=NONE
+highlight   TabLineFill       term=NONE       ctermfg=0     ctermbg=0     cterm=NONE       guifg=#121212  guibg=#121212  guisp=NONE  gui=NONE
+highlight   TabLine           term=bold       ctermfg=7     ctermbg=8     cterm=bold       guifg=#f1f1f1  guibg=#505050  guisp=NONE  gui=bold
+highlight   TabLineSel        term=bold       ctermfg=7     ctermbg=4     cterm=bold       guifg=#f1f1f1  guibg=#84a7f2  guisp=NONE  gui=bold
+highlight   VertSplit         term=NONE       ctermfg=0     ctermbg=7     cterm=NONE       guifg=#121212  guibg=#f1f1f1  guisp=NONE  gui=NONE
+highlight   Title             term=NONE       ctermfg=8     ctermbg=4     cterm=NONE       guifg=#505050  guibg=#84a7f2  guisp=NONE  gui=NONE
+highlight   Pmenu             term=NONE       ctermfg=NONE  ctermbg=8     cterm=NONE       guifg=NONE     guibg=#505050  guisp=NONE  gui=NONE
+highlight   PmenuSel          term=NONE       ctermfg=4     ctermbg=8     cterm=NONE       guifg=#84a7f2  guibg=#505050  guisp=NONE  gui=NONE
+highlight   PmenuThumb        term=NONE       ctermfg=7     ctermbg=15    cterm=NONE       guifg=#f1f1f1  guibg=#b3b3b3  guisp=NONE  gui=NONE
+highlight   PmenuSbar         term=NONE       ctermfg=4     ctermbg=15    cterm=NONE       guifg=#84a7f2  guibg=#b3b3b3  guisp=NONE  gui=NONE
 
 " Navigation                                                                                               
-highlight   IncSearch   term=NONE     ctermfg=NONE  ctermbg=NONE     cterm=reverse,bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
-highlight   Search      term=NONE     ctermfg=NONE  ctermbg=NONE     cterm=reverse,bold     guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
-highlight   Visual      term=reverse  cterm=NONE    ctermbg=NONE  cterm=reverse  guifg=NONE  guibg=NONE  guisp=NONE  gui=reverse
-highlight!  link        VisualNOS     Visual                                                                         
+highlight   IncSearch  term=NONE     ctermfg=NONE  ctermbg=NONE  cterm=reverse,bold  guifg=NONE  guibg=NONE  guisp=NONE  gui=reverse,bold
+highlight   Search     term=NONE     ctermfg=NONE  ctermbg=NONE  cterm=reverse,bold  guifg=NONE  guibg=NONE  guisp=NONE  gui=reverse,bold
+highlight   Visual     term=reverse  ctermfg=NONE  ctermbg=NONE  cterm=reverse       guifg=NONE  guibg=NONE  guisp=NONE  gui=reverse
+highlight!  link       VisualNOS     Visual                                                                              
 
 " Syntax                                                                                      
-highlight  Comment  term=NONE  ctermfg=8  ctermbg=0  cterm=italic  guifg=NONE  guibg=NONE  guisp=NONE  gui=italic
+highlight  Comment  term=NONE  ctermfg=8  ctermbg=0  cterm=italic  guifg=#505050  guibg=#121212  guisp=NONE  gui=italic
 
 " Groups String Character Number Boolean Float
-highlight    Constant          term=italic     ctermfg=7     ctermbg=NONE     cterm=italic       guifg=NONE     guibg=NONE     guisp=NONE  gui=italic
+highlight    Constant          term=italic     ctermfg=7     ctermbg=NONE     cterm=italic       guifg=#f1f1f1     guibg=NONE     guisp=NONE  gui=italic
 
 " Groups Function
-highlight    Identifier        term=NONE       ctermfg=4     ctermbg=NONE     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
+highlight    Identifier        term=NONE       ctermfg=4     ctermbg=NONE     cterm=NONE         guifg=#84a7f2     guibg=NONE     guisp=NONE  gui=NONE
 
 " Groups Conditional Repeat Label Operator Keyword Exception
-highlight    Statement         term=bold       ctermfg=7     ctermbg=NONE     cterm=bold         guifg=NONE     guibg=NONE     guisp=NONE  gui=bold
+highlight    Statement         term=bold       ctermfg=7     ctermbg=NONE     cterm=bold         guifg=#f1f1f1     guibg=NONE     guisp=NONE  gui=bold
 
 " Groups Include Define Macro PreCondit
-highlight    PreProc           term=NONE       ctermfg=7     ctermbg=NONE     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=bold
+highlight    PreProc           term=NONE       ctermfg=7     ctermbg=NONE     cterm=NONE         guifg=#f1f1f1     guibg=NONE     guisp=NONE  gui=bold
 
 " Groups StorageClass Structure Typedef
-highlight    Type              term=NONE       ctermfg=15    ctermbg=NONE     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
+highlight    Type              term=NONE       ctermfg=15    ctermbg=NONE     cterm=NONE         guifg=#b3b3b3     guibg=NONE     guisp=NONE  gui=NONE
 
 " Groups SpecialChar Tag Delimiter SpecialComment Debug
-highlight    Special           term=NONE       ctermfg=2     ctermbg=NONE     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight!  link              Whitespace      NonText
-
-highlight    MatchParen        term=NONE       ctermfg=0     ctermbg=3     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
+highlight   Special     term=NONE   ctermfg=2  ctermbg=NONE  cterm=NONE  guifg=#48d56b  guibg=NONE     guisp=NONE  gui=NONE
+highlight!  link        Whitespace  NonText                                                                        
+highlight   MatchParen  term=NONE   ctermfg=0  ctermbg=3     cterm=NONE  guifg=#121212  guibg=#ffb94c  guisp=NONE  gui=NONE
 
 " Messages
-highlight    Todo              term=bold       ctermfg=7     ctermbg=3     cterm=bold         guifg=NONE     guibg=NONE     guisp=NONE  gui=bold
-highlight    Error             term=bold       ctermfg=7     ctermbg=1     cterm=bold         guifg=NONE     guibg=NONE     guisp=NONE  gui=bold
-highlight!   link              ErrorMsg        Error
-highlight    WarningMsg        term=NONE       ctermfg=0     ctermbg=3     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight    MoreMsg           term=NONE       ctermfg=15    ctermbg=8     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight    ModeMsg           term=NONE       ctermfg=15    ctermbg=8     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight!   link              Question        MoreMsg
-highlight    Folded            term=bold       ctermfg=15    ctermbg=8     cterm=bold         guifg=NONE     guibg=NONE     guisp=NONE  gui=bold
+highlight   Todo        term=bold  ctermfg=7   ctermbg=3  cterm=bold  guifg=#f1f1f1  guibg=#ffb94c  guisp=NONE  gui=bold
+highlight   Error       term=bold  ctermfg=7   ctermbg=1  cterm=bold  guifg=#f1f1f1  guibg=#ff7c59  guisp=NONE  gui=bold
+highlight!  link        ErrorMsg   Error                                                                       
+highlight   WarningMsg  term=NONE  ctermfg=0   ctermbg=3  cterm=NONE  guifg=#121212  guibg=#ffb94c  guisp=NONE  gui=NONE
+highlight   MoreMsg     term=NONE  ctermfg=15  ctermbg=8  cterm=NONE  guifg=#b3b3b3  guibg=#505050  guisp=NONE  gui=NONE
+highlight   ModeMsg     term=NONE  ctermfg=15  ctermbg=8  cterm=NONE  guifg=#b3b3b3  guibg=#505050  guisp=NONE  gui=NONE
+highlight!  link        Question   MoreMsg                                                                      
+highlight   Folded      term=bold  ctermfg=15  ctermbg=8  cterm=bold  guifg=#b3b3b3  guibg=#505050  guisp=NONE  gui=bold
 
 " Filetypes
-highlight    Directory         term=bold       ctermfg=7     ctermbg=0     cterm=bold         guifg=NONE     guibg=NONE     guisp=NONE  gui=italic
+highlight  Directory  term=bold  ctermfg=7  ctermbg=0  cterm=bold  guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=italic
 
 " DIFF
-highlight    DiffAdd           term=NONE       ctermfg=NONE     ctermbg=10    cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight    DiffDelete        term=NONE       ctermfg=NONE     ctermbg=9     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight    DiffChange        term=NONE       ctermfg=NONE     ctermbg=14    cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight    DiffText          term=NONE       ctermfg=NONE     ctermbg=13     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
+highlight  DiffAdd     term=NONE  ctermfg=NONE  ctermbg=10  cterm=NONE  guifg=NONE  guibg=#076b47  guisp=NONE  gui=NONE
+highlight  DiffDelete  term=NONE  ctermfg=NONE  ctermbg=9   cterm=NONE  guifg=NONE  guibg=#b51530  guisp=NONE  gui=NONE
+highlight  DiffChange  term=NONE  ctermfg=NONE  ctermbg=14  cterm=NONE  guifg=NONE  guibg=#005c7d  guisp=NONE  gui=NONE
+highlight  DiffText    term=NONE  ctermfg=NONE  ctermbg=13  cterm=NONE  guifg=NONE  guibg=#9700b7  guisp=NONE  gui=NONE
 
 " Spelling
-highlight    SpellBad          term=NONE       ctermfg=NONE     ctermbg=9     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight    SpellRare         term=NONE       ctermfg=NONE     ctermbg=13    cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight    SpellLocal        term=NONE       ctermfg=NONE     ctermbg=13    cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight    SpellCap          term=NONE       ctermfg=NONE     ctermbg=13    cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-
-highlight    SpecialKey        term=NONE       ctermfg=8        ctermbg=0     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-
-highlight    QuickFixLine      term=NONE       ctermfg=NONE     ctermbg=1     cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
-highlight    Terminal          term=NONE       ctermfg=2        ctermbg=13    cterm=NONE         guifg=NONE     guibg=NONE     guisp=NONE  gui=NONE
+highlight  SpellBad      term=NONE  ctermfg=NONE  ctermbg=9   cterm=NONE  guifg=NONE     guibg=#b51530  guisp=NONE  gui=NONE
+highlight  SpellRare     term=NONE  ctermfg=NONE  ctermbg=13  cterm=NONE  guifg=NONE     guibg=#9700b7  guisp=NONE  gui=NONE
+highlight  SpellLocal    term=NONE  ctermfg=NONE  ctermbg=13  cterm=NONE  guifg=NONE     guibg=#9700b7  guisp=NONE  gui=NONE
+highlight  SpellCap      term=NONE  ctermfg=NONE  ctermbg=13  cterm=NONE  guifg=NONE     guibg=#9700b7  guisp=NONE  gui=NONE
+highlight  SpecialKey    term=NONE  ctermfg=8     ctermbg=0   cterm=NONE  guifg=#505050  guibg=#121212  guisp=NONE  gui=NONE
+highlight  QuickFixLine  term=NONE  ctermfg=NONE  ctermbg=1   cterm=NONE  guifg=NONE     guibg=#ff7c59  guisp=NONE  gui=NONE
+highlight  Terminal      term=NONE  ctermfg=2     ctermbg=13  cterm=NONE  guifg=#48d56b  guibg=#9700b7  guisp=NONE  gui=NONE
 
 "
 " PLUGINS
 "
 
 " Illuminated
-highlight  illuminatedWord     term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=reverse,bold  guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
-highlight  illuminatedCurWord  term=NONE  ctermfg=3     ctermbg=NONE  cterm=reverse,bold  guifg=NONE  guibg=NONE  guisp=NONE  gui=bold
+highlight  illuminatedWord     term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=reverse,bold  guifg=NONE     guibg=NONE  guisp=NONE  gui=reverse,bold
+highlight  illuminatedCurWord  term=NONE  ctermfg=3     ctermbg=NONE  cterm=reverse,bold  guifg=#ffb94c  guibg=NONE  guisp=NONE  gui=reverse,bold
+
 
 " COC
 " highlight CocErrorHighlight guifg=#A8334C guibg=NONE guisp=NONE gui=underline
@@ -182,7 +187,6 @@ highlight  illuminatedCurWord  term=NONE  ctermfg=3     ctermbg=NONE  cterm=reve
 " highlight! link LspReferenceText ColorColumn
 " highlight! link LspReferenceWrite ColorColumn
 
-"
 " GIT
 " highlight GitSignsAdd guifg=#617437 guibg=NONE guisp=NONE gui=NONE
 " highlight GitSignsChange guifg=#286486 guibg=NONE guisp=NONE gui=NONE
@@ -199,12 +203,12 @@ highlight  illuminatedCurWord  term=NONE  ctermfg=3     ctermbg=NONE  cterm=reve
 " highlight! link NeogitNotificationWarning LspDiagnosticsDefaultWarning
 
 " Barbar
-" highlight BufferVisible term=NONE ctermfg=8 ctermbg=6 cterm=NONE guifg=NONE guibg=NONE guisp=NONE gui=NONE
+" highlight BufferVisible term=NONE ctermfg=8 ctermbg=6 cterm=NONE guifg=#505050 guibg=#39e7d8 guisp=NONE gui=NONE
 " highlight BufferVisibleIndex guifg=#596A76 guibg=NONE guisp=NONE gui=NONE
 " highlight BufferVisibleSign guifg=#596A76 guibg=NONE guisp=NONE gui=NONE
 " highlight! link BufferCurrent TabLineSel
 
-" MisC
+" Misc
 " highlight SneakLabelMask guifg=#88507D guibg=#88507D guisp=NONE gui=NONE
 " highlight! link SneakLabel WildMenu
 " highlight! link Sneak Search
@@ -216,7 +220,6 @@ highlight  illuminatedCurWord  term=NONE  ctermfg=3     ctermbg=NONE  cterm=reve
 " highlight! link TSVariable Identifier
 " highlight! link TelescopeBorder FloatBorder
 " highlight! link TelescopeSelection CursorLine
-
 
 " highlight NormalFloat guifg=NONE guibg=#E1DCD9 guisp=NONE gui=NONE
 " highlight FloatBorder guifg=#786D68 guibg=NONE guisp=NONE gui=NONE
