@@ -5,7 +5,6 @@
 " TODO: Master vim grep
 " TODO: Spelling and +kspell in complete
 " TODO: If exists only works after vim is fully loaded. Since plugins just
-" TODO: Master dirvish
 " TODO: Omnifunc/Omnicomplete
 "       load in the en.Find a way to use something like that.
 
@@ -49,32 +48,12 @@ runtime macros/matchit.vim
 " To install plugins call
 " :PlugInstall
 call plug#begin('~/.vim/plugged')
-    " SUpport for fish
-    Plug 'dag/vim-fish'
-    " Support for vue
-    Plug 'posva/vim-vue'
-    " Support for xonsh file format in vim
-    Plug 'linkinpark342/xonsh-vim'
-    " Shows Git information in sign column
-    Plug 'airblade/vim-gitgutter'
-    " Navigate between tmux and vim windows
-    Plug 'christoomey/vim-tmux-navigator'
-    " My own documentation
-    Plug 'igormorgado/vim-hints'
-    " Use any repl with vim.
-    Plug 'jpalardy/vim-slime'
-    " An alternative to NETRW
-    Plug 'knubie/vim-kitty-navigator'
-    " Shows Git information in dirvish buffer
-    Plug 'justinmk/vim-dirvish'
-    " Navigate between kitty and vim windows
-    Plug 'kristijanhusak/vim-dirvish-git'
-    " Shows mark information in sign column
-    Plug 'kshenoy/vim-signature'
-    " Quickfix enhancements
-    Plug 'romainl/vim-qf'
-    " Colorize current word occurrence
-    Plug 'RRethy/vim-illuminate'
+    " Commentary operator management
+    Plug 'tpope/vim-commentary'
+    " Tags and surroundings
+    Plug 'tpope/vim-surround'
+    " ga over a char for info
+    Plug 'tpope/vim-characterize'
     " Suggar for Shell commands
     Plug 'tpope/vim-eunuch'
     " Git Integration
@@ -85,127 +64,125 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-repeat'
     " Complementary pairs
     Plug 'tpope/vim-unimpaired'
-    " Commentary operator management
-    Plug 'tpope/vim-commentary'
-    " Integrate Valgrind Debugger
-    Plug 'igormorgado/valgrind.vim'
+    " Alternative to netrw
+    Plug 'justinmk/vim-dirvish'
+    " Shows Git information in dirvish buffer
+    Plug 'kristijanhusak/vim-dirvish-git'
+    " Quickfix enhancements
+    Plug 'romainl/vim-qf'
     " Auto disable hlsearch
     Plug 'romainl/vim-cool'
-    " Linting
-"    Plug 'dense-analysis/ale'
-"    let g:ale_set_loclist = 0
-"    let g:ale_set_quickfix = 1
-"    let g:ale_open_list = 1
+    " Align by character
+    Plug 'tommcdo/vim-lion'
+    
+    " Navigations
+    " Navigate between tmux and vim windows
+    Plug 'christoomey/vim-tmux-navigator'
+    " Navigate in kitty using vim window hotkeys
+    Plug 'knubie/vim-kitty-navigator'
+    " Use any repl with vim.
+    Plug 'jpalardy/vim-slime'
 
+    " Sign column info
+    " Shows Git information in sign column
+    Plug 'airblade/vim-gitgutter'
+    " Shows mark information in sign column
+    Plug 'kshenoy/vim-signature'
 
-    " AUTOCOMPLETE HELPER
+    " Colorize current word occurrence
+    Plug 'RRethy/vim-illuminate'
+
+    " Integrate Valgrind Debugger
+    Plug 'igormorgado/valgrind.vim'
+    " My own documentation
+    Plug 'igormorgado/vim-hints'
+
+    " 
+    " File types support
     "
-    " Open automaticaly complete popup
-    " Too much interference when willing to press
-    " enter and tab.. need to check better configuration.
-    " user cTRL-e to close, maybe change to <ESC>?
-    Plug 'vim-scripts/AutoComplPop'
-    " Autocomplete
-    "Plug 'ackyshake/VimCompletesMe'
-    " Coding snippets - nned more stuff
-    " Plug 'garbas/vim-snipmate'
+    " SUpport for fish
+    Plug 'dag/vim-fish'
+    " Support for vue
+    Plug 'posva/vim-vue'
+    " Support for xonsh file format in vim
+    Plug 'linkinpark342/xonsh-vim'
+    " Meson
+    Plug 'igankevich/mesonic'
+
     "
-    " Struct ok
-    " Function ok
-    " Signatue Window yes
-    " arguments yes
-    " Jump tags Ok
-    "Plug 'xavierd/clang_complete'
-    set completeopt=menuone,preview,longest
-    set shortmess+=c
-    "let g:clang_library_path='/usr/lib/llvm-11/lib'
-    "let g:clang_complete_copen=1
-    "let g:clang_hl_errors=1
-    "let g:clang_auto_select=1
-    "let g:clang_close_preview=1
-    "let g:clang_snippets=1
-    "let g:clang_snippets_engine='clang_complete'
-
-
-    " CLANG!
-    "Plug 'justmao945/vim-clang'
-    "let g:clang_c_options = '-std=c11'
-    "let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
-    "let g:clang_c_completeopt = 'menuone,preview'
-    "let g:clang_load_if_clang_dotfile = 1
-    "let g:clang_verbose_pmenu = 1
-    "let g:clang_check_syntax_auto = 1
-    "let g:clang_pwheight = 6
-    "let g:clang_statusline = '%s\ \|\ %%l/\%%L\ \|\ %%p%%%%'
-"
-
+    " Programming help
+    "
     " AUTOCOMPLETE WARS (TO READ)
     " https://programmersought.com/article/11541994259/
     " https://www.thegeekstuff.com/2009/04/ctags-taglist-vi-vim-editor-as-sourece-code-browser/
     " https://stackoverflow.com/questions/934233/cscope-or-ctags-why-choose-one-over-the-other
+    
+    " Auto Autocomplete Popup when able
+    "Plug 'vim-scripts/AutoComplPop'
+    
+    " Autocomplete
+    "Plug 'ackyshake/VimCompletesMe'
+    
+    " Coding snippets - need more stuff
+    "Plug 'garbas/vim-snipmate'
+    
+    " Autocomplete using clang information
+    "Plug 'xavierd/clang_complete'
     "
+    " CLANG another CLAN autocomplete
+    "Plug 'justmao945/vim-clang'
+    
+    
     "
     " TAGS
     "
-    " Tags management
+    
+    " Automatic management to ctags
+    Plug 'ludovicchabant/vim-gutentags'
+
     "Plug 'LucHermitte/lh-tags'
     " Automatic tags management
     "Plug 'xolox/vim-easytags'
-    " Automatic management to ctags
-    "Plug 'ludovicchabant/vim-gutentags'
+    
+
     "
     " CALL GRAPHS
     "
+    
     " Automatic management to callgraph - Need cscope
     "Plug 'skywind3000/gutentags_plus'
     " Use binary call graph in Vim - Need ccglue
     "Plug 'hari-rangarajan/CCTree'
-    "
-    " TAG SIDEBAR
-    "
-    " Tag sidebar
-    "Plug 'preservim/tagbar'
-    " Another tag sidebar
-    "Plug 'mtth/taglist.vim '
-    " A sidebar to ctags
-    "Plug 'majutsushi/tagbar'
-    "
-    " SYNTAX CHECKER / STATIC CHECKER
-    "
-    " ...
-    "
-    " SYNTAX HIGHLIGHTER
-    "
-    " ...
-    "
-    " COMPILATION MANAGER
-    "
-    " ...
-    "
-    " DEBUGGER
-    "
-    " ...
 
+
+    "
     " Python
+    "
+
     " Auto completion
-    Plug 'davidhalter/jedi-vim'
-    let g:jedi#use_splits_not_buffers = "top"
-    " Folding
-    Plug 'tmhedberg/SimpylFold'
-    " Identation
-    Plug 'Vimjas/vim-python-pep8-indent'
-    " Linting
-    Plug 'ambv/black'
-    " Static Checker
-    Plug 'nvie/vim-flake8'
+    " Plug 'davidhalter/jedi-vim'
+    " let g:jedi#use_splits_not_buffers = "top"
+    " " Folding
+    " Plug 'tmhedberg/SimpylFold'
+    " " Identation
+    " Plug 'Vimjas/vim-python-pep8-indent'
+    " " Linting
+    " Plug 'ambv/black'
+    " " Static Checker
+    " Plug 'nvie/vim-flake8'
     "NEED TO CUSTOMIZE FLAKE8 ... check  https://github.com/nvie/vim-flake8
 
+
+    "
     " Latex
+    "
     "Plug 'inkarkat/vim-ingo-library'
     "Plug 'inkarkat/vim-SpellCheck'
-    " Meson
-    "Plug 'igankevich/mesonic'
+
+
+    "
     " XML
+    "
     "Plug 'othree/xml.vim'
     "Plug 'chrisbra/vim-xml-runtime'
 call plug#end()
@@ -228,12 +205,12 @@ set tags=.tags;tags;$HOME
 " Other many settings (TO ORGANIZE)
 set encoding=utf-8
 set fileformat=unix
-set signcolumn=yes
+set signcolumn=auto
 set foldcolumn=2
 
-set tabstop=8
-set shiftwidth=8
-set softtabstop=8
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 set noexpandtab
 set shiftround
 
@@ -245,6 +222,10 @@ set backspace=indent,eol,start
 set hidden
 set ruler
 
+" Auto complete settings
+set completeopt=menuone,preview,longest
+set shortmess+=c
+
 " Do not break words when wrapping (if wrapping)
 set linebreak
 
@@ -253,8 +234,8 @@ set showbreak=↪\
 set textwidth=80
 set colorcolumn=80
 
-set scrolloff=8
-set sidescroll=8
+set scrolloff=4
+set sidescroll=4
 
 set modeline
 " Need to find a coloscheme to cursorline not mess with colors in line.
@@ -366,63 +347,44 @@ if has("gui_running") && has('vim_starting')
     if has("gui_gtk3")
         set guifont=Fira\ Code\ weight\=453\ 12
     endif
-    " Do note enable kitty/tmux motion
-
 endif
  
 " Enable syntax
 syntax on
 set synmaxcol=200
 
-
-
 " Plugin settings
 
 " Slime configuration
-" if exists('loaded_slime')
-    let g:slime_target='vimterminal'
-    let g:slime_vimterminal_config={"term_finish": "close"}
-    let g:slime_no_mappings=1
-" endif
-"
+let g:slime_target='vimterminal'
+let g:slime_vimterminal_config={"term_finish": "close"}
+let g:slime_no_mappings=1
 
 " Kitty navigation
 " For system configuration check https://github.com/knubie/vim-kitty-navigator
-" if exists('g:loaded_kitty_navigator')
-    if $TERM !~? "kitty" || has('gui_running')
-        let g:kitty_navigator_no_mappings = 1
-    endif
-" endif
-"
+if $TERM !~? "kitty" || has('gui_running')
+    let g:kitty_navigator_no_mappings = 1
+endif
 
 " Tmux navigation
 " Need additinal settings https://github.com/christoomey/vim-tmux-navigator
-
-" if exists('g:loaded_tmux_navigator')
-    if empty($TMUX) || has('gui_running')
-        let g:tmux_navigator_no_mappings = 1
-    else
-        let g:tmux_navigator_save_on_switch = 1
-        let g:tmux_navigator_disable_when_zoomed = 1
-    endif
-" endif
-"
+if empty($TMUX) || has('gui_running')
+    let g:tmux_navigator_no_mappings = 1
+else
+    let g:tmux_navigator_save_on_switch = 1
+    let g:tmux_navigator_disable_when_zoomed = 1
+endif
 
 " Quickfix
-" if exists('g:loaded_qf')
-    nmap <F4> <Plug><qf_qf_toggle>
-    nmap <buffer> <Left>  <Plug>(qf_older)
-    nmap <buffer> <Right> <Plug>(qf_newer)
-    nmap <buffer> { <Plug>(qf_previous_file)
-    nmap <buffer> } <Plug>(qf_next_file)
-    let g:qf_mapping_ack_style = 1
-" endif
+nmap <F4> <Plug><qf_qf_toggle>
+nmap <buffer> <Left>  <Plug>(qf_older)
+nmap <buffer> <Right> <Plug>(qf_newer)
+nmap <buffer> { <Plug>(qf_previous_file)
+nmap <buffer> } <Plug>(qf_next_file)
+let g:qf_mapping_ack_style = 1
 
- 
 " Colors
-" if exists('g:loaded_fugitive')
-    let g:fugitive_dynamic_colors = 1
-" endif
+let g:fugitive_dynamic_colors = 1
 " 
 let g:Illuminate_ftblacklist = ['dirvish', 'json', 'dircolors']
 let g:Illuminate_highlightUnderCursor = 1
@@ -433,28 +395,44 @@ colorscheme dark_trial
 
 " Faster loads large files
 augroup LargeFile
-        let g:large_file = 10485760 " 10MB
-        " Set options:
-        "   eventignore+=FileType (no syntax highlighting etc
-        "   assumes FileType always on)
-        "   noswapfile (save copy of file)
-        "   bufhidden=unload (save memory when other file is viewed)
-        "   buftype=nowritefile (is read-only)
-        "   undolevels=-1 (no undo possible)
-        au BufReadPre *
-                \ let f=expand("<afile>") |
-                \ if getfsize(f) > g:large_file |
-                        \ set eventignore+=FileType |
-                        \ setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 |
-                \ else |
-                        \ set eventignore-=FileType |
-                \ endif
+    let g:large_file = 10485760 " 10MB
+    " Set options:
+    "   eventignore+=FileType (no syntax highlighting etc
+    "   assumes FileType always on)
+    "   noswapfile (save copy of file)
+    "   bufhidden=unload (save memory when other file is viewed)
+    "   buftype=nowritefile (is read-only)
+    "   undolevels=-1 (no undo possible)
+    au BufReadPre *
+            \ let f=expand("<afile>") |
+            \ if getfsize(f) > g:large_file |
+                    \ set eventignore+=FileType |
+                    \ setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 |
+            \ else |
+                    \ set eventignore-=FileType |
+            \ endif
 augroup END
 
  
 " Clang Autocomplete
-
 " CLANG justmao
+" let g:clang_library_path='/usr/lib/llvm-11/lib'
+" let g:clang_complete_copen=1
+" let g:clang_hl_errors=1
+" let g:clang_auto_select=1
+" let g:clang_close_preview=1
+" let g:clang_snippets=1
+" let g:clang_snippets_engine='clang_complete'
+
+
+" let g:clang_c_options = '-std=c11'
+" let g:clang_cpp_options = '-std=c++11 -stdlib=libc++'
+" let g:clang_c_completeopt = 'menuone,preview'
+" let g:clang_load_if_clang_dotfile = 1
+" let g:clang_verbose_pmenu = 1
+" let g:clang_check_syntax_auto = 1
+" let g:clang_pwheight = 6
+" let g:clang_statusline = '%s\ \|\ %%l/\%%L\ \|\ %%p%%%%'
 
 " C Tags management
 " let g:gutentags_define_advanced_commands = 1
@@ -478,8 +456,6 @@ augroup END
 " etc
 " Markdown editing and vieweing
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
-"
-
 "
 
 " Mappings
@@ -535,13 +511,17 @@ nmap [h <Plug>(GitGutterPrevHunk)
 
 nnoremap <ESC><ESC><ESC> :q<CR>
 nnoremap <leader><space> za
-nnoremap <leader>ev :vsplit $MYVIMRC<cr>
-nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
+"nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+"nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
 command! W :w
 cnoremap W!  w !sudo tee % >/dev/null
 cnoremap w!! w !sudo tee % >/dev/null
 nnoremap <leader>l :setlocal list!<cr>
 
+if executable("ag")
+    set grepprg=ag\ --nogroup\ --nocolor\ --ignore-case\ --column
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
 " Find current word
 nnoremap gr :grep <cword> *<CR>
 nnoremap Gr :grep <cword> %:p:h/*<CR>
@@ -720,6 +700,36 @@ function! <SID>SynStack()
     echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
 
+" Add files with wildcards to arglist
+nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%:p:h'))<cr>/*<C-d>
+" Open buffer list
+nnoremap <leader>b :b <C-d>
+" Open a single file not in buffer
+nnoremap <leader>e :e **/
+" Gep
+nnoremap <leader>g :grep<space>
+" Ilist
+"nnoremap <leader>i :Ilist<space>
+" Go to a tag
+nnoremap <leader>j :tjump /
+" Run make
+nnoremap <leader>m :make<cr>
+" Remove whitespaces
+nnoremap <leader>s :call StripTrailingWhitespace()<cr>
+" Go to last buffer
+nnoremap <leader>q :b#<cr>
+" Run ttags
+"nnoremap <leader>t :TTags<space>*<space>*<space>.<cr>
+
+function! StripTrailingWhitespace()
+  if !&binary && &filetype != 'diff'
+    normal mz
+    normal Hmy
+    %s/\s\+$//e
+    normal 'yz<CR>
+    normal `z
+  endif
+endfunction
 
 if &shell =~? 'xonsh'
    set shell=/home/igor/.local/share/xonsh-vim-read/xonsh-vim-read
