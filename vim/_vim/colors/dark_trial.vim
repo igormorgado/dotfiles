@@ -61,7 +61,7 @@ highlight  Conceal     term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=bold,italic 
 " search, visual and other markings.
 " }}}
 highlight   ColorColumn       term=NONE       ctermfg=3     ctermbg=NONE  cterm=NONE       guifg=#ffb94c  guibg=NONE     guisp=NONE  gui=NONE
-highlight   CursorColumn      term=NONE       ctermfg=NONE  ctermbg=8     cterm=NONE       guifg=NONE     guibg=#303030  guisp=NONE  gui=NONE
+highlight   CursorColumn      term=NONE       ctermfg=NONE  ctermbg=8     cterm=NONE       guifg=NONE     guibg=#505050  guisp=NONE  gui=NONE
 highlight   CursorLine        term=underline  ctermfg=NONE  ctermbg=NONE  cterm=underline  guifg=NONE     guibg=#303030  guisp=NONE  gui=NONE
 highlight   Cursor            term=NONE       ctermfg=NONE  ctermbg=4     cterm=NONE       guifg=NONE     guibg=#84a7f2  guisp=NONE  gui=NONE
 highlight   lCursor           term=NONE       ctermfg=NONE  ctermbg=4     cterm=NONE       guifg=NONE     guibg=#84a7f2  guisp=NONE  gui=NONE
@@ -145,8 +145,7 @@ highlight  SpellLocal    term=NONE  ctermfg=NONE  ctermbg=13  cterm=NONE  guifg=
 highlight  SpellCap      term=NONE  ctermfg=NONE  ctermbg=13  cterm=NONE  guifg=NONE     guibg=#9700b7  guisp=NONE  gui=NONE
 highlight  SpecialKey    term=NONE  ctermfg=8     ctermbg=0   cterm=NONE  guifg=#505050  guibg=#121212  guisp=NONE  gui=NONE
 highlight  QuickFixLine  term=NONE  ctermfg=NONE  ctermbg=1   cterm=NONE  guifg=NONE     guibg=#ff7c59  guisp=NONE  gui=NONE
-highlight  Terminal      term=NONE  ctermfg=2     ctermbg=13  cterm=NONE  guifg=#48d56b  guibg=#9700b7  guisp=NONE  gui=NONE
-
+highlight  Terminal      term=NONE  ctermfg=7     ctermbg=0   cterm=NONE  guifg=#f1f1f1  guibg=#121212  guisp=NONE  gui=NONE
 "
 " PLUGINS
 "
@@ -154,7 +153,6 @@ highlight  Terminal      term=NONE  ctermfg=2     ctermbg=13  cterm=NONE  guifg=
 " Illuminated
 highlight  illuminatedWord     term=NONE  ctermfg=NONE  ctermbg=NONE  cterm=reverse,bold  guifg=NONE     guibg=NONE  guisp=NONE  gui=reverse,bold
 highlight  illuminatedCurWord  term=NONE  ctermfg=3     ctermbg=NONE  cterm=reverse,bold  guifg=#ffb94c  guibg=NONE  guisp=NONE  gui=reverse,bold
-
 
 " COC
 " highlight CocErrorHighlight guifg=#A8334C guibg=NONE guisp=NONE gui=underline

@@ -78,19 +78,20 @@ Xft.antialias: 1
 Xft.rgba: rgb
 
 ! TTF Font
-!*VT100.renderFont: true 
-!*faceName:			xft:Fira Mono:pixelsize=14:antialias=true
-!*facesize: 14
+*VT100.renderFont: false 
+*faceName:			xft:Fira Mono:pixelsize=14:antialias=true
+*facesize: 14
 
 ! Terminus !
 ! *font1: nil2
-XTerm*font: -*-terminus-medium-*-*-*-18-*-*-*-*-*-iso10646-1
+XTerm*font:  -*-terminus-medium-*-*-*-18-*-*-*-*-*-iso10646-1
 XTerm*font1: -*-terminus-medium-*-*-*-10-*-*-*-*-*-iso10646-1
 XTerm*font2: -*-terminus-medium-*-*-*-14-*-*-*-*-*-iso10646-1
 XTerm*font3: -*-terminus-medium-*-*-*-22-*-*-*-*-*-iso10646-1
 XTerm*font4: -*-terminus-medium-*-*-*-24-*-*-*-*-*-iso10646-1
 XTerm*font5: -*-terminus-medium-*-*-*-32-*-*-*-*-*-iso10646-1
 XTerm*font6: -*-terminus-medium-*-*-*-40-*-*-*-*-*-iso10646-1
+XTerm*font7: -*-terminus-medium-*-*-*-48-*-*-*-*-*-iso10646-1
 
 UXTerm*font: -*-terminus-medium-*-*-*-18-*-*-*-*-*-iso10646-1
 UXTerm*font1: -*-terminus-medium-*-*-*-10-*-*-*-*-*-iso10646-1
