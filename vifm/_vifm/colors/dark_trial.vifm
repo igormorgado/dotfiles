@@ -1,3 +1,12 @@
+" 0 black
+" 1 red
+" 2 green
+" 3 yellow
+" 4 blue
+" 5 magenta
+" 6 cyan
+" 7 white
+
 highlight clear
 
 highlight  Win       ctermfg=7     ctermbg=0  cterm=none
@@ -19,12 +28,26 @@ highlight  JobLine     ctermfg=5  ctermbg=8   cterm=none
 highlight  Directory   cterm=bold       ctermfg=7  ctermbg=none
 highlight  Executable  cterm=bold       ctermfg=2  ctermbg=none
 highlight  Link        cterm=underline  ctermfg=7  ctermbg=0
-highlight  BrokenLink  cterm=none       ctermfg=1  ctermbg=7
+highlight BrokenLink cterm=none ctermfg=white ctermbg=red
 highlight  Device      cterm=none       ctermfg=6  ctermbg=none
 highlight  Fifo        cterm=none       ctermfg=6  ctermbg=none
 highlight  Socket      cterm=none       ctermfg=6  ctermbg=none
+
+" generic file types
+highlight Win cterm=none ctermfg=default ctermbg=default
+
+" file name specific highlight
+highlight /^.*\.(md|mkd|org|txt)$/I cterm=none ctermfg=default ctermbg=default
+highlight /^.*(#|\.ansi-01;32-brgreen|\.app|\.bat|\.cmd|\.com|\.exe|\.jar|\.log|\.reg|~)$/I cterm=bold ctermfg=green ctermbg=default
+highlight /^.*(,v|\.ansi-01;33-bryellow|\.bak|\.dist|\.off|\.old|\.org_archive|\.orig|\.swo|\.swp)$/I cterm=bold ctermfg=yellow ctermbg=default
+highlight /^.*\.(7z|apk|arj|bin|bz|bz2|cab|deb|dmg|gem|gz|iso|msi|rar|rpm|tar|tbz|tbz2|tgz|tx|war|xpi|xz|z|zip)$/I cterm=bold ctermfg=magenta ctermbg=default
+highlight /^.*\.(ansi-31-red|doc|docx|dot|dotx|fla|ppt|pptx|psd|rtf|xls|xlsx)$/I cterm=none ctermfg=red ctermbg=default
+highlight /^.*\.(0|1|2|3|4|5|6|7|8|9|ansi-32-green|c|cc|coffee|cpp|csh|css|cxx|el|erb|h|haml|hs|htm|html|java|js|l|less|man|n|objc|p|php|pl|pm|pod|py|rb|rdf|sass|scss|sh|shtml|tex|vim|xml|zsh)$/I cterm=none ctermfg=green ctermbg=default
+highlight /^.*\.(aac|ansi-33-yellow|anx|asf|au|avi|axv|bmp|cgm|dl|dvi|emf|eps|flac|flc|fli|flv|gif|gl|jpeg|jpg|m2v|m4v|mid|midi|mka|mkv|mng|mov|mp3|mp4|mp4v|mpa|mpeg|mpg|nuv|ogg|ogm|ogv|ogx|pbm|pcx|pdf|pgm|png|ppm|pps|ppsx|ps|qt|ra|rm|rmvb|svg|svgz|swf|tga|tif|tiff|vob|wav|wmv|xbm|xcf|xpm|xwd|yuv)$/I cterm=none ctermfg=yellow ctermbg=default
+highlight /^.*\.(3des|aes|ansi-34-blue|asc|enc|gpg|pgp|sqlite)$/I cterm=none ctermfg=blue ctermbg=default
 
 if $USER == 'root'
 	highlight  Win      cterm=none  ctermfg=0  ctermbg=1  
 	highlight  Border   cterm=none  ctermfg=0  ctermbg=9
 endif
+
