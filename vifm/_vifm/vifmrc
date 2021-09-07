@@ -16,7 +16,7 @@ set incsearch
 set scrolloff=3
 set slowfs=curlftpfs
 "set dotdirs=rootparent
-set nosyscalls
+set syscalls
 "set relativenumber
 set numberwidth=3
 set title
