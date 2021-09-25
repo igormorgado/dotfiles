@@ -2,7 +2,8 @@ mkfile_path := $(abspath $(lastword $(MAKEFILE_LIST)))
 current_dir := $(notdir $(patsubst %/,%,$(dir $(mkfile_path))))
 
 dirs = 
-files = _dir_colors 
+files = _dir_colors  _lessfilter
+exec = _lessfilter
 
 all: install
 clean: cleanup
@@ -13,6 +14,7 @@ test:
 install:
 	$(foreach f,$(dirs),mkdir -p ${HOME}/$(patsubst _%,.%,$(f)) ;)
 	$(foreach f,$(files),ln -s $(realpath $(dir $(mkfile_path))$(f)) ${HOME}/$(patsubst _%,.%,$(f)) ;)
+	$(foreach f,$(exec),chmod 755 ${HOME}/$(patsubst _%,.%,$(f)) ;)
 
 cleanup:
 	$(foreach f,$(files),rm ${HOME}/$(patsubst _%,.%,$(f)) ;)

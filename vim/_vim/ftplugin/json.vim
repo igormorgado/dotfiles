@@ -10,4 +10,5 @@ setlocal autoindent
 setlocal expandtab
 setlocal foldmethod=indent
 
-
+"  Linting ... maybe
+"  %!jq .

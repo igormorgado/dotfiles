@@ -6,7 +6,6 @@ if exists("syntax_on")
 endif
 
 let g:colors_name = "dark_trial"
-
 let g:terminal_color_0  = "#121212"
 let g:terminal_color_1  = "#ff7c59"
 let g:terminal_color_2  = "#48d56b"
@@ -75,7 +74,7 @@ highlight!  link              LineNrBelow     LineNrAbove
 highlight   CursorLineNr      term=NONE       ctermfg=3     ctermbg=0     cterm=bold       guifg=#ffb94c  guibg=#121212  guisp=NONE  gui=bold
 highlight   SignColumn        term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=#505050  guibg=#121212  guisp=NONE  gui=NONE
 highlight   FoldColumn        term=NONE       ctermfg=8     ctermbg=0     cterm=NONE       guifg=#505050  guibg=#121212  guisp=NONE  gui=NONE
-highlight   StatusLine        term=NONE       ctermfg=7     ctermbg=4     cterm=NONE       guifg=#f1f1f1  guibg=#84a7f2  guisp=NONE  gui=NONE
+highlight   StatusLine        term=NONE       ctermfg=0     ctermbg=4     cterm=NONE       guifg=#121212  guibg=#84a7f2  guisp=NONE  gui=NONE
 highlight   StatusLineNC      term=NONE       ctermfg=8     ctermbg=15    cterm=NONE       guifg=#505050  guibg=#b3b3b3  guisp=NONE  gui=NONE
 highlight   StatusLineTerm    term=NONE       ctermfg=0     ctermbg=4     cterm=NONE       guifg=#121212  guibg=#84a7f2  guisp=NONE  gui=NONE
 highlight   StatusLineTermNC  term=NONE       ctermfg=8     ctermbg=15    cterm=NONE       guifg=#505050  guibg=#b3b3b3  guisp=NONE  gui=NONE

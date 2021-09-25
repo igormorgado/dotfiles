@@ -1,13 +1,18 @@
 " VIM CONFIGURATION FILE
 " vim: set ft=vim
 "
-" TODO {{{
+" TODO / Check or learn {{{
 " --  Master arglist
 " --  Master vim grep
 " --  Spelling and +kspell in complete
 " --  If exists only works after vim is fully loaded. Since plugins just
 " --  Omnifunc/Omnicomplete
 "       load in the en.Find a way to use something like that.
+" -- Add files with wildcards to arglist
+" -- Change working directory
+" -- Delete all other buffers
+" -- Fast Buffers access
+" -- Find current word
 " }}}
 
 " Initial settings {{{
@@ -56,8 +61,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-eunuch'
     " Git Integration
     Plug 'tpope/vim-fugitive'
-    " Markdown support
-    Plug 'tpope/vim-markdown'
     " Repeat commands
     Plug 'tpope/vim-repeat'
     " Complementary pairs
@@ -88,14 +91,23 @@ call plug#begin('~/.vim/plugged')
     Plug 'igormorgado/valgrind.vim'
     " My own documentation
     Plug 'igormorgado/vim-hints'
-    " Support for fish
-    Plug 'dag/vim-fish'
-    " Support for vue
-    Plug 'posva/vim-vue'
-    " Support for xonsh file format in vim
-    Plug 'linkinpark342/xonsh-vim'
+
+    "
+    " FILE FORMATS
+    "
     " Meson
     Plug 'igankevich/mesonic'
+    " Solidity
+    Plug 'tomlion/vim-solidity'
+    " Fish
+    Plug 'dag/vim-fish'
+    " Vue
+    Plug 'posva/vim-vue'
+    " Xonsh
+    Plug 'linkinpark342/xonsh-vim'
+    " Markdown
+    Plug 'tpope/vim-markdown'
+
     " AUTOCOMPLETE WARS (TO READ)
     " https://programmersought.com/article/11541994259/
     " https://www.thegeekstuff.com/2009/04/ctags-taglist-vi-vim-editor-as-sourece-code-browser/
@@ -411,9 +423,25 @@ endfunction
 
 " Open url in browser
 function! Browser ()
-   let line = getline (".")
-   let line = matchstr (line, "http[^   ]*")
-   exec "!firefox ".line
+    let line = getline (".")
+    let line = matchstr (line, "http[^   ]*")
+    exec "!firefox ".line
+endfunction
+
+function! Rinkeby ()
+    let line = getline (".")
+    let line = matchstr (line, "0x[^   ]*")
+    if len(line) > 43
+        echom "Opening transaction " . line
+        " Silent skips the boring Press ENTER message but need a redraw
+        exec "silent !firefox https://rinkeby.etherscan.io/tx/".line
+        redraw!
+    else
+        echom "Opening address " . line
+        " Silent skips the boring Press ENTER message but need a redraw
+        exec "silent !firefox https://rinkeby.etherscan.io/address/".line
+        redraw!
+    endif
 endfunction
 
 " Show highlight group
@@ -425,18 +453,24 @@ function! <SID>SynStack()
 endfunc
 " }}}
 
-" Slime configuration {{{
-let g:slime_target='vimterminal'
-let g:slime_vimterminal_config={"term_finish": "close"}
-let g:slime_no_mappings=1
+" Togglee quickfix window {{{
+function! ToggleQuickFix()
+    if empty(filter(getwininfo(), 'v:val.quickfix'))
+        copen
+    else
+        cclose
+    endif
+endfunction
 " }}}
-
-" Quickfix {{{
-nmap <buffer> <Left>  <Plug>(qf_older)
-nmap <buffer> <Right> <Plug>(qf_newer)
-nmap <buffer> { <Plug>(qf_previous_file)
-nmap <buffer> } <Plug>(qf_next_file)
-let g:qf_mapping_ack_style = 1
+"
+" Toggle location list window {{{
+function! ToggleLocationList()
+    if empty(filter(getwininfo(), 'v:val.loclist'))
+        lopen
+    else
+        lclose
+    endif
+endfunction
 " }}}
 
 " Programming config {{{
@@ -507,6 +541,24 @@ let g:Illuminate_delay = 2
 " Markdown editing and vieweing
 let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
 "
+if &shell =~# 'fish$'
+    set shell=/bin/bash
+endif
+" 
+if &shell =~? 'xonsh'
+    if executable('$HOME/.local/share/xonsh-vim-read/xonsh-vim-read')
+        set shell=$HOME/.local/share/xonsh-vim-read/xonsh-vim-read
+    endif
+endif
+
+if executable("ag")
+    set grepprg=ag\ --nogroup\ --nocolor\ --ignore-case\ --column
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+endif
+
+" Python Jedi
+let g:jedi#use_splits_not_buffers = "top"
+
 " Mappings to remember {{{
 
 " Some mapping to remember
@@ -562,35 +614,7 @@ let g:markdown_fenced_languages = ['html', 'python', 'bash=sh', 'c', 'help']
 " <F10>
 " <F11>
 " <F12>
-" }}}
-
-if executable("ag")
-    set grepprg=ag\ --nogroup\ --nocolor\ --ignore-case\ --column
-    set grepformat=%f:%l:%c:%m,%f:%l:%m
-endif
-
-" Add files with wildcards to arglist
-" Change working directory
-" Delete all other buffers
-" Fast Buffers access
-" Find current word
-" Gep
-" Go to a tag
-" Go to last buffer
-" Ilist
-" Many mappings
-" Open a single file not in buffer
-" Open buffer list
-" Run make
-" Run ttags
-" Toggle paste status
-" Execute vim make
-
-" Command to delete all buffers except active one
-command! BufOnly silent! execute "%bd|e#|bd#"
-" Command to change to active file directory
-command CWD cd %:p:h
-
+"
 " Display highlight groups
 nmap <C-S-P> :call <SID>SynStack()<CR>
 
@@ -603,9 +627,11 @@ inoremap <F3> <ESC>:buffers<CR>:buffer<Space>
 tnoremap <F3> <ESC><C-w>:buffers<CR>:buffer<Space>
 
 " Quickfix toggle
-nnoremap <F4> <Plug><qf_qf_toggle>
+nnoremap <silent> <F4> :call ToggleQuickFix()<cr>
+tnoremap <silent> <F4> <ESC><C-W>:call ToggleQuickFix()<cr>
 inoremap <F4> <Nop>
 vnoremap <F4> <Nop>
+
 " Run make (maybe stay with <Leader>m
 inoremap <F5> <ESC>:make!<cr>
 nnoremap <F5> :make!<cr>
@@ -633,44 +659,106 @@ inoremap <F12> <Nop>
 nnoremap <F12> <Nop>
 vnoremap <F12> <Nop>
 
-nnoremap gR :grep '\b<cword>\b' *<CR>
-nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
-nnoremap gr :grep <cword> *<CR>
-nnoremap Gr :grep <cword> %:p:h/*<CR>
-nmap ]h <Plug>(GitGutterNextHunk)
-nmap [h <Plug>(GitGutterPrevHunk)
+
+" Look for other files with same extension
 nnoremap <leader>a :argadd <c-r>=fnameescape(expand('%:p:h'))<cr>/*<C-d>
+
+" Open buffer list
 nnoremap <leader>b :b <C-d>
+
+" Write all buffers and close all buffers except this  one
 nnoremap <leader>ca :wa<bar>%bd<bar>e#<bar>bd#<CR>
+
+" Command to delete all buffers except active one
+command! BufOnly silent! execute "%bd|e#|bd#"
+
+" Change vim PWD to actual buffer
 nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+"
+" Command to change to active file directory
+command CWD cd %:p:h
+
+" Open edit command in wild menu recursively
 nnoremap <leader>e :e **/
+
+" Open ftplugin file in a new split
 "nnoremap <leader>ef :execute 'vsplit $HOME/.vim/ftplugin/' . &filetype .  '.vim'<CR>
+
+" Open vimrc in a new split
 "nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" Shortcut for grep
 nnoremap <leader>g :grep<space>
+
+" Grep for current word 
+nnoremap gR :grep '\b<cword>\b' *<CR>
+
+" Grep for current word only in same type
+nnoremap GR :grep '\b<cword>\b' %:p:h/*<CR>
+
+" Grep for current word as substring
+nnoremap gr :grep <cword> *<CR>
+" Grep for current word as substring only in same type
+nnoremap Gr :grep <cword> %:p:h/*<CR>
+
+
 "nnoremap <leader>i :Ilist<space>
 nnoremap <leader>j :tjump /
 nnoremap <leader>l :setlocal list!<cr>
+
+" Run make
 nnoremap <leader>m :make<cr>
 nnoremap <leader>q :b#<cr>
+
+" Call strip white spaces
 nnoremap <leader>s :call StripTrailingWhitespace()<cr>
+
+" Toggle fold
 nnoremap <leader><space> za
-"nnoremap <leader>t :TTags<space>*<space>*<space>.<cr>
+
+" Open word url on Browser
 map <leader>w :call Browser()<cr>
+map <leader>er :call Rinkeby()<cr>
+
+" Toggle paste mode
 set pastetoggle=<F2>
+
+" Alias to w
 command! W :w
+
+" Force write with sudo
 cnoremap w!! w !sudo tee % >/dev/null
 cnoremap W!  w !sudo tee % >/dev/null
 
-if &shell =~# 'fish$'
-    set shell=/bin/bash
-endif
-" 
-if &shell =~? 'xonsh'
-    if executable('$HOME/.local/share/xonsh-vim-read/xonsh-vim-read')
-        set shell=$HOME/.local/share/xonsh-vim-read/xonsh-vim-read
-    endif
-endif
+"
+" PLUGIN DEPENDANTSz
+"
 
-" Python Jedi
-let g:jedi#use_splits_not_buffers = "top"
+" Git gutter 
+
+" Move beetwen hunks (kind of impaired)
+nmap ]h <Plug>(GitGutterNextHunk)
+nmap [h <Plug>(GitGutterPrevHunk)
+
+" TTags
+" Open ttags on current word
+"nnoremap <leader>t :TTags<space>*<space>*<space>.<cr>
+
+" Slime configuration {{{
+let g:slime_target='vimterminal'
+let g:slime_vimterminal_config={"term_finish": "close"}
+let g:slime_no_mappings=1
+" }}}
+
+" Quickfix {{{
+nmap <buffer> <Left>  <Plug>(qf_older)
+nmap <buffer> <Right> <Plug>(qf_newer)
+nmap <buffer> { <Plug>(qf_previous_file)
+nmap <buffer> } <Plug>(qf_next_file)
+let g:qf_mapping_ack_style = 1
+" }}}
+
+
+
+""" }}}
 
