@@ -653,8 +653,10 @@ vnoremap <F10> <Nop>
 vnoremap <F11> <Nop>
 nnoremap <F11> :bnext<cr>
 inoremap <F11> <esc>:bnext<cr>
+tnoremap <F11> <esc><c-w>:bnext<cr>
 nnoremap <S-F11> :bprev<cr>
 inoremap <S-F11> <esc>:bprev<cr>
+tnoremap <S-F11> <esc><c-w>:bprev<cr>
 inoremap <F12> <Nop>
 nnoremap <F12> <Nop>
 vnoremap <F12> <Nop>
