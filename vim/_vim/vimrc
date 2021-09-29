@@ -107,6 +107,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'linkinpark342/xonsh-vim'
     " Markdown
     Plug 'tpope/vim-markdown'
+    " XML Support
+    Plug 'chrisbra/vim-xml-runtime'
 
     " AUTOCOMPLETE WARS (TO READ)
     " https://programmersought.com/article/11541994259/
@@ -131,18 +133,23 @@ call plug#begin('~/.vim/plugged')
     " Plug 'skywind3000/gutentags_plus'
     " Use binary call graph in Vim - Need ccglue
     " Plug 'hari-rangarajan/CCTree'
+    "
+    " PYTHON
+    "
+    " Pylint, flake8, jedi, pep8, black, pyflakes, mypy
+    " how all thos fit together?
+    "
+    " Python Folding
+    Plug 'tmhedberg/SimpylFold'
     " Python Auto completion
     " Plug 'davidhalter/jedi-vim'
-    " Python Folding
-    " Plug 'tmhedberg/SimpylFold'
     " Python Identation
     " Plug 'Vimjas/vim-python-pep8-indent'
     " Python Linting
     " Plug 'ambv/black'
     " Python Static Checker
     " Plug 'nvie/vim-flake8'
-    " XML Support
-    "Plug 'chrisbra/vim-xml-runtime'
+    "
 call plug#end()
 " }}} 
 
@@ -249,6 +256,7 @@ set showtabline=1
 set numberwidth=5
 set number
 set relativenumber
+set mouse=a
 
 " }}}
 

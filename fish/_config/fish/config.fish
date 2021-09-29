@@ -20,8 +20,8 @@ set EDITOR vim
 set GIT_EDITOR vim
 set SHELL /usr/bin/fish
 set NMON vcmknt.
-set LESS='-R'
-set LESSOPEN='|~/.lessfilter %s'
+set LESS '-R'
+set LESSOPEN '|~/.lessfilter %s'
 
 
 set XLA_FLAGS --xla_gpu_cuda_data_dir=/usr/lib/cuda
