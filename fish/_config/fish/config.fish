@@ -16,8 +16,8 @@ set fish_color_cwd brwhite
 set fish_color_prompt green
 set fish_color_git blue
 
-set EDITOR vim
-set GIT_EDITOR vim
+set -Ux EDITOR vim
+set -Ux GIT_EDITOR vim
 set SHELL /usr/bin/fish
 set NMON vcmknt.
 set LESS '-R'
