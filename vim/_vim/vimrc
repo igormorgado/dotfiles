@@ -941,11 +941,10 @@ endfunction
 
 command! Usp 1,/voluntario@futuro\.usp\.br/d <bar> g/\%uc/d
 command! Usp2 1,/como isso é possível./d <bar> g/\%uc/d
-command! Npi 1,6d <bar> $-2,$d
+command! Npi 1,6d <bar> $-1,$d
 command! Unama 1,/\%uc/d <bar> g/[[:cntrl:]]/-1,.d
 command! Cultura 1,8d <bar> g/\%uc/d
 command! Paginas g/^\s*\d\{1,3}\s*$/d
-command! Elivros 1,/elivros/d
 command! CarrLin g/\%uc/d
 command! MultiLinha %s/\s\+$//e <bar> %s/\%ua0//e <bar>%s/\n\{3,}/\r\r\r/
 
