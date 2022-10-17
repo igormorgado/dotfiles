@@ -41,9 +41,9 @@ if exists('loaded_slime')
     let g:slime_cell_delimiter = "#%%"
     "let g:slime_cell_delimiter = "# In["
     let g:slime_no_mappings = 1
-    nmap <Leader>gv <Plug>SlimeConfig
+    nmap <Leader>gc <Plug>SlimeConfig
     xmap <Leader>g <Plug>SlimeRegionSend
-    nmap <Leader>g <Plug>SlimeParagraphSend
+    nmap <Leader>gp <Plug>SlimeParagraphSend
 
     nmap <silent> <Leader>gg :call SlimeExecuteAndJump()<cr>
     "nmap <silent> <Leader>gg <plug>SlimeLineSend:call search('^\S')<CR>

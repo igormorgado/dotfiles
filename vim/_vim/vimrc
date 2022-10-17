@@ -154,7 +154,7 @@ call plug#begin('~/.vim/plugged')
     " how all thos fit together?
     "
     " Python Folding
-    " Plug 'tmhedberg/SimpylFold'
+    Plug 'tmhedberg/SimpylFold'
     " Python Auto completion
     " Plug 'davidhalter/jedi-vim'
     " Python Identation
@@ -256,6 +256,7 @@ set hlsearch
 set incsearch
 set ignorecase
 set smartcase
+" set termwinsize=15x0
 " }}}
 
 " Window display {{{
