@@ -24,10 +24,11 @@ set LESS '-R'
 set LESSOPEN '|~/.lessfilter %s'
 
 
+set MC_SKIN 'dark_trial'
 set XLA_FLAGS --xla_gpu_cuda_data_dir=/usr/lib/cuda
 
-fish_add_path $HOME/bin
-fish_add_path $HOME/.local/bin
+# fish_add_path $HOME/bin
+# fish_add_path $HOME/.local/bin
 
 set -gx PAGER less
 # set -gx MC_SKIN /home/igor/.config/mc/solarized.ini
