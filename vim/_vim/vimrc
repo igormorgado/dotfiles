@@ -386,7 +386,8 @@ nnoremap <silent> <Leader>< :exe "vertical resize " . (winwidth(0) * 2/3)<CR>
 
 
 " Vim Terminal + Kitty/Tmux Navigator
-tnoremap <S-Insert> <C-w>"+
+tmap <S-Insert> <C-w>"+
+
 if $TERM =~? "kitty"
     tnoremap <silent> <C-h> <C-w>:KittyNavigateLeft<cr>
     tnoremap <silent> <C-j> <C-w>:KittyNavigateDown<cr>

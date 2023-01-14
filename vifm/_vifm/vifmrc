@@ -121,6 +121,7 @@ command! extract! extract -f %a %f %n
 filextype *.pdf,*.ps,*.djvu
   \ zathura %f %i &,
   \ open %f &,
+  \ evince %f &,
 fileview *.pdf
   \ pdftotext -nopgbrk %c -
 
@@ -159,6 +160,7 @@ filextype *.gif
 filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,*.svg,*.ico
   \ open %f &,
   \ image %c %i &,
+  \ eog %f &,
 fileview *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,*.svg,*.ico
   \ identify %f
 
