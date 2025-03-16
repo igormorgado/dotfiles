@@ -217,16 +217,13 @@ fileview *
 " 
 
 " " Open file in the background using its default program
-" nmap gb :file &<cr>l
+nmap gb :file &<cr>l
 " 
 " " Yank current directory path into the clipboard
 " nmap yd :!echo %d | xclip %i<cr>
 " 
 " " Yank current file path into the clipboard
 " nmap yf :!echo %c:p | xclip %i<cr>
-" 
-" " Opening console in current directory
-" nmap \t :!xterm &<cr>
 " 
 " " Opening vim to edit .vifmrc
 " nmap \c :execute ':!vim $MYVIFMRC' | restart<cr>
@@ -235,8 +232,8 @@ fileview *
 " nmap \w :set wrap!<cr>
 " 
 " " External commands
-" nmap ! :!
-" nmap @ :!<space>%f<left><left><left>
+nmap ! :!
+nmap @ :!<space>%f<left><left><left>
  
  
 " Format for displaying time in file list. For example:
