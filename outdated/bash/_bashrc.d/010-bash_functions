@@ -658,3 +658,29 @@ if [ "$1" != "" ]; then
     iterate "" 0
 
 fi
+
+# For uvenvs
+export venv_home="$HOME/.uvenv"
+mkdir -p "$venv_home"
+
+uvenv() {
+    if [ $# -eq 0 ]; then
+        echo "Usage: uvenv <env_name> [packages...]"
+        return 1
+    fi
+    
+    env_name="$1"
+    shift
+    
+    if [ ! -d "$venv_home/$env_name" ]; then
+        echo "Creating virtual environment: $env_name"
+        uv venv "$venv_home/$env_name"
+    fi
+    
+    if [ $# -gt 0 ]; then
+        echo "Installing packages: $@"
+        uv pip install --python "$venv_home/$env_name/bin/python" "$@"
+    fi
+    
+    echo "To activate: source $venv_home/$env_name/bin/activate"
+}

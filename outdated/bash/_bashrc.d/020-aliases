@@ -122,4 +122,16 @@ alias icat="kitty +kitten icat"
 
 alias zeroad="pushd ~/src/0ad/;./binaries/system/pyrogenesis; popd"
 alias litcorpt="source /home/igor/.virtualenvs/litcorpt/bin/activate; pushd ~/Projects/litcorpt/"
+
+# Modern life
+alias vim="nvim"
+alias vi="nvim"
+alias e="nvim"
+alias cat="bat"
+alias ls="lsd"
+alias top="btop"
+alias ps="procs"
+
+
 # vim: ft=sh:
+

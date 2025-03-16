@@ -602,6 +602,11 @@ nmap <C-S-P> :call <SID>SynStack()<CR>
 
 " Exit vim lazily
 nnoremap <ESC><ESC><ESC> :q<CR>
+nnoremap <ESC><ESC><ESC> :q<CR>
+
+" Lazy to reach esc < makes vim laggy>
+"inoremap jkjkjkjk <ESC>:q<CR>
+" nnoremap jkjkjk <ESC>:q<CR>
 
 " Display buffers (maybe stay with <Leader>b
 nnoremap <F3>      :buffers<CR>:buffer<Space>

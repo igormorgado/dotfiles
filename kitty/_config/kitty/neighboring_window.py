@@ -7,3 +7,4 @@ def handle_result(args, result, target_window_id, boss):
 
 
 handle_result.no_ui = True
+

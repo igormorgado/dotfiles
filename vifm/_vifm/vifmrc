@@ -67,7 +67,7 @@ nnoremap <silent> w : if &quickview && !layoutis('only')
                    \| endif
                    \| <cr>
 
-colorscheme dark_trial
+colorscheme darktrial
 
 " :com[mand] command_name action
 " The following macros can be used in a command
