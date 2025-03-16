@@ -20,7 +20,7 @@ set syscalls
 "set relativenumber
 set numberwidth=3
 set title
-set statusline="%t%= [%A %u:%g %E %d]"
+set statusline="%t%[ -> %T%]%= [%A %u:%g %E %d]"
 
 " What should be saved automatically between vifm runs
 " Like in previous versions of vifm
