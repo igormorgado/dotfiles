@@ -155,7 +155,7 @@ TabLineSel           white             blue              bold
 Title                brightblack       blue
 VertSplit            blue              black             bold
 Visual               none              none              reverse
-VisualNOS            white             black
+VisualNOS            none              none              reverse
 WarningMsg           black             yellow
 WildMenu             white             black
 ; Other conventional group names (see `:help group-name`)

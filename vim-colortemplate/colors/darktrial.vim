@@ -14,7 +14,12 @@ hi clear
 let g:colors_name = 'darktrial'
 
 let s:t_Co = has('gui_running') ? -1 : (&t_Co ?? 0)
-let s:italics = has('gui_running') || (&t_ZH != '' && &t_ZH != '[7m' && !has('win32'))
+" Damn xterm-kitty with neovim
+if (exists('&t_ZH') && &t_ZH != '') || has('gui_running') || &term =~ 'xterm' || &term =~ 'screen' || &term =~ 'tmux'
+  let s:italics = 1
+else
+  let s:italics = 0
+endif
 
 hi! link Added diffAdded
 hi! link Boolean Constant
@@ -117,7 +122,7 @@ hi TabLineSel guifg=#eeeeee guibg=#84a7f2 gui=bold cterm=bold
 hi Title guifg=#4e4e4e guibg=#84a7f2 gui=NONE cterm=NONE
 hi VertSplit guifg=#84a7f2 guibg=#121212 gui=bold cterm=bold
 hi Visual guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm=reverse
-hi VisualNOS guifg=#eeeeee guibg=#121212 gui=NONE cterm=NONE
+hi VisualNOS guifg=NONE guibg=NONE gui=reverse ctermfg=NONE ctermbg=NONE cterm=reverse
 hi WarningMsg guifg=#121212 guibg=#f2d085 gui=NONE cterm=NONE
 hi WildMenu guifg=#eeeeee guibg=#121212 gui=NONE cterm=NONE
 hi Comment guifg=#b2b2b2 guibg=NONE gui=italic cterm=italic
@@ -200,7 +205,7 @@ if s:t_Co >= 256
   hi Title ctermfg=239 ctermbg=111 cterm=NONE
   hi VertSplit ctermfg=111 ctermbg=233 cterm=bold
   hi Visual ctermfg=NONE ctermbg=NONE cterm=reverse
-  hi VisualNOS ctermfg=255 ctermbg=233 cterm=NONE
+  hi VisualNOS ctermfg=NONE ctermbg=NONE cterm=reverse
   hi WarningMsg ctermfg=233 ctermbg=222 cterm=NONE
   hi WildMenu ctermfg=255 ctermbg=233 cterm=NONE
   hi Comment ctermfg=249 ctermbg=NONE cterm=italic
@@ -286,7 +291,7 @@ if s:t_Co >= 8
   hi Title ctermfg=DarkGrey ctermbg=DarkBlue cterm=NONE
   hi VertSplit ctermfg=DarkBlue ctermbg=Black cterm=bold
   hi Visual ctermfg=NONE ctermbg=NONE cterm=reverse
-  hi VisualNOS ctermfg=LightGrey ctermbg=Black cterm=NONE
+  hi VisualNOS ctermfg=NONE ctermbg=NONE cterm=reverse
   hi WarningMsg ctermfg=Black ctermbg=DarkYellow cterm=NONE
   hi WildMenu ctermfg=LightGrey ctermbg=Black cterm=NONE
   hi Comment ctermfg=White ctermbg=NONE cterm=italic
