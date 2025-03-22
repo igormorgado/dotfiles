@@ -16,6 +16,10 @@
     - dig: dog
     - bandwhich: iftop
 
+Change makefile installation, instead linking use copy of files. That
+is better to avoid unwanted removals, file changes and backups. Installed
+files should be isolated from repository.
+
 ## Kitty
 
 - Make kitty window change work again in kitty+vim
@@ -51,6 +55,7 @@
 - visualize images in terminal
 - Make vifm theme reflect the latest one from vim. (neat-o)
 - compute directory sizes
+- open hovered directory in the other pane
 
 
 ![spec](./spec.png)
