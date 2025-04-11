@@ -358,7 +358,7 @@ endif
 syntax on
 set synmaxcol=200
 
-colorscheme dark_trial
+colorscheme darktrial
 " }}}
 
 " Window navigation {{{
