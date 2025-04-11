@@ -1,0 +1,15 @@
+{{- $home := .chezmoi.homeDir -}}
+{{- $user := .chezmoi.user -}}
+{{- $hostname := .chezmoi.hostname -}}
+
+# Detect platform-specific dotfiles directory
+{{- if eq .chezmoi.os "darwin" }}
+sourceDir = "{{ $home }}/repos/dotfiles"
+workingTree = "{{ $home }}/repos/dotfiles"
+{{- else if eq $hostname "blackmonolith" }}
+sourceDir = "{{ $home }}/.local/dotfiles"
+workingTree = "{{ $home }}/.local/dotfiles"
+{{- else }}
+sourceDir = "{{ $home }}/repos/dotfiles"
+workingTree = "{{ $home }}/repos/dotfiles"
+{{- end }}

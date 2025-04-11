@@ -1,5 +1,0 @@
-[files]
-prefix = "_"
-
-[template]
-delimiters = ["{{", "}}"]
