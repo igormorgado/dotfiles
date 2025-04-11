@@ -1,0 +1,15 @@
+{{- $home := .chezmoi.homeDir -}}
+{{- $hostname := .chezmoi.hostname -}}
+
+edit:
+    command: "nvim"
+
+diff:
+    command: "delta"
+    exclude: 
+        - "scripts" 
+
+git:
+    autoAdd: true
+    autoCommit: true
+    autoPush: true

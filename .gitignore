@@ -1,52 +1,46 @@
-rpcs3
-bin/pcloud
-gotr
-gcp/
-python/_ipython/_ipython
-python/_ipython/profile_default/db/
-ssh/
-bin/bin/pcloud
+.env
+.tool-versions
+
+# Fish
+fish_variables
+fish_history
+
+# MacOSXit
+.DS_Store
+.LSOverride
+._*
 
 # SSH Stuff
-*authorized_keys*
+authorized_keys
 *id_rsa*
-*id_rsa.ppk*
-*id_rsa.pub*
-*igormorgado*
-*igormorgado.pem*
-*igormorgado.ppk*
-*igormorgado.pub*
-*known_hosts*
+*.pem
+*.ppk
 
-_bash_history
-.bash_history
-_bash_nda
-*cgg*
-*CGG*
-_config/dotsecrets/dotsecrets.yaml
-_config/gcloud/
-_config/gcloud/*
-_fonts/
-_irssi/config
-_irssi/logs/
-_local/share/fonts/
-_local/share/mc/history
-_mutt/alias
-_mutt/secrets
+# Mutt 
+alias
 secrets
-*secret*
- mutt/_mutt/alias
- mutt/_mutt/secrets
-*.old
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+# Auto-generated tag files
 tags
 .tags
-vim/_vim/after/after
-vim/_vim/ftdetect/ftdetect
-vim/_vim/ftplugin/ftplugin
-vim/_vim/indent/indent
-vim/_vim/spell/spell
-vim/_vim/syntax/syntax
-bin/bin/evelauncher
-bin/bin/jhbuild
-bin/bin/potion
-bin/bin/python
+# Persistent undo
+[._]*.un~
+
+# lazy.nvim
+lazy-lock.json
+
+# Swap
+[._]*.s[a-v][a-z]
+!*.svg  # comment out if you don't need vector files
+[._]*.sw[a-p]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
