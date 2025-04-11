@@ -173,10 +173,11 @@ alias gdb='gdb -q'
 alias vim="nvim"
 alias vi="nvim"
 alias e="nvim"
-alias cat="bat"
 alias ls="lsd"
 alias top="btop"
-alias ps="procs"
+# Not good to change very common tools that are not 100% compatible
+# alias cat="bat"
+# alias ps="procs"
 
 alias secure="cryfs /mnt/data/igor/Secure/ /home/igor/Secure/ && cd /home/igor/Secure"
 alias usecure="cryfs-unmount /home/igor/Secure"

@@ -14,7 +14,7 @@
     - ps: procs
     - tmux: zellij
     - dig: dog
-    - bandwhich: iftop
+    - iftop: bandwhich 
 
 Change makefile installation, instead linking use copy of files. That
 is better to avoid unwanted removals, file changes and backups. Installed
@@ -29,9 +29,7 @@ files should be isolated from repository.
 
 ## Neovim
 
-- Enable markdown editing and visualization
-- make vim conceal bold, italics, links and such, except when in the line
-- make underline show
+- make underline show properly 
 **bold** *italics*  _underline_
 
 ## Redo all dotfiles install scripts and refactor all
@@ -42,28 +40,7 @@ files should be isolated from repository.
 - Make fish theme reflect the latest one from vim (neat-o too)
 - make fzf display images
 - Integrate a nice img visualizer chafa/viu/whatever...
--
 
 
 ## VIFM (configs/commands to do)
-
-- in VIFM use D and P to delete with rm and move with P
-- command to create symlinks
-- compare directories
-- diff directories
-- uncompress and visualize compressed files
-- visualize images in terminal
-- Make vifm theme reflect the latest one from vim. (neat-o)
-- compute directory sizes
-- open hovered directory in the other pane
-
-
-![spec](./spec.png)
-askdjaskldja lks
-asd 
-asd
-a
-sd a
-sd a
-s
 

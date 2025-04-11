@@ -2,5 +2,7 @@
 misc
 LICENSE
 README.md
+TODO.md
+Makefile
 settings.yaml
 misc/
