@@ -1,10 +1,13 @@
 {{- $home := .chezmoi.homeDir -}}
 {{- $hostname := .chezmoi.hostname -}}
 
-[editor]
+[edit]
 command = "nvim"
 
 [diff]
 command = "delta"
 exclude = ["scripts"]
 
+[git]
+    autoCommit = true
+    commitMessageTemplate = "{{ promptString \"Commit message\" }}"
