@@ -1,0 +1,6 @@
+# vim: foldmethod=marker:ft=sh:
+# source the users bashrc if it exists
+
+[ -f "${HOME}/.bashrc" ] && source "${HOME}/.bashrc"
+
+export PATH="$HOME/.cargo/bin:$PATH"

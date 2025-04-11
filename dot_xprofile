@@ -1,0 +1,18 @@
+
+# Activating CEDILLA
+GTK_IM_MODULE=cedilla
+QT_IM_MODULE=cedilla
+export GTK_IM_MODULE QT_IM_MODULE
+
+# Activating terminus font
+# xlsfonts  | grep -q "terminus-12" 2> /dev/null
+# terminusfound=$?
+
+# if [ $terminusfound -ne 0 ] && [ -d "${HOME}/fonts/terminus" ]; then
+# 	xset +fp "${HOME}/fonts/terminus"
+# fi
+# TODO
+# export XENVIRONMENT="${HOME}/.Xresources"
+[ -r "${HOME}/.Xdefaults" ] && xrdb -merge "${HOME}/.Xdefaults"
+[ -r "${HOME}/.Xresources" ] && xrdb -merge "${HOME}/.Xresources"
+

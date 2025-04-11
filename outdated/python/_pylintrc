@@ -1,8 +1,0 @@
-[MASTER]
-# init-hook='import sys; sys.path.append(".")
-
-[BASIC]
-good-names = i, j, mu, rho, E, t0, t1, r0, r1, n, tf, k, x, y, z, t, f, dx, dy, dz, dt, nx, ny, nz, nt, V, U, p, td, tr
-max-args = 10
-ignored-modules=numpy, cv2
-
