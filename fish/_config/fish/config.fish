@@ -1,19 +1,55 @@
 fish_vi_key_bindings
 
-set fish_color_normal white
-set fish_color_command white
-set fish_color_keyword white --bold
-set fish_color_param white
-set fish_color_quote white --italics
-set fish_color_comment white --italics --dim
-set fish_color_selection --reverse
-set fish_color_rightprompt white --italics --dim
+bind -M default delete delete-char
+bind -M insert delete delete-char
+bind -M visual delete delete-char
 
+# Base
+set -U fish_color_normal         white
+set -U fish_color_command        blue       # Functions and commands
+set -U fish_color_keyword        blue       # `if`, `while`, etc.
+set -U fish_color_param          white
+set -U fish_color_option         cyan       # CLI flags
+set -U fish_color_comment        white --italics --dim
+set -U fish_color_error          red --bold
+set -U fish_color_escape         magenta --bold
+set -U fish_color_quote          white --italics
+set -U fish_color_operator       yellow
+set -U fish_color_redirection    yellow
+set -U fish_color_end            brwhite
+set -U fish_color_match          --background=yellow
+
+# Autosuggestions and History
+set -U fish_color_autosuggestion white --dim
+# set -U fish_color_user           blue
+# set -U fish_color_host           cyan
+# set -U fish_color_host_remote    brcyan
 set fish_color_user white --dim
 set fish_color_host white --dim
 set fish_color_host_remote --bold white
-set fish_color_cwd brwhite
+set -U fish_color_cwd            brwhite
+set -U fish_color_cwd_root       red
+set -U fish_color_status         brred --bold
+
+# Pager
+set -U fish_pager_color_prefix            brwhite --bold
+set -U fish_pager_color_completion        white
+set -U fish_pager_color_description       white
+set -U fish_pager_color_selected_background --background=brblack
+set -U fish_pager_color_selected_completion brwhite --bold
+set -U fish_pager_color_selected_description brwhite --bold
+
+# Misc
+set -U fish_color_valid_path       cyan
+set -U fish_color_search_match     --background=bryellow --bold
+set -U fish_color_history_current  --bold
+
+set fish_color_selection --reverse
+set fish_color_rightprompt white --italics --dim
+
+# Color of prompt character
 set fish_color_prompt green
+# Color of git status?
 set fish_color_git blue
 
 set -Ux EDITOR vim
@@ -147,8 +183,10 @@ alias e="nvim"
 alias cat="bat"
 alias ls="lsd"
 alias top="btop"
-#alias ps="procs"
-# alias grep="ripgrep"
-#
+alias ps="procs"
+
+alias secure="cryfs /mnt/data/igor/Secure/ /home/igor/Secure/ && cd /home/igor/Secure"
+alias usecure="cryfs-unmount /home/igor/Secure"
+
 # vim: ft=sh:
 
