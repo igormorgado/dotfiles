@@ -54,11 +54,11 @@ set LESSOPEN '|~/.lessfilter %s'
 
 set -gx uvenv_home "$HOME/.uvenv"
 
-set MC_SKIN 'dark_trial'
+set MC_SKIN 'darktrial'
 set XLA_FLAGS --xla_gpu_cuda_data_dir=/usr/lib/cuda
 
-# fish_add_path $HOME/bin
-# fish_add_path $HOME/.local/bin
+fish_add_path $HOME/bin
+fish_add_path $HOME/.local/bin
 
 set -gx PYENV_ROOT $HOME/.pyenv
 
@@ -112,8 +112,6 @@ alias sstatus="sudo systemctl status"
 alias shutc="sudo shutdown -c"
 alias tb="nc termbin.com 9999"
 alias vimclean="vim -u NONE -U NONE -N"
-alias dotpull="cd ~/dotfiles; git pull ; cd -"
-alias dotpush="cd ~/dotfiles; git push ; cd -"
 alias gplog="git log --oneline --graph --decorate --all"
 alias vimgit='vim $(git diff --name-only stage | grep -v development.ini)'
 
@@ -131,7 +129,7 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # All of our servers eth0 is connected to the Internets via vlan / router etc  ##
-alias dnstop='dnstop -l 5  eth0'
+alias dnstop='dnstop -l 5 eth0'
 alias vnstat='vnstat -i eth0'
 alias iftop='iftop -i eth0'
 alias tcpdump='tshark -i eth0'
