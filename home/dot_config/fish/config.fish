@@ -171,10 +171,7 @@ alias vi="nvim"
 alias e="nvim"
 alias ls="lsd"
 alias top="btop"
-alias cea="chezmoi edit --apply"
-# Not good to change very common tools that are not 100% compatible
-# alias cat="bat"
-# alias ps="procs"
+alias chez="chezmoi edit --apply"
 
 alias secure="cryfs /mnt/data/igor/Secure/ /home/igor/Secure/ && cd /home/igor/Secure"
 alias usecure="cryfs-unmount /home/igor/Secure"
@@ -194,4 +191,3 @@ alias edvifm="$CONFEDITOR ~/.config/vifm/vifmrc"
 alias edfish="$CONFEDITOR ~/.config/fish/config.fish"
 
 # vim: ft=fish:
-
