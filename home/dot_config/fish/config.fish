@@ -45,8 +45,8 @@ set -U fish_color_rightprompt                   white --italics --dim
 set -U fish_color_prompt                        green
 set -U fish_color_git                           blue
 
-set -Ux EDITOR vim
-set -Ux GIT_EDITOR vim
+set -Ux EDITOR nvim
+set -Ux GIT_EDITOR nvim
 set SHELL /usr/bin/fish
 set NMON vcmknt.
 set LESS '-R'
@@ -67,7 +67,6 @@ set -gx PAGER less
 
 if set -q DISPLAY
     if test -r ~/.Xresources
-
         xrdb ~/.Xresources
     end
 end
@@ -180,6 +179,20 @@ alias cea="chezmoi edit --apply"
 
 alias secure="cryfs /mnt/data/igor/Secure/ /home/igor/Secure/ && cd /home/igor/Secure"
 alias usecure="cryfs-unmount /home/igor/Secure"
+
+# Edit common configurations
+if command -q chezmoi
+    echo "chezmoi"
+    set CONFEDITOR "chezmoi edit --apply"
+else 
+    echo "$EDITOR"
+    set CONFEDITOR $EDITOR
+end
+
+alias ednvim="$CONFEDITOR ~/.config/nvim/init.lua" 
+alias edkitty="$CONFEDITOR ~/.config/kitty/kitty.conf"
+alias edvifm="$CONFEDITOR ~/.config/vifm/vifmrc"
+alias edfish="$CONFEDITOR ~/.config/fish/config.fish"
 
 # vim: ft=sh:
 
