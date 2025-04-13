@@ -165,7 +165,6 @@ end
 # alias activate='source venv/bin/activate.fish'
 alias gdb='gdb -q'
 
-
 # Modern life
 alias vim="nvim"
 alias vi="nvim"
@@ -194,5 +193,5 @@ alias edkitty="$CONFEDITOR ~/.config/kitty/kitty.conf"
 alias edvifm="$CONFEDITOR ~/.config/vifm/vifmrc"
 alias edfish="$CONFEDITOR ~/.config/fish/config.fish"
 
-# vim: ft=sh:
+# vim: ft=fish:
 
