@@ -44,7 +44,6 @@ vim.opt.wrap = false
 vim.opt.breakindent = true
 
 -- List chars
--- 
 local default_listchars = { tab = "  ", extends = "⏵", precedes = "⏴" }
 local extended_listchars = { eol = "↲", nbsp = "␣", trail = "•", extends = "⏵", precedes = "⏵", tab = "⟶ " }
 local show_extra = false
@@ -63,7 +62,6 @@ function ToggleList()
 end
 vim.keymap.set('n', '<leader>l', '<cmd>lua ToggleList()<CR>', { noremap = true, silent = true, desc = 'Toggle list' })
 
-
 -- Indentation settings
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -72,7 +70,6 @@ vim.opt.expandtab = true
 
 -- Apply colorscheme after options but before plugins
 vim.cmd [[colorscheme darktrial]]
-
 
 -- Toggle relativenumber in insert mode
 vim.api.nvim_create_autocmd({ "InsertEnter" }, {
@@ -145,7 +142,6 @@ end
 -- AI STUFF
 -----------------------------------------------------------------------------------
 local model_name = "deepseek-coder:6.7b-instruct-q4_K_M"
-
 
 -----------------------------------------------------------------------------------
 -- PLUGIN MANAGER SETUP (LAZY.NVIM)
@@ -317,9 +313,12 @@ require("lazy").setup({
         config = function()
             require("gen").setup({
                 model = model_name,
-                display_mode = "vsplit",         -- Display response in a floating window
-                show_model = true,              -- Show the model name in the output
-                no_auto_close = true,          -- Don't auto-close the window
+                -- Display response in a floating window
+                display_mode = "vsplit",
+                -- Show the model name in the output
+                show_model = true,
+                -- Don't auto-close the window
+                no_auto_close = true,
             })
             vim.fn.jobstart("pgrep ollama || ollama serve > /dev/null 2>&1 &")
 
@@ -766,7 +765,6 @@ end
 vim.keymap.set('n', '<F12>', _G.ts_syntax_at_point, {noremap = true})
 
 
-
 -----------------------------------------------------------------------------------
 -- NEOVIDE GUI SETTINGS
 -----------------------------------------------------------------------------------
@@ -811,5 +809,3 @@ if vim.g.neovide then
         change_scale_factor(1/1.25)
     end)
 end
-
-
