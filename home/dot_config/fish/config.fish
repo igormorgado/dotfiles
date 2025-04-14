@@ -179,7 +179,6 @@ alias usecure="cryfs-unmount /home/igor/Secure"
 
 # Edit common configurations
 if command -q chezmoi
-    echo "chezmoi"
     set CONFEDITOR "chezmoi edit --apply"
 else 
     echo "$EDITOR"
