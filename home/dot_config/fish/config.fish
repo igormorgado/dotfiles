@@ -93,10 +93,10 @@ if command -q uvx
   uvx --generate-shell-completion fish | source
 end
 
-# Load base uvenv if it exists
-if functions -q uvenv; and not set -q VIRTUAL_ENV; and test -d $uvenv_home/base
-  uvenv base
-end
+# Load base uvenv if it exists (check if no other env is already loaded
+# if functions -q uvenv; and not set -q VIRTUAL_ENV; and test -d $uvenv_home/base
+#   uvenv base
+# end
 
 
 # Aliases
