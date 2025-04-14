@@ -179,7 +179,8 @@ colorscheme darktrial
 " ----------------------------------------------------------------------
 
 mark h ~/
-mark t ~/.vifm/Trash
+mark H /mnt/data/igor
+mark d ~/dsc
 
 " }}}
 
