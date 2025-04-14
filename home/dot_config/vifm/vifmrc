@@ -248,8 +248,6 @@ command! ln ln -s %f:p %D
 " Block particular shortcut
 " nnoremap <left> <nop>
 
-nnoremap ln :ln<cr>
-
 " TMUX integration
 nnoremap <silent> <c-h> :if paneisat('left')   | execute '!tmux select-pane -L %i' | else | execute 'wincmd h' | endif<cr>
 nnoremap <silent> <c-j> :if paneisat('bottom') | execute '!tmux select-pane -D %i' | else | execute 'wincmd j' | endif<cr>
