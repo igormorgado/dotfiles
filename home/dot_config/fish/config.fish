@@ -60,7 +60,7 @@ set XLA_FLAGS --xla_gpu_cuda_data_dir=/usr/lib/cuda
 fish_add_path $HOME/bin
 fish_add_path $HOME/.local/bin
 
-set -gx PYENV_ROOT $HOME/.pyenv
+# set -gx PYENV_ROOT $HOME/.pyenv
 
 set -gx PAGER less
 # set -gx MC_SKIN /home/igor/.config/mc/solarized.ini
@@ -80,10 +80,10 @@ if command -q zoxide
 end
 #
 # initialize pyenv
-if command -q pyenv
-  pyenv init - | source
-  status --is-interactive; and pyenv virtualenv-init - | source
-end
+# if command -q pyenv
+#   pyenv init - | source
+#   status --is-interactive; and pyenv virtualenv-init - | source
+# end
 
 if command -q uv
   uv generate-shell-completion fish | source
