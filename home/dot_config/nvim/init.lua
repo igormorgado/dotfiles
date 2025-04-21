@@ -192,7 +192,8 @@ require("lazy").setup({
             end
 
             local function lsp_status()
-                local clients = vim.lsp.get_active_clients({ bufnr = 0 })
+                local clients = vim.lsp.get_clients({ bufnr = 0 })
+                -- local clients = vim.lsp.get_active_clients({ bufnr = 0 })
                 if #clients == 0 then
                     return ''
                 end
@@ -786,7 +787,7 @@ if vim.g.neovide then
     vim.g.neovide_floating_z_height = 10
     vim.g.neovide_light_angle_degrees = 45
     vim.g.neovide_light_radius = 5
-    vim.g.neovide_transparency = 0.99
+    vim.g.neovide_opacity = 0.99
     vim.g.neovide_hide_mouse_when_typing = true
     vim.g.neovide_theme = "auto"
     vim.g.neovide_cursor_vfx_mode = "pixiedust"
