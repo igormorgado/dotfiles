@@ -5,11 +5,11 @@ DISTRO := $(shell [ -f /etc/os-release ] && . /etc/os-release && echo $$ID || ec
 MAKEFILE_DIR := $(dir $(realpath $(lastword $(MAKEFILE_LIST))))
 DOTFILES_DIR := $(MAKEFILE_DIR)
 
-.PHONY: all bootstrap apply
+.PHONY: all bootstrap apply config
  
-# all: bootstrap apply
+all: install bootstrap apply config
 
-install-chezmoi:
+install:
 ifeq (,$(wildcard $(CHEZMOI)))
 	@echo "🔧 Installing chezmoi..."
 ifeq ($(UNAME),Darwin)
@@ -30,8 +30,14 @@ bootstrap: install-chezmoi
 	@echo "🚀 Bootstrapping chezmoi from $(DOTFILES_DIR)..."
 	# mkdir -p $(HOME)/.config/chezmoi
 	# cp $(DOTFILES_DIR)/chezmoi.toml $(HOME)/.config/chezmoi/chezmoi.toml
-	$(CHEZMOI) init igormorgado
+	$(CHEZMOI) init -v igormorgado 
+
+config:
+	@echo "Generating chezmoi config
+	cat .chezmoi.yaml.tmpl | $(CHEZMOI) execute-template > $(HOME)/.config/chezmoi/chezmoi.yaml
 
 apply:
 	@echo "🎯 Applying dotfiles..."
-	$(CHEZMOI) apply
+	$(CHEZMOI) -v apply
+
+
