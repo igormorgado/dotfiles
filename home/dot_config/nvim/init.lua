@@ -14,11 +14,11 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- Shell configuration
-local FISH_SHELL = os.getenv('FISH_SHELL')
-if FISH_SHELL then
-    vim.opt.shell = FISH_SHELL
-end
+-- Shell configuration (do not enforce shell)
+-- local FISH_SHELL = os.getenv('FISH_SHELL')
+-- if FISH_SHELL then
+--     vim.opt.shell = FISH_SHELL
+-- end
 
 -----------------------------------------------------------------------------------
 -- UI SETTINGS
@@ -321,7 +321,9 @@ require("lazy").setup({
                 -- Don't auto-close the window
                 no_auto_close = true,
             })
-            vim.fn.jobstart("pgrep ollama || ollama serve > /dev/null 2>&1 &")
+            if vim.fn.executable("ollama") == 1 then
+                vim.fn.jobstart("pgrep ollama || ollama serve > /dev/null 2>&1 &")
+            end
 
             local prompts = require("gen").prompts
             prompts['Fix_Code'] = { prompt = "Fix the following code. Only output the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```", replace = true, extract = "```$filetype\n(.-)```" }

@@ -1,3 +1,5 @@
+# set -g fish_trace 1
+
 fish_vi_key_bindings
 
 bind -M default delete delete-char
@@ -45,45 +47,111 @@ set -U fish_color_rightprompt                   white --italics --dim
 set -U fish_color_prompt                        green
 set -U fish_color_git                           blue
 
-set -Ux EDITOR nvim
-set -Ux GIT_EDITOR nvim
-set SHELL /usr/bin/fish
+# First thing, add paths
+
+if test -d $HOME/bin
+    fish_add_path $HOME/bin
+end
+
+if test -d $HOME/.local/bin
+    fish_add_path $HOME/.local/bin
+end
+
+if test -d /opt/nvim-macos/bin
+  fish_add_path /opt/nvim-macos/bin
+end
+
+if test -d /opt/homebrew/bin
+    fish_add_path /opt/homebrew/bin
+end
+
+set -l HOMEBREW_ROOT /opt/homebrew
+if test -d $HOMEBREW_ROOT
+  fish_add_path $HOMEBREW_ROOT/bin
+  $HOMEBREW_ROOT/bin/brew shellenv | source
+end
+
+if test -d ~/.basher
+  set basher ~/.basher/bin
+end
+set -gx PATH $basher $PATH
+status --is-interactive; and . (basher init - fish | psub)
+
+# The next line updates PATH for the Google Cloud SDK.
+set -l GOOGLE_SDK_PATH '/opt/google-cloud-sdk/path.fish.inc'
+if test -f $GOOGLE_SDK_PATH
+    source $GOOGLE_SDK_PATH
+end
+
+function should_run_google_login
+    set -l timestamp_file ~/.cache/google_login_last_run
+    set -l current_time (date +%s)
+    set -l twelve_hours 43200
+
+    if test -f $timestamp_file
+        set -l last_run_time (cat $timestamp_file)
+        if test (math "$current_time - $last_run_time") -lt $twelve_hours
+            return 1  # Don't run
+        end
+    end
+
+    echo $current_time > $timestamp_file
+    return 0  # Run
+end
+
+if status is-interactive; and status is-login; and functions -q google_login
+  printf "Checking for Google authentication"
+  google_login
+end
+
 set NMON vcmknt.
 set LESS '-R'
 set LESSOPEN '|~/.lessfilter %s'
 
-set -gx uvenv_home "$HOME/.uvenv"
-
-set MC_SKIN 'darktrial'
-set XLA_FLAGS --xla_gpu_cuda_data_dir=/usr/lib/cuda
-
-fish_add_path $HOME/bin
-fish_add_path $HOME/.local/bin
-
-# set -gx PYENV_ROOT $HOME/.pyenv
-
-set -gx PAGER less
-# set -gx MC_SKIN /home/igor/.config/mc/solarized.ini
-
-if set -q DISPLAY
-    if test -r ~/.Xresources
-        xrdb ~/.Xresources
-    end
+set -l PYENV_ROOT ~/.pyenv
+if test -d $PYENV_ROOT
+  fish_add_path $PYENV_ROOT/bin
+  pyenv init - | source
 end
 
-if test -r ~/.dir_colors
+if command -q pyenv
+  pyenv virtualenv-init - | source
+end
+
+
+set -gx uvenv_home "$HOME/.uvenv"
+
+set -gx PAGER less
+set MC_SKIN 'darktrial'
+
+if test -d /usr/lib/cuda
+    set XLA_FLAGS --xla_gpu_cuda_data_dir=/usr/lib/cuda
+end
+
+if command -q nvim
+    set -Ux EDITOR nvim
+    set -Ux GIT_EDITOR nvim
+else if command -q vim
+    set -Ux EDITOR vim
+    set -Ux GIT_EDITOR vim
+end
+
+if set -q DISPLAY; and test -r ~/.Xresources; and command -q xrdb
+    xrdb ~/.Xresources 2>/dev/null
+end
+
+if test -r ~/.dir_colors; and command -q dircolors
     eval (dircolors -c $HOME/.dir_colors)
 end
 
 if command -q zoxide
   zoxide init fish | source
 end
-#
-# initialize pyenv
-# if command -q pyenv
-#   pyenv init - | source
-#   status --is-interactive; and pyenv virtualenv-init - | source
-# end
+
+if command -q pyenv
+  pyenv init - | source
+  status --is-interactive; and pyenv virtualenv-init - | source
+end
 
 if command -q uv
   uv generate-shell-completion fish | source
@@ -99,26 +167,11 @@ end
 # end
 
 
+########################################
 # Aliases
-alias cscp="cscope -k -b -c -R; rm -f cctree.out"
+########################################
 
-alias ackpy="ack --python"
-
-alias sstart="sudo systemctl start"
-alias sstop="sudo systemctl stop"
-alias srestart="sudo systemctl restart"
-alias sstatus="sudo systemctl status"
-
-alias shutc="sudo shutdown -c"
-alias tb="nc termbin.com 9999"
-alias vimclean="vim -u NONE -U NONE -N"
-alias gplog="git log --oneline --graph --decorate --all"
-alias vimgit='vim $(git diff --name-only stage | grep -v development.ini)'
-
-# do not delete / or prompt if deleting more than 3 files at a time #
-alias rm='rm -I --preserve-root'
-
-# confirmation #
+# Base aliases
 alias mv='mv -i'
 alias cp='cp -i'
 alias ln='ln -i'
@@ -128,66 +181,113 @@ alias chown='chown --preserve-root'
 alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
-# All of our servers eth0 is connected to the Internets via vlan / router etc  ##
-alias dnstop='dnstop -l 5 eth0'
-alias vnstat='vnstat -i eth0'
-alias iftop='iftop -i eth0'
-alias tcpdump='tshark -i eth0'
-alias tshark='tshark -i eth0'
-alias ethtool='ethtool eth0'
+# alias venv='source venv/bin/activate.fish'
+# alias actv='source venv/bin/activate.fish'
+# alias activate='source venv/bin/activate.fish'
 
-# work on wlan0 by default #
-# Only useful for laptop as all servers are without wireless interface
-alias iwconfig='iwconfig wlan0'
+# Linux only (commands that are based on Gnu Utils)
+if test (uname) = "Linux"
+    alias rm='rm -I --preserve-root'
+    alias sstart="sudo systemctl start"
+    alias sstop="sudo systemctl stop"
+    alias srestart="sudo systemctl restart"
+    alias sstatus="sudo systemctl status"
+    alias shutc="sudo shutdown -c"
+    alias meminfo='free -m -l -t'
+    ## get top process eating memory
+    alias psmem='ps auxf | sort -nr -k 4'
+    alias psmem10='ps aux | sort -nr -k 4 | head -10'
+    
+    # get top process eating cpu ##
+    alias pscpu='ps auxf | sort -nr -k 3'
+    alias pscpu10='ps aux | sort -nr -k 3 | head -10'
 
-alias iotop='iotop'
+    # get GPU ram on desktop / laptop##
+    if test -f /var/log/Xorg.0.log
+        alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+    end
 
-## pass options to free ##
-alias meminfo='free -m -l -t'
+end
 
-## get top process eating memory
-alias psmem='ps auxf | sort -nr -k 4'
-alias psmem10='ps aux | sort -nr -k 4 | head -10'
+# Vim
+alias vimclean="vim -u NONE -U NONE -N"
+alias vimgit='vim $(git diff --name-only stage | grep -v development.ini)'
 
-## get top process eating cpu ##
-alias pscpu='ps auxf | sort -nr -k 3'
-alias pscpu10='ps aux | sort -nr -k 3 | head -10'
+# Git
+alias gplog="git log --oneline --graph --decorate --all"
 
-## get GPU ram on desktop / laptop##
-alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
+# Chezmoi
+if command -q chezmoi
+    alias chez="chezmoi edit --apply"
+    set CONFEDITOR "chezmoi edit --apply"
+else 
+    set CONFEDITOR $EDITOR
+end
+
+if command -q chezmoi
+    if command -q nvim
+        alias ednvim="$CONFEDITOR ~/.config/nvim/init.lua" 
+    end
+    if command -q kitty
+        alias edkitty="$CONFEDITOR ~/.config/kitty/kitty.conf"
+    end
+    if command -q vifm
+        alias edvifm="$CONFEDITOR ~/.config/vifm/vifmrc"
+    end
+    if command -q fish
+        alias edfish="$CONFEDITOR ~/.config/fish/config.fish"
+    end
+    if command -q vim
+        alias edvim="$CONFEDITOR ~/.vim/vimrc"
+    end
+end
+
+
+# Modern life
+if command -q nvim
+    alias vim="nvim"
+    alias vi="nvim"
+    alias e="nvim"
+end
+
+if command -q lsd
+    alias ls="lsd"
+end
+
+if command -q btop
+    alias top="btop"
+end
+
+
+# Rare command a based aliaes
+
+if command -q cscope
+    alias cscp="cscope -k -b -c -R; rm -f cctree.out"
+end
+
+if command -q ack
+    alias ackpy="ack --python"
+end
 
 # For environments with bad apt sources
 if command -q apt-get
   alias apt-get='apt-get --force-yes -y'
 end
 
-# alias venv='source venv/bin/activate.fish'
-# alias actv='source venv/bin/activate.fish'
-# alias activate='source venv/bin/activate.fish'
 alias gdb='gdb -q'
 
-# Modern life
-alias vim="nvim"
-alias vi="nvim"
-alias e="nvim"
-alias ls="lsd"
-alias top="btop"
-alias chez="chezmoi edit --apply"
-
-alias secure="cryfs /mnt/data/igor/Secure/ /home/igor/Secure/ && cd /home/igor/Secure"
-alias usecure="cryfs-unmount /home/igor/Secure"
-
-# Edit common configurations
-if command -q chezmoi
-    set CONFEDITOR "chezmoi edit --apply"
-else 
-    echo "$EDITOR"
-    set CONFEDITOR $EDITOR
+if command -q cryfs
+    alias secure="cryfs /mnt/data/igor/Secure/ /home/igor/Secure/ && cd /home/igor/Secure"
+    alias usecure="cryfs-unmount /home/igor/Secure"
 end
 
-alias ednvim="$CONFEDITOR ~/.config/nvim/init.lua" 
-alias edkitty="$CONFEDITOR ~/.config/kitty/kitty.conf"
-alias edvifm="$CONFEDITOR ~/.config/vifm/vifmrc"
-alias edfish="$CONFEDITOR ~/.config/fish/config.fish"
-
+# Custom env for cloudwalk/macosx
+alias tyrell="pyenv activate tyrell_venv; cd $HOME/repos/"
+alias vols="cd /Volumes"
+alias sec="cd /Volumes/Secure"
+alias msec="hdiutil attach ~/secure.dmg"
+alias jobsync="unison -auto -batch -confirmbigdel=false ssh://lab//home/jupyter/jobs $HOME/jobs"
+alias k="kubectl"
+alias todo="cat -p ~/TODO.txt"
+alias etodo="e ~/TODO.txt"
 # vim: ft=fish:

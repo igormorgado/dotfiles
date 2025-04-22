@@ -30,7 +30,7 @@ bootstrap: install-chezmoi
 	@echo "🚀 Bootstrapping chezmoi from $(DOTFILES_DIR)..."
 	# mkdir -p $(HOME)/.config/chezmoi
 	# cp $(DOTFILES_DIR)/chezmoi.toml $(HOME)/.config/chezmoi/chezmoi.toml
-	$(CHEZMOI) init --source=$(DOTFILES_DIR)
+	$(CHEZMOI) init igormorgado
 
 apply:
 	@echo "🎯 Applying dotfiles..."
