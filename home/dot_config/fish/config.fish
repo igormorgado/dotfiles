@@ -71,11 +71,13 @@ if test -d $HOMEBREW_ROOT
   $HOMEBREW_ROOT/bin/brew shellenv | source
 end
 
-if test -d ~/.basher
-  set basher ~/.basher/bin
+set -l BASHER_ROOT $HOME/.basher
+if test -d $BASHER_ROOT
+  set basher $BASHER_ROOT/bin
+  fish_add_path $basher
+  # set -gx PATH $basher $PATH
+  status --is-interactive; and . (basher init - fish | psub)
 end
-set -gx PATH $basher $PATH
-status --is-interactive; and . (basher init - fish | psub)
 
 # The next line updates PATH for the Google Cloud SDK.
 set -l GOOGLE_SDK_PATH '/opt/google-cloud-sdk/path.fish.inc'
