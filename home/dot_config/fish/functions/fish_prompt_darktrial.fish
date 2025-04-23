@@ -1,4 +1,4 @@
-function dt_user --description 'Write username colored'
+function __dt_user --description 'Write username colored'
     if set -q $fish_color_user
         set_color $fish_color_user
     end
@@ -6,7 +6,8 @@ function dt_user --description 'Write username colored'
     set_color normal
 end
 
-function dt_color_host --description "Write host color. Different if remote"
+
+function __dt_color_host --description "Write host color. Different if remote"
     if set -q SSH; and set -q fish_color_host_remote
         echo $fish_color_host_remote
     else if set -q fish_color_host
@@ -16,15 +17,16 @@ function dt_color_host --description "Write host color. Different if remote"
     end
 end
 
-function dt_host --description 'Write hostname colored'
-    set -l host_color (dt_color_host)
+
+function __dt_host --description 'Write hostname colored'
+    set -l host_color (__dt_color_host)
     set_color $host_color
     echo -n (prompt_hostname)
     set_color normal
 end
 
 
-function dt_pwd --description 'Write pwd colored'
+function __dt_pwd --description 'Write pwd colored'
     # Set cwd color
     if set -q fish_color_cwd
         set_color $fish_color_cwd
@@ -42,10 +44,15 @@ function dt_pwd --description 'Write pwd colored'
 end
 
 
-function dt_status --description 'Write colored status'
-    set -l last_status $argv[1]
+function __dt_status --description 'Write colored status'
+    if test (count $argv) -gt 0
+        set -l last_status $argv[1]
+    else
+        set -l last_status 0
+    end
 
-    if test $last_status -ne 0
+    # if test $last_status -ne 0
+    if test 0 -ne 0
         if set -q fish_color_error
             set_color $fish_color_error
         end
@@ -55,8 +62,12 @@ function dt_status --description 'Write colored status'
 end
 
 
-function dt_suffix --description 'Write the prompt'
-    set -l last_status $argv[1]
+function __dt_suffix --description 'Write the prompt'
+    if test (count $argv) -gt 0
+        set -l last_status $argv[1]
+    else
+        set -l last_status 0
+    end
 
     # Decide if suffix is root or not
     if functions -q fish_is_root_user; and fish_is_root_user
@@ -75,11 +86,11 @@ function dt_suffix --description 'Write the prompt'
     set_color normal
 end
  
-function dt_login --description 'Write the login information'
-    echo -n -s (dt_user) '@' (dt_host)
+function __dt_login --description 'Write the login information'
+    echo -n -s (__dt_user) '@' (__dt_host)
 end
  
-function dt_vcs_prompt --description 'Write vsc prompt'
+function __dt_vcs_prompt --description 'Write vsc prompt'
     if set -q fish_vcs_color
         set_color $fish_vcs_color
     end
@@ -87,9 +98,13 @@ function dt_vcs_prompt --description 'Write vsc prompt'
     set_color normal
 end
    
-function dt_prompt --description 'Write the prompt'
-    set -l last_status $argv[1]
-    echo -s -n (dt_login) ':' (dt_pwd) ' ' (dt_vcs_prompt) ' ' (dt_status $last_status)
+function __dt_prompt --description 'Write the prompt'
+    if test (count $argv) -gt 0
+        set -l last_status $argv[1]
+    else
+        set -l last_status 0
+    end
+    echo -s -n (__dt_login) ':' (__dt_pwd) '1' (__dt_vcs_prompt) '2' (__dt_status $last_status) '3'
 end
  
 function fish_prompt --description 'Write out the prompt'
@@ -101,7 +116,7 @@ function fish_prompt --description 'Write out the prompt'
         set -l fish_prompt_pwd_dir_length 0
     end
 
-    echo (dt_prompt $last_status)
-    echo -n -s (dt_suffix $last_status) ' '
+    echo (__dt_prompt $last_status) '4'
+    echo -n -s (__dt_suffix $last_status) ' ' '5'
     set_color normal
 end
