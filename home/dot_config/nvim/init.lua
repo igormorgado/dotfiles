@@ -231,6 +231,22 @@ require("lazy").setup({
         end
     },
 
+
+    {
+      "RRethy/vim-hexokinase",
+      -- run the build step after install/update
+      build = "make hexokinase",
+      config = function()
+        -- { "sign_column" }, { "background" }, { "foreground" }, etc.
+        vim.g.Hexokinase_highlighters = { "virtual" }
+        vim.g.Hexokinase_ftOptInPatterns = {
+            fish = "full_hex,rgb,colour_names"
+        }
+        -- turn on the colouring immediately
+        vim.cmd("HexokinaseTurnOn")
+      end,
+    },
+
     -- File explorer
     { "nvim-tree/nvim-tree.lua",
         lazy = false,
