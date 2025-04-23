@@ -76,7 +76,7 @@ function dt_suffix --description 'Write the prompt'
 end
  
 function dt_login --description 'Write the login information'
-    echo -n -s (dt_user) '@' (dt_hostname)
+    echo -n -s (dt_user) '@' (dt_host)
 end
  
 function dt_vcs_prompt --description 'Write vsc prompt'
