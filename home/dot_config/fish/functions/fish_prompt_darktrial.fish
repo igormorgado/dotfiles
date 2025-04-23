@@ -1,7 +1,5 @@
 function __dt_user --description 'Write username colored'
-    if set -q $fish_color_user
-        set_color $fish_color_user
-    end
+    set -q $fish_color_user; and set_color $fish_color_user
     echo -n $USER
     set_color normal
 end
@@ -27,10 +25,7 @@ end
 
 
 function __dt_pwd --description 'Write pwd colored'
-    # Set cwd color
-    if set -q fish_color_cwd
-        set_color $fish_color_cwd
-    end
+    set -q fish_color_cwd; and set_color $fish_color_cwd
 
     # is it root?
     if functions -q fish_is_root_user; and fish_is_root_user
