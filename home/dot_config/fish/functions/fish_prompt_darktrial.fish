@@ -51,7 +51,7 @@ function __dt_status --description 'Write colored status'
         set -l last_status 0
     end
 
-    if test "$last_status" -ne 0
+    if test "$last_status" -ne "0"
         if set -q fish_color_error
             set_color $fish_color_error
         end
@@ -79,7 +79,7 @@ function __dt_suffix --description 'Write the prompt'
         set_color $fish_color_prompt
     end
 
-    if test "$last_status" -ne 0; and set -q fish_color_error
+    if test "$last_status" -ne "0"; and set -q fish_color_error
         set_color $fish_color_error
     end
 
