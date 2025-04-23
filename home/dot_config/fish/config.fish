@@ -1,13 +1,12 @@
 # set -g fish_trace 1
-
 # set -l DEBUG 1
-set -q DEBUG; and time_since_last
+set -q DEBUG; and echo -n starting; and time_since_last
 
 fish_vi_key_bindings
 bind -M default delete delete-char
 bind -M insert delete delete-char
 bind -M visual delete delete-char
-set -q DEBUG; echo -n bindings; and time_since_last
+set -q DEBUG; and echo -n bindings; and time_since_last
 
 
 # Base
@@ -51,7 +50,7 @@ set -U fish_color_rightprompt                   white --italics --dim
 set -U fish_color_prompt                        green
 set -U fish_color_git                           blue
 
-set -q DEBUG; echo -n theme; and time_since_last
+set -q DEBUG; and echo -n theme; and time_since_last
 
 # First thing, add paths
 
@@ -70,14 +69,14 @@ end
 if test -d /opt/homebrew/bin
     fish_add_path /opt/homebrew/bin
 end
-set -q DEBUG; echo -n paths; and time_since_last
+set -q DEBUG; and echo -n paths; and time_since_last
 
 set -l HOMEBREW_ROOT /opt/homebrew
 if test -d $HOMEBREW_ROOT
   fish_add_path $HOMEBREW_ROOT/bin
   $HOMEBREW_ROOT/bin/brew shellenv | source
 end
-set -q DEBUG; echo -n homebrew; and time_since_last
+set -q DEBUG; and echo -n homebrew; and time_since_last
 
 set -l BASHER_ROOT $HOME/.basher
 if test -d $BASHER_ROOT
@@ -85,14 +84,14 @@ if test -d $BASHER_ROOT
   fish_add_path $basher
   status --is-interactive; and . (basher init - fish | psub)
 end
-set -q DEBUG; echo -n basher; and time_since_last
+set -q DEBUG; and echo -n basher; and time_since_last
 
 # The next line updates PATH for the Google Cloud SDK.
 set -l GOOGLE_SDK_PATH '/opt/google-cloud-sdk/path.fish.inc'
 if test -f $GOOGLE_SDK_PATH
     source $GOOGLE_SDK_PATH
 end
-set -q DEBUG; echo -n google_sdk; and time_since_last
+set -q DEBUG; and echo -n google_sdk; and time_since_last
 
 # Verify if need to login at google
 set -l delay_time 43200  # 12h
@@ -102,7 +101,7 @@ if      status is-interactive;
     and should_run_google_login $delay_time
     google_login
 end
-set -q DEBUG; echo -n google_login; and time_since_last
+set -q DEBUG; and echo -n google_login; and time_since_last
 
 set -l PYENV_ROOT ~/.pyenv
 if test -d $PYENV_ROOT
@@ -112,7 +111,7 @@ if test -d $PYENV_ROOT
     pyenv virtualenv-init - | source
   end
 end
-set -q DEBUG; echo -n pyenv; and time_since_last
+set -q DEBUG; and echo -n pyenv; and time_since_last
 
 set -gx uvenv_home "$HOME/.uvenv"
 
@@ -133,33 +132,33 @@ else if command -q vim
     set -Ux EDITOR vim
     set -Ux GIT_EDITOR vim
 end
-set -q DEBUG; echo -n settings; and time_since_last
+set -q DEBUG; and echo -n settings; and time_since_last
 
 
 if set -q DISPLAY; and test -r ~/.Xresources; and command -q xrdb
     xrdb ~/.Xresources 2>/dev/null
 end
-set -q DEBUG; echo -n xrdb; and time_since_last
+set -q DEBUG; and echo -n xrdb; and time_since_last
 
 if test -r ~/.dir_colors; and command -q dircolors
     eval (dircolors -c $HOME/.dir_colors)
 end
-set -q DEBUG; echo -n dircolor; and time_since_last
+set -q DEBUG; and echo -n dircolor; and time_since_last
 
 if command -q zoxide
   zoxide init fish | source
 end
-set -q DEBUG; echo -n zoxide; and time_since_last
+set -q DEBUG; and echo -n zoxide; and time_since_last
 
 if command -q uv
   uv generate-shell-completion fish | source
 end
-set -q DEBUG; echo -n uv; and time_since_last
+set -q DEBUG; and echo -n uv; and time_since_last
 
 if command -q uvx
   uvx --generate-shell-completion fish | source
 end
-set -q DEBUG; echo -n uvx; and time_since_last
+set -q DEBUG; and echo -n uvx; and time_since_last
 
 # Load base uvenv if it exists (check if no other env is already loaded
 # if functions -q uvenv; and not set -q VIRTUAL_ENV; and test -d $uvenv_home/base
@@ -291,6 +290,6 @@ alias k="kubectl"
 alias todo="cat -p ~/TODO.txt"
 alias etodo="e ~/TODO.txt"
 
-set -q DEBUG; echo -n aliases; and time_since_last
+set -q DEBUG; and echo -n aliases; and time_since_last
 
 # vim: ft=fish:
