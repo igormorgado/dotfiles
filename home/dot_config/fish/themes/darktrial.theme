@@ -17,12 +17,12 @@ fish_color_operator                     yellow
 fish_color_escape                       yellow --bold
 fish_color_cwd_root                     red
 fish_color_valid_path                   --underline
-fish_color_cwd                          cyan
+fish_color_cwd                          blue
 fish_color_autosuggestion               white --dim
 fish_color_user                         yellow
 fish_color_host                         normal
 fish_color_cancel                       -r
-fish_color_option                       blue
+fish_color_option                       cyan
 fish_color_keyword                      white --bold
 fish_color_host_remote                  magenta
 fish_color_status                       red --bold
