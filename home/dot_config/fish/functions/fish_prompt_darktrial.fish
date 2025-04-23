@@ -51,8 +51,7 @@ function __dt_status --description 'Write colored status'
         set -l last_status 0
     end
 
-    # if test $last_status -ne 0
-    if test 0 -ne 0
+    if test "$last_status" -ne 0
         if set -q fish_color_error
             set_color $fish_color_error
         end
@@ -69,8 +68,6 @@ function __dt_suffix --description 'Write the prompt'
         set -l last_status 0
     end
 
-    echo "LAST STATUS $last_status -- done"
-
     # Decide if suffix is root or not
     if functions -q fish_is_root_user; and fish_is_root_user
         set -l suffix '#'
@@ -82,7 +79,7 @@ function __dt_suffix --description 'Write the prompt'
         set_color $fish_color_prompt
     end
 
-    if test $last_status -ne 0; and set -q fish_color_error
+    if test "$last_status" -ne 0; and set -q fish_color_error
         set_color $fish_color_error
     end
 
