@@ -1,3 +1,7 @@
+# name: "Darktrial"
+# preferred_background: 'black'
+
+
 # Base
 fish_color_normal                        white
 fish_color_command                       blue
