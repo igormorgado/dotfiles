@@ -63,12 +63,15 @@ end
 
 
 function __dt_suffix --description 'Write the prompt'
-    set -l last_status
-    if test (count $argv) -gt 0
-        set last_status $argv[1]
-    else
-        set last_status 0
-    end
+
+    set -q argv[1]; and set -l last_status $argv[1]; or set -l last_status 0
+
+    # set -l last_status
+    # if test (count $argv) -gt 0
+    #     set last_status $argv[1]
+    # else
+    #     set last_status 0
+    # end
 
     # Decide if suffix is root or not
     set -l suffix
@@ -83,7 +86,6 @@ function __dt_suffix --description 'Write the prompt'
     end
 
     if test "$last_status" != "0"; and set -q fish_color_error
-        echo "LAST STATUS suffix [$last_status]"
         set_color $fish_color_error
     end
 
