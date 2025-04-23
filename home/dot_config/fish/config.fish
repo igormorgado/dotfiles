@@ -1,6 +1,6 @@
 # set -g fish_trace 1
-set -l DEBUG 1
-set -q DEBUG; and echo -n starting; and time_since_last
+# set -l DEBUG 1
+set -q DEBUG; and echo Time debug start; and time_since_last
 
 fish_vi_key_bindings
 bind -M default delete delete-char
@@ -53,7 +53,6 @@ set -U fish_color_git                           blue
 set -q DEBUG; and echo -n theme; and time_since_last
 
 # First thing, add paths
-
 if test -d $HOME/bin
     fish_add_path $HOME/bin
 end
