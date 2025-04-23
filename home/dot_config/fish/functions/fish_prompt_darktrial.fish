@@ -45,10 +45,11 @@ end
 
 
 function __dt_status --description 'Write colored status'
+    set -l last_status
     if test (count $argv) -gt 0
-        set -l last_status $argv[1]
+        set last_status $argv[1]
     else
-        set -l last_status 0
+        set last_status 0
     end
 
     if test "$last_status" != "0"
