@@ -49,7 +49,7 @@ function dt_status --description 'Write colored status'
         if set -q fish_color_error
             set_color $fish_color_error
         end
-        echo -n "[$last_status]"
+        echo -n "✘ $last_status"
     end
     set_color normal
 end
@@ -95,7 +95,7 @@ end
 function fish_prompt --description 'Write out the prompt'
     set -l last_status $status
 
-    if test $COLUMNS -lt 100
+    if test $COLUMNS -lt 120
         set -l fish_prompt_pwd_dir_length 1
     else
         set -l fish_prompt_pwd_dir_length 0
