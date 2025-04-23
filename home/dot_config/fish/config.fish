@@ -160,7 +160,6 @@ if command -q pyenv
 end
 set -q DEBUG; echo -n pyenv; and time_since_last
 
-if command -q pyenv
 if command -q uv
   uv generate-shell-completion fish | source
 end
