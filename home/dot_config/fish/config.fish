@@ -1,6 +1,6 @@
 # set -g fish_trace 1
 
-set -l DEBUG 1
+# set -l DEBUG 1
 set -q DEBUG; and time_since_last
 
 fish_vi_key_bindings
