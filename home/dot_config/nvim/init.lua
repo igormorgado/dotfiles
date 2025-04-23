@@ -33,6 +33,7 @@ vim.opt.cursorcolumn = true
 vim.opt.colorcolumn = '80'
 vim.opt.modeline = true
 vim.opt.modelines = 3
+vim.opt.scrolloff = 5
 
 -- Search settings
 vim.opt.ignorecase = true
