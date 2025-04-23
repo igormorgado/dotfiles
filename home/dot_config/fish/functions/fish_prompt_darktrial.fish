@@ -63,23 +63,10 @@ end
 
 
 function __dt_suffix --description 'Write the prompt'
-
     set -q argv[1]; and set -l last_status $argv[1]; or set -l last_status 0
 
-    # set -l last_status
-    # if test (count $argv) -gt 0
-    #     set last_status $argv[1]
-    # else
-    #     set last_status 0
-    # end
-
-    # Decide if suffix is root or not
-    set -l suffix
-    if functions -q fish_is_root_user; and fish_is_root_user
-        set suffix '#'
-    else 
-        set suffix '❯'
-    end
+    set -l suffix '❯'
+    functions -q fish_is_root_user; and fish_is_root_user; and set suffix '#'
 
     if set -q fish_color_prompt
         set_color $fish_color_prompt
