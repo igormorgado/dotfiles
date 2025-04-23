@@ -107,15 +107,12 @@ set -q DEBUG; echo -n google_login; and time_since_last
 set -l PYENV_ROOT ~/.pyenv
 if test -d $PYENV_ROOT
   fish_add_path $PYENV_ROOT/bin
-  pyenv init - | source
+  if command -q pyenv
+    pyenv init - | source
+    pyenv virtualenv-init - | source
+  end
 end
 set -q DEBUG; echo -n pyenv; and time_since_last
-
-if command -q pyenv
-  pyenv virtualenv-init - | source
-end
-set -q DEBUG; echo -n virtualenv; and time_since_last
-
 
 set -gx uvenv_home "$HOME/.uvenv"
 
@@ -153,12 +150,6 @@ if command -q zoxide
   zoxide init fish | source
 end
 set -q DEBUG; echo -n zoxide; and time_since_last
-
-if command -q pyenv
-  pyenv init - | source
-  status --is-interactive; and pyenv virtualenv-init - | source
-end
-set -q DEBUG; echo -n pyenv; and time_since_last
 
 if command -q uv
   uv generate-shell-completion fish | source
