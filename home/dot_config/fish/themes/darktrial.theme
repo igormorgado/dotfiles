@@ -33,18 +33,19 @@ fish_color_git                          magenta
 fish_pager_color_progress               brwhite --background=cyan
 
 fish_pager_color_background             --background=black
-fish_pager_color_selected_background    --background=brblack
-fish_pager_color_secondary_background   --background=green
+fish_pager_color_secondary_background   --background=brblack
 
 fish_pager_color_completion             normal
-fish_pager_color_selected_completion    normal --bold
-fish_pager_color_secondary_completion   magenta
+fish_pager_color_secondary_completion   normal
 
 fish_pager_color_description            brwhite white
-fish_pager_color_selected_description   brwhite --bold
-fish_pager_color_secondary_description  blue
+fish_pager_color_secondary_description  brwhite white
 
 fish_pager_color_prefix                 brwhite --underline
-fish_pager_color_selected_prefix        brwhite --bold --underline
-fish_pager_color_secondary_prefix       red
+fish_pager_color_secondary_prefix       brwhite --underline
+
+fish_pager_color_selected_background    --background=white
+fish_pager_color_selected_completion    black --bold
+fish_pager_color_selected_description   black --bold
+fish_pager_color_selected_prefix        black --bold 
 
