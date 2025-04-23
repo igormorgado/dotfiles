@@ -1,7 +1,12 @@
 # set -g fish_trace 1
 
+set -l DEBUG 1
+set -q DEBUG; and time_since_last
+
 fish_vi_key_bindings
 
+
+set -q DEBUG; and time_since_last
 bind -M default delete delete-char
 bind -M insert delete delete-char
 bind -M visual delete delete-char
@@ -49,6 +54,7 @@ set -U fish_color_git                           blue
 
 # First thing, add paths
 
+set -q DEBUG; and time_since_last
 if test -d $HOME/bin
     fish_add_path $HOME/bin
 end
@@ -65,12 +71,14 @@ if test -d /opt/homebrew/bin
     fish_add_path /opt/homebrew/bin
 end
 
+set -q DEBUG; and time_since_last
 set -l HOMEBREW_ROOT /opt/homebrew
 if test -d $HOMEBREW_ROOT
   fish_add_path $HOMEBREW_ROOT/bin
   $HOMEBREW_ROOT/bin/brew shellenv | source
 end
 
+set -q DEBUG; and time_since_last
 set -l BASHER_ROOT $HOME/.basher
 if test -d $BASHER_ROOT
   set basher $BASHER_ROOT/bin
@@ -79,34 +87,20 @@ if test -d $BASHER_ROOT
   status --is-interactive; and . (basher init - fish | psub)
 end
 
+set -q DEBUG; and time_since_last
 # The next line updates PATH for the Google Cloud SDK.
 set -l GOOGLE_SDK_PATH '/opt/google-cloud-sdk/path.fish.inc'
 if test -f $GOOGLE_SDK_PATH
     source $GOOGLE_SDK_PATH
 end
 
-function should_run_google_login
-    set -l timestamp_file ~/.cache/google_login_last_run
-    set -l current_time (date +%s)
-    set -l twelve_hours 43200
-
-    if test -f $timestamp_file
-        set -l last_run_time (cat $timestamp_file)
-        set -l time_since_last_run (math "$current_time - $last_run_time")
-        if test $time_since_last_run -lt $twelve_hours
-            return 1  # Don't run
-        end
-    end
-
-    echo $current_time > $timestamp_file
-    return 0  # Run
-end
-
+set -q DEBUG; and time_since_last
+# Verify if need to login at google
+set -l delay_time 43200  # 12h
 if      status is-interactive;
     and status is-login;
     and functions -q google_login;
-    and should_run_google_login
-    printf "Checking for Google authentication"
+    and should_run_google_login $delay_time
     google_login
 end
 
@@ -114,12 +108,14 @@ set NMON vcmknt.
 set LESS '-R'
 set LESSOPEN '|~/.lessfilter %s'
 
+set -q DEBUG; and time_since_last
 set -l PYENV_ROOT ~/.pyenv
 if test -d $PYENV_ROOT
   fish_add_path $PYENV_ROOT/bin
   pyenv init - | source
 end
 
+set -q DEBUG; and time_since_last
 if command -q pyenv
   pyenv virtualenv-init - | source
 end
@@ -150,19 +146,23 @@ if test -r ~/.dir_colors; and command -q dircolors
     eval (dircolors -c $HOME/.dir_colors)
 end
 
+set -q DEBUG; and time_since_last
 if command -q zoxide
   zoxide init fish | source
 end
 
+set -q DEBUG; and time_since_last
 if command -q pyenv
   pyenv init - | source
   status --is-interactive; and pyenv virtualenv-init - | source
 end
 
+set -q DEBUG; and time_since_last
 if command -q uv
   uv generate-shell-completion fish | source
 end
 
+set -q DEBUG; and time_since_last
 if command -q uvx
   uvx --generate-shell-completion fish | source
 end
@@ -177,6 +177,7 @@ end
 # Aliases
 ########################################
 
+set -q DEBUG; and time_since_last
 # Base aliases
 alias mv='mv -i'
 alias cp='cp -i'
@@ -296,4 +297,6 @@ alias jobsync="unison -auto -batch -confirmbigdel=false ssh://lab//home/jupyter/
 alias k="kubectl"
 alias todo="cat -p ~/TODO.txt"
 alias etodo="e ~/TODO.txt"
+
+set -q DEBUG; and time_since_last
 # vim: ft=fish:
