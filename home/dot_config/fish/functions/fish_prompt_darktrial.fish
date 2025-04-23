@@ -104,7 +104,8 @@ end
 function __dt_prompt --description 'Write the prompt'
     echo "ARGV $argv" 
     if test (count $argv) -gt 0
-        echo "ARGV > 0"
+        echo "ARGV > 0 ; argv[1] $argv[1]"
+
         set -l last_status $argv[1]
     else
         echo "ARGV = 0"
