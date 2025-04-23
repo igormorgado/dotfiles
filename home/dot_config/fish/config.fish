@@ -92,7 +92,8 @@ function should_run_google_login
 
     if test -f $timestamp_file
         set -l last_run_time (cat $timestamp_file)
-        if test (math "$current_time - $last_run_time") -lt $twelve_hours
+        set -l time_since_last_run (math "$current_time - $last_run_time")
+        if test $time_since_last_run -lt $twelve_hours
             return 1  # Don't run
         end
     end
@@ -101,10 +102,10 @@ function should_run_google_login
     return 0  # Run
 end
 
-if  status is-interactive;
+if      status is-interactive;
     and status is-login;
     and functions -q google_login;
-    and not should_run_google_login
+    and should_run_google_login
     printf "Checking for Google authentication"
     google_login
 end
