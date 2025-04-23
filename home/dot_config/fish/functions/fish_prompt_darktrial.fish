@@ -39,17 +39,10 @@ end
 
 
 function __dt_status --description 'Write colored status'
-    set -l last_status
-    if test (count $argv) -gt 0
-        set last_status $argv[1]
-    else
-        set last_status 0
-    end
+    set -q argv[1]; and set -l last_status $argv[1]; or set -l last_status 0
 
     if test "$last_status" != "0"
-        if set -q fish_color_error
-            set_color $fish_color_error
-        end
+        set -q fish_color_error; and set_color $fish_color_error
         echo -n "✘ $last_status"
     end
     set_color normal
@@ -62,13 +55,8 @@ function __dt_suffix --description 'Write the prompt'
     set -l suffix '❯'
     functions -q fish_is_root_user; and fish_is_root_user; and set suffix '#'
 
-    if set -q fish_color_prompt
-        set_color $fish_color_prompt
-    end
-
-    if test "$last_status" != "0"; and set -q fish_color_error
-        set_color $fish_color_error
-    end
+    set -q fish_color_prompt; and set_color $fish_color_prompt
+    test "$last_status" != "0"; and set -q fish_color_error; and set_color $fish_color_error
 
     echo -n "$suffix"
     set_color normal
