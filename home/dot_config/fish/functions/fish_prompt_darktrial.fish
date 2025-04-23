@@ -28,11 +28,10 @@ function __dt_pwd --description 'Write pwd colored'
     set -q fish_color_cwd; and set_color $fish_color_cwd
 
     # is it root?
-    if functions -q fish_is_root_user; and fish_is_root_user
-        if set -q fish_color_cwd_root
-            set_color $fish_color_cwd_root
-        end
-    end
+    functions -q fish_is_root_user;
+        and fish_is_root_user;
+        and set -q fish_color_cwd_root;
+        and set_color $fish_color_cwd_root
 
     echo -n (prompt_pwd)
     set_color normal
