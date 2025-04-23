@@ -1,44 +1,44 @@
 # name: "Darktrial"
 # preferred_background: 'black'
 
-
-# Base
-fish_color_normal                        white
-fish_color_command                       blue
-fish_color_keyword                       blue
-fish_color_param                         white
-fish_color_option                        cyan
-fish_color_comment                       white --italics --dim
-fish_color_error                         red --bold
-fish_color_escape                        magenta --bold
-fish_color_quote                         white --italics
-fish_color_operator                      yellow
-fish_color_redirection                   yellow
-fish_color_end                           brwhite
-fish_color_match                         --background=yellow
-
-# Autosuggestions and History
-fish_color_autosuggestion                white --dim
-fish_color_user                          white --dim
-fish_color_host                          white --dim
-fish_color_host_remote                   white --bold
-fish_color_cwd                           brwhite
-fish_color_cwd_root                      red
-fish_color_status                        brred --bold
-
-# Pager
-fish_pager_color_prefix                  brwhite --bold
-fish_pager_color_completion              white
-fish_pager_color_description             white
-fish_pager_color_selected_background     --background=brblack
-fish_pager_color_selected_completion     brwhite --bold
-fish_pager_color_selected_description    brwhite --bold
-
-# Misc
-fish_color_valid_path                    cyan
-fish_color_search_match                  --background=bryellow --bold
-fish_color_history_current               --bold
-fish_color_selection                     --reverse
-fish_color_rightprompt                   white --italics --dim
-fish_color_prompt                        green
-fish_color_git                           blue
+fish_color_normal                       white
+fish_color_command                      brwhite
+fish_color_quote                        white --italics
+fish_color_redirection                  brwhite
+fish_color_end                          brwhite
+fish_color_error                        red --bold
+fish_color_param                        white
+fish_color_comment                      white --italics --dim
+fish_color_match                        --background=yellow
+fish_color_selection                    --reverse
+fish_color_search_match                 --background=bryellow --bold
+fish_color_history_current              --bold
+fish_color_operator                     yellow
+fish_color_escape                       magenta --bold
+fish_color_cwd_root                     red
+fish_color_valid_path                   cyan
+fish_color_cwd                          brwhite
+fish_color_autosuggestion               white --dim
+fish_color_user                         white --dim
+fish_color_host                         white --dim
+fish_color_cancel                       -r
+fish_pager_color_completion             white
+fish_pager_color_description            white
+fish_pager_color_prefix                 brwhite --bold
+fish_pager_color_progress               brwhite --background=cyan
+fish_pager_color_selected_background    --background=brblack
+fish_color_option                       cyan
+fish_color_keyword                      blue
+fish_color_host_remote                  white --bold
+fish_color_status                       brred --bold
+fish_pager_color_selected_completion    brwhite --bold
+fish_pager_color_selected_description   brwhite --bold
+fish_pager_color_selected_prefix
+fish_pager_color_secondary_background
+fish_pager_color_secondary_prefix
+fish_pager_color_secondary_completion
+fish_pager_color_secondary_description
+fish_pager_color_background             
+fish_color_rightprompt                  white --italics --dim
+fish_color_prompt                       green
+fish_color_git                          blue
