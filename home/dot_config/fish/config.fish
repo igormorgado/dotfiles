@@ -101,9 +101,12 @@ function should_run_google_login
     return 0  # Run
 end
 
-if status is-interactive; and status is-login; and functions -q google_login
-  printf "Checking for Google authentication"
-  google_login
+if  status is-interactive;
+    and status is-login;
+    and functions -q google_login;
+    and not should_run_google_login
+    printf "Checking for Google authentication"
+    google_login
 end
 
 set NMON vcmknt.
