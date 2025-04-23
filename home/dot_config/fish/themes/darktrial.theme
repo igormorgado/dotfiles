@@ -22,7 +22,7 @@ fish_color_autosuggestion               white --dim
 fish_color_user                         green
 fish_color_host                         normal
 fish_color_cancel                       -r
-fish_color_option                       magenta
+fish_color_option                       blue
 fish_color_keyword                      white --bold
 fish_color_host_remote                  yellow
 fish_color_status                       red --bold
