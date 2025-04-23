@@ -34,6 +34,7 @@ vim.opt.colorcolumn = '80'
 vim.opt.modeline = true
 vim.opt.modelines = 3
 vim.opt.scrolloff = 5
+vim.opt.sidescrolloff = 10
 
 -- Search settings
 vim.opt.ignorecase = true
@@ -784,6 +785,47 @@ end
 -- Create a keymap to call the function
 vim.keymap.set('n', '<F12>', _G.ts_syntax_at_point, {noremap = true})
 
+
+
+-- Toggleable Typewriter Scrolling for Neovim
+-- Place this in your init.lua or a separate Lua module
+
+-- State storage in the global namespace
+vim.g.typewriter_mode = false
+vim.g.typewriter_saved = {}
+
+-- The toggle function
+function _G.toggle_typewriter()
+  if not vim.g.typewriter_mode then
+    -- Save original settings
+    vim.g.typewriter_saved.scrolloff    = vim.wo.scrolloff
+    vim.g.typewriter_saved.sidescrolloff = vim.wo.sidescrolloff
+
+    -- Compute half the window height (minus one so the cursor truly stays centered)
+    local h = vim.api.nvim_win_get_height(0)
+    local half = math.floor(h / 2)
+
+    -- Enable typewriter mode
+    vim.wo.scrolloff = half
+    vim.wo.sidescrolloff = 0
+    vim.g.typewriter_mode = true
+    vim.notify("Typewriter mode ON (cursor stays centered)", vim.log.levels.INFO)
+  else
+    -- Restore original settings
+    vim.wo.scrolloff = vim.g.typewriter_saved.scrolloff
+    vim.wo.sidescrolloff = vim.g.typewriter_saved.sidescrolloff
+    vim.g.typewriter_mode = false
+    vim.notify("Typewriter mode OFF", vim.log.levels.INFO)
+  end
+end
+
+-- Keymap: <Leader>t to toggle
+vim.keymap.set(
+  "n",
+  "<Leader>t",
+  _G.toggle_typewriter,
+  { noremap = true, silent = true, desc = "Toggle typewriter scroll mode" }
+)
 
 -----------------------------------------------------------------------------------
 -- NEOVIDE GUI SETTINGS
