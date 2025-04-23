@@ -104,7 +104,7 @@ function __dt_prompt --description 'Write the prompt'
     else
         set -l last_status 0
     end
-    echo -s -n (__dt_login) ':' (__dt_pwd) '1' (__dt_vcs_prompt) '2' (__dt_status $last_status) '3'
+    echo -s -n (__dt_login) ':' (__dt_pwd) ' ' (__dt_vcs_prompt) ' ' (__dt_status $last_status)
 end
  
 function fish_prompt --description 'Write out the prompt'
@@ -116,7 +116,7 @@ function fish_prompt --description 'Write out the prompt'
         set -l fish_prompt_pwd_dir_length 0
     end
 
-    echo (__dt_prompt $last_status) '4'
-    echo -n -s (__dt_suffix $last_status) ' ' '5'
+    echo (__dt_prompt $last_status)
+    echo -n -s (__dt_suffix $last_status) ' '
     set_color normal
 end
