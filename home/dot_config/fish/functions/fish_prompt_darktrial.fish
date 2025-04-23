@@ -102,6 +102,7 @@ function __dt_vcs_prompt --description 'Write vsc prompt'
 end
    
 function __dt_prompt --description 'Write the prompt'
+    echo "ARGV $argv" 
     if test (count $argv) -gt 0
         set -l last_status $argv[1]
     else
@@ -120,7 +121,8 @@ function fish_prompt --description 'Write out the prompt'
         set -l fish_prompt_pwd_dir_length 0
     end
 
+    echo "LAST STATUS fish_prompt [$last_status]"
     echo (__dt_prompt "$last_status")
-    echo -n -s (__dt_suffix $last_status) ' '
+    echo -n -s (__dt_suffix "$last_status") ' '
     set_color normal
 end
