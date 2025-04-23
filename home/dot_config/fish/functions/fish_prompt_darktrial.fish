@@ -89,7 +89,7 @@ end
    
 function dt_prompt --description 'Write the prompt'
     set -l last_status $argv[1]
-    echo -s (dt_login) ':' (dt_pwd) ' ' (dt_vcs_prompt) ' ' (dt_status $last_status)
+    echo -s -n (dt_login) ':' (dt_pwd) ' ' (dt_vcs_prompt) ' ' (dt_status $last_status)
 end
  
 function fish_prompt --description 'Write out the prompt'
@@ -102,7 +102,6 @@ function fish_prompt --description 'Write out the prompt'
     end
 
     echo (dt_prompt $last_status)
-    echo
     echo -n -s (dt_suffix $last_status) ' '
     set_color normal
 end
