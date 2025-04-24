@@ -29,7 +29,7 @@ fish_color_status                       red --bold
 
 fish_color_rightprompt                  white --italics --dim
 fish_color_prompt                       green
-fish_color_git                          magenta
+# fish_color_git                          magenta
 
 fish_pager_color_progress               brwhite --background=cyan
 
