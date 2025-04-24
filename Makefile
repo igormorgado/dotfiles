@@ -26,17 +26,16 @@ else
 	@echo "🏠 Chezmoi installed" 
 endif
 
-bootstrap: install-chezmoi
+bootstrap: install
 	@echo "🚀 Bootstrapping chezmoi from $(DOTFILES_DIR)..."
-	# mkdir -p $(HOME)/.config/chezmoi
-	# cp $(DOTFILES_DIR)/chezmoi.toml $(HOME)/.config/chezmoi/chezmoi.toml
 	$(CHEZMOI) init -v igormorgado 
 
-config:
-	@echo "Generating chezmoi config
+config: install
+	@echo "Generating chezmoi config"
+	mkdir -p $(HOME)/.config/chezmoi
 	cat .chezmoi.yaml.tmpl | $(CHEZMOI) execute-template > $(HOME)/.config/chezmoi/chezmoi.yaml
 
-apply:
+apply: install bootstrap
 	@echo "🎯 Applying dotfiles..."
 	$(CHEZMOI) -v apply
 
