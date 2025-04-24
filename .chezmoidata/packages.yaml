@@ -1,0 +1,131 @@
+packages:
+  darwin:
+    brew:
+      - ack
+      - aspell
+      - bash
+      - bat
+      - btop
+      - cbonsai
+      - chezmoi
+      - coreutils
+      - diffutils
+      - duf
+      - fd
+      - fdupes
+      - fish
+      - fisher
+      - fzf
+      - git
+      - git-delta
+      - git-filter-repo
+      - git-lfs
+      - go
+      - htop
+      - hunspell
+      - jq
+      - lsd
+      - lua
+      - luajit
+      - luarocks
+      - mercurial
+      - midnight-commander
+      - mtr
+      - ncdu
+      - neovim
+      - readline
+      - ripgrep
+      - rsync
+      - tmux
+      - tree-sitter
+      - unison
+      - vifm
+      - watch
+      - wget
+      - xz
+      - zoxide
+      - zstd
+  debian:
+    apt:
+      - ack
+      - aspell
+      - bat
+      - btop
+      # - cbonsai
+      - ack
+      - autoconf
+      - autogen
+      - automake
+      - autopoint
+      - bash-completion
+      - build-essential
+      - chezmoi
+      - cmake
+      - coreutils
+      - cscope
+      - curl
+      - diffutils
+      - fd
+      - fdupes
+      - fish
+      - fzf
+      - git
+      # - git-delta
+      - git-filter-repo
+      - git-lfs
+      - golang
+      - htop
+      - hunspell
+      - ifstat
+      - iftop
+      - iotop
+      - iptraf-ng
+      - ipython3
+      - jq
+      - json-c
+      - links
+      - lsd
+      - lsof
+      - lsscsi
+      - lua5.1
+      - luarocks
+      - m4
+      - make
+      - mc
+      - mercurial
+      - mtr-tiny
+      - ncdu
+      - neovim
+      - nmon
+      - p7zip-full
+      - pastebinit
+      - pkg-config
+      - powertop
+      - python3-flake8
+      - python3-pep8
+      - python3-pip
+      - python3-pyflakes
+      - python3-virtualenv
+      - ripgrep
+      - rsync
+      - sensible-utils
+      - strace
+      - subversion
+      - tmux
+      - universal-ctags
+      - unison
+      - vifm
+      - watch
+      - wget
+      # - xfonts-terminus
+      # - xfonts-terminus-dos
+      # - xfonts-terminus-oblique
+      # - xsel
+      - xz
+      # - zathura
+      # - zoxide
+      - zstd
+  archlinux:
+    pacman:
+      - xsel
+      - git
