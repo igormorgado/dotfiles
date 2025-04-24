@@ -13,6 +13,9 @@ function fish_mode_prompt --description 'Displays the current mode'
             case visual
                 set_color --bold magenta
                 echo V
+            case '*'
+                set_color --bold red
+                echo '?'
         end
         set_color normal
         printf " "
