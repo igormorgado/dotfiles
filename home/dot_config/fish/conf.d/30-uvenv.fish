@@ -11,8 +11,8 @@ if command -q uvx
 end
 
 # Load base uvenv if it exists (check if no other env is already loaded
-if functions -q uvenv; and not set -q VIRTUAL_ENV; and test -d $uvenv_home/base
-  uvenv base
-  set -q DEBUG; and echo -n "Uv base "; and time_since_last
-end
+# if functions -q uvenv; and not set -q VIRTUAL_ENV; and test -d $uvenv_home/base
+#   uvenv base
+#   set -q DEBUG; and echo -n "Uv base "; and time_since_last
+# end
 
