@@ -34,7 +34,7 @@ function __dt_git_prompt --description 'Write out the git prompt'
     set -q __fish_git_prompt_char_stateseparator
     or set -g __fish_git_prompt_char_stateseparator '⚡'
 
-    fish_git_prompt '%s'
+    # fish_git_prompt '%s'
 end
 
 function __dt_user --description 'Write username colored'
@@ -105,9 +105,9 @@ end
  
 
 function __dt_vcs_prompt --description 'Write vsc prompt'
+    __dt_git_prompt
     set -q fish_vcs_color; and set_color $fish_vcs_color
     echo -n (fish_vcs_prompt)
-    # __dt_git_prompt
     set_color normal
 end
    
