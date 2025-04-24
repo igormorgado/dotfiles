@@ -125,7 +125,7 @@ packages:
       # - zathura
       # - zoxide
       - zstd
-  archlinux:
+  arch:
     pacman:
       - xsel
       - git
