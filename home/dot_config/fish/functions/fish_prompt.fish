@@ -1,41 +1,59 @@
-function __dt_git_prompt --description 'Write out the git prompt'
-    set -q __fish_git_prompt_showdirtystate
-    or set -g __fish_git_prompt_showdirtystate 1
-    set -q __fish_git_prompt_showuntrackedfiles
-    or set -g __fish_git_prompt_showuntrackedfiles 1
-    set -q __fish_git_prompt_showcolorhints
-    or set -g __fish_git_prompt_showcolorhints 1
-    set -q __fish_git_prompt_color_untrackedfiles
-    or set -g __fish_git_prompt_color_untrackedfiles yellow
-    set -q __fish_git_prompt_char_untrackedfiles
-    or set -g __fish_git_prompt_char_untrackedfiles '?'
-    set -q __fish_git_prompt_color_invalidstate
-    or set -g __fish_git_prompt_color_invalidstate red
-    set -q __fish_git_prompt_char_invalidstate
-    or set -g __fish_git_prompt_char_invalidstate '!'
-    set -q __fish_git_prompt_color_dirtystate
-    or set -g __fish_git_prompt_color_dirtystate blue
-    set -q __fish_git_prompt_char_dirtystate
-    or set -g __fish_git_prompt_char_dirtystate '*'
-    set -q __fish_git_prompt_char_stagedstate
-    or set -g __fish_git_prompt_char_stagedstate '✚'
-    set -q __fish_git_prompt_color_cleanstate
-    or set -g __fish_git_prompt_color_cleanstate green
-    set -q __fish_git_prompt_char_cleanstate
-    or set -g __fish_git_prompt_char_cleanstate '✓'
-    set -q __fish_git_prompt_color_stagedstate
-    or set -g __fish_git_prompt_color_stagedstate yellow
-    set -q __fish_git_prompt_color_branch_dirty
-    or set -g __fish_git_prompt_color_branch_dirty red
-    set -q __fish_git_prompt_color_branch_staged
-    or set -g __fish_git_prompt_color_branch_staged yellow
-    set -q __fish_git_prompt_color_branch
-    or set -g __fish_git_prompt_color_branch green
-    set -q __fish_git_prompt_char_stateseparator
-    or set -g __fish_git_prompt_char_stateseparator '⚡'
+set -g __fish_git_prompt_showdirtystate 1
+set -g __fish_git_prompt_showuntrackedfiles 1
+set -g __fish_git_prompt_showcolorhints 1
+set -g __fish_git_prompt_color_untrackedfiles yellow
+set -g __fish_git_prompt_char_untrackedfiles '?'
+set -g __fish_git_prompt_color_invalidstate red
+set -g __fish_git_prompt_char_invalidstate '!'
+set -g __fish_git_prompt_color_dirtystate blue
+set -g __fish_git_prompt_char_dirtystate '*'
+set -g __fish_git_prompt_char_stagedstate '✚'
+set -g __fish_git_prompt_color_cleanstate green
+set -g __fish_git_prompt_char_cleanstate '✓'
+set -g __fish_git_prompt_color_stagedstate yellow
+set -g __fish_git_prompt_color_branch_dirty red
+set -g __fish_git_prompt_color_branch_staged yellow
+set -g __fish_git_prompt_color_branch green
+set -g __fish_git_prompt_char_stateseparator '⚡'
 
-    # fish_git_prompt '%s'
-end
+# function __dt_git_prompt --description 'Write out the git prompt'
+#     set -q __fish_git_prompt_showdirtystate
+#     or set -g __fish_git_prompt_showdirtystate 1
+#     set -q __fish_git_prompt_showuntrackedfiles
+#     or set -g __fish_git_prompt_showuntrackedfiles 1
+#     set -q __fish_git_prompt_showcolorhints
+#     or set -g __fish_git_prompt_showcolorhints 1
+#     set -q __fish_git_prompt_color_untrackedfiles
+#     or set -g __fish_git_prompt_color_untrackedfiles yellow
+#     set -q __fish_git_prompt_char_untrackedfiles
+#     or set -g __fish_git_prompt_char_untrackedfiles '?'
+#     set -q __fish_git_prompt_color_invalidstate
+#     or set -g __fish_git_prompt_color_invalidstate red
+#     set -q __fish_git_prompt_char_invalidstate
+#     or set -g __fish_git_prompt_char_invalidstate '!'
+#     set -q __fish_git_prompt_color_dirtystate
+#     or set -g __fish_git_prompt_color_dirtystate blue
+#     set -q __fish_git_prompt_char_dirtystate
+#     or set -g __fish_git_prompt_char_dirtystate '*'
+#     set -q __fish_git_prompt_char_stagedstate
+#     or set -g __fish_git_prompt_char_stagedstate '✚'
+#     set -q __fish_git_prompt_color_cleanstate
+#     or set -g __fish_git_prompt_color_cleanstate green
+#     set -q __fish_git_prompt_char_cleanstate
+#     or set -g __fish_git_prompt_char_cleanstate '✓'
+#     set -q __fish_git_prompt_color_stagedstate
+#     or set -g __fish_git_prompt_color_stagedstate yellow
+#     set -q __fish_git_prompt_color_branch_dirty
+#     or set -g __fish_git_prompt_color_branch_dirty red
+#     set -q __fish_git_prompt_color_branch_staged
+#     or set -g __fish_git_prompt_color_branch_staged yellow
+#     set -q __fish_git_prompt_color_branch
+#     or set -g __fish_git_prompt_color_branch green
+#     set -q __fish_git_prompt_char_stateseparator
+#     or set -g __fish_git_prompt_char_stateseparator '⚡'
+# 
+#     # fish_git_prompt '%s'
+# end
 
 function __dt_user --description 'Write username colored'
     set -q $fish_color_user; and set_color $fish_color_user
@@ -105,7 +123,7 @@ end
  
 
 function __dt_vcs_prompt --description 'Write vsc prompt'
-    __dt_git_prompt
+    # __dt_git_prompt
     set -q fish_vcs_color; and set_color $fish_vcs_color
     echo -n (fish_vcs_prompt)
     set_color normal
