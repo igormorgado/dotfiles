@@ -73,15 +73,18 @@ end
    
 function __dt_prompt --description 'Write the prompt'
     set -q argv[1]; and set -l last_status $argv[1]; or set -l last_status 0
-    echo -s -n (__dt_login) (set_color brblack) ':' (set_color normal) (__dt_pwd) '/' (__dt_vcs_prompt) ' ' (__dt_status $last_status)
+    echo -s -n (__dt_login) (set_color brblack) ':' (set_color normal) (__dt_pwd) ' ' (__dt_vcs_prompt) ' ' (__dt_status $last_status)
 end
  
 function fish_prompt --description 'Write out the prompt'
     set -l last_status $status
 
-    test $COLUMNS -lt 120; 
-        and set -l fish_prompt_pwd_dir_length 1;
-        or set -l fish_prompt_pwd_dir_length 0
+    if test $COLUMNS -lt 120; 
+        set -g fish_prompt_pwd_dir_length 3
+        set -g fish_prompt_pwd_full_dirs 2
+    else
+        set -g fish_prompt_pwd_dir_length 0
+    end
 
     echo (__dt_prompt "$last_status")
     echo -n -s (__dt_suffix "$last_status") ' '
