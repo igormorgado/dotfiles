@@ -19,7 +19,8 @@ packages:
 ```
 
 Put `./run_once_before_install-packages.sh.tmpl` at `$CHEZMOIDIR`, or better, at
-some `chezmoiscript` sub directory in `$CHEZMOIDIR`.
+some `chezmoiscript` sub directory in `$CHEZMOIDIR`. Also make it executable
+`+x`.
 
 
 Need to findout a way to tell chezmoi to execute this, maybe some configuration
