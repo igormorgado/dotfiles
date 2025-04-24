@@ -83,7 +83,6 @@ function fish_prompt --description 'Write out the prompt'
         and set -l fish_prompt_pwd_dir_length 1;
         or set -l fish_prompt_pwd_dir_length 0
 
-    echo
     echo (__dt_prompt "$last_status")
     echo -n -s (__dt_suffix "$last_status") ' '
 
