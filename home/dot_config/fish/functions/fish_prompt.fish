@@ -105,9 +105,9 @@ end
  
 
 function __dt_vcs_prompt --description 'Write vsc prompt'
-    # set -q fish_vcs_color; and set_color $fish_vcs_color
-    # echo -n (fish_vcs_prompt)
-    __dt_git_prompt
+    set -q fish_vcs_color; and set_color $fish_vcs_color
+    echo -n (fish_vcs_prompt)
+    # __dt_git_prompt
     set_color normal
 end
    
