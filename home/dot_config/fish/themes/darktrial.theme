@@ -3,35 +3,35 @@
 
 fish_color_normal                       white
 fish_color_command                      brwhite --bold
+fish_color_param                        white
+fish_color_keyword                      white
+fish_color_autosuggestion               white --dim
 fish_color_quote                        white --italics
-fish_color_redirection                  brwhite
-fish_color_end                          brwhite
-fish_color_error                        red --bold
-fish_color_param                        white --bold
 fish_color_comment                      white --italics --dim
-fish_color_match                        --background=yellow
-fish_color_selection                    --reverse
-fish_color_search_match                 --background=yellow --bold
+fish_color_end                          brwhite
+fish_color_redirection                  brwhite
+fish_color_option                       cyan
+fish_color_host                         white
+fish_color_host_remote                  brwhite --bold
 fish_color_history_current              --bold
+fish_color_cancel                       -r
+fish_color_cwd                          blue
+fish_color_cwd_root                     red
+fish_color_error                        red --bold
+fish_color_status                       red --bold
+fish_color_selection                    --reverse
+fish_color_valid_path                   --underline
+fish_color_user                         yellow
 fish_color_operator                     yellow
 fish_color_escape                       yellow --bold
-fish_color_cwd_root                     red
-fish_color_valid_path                   --underline
-fish_color_cwd                          blue
-fish_color_autosuggestion               white --dim
-fish_color_user                         yellow
-fish_color_host                         white
-fish_color_cancel                       -r
-fish_color_option                       cyan
-fish_color_keyword                      white --bold
-fish_color_host_remote                  brwhite --bold
-fish_color_status                       red --bold
+fish_color_match                        --background=yellow
+fish_color_search_match                 --background=yellow --bold
 
 fish_color_rightprompt                  white --italics --dim
 fish_color_prompt                       green
 # fish_color_git                          magenta
 
-fish_pager_color_progress               brwhite --background=cyan
+fish_pager_color_progress               brwhite --background=brcyan
 
 fish_pager_color_background             --background=black
 fish_pager_color_secondary_background   --background=brblack
