@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -e
+
+if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
+  # Load OS ID for distro detection
+  if [[ -r /etc/os-release ]]; then
+    source /etc/os-release
+  fi
+
+  if [[ "$ID" == "arch" ]]; then
+    # Pacman on Arch Linux
+    sudo pacman -Sy --noconfirm \
+      {{- if .packages.archlinux.pacman }}{{ range .packages.archlinux.pacman }}
+      {{ . }}{{ end }}{{ end }}
+  elif [[ "$ID" == "debian" ]] || [[ "$ID" == "ubuntu" ]] || [[ "$ID_LIKE" == *"debian"* ]]; then
+    # APT on Debian/Ubuntu derivatives
+    sudo apt-get update
+    sudo apt-get install -y \
+      {{- if .packages.debian.apt }}{{ range .packages.debian.apt }}
+      {{ . }}{{ end }}{{ end }}
+  fi
+elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
+  # Homebrew on macOS
+  brew update
+  brew install \
+    {{- if .packages.darwin.brew }}{{ range .packages.darwin.brew }}
+    {{ . }}{{ end }}{{ end }}
+fi
