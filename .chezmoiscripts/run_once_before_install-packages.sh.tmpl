@@ -10,7 +10,7 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
   if [[ "$ID" == "arch" ]]; then
     # Pacman on Arch Linux
     sudo pacman -Sy --noconfirm \
-      {{- if .packages.archlinux.pacman }}{{ range .packages.archlinux.pacman }}
+      {{- if .packages.arch.pacman }}{{ range .packages.arch.pacman }}
       {{ . }}{{ end }}{{ end }}
   elif [[ "$ID" == "debian" ]] || [[ "$ID" == "ubuntu" ]] || [[ "$ID_LIKE" == *"debian"* ]]; then
     # APT on Debian/Ubuntu derivatives
