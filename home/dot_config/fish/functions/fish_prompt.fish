@@ -36,7 +36,7 @@ function __dt_git_prompt --description 'Write out the git prompt'
 
     fish_git_prompt '%s'
 end
-- 
+
 function __dt_user --description 'Write username colored'
     set -q $fish_color_user; and set_color $fish_color_user
     echo -n $USER
