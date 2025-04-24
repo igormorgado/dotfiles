@@ -12,8 +12,6 @@ end
 
 
 function __dt_host --description 'Write hostname colored'
-    # set -l host_color (__dt_color_host)
-    # set_color $host_color
     __dt_color_host
     echo -n (prompt_hostname)
     set_color normal
@@ -61,27 +59,31 @@ function __dt_suffix --description 'Write the prompt'
     set_color normal
 end
  
+
 function __dt_login --description 'Write the login information'
     echo -n -s (__dt_user) (set_color brblack) '@' (set_color normal) (__dt_host)
 end
  
+
 function __dt_vcs_prompt --description 'Write vsc prompt'
     set -q fish_vcs_color; and set_color $fish_vcs_color
     echo -n (fish_vcs_prompt)
     set_color normal
 end
    
+
 function __dt_prompt --description 'Write the prompt'
     set -q argv[1]; and set -l last_status $argv[1]; or set -l last_status 0
     echo -s -n (__dt_login) (set_color brblack) ':' (set_color normal) (__dt_pwd) ' ' (__dt_vcs_prompt) ' ' (__dt_status $last_status)
 end
  
+
 function fish_prompt --description 'Write out the prompt'
     set -l last_status $status
 
     if test $COLUMNS -lt 120; 
-        set -g fish_prompt_pwd_dir_length 3
-        set -g fish_prompt_pwd_full_dirs 2
+        set -g fish_prompt_pwd_dir_length 1
+        set -g fish_prompt_pwd_full_dirs 1
     else
         set -g fish_prompt_pwd_dir_length 0
     end
