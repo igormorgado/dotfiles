@@ -6,19 +6,15 @@ end
 
 
 function __dt_color_host --description "Write host color. Different if remote"
-    if set -q SSH; and set -q fish_color_host_remote
-        echo $fish_color_host_remote
-    else if set -q fish_color_host
-        echo $fish_color_host
-    else
-        echo normal
-    end
+    set -q fish_color_host; and set_color $fish_color_host
+    set -q SSH_TTY; and set -q fish_color_host_remote; and set_color $fish_color_host_remote
 end
 
 
 function __dt_host --description 'Write hostname colored'
-    set -l host_color (__dt_color_host)
-    set_color $host_color
+    # set -l host_color (__dt_color_host)
+    # set_color $host_color
+    __dt_color_host
     echo -n (prompt_hostname)
     set_color normal
 end
