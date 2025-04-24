@@ -1,0 +1,5 @@
+packages:
+  arch:
+    pacman:
+      - xsel
+      - git

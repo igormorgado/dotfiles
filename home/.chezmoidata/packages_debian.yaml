@@ -1,50 +1,4 @@
 packages:
-  darwin:
-    brew:
-      - ack
-      - aspell
-      - bash
-      - bat
-      - btop
-      - cbonsai
-      - chezmoi
-      - coreutils
-      - diffutils
-      - duf
-      - fd
-      - fdupes
-      - fish
-      - fisher
-      - fzf
-      - git
-      - git-delta
-      - git-filter-repo
-      - git-lfs
-      - go
-      - htop
-      - hunspell
-      - jq
-      - lsd
-      - lua
-      - luajit
-      - luarocks
-      - mercurial
-      - midnight-commander
-      - mtr
-      - ncdu
-      - neovim
-      - readline
-      - ripgrep
-      - rsync
-      - tmux
-      - tree-sitter
-      - unison
-      - vifm
-      - watch
-      - wget
-      - xz
-      - zoxide
-      - zstd
   debian:
     apt:
       - ack
@@ -125,7 +79,3 @@ packages:
       # - zathura
       # - zoxide
       - zstd
-  arch:
-    pacman:
-      - xsel
-      - git
