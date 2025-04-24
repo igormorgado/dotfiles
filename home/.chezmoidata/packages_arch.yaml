@@ -2,7 +2,6 @@ packages:
   arch:
     pacman:
       - 7zip
-      - ack
       - age
       - aspell
       - aspell-en
@@ -51,7 +50,6 @@ packages:
       - hunspell-es_es
       - hunspell-es_mx
       - hunspell-fr
-      - hunspell-pt-br
       - hwdata
       - hwinfo
       - jq
@@ -81,8 +79,6 @@ packages:
       - mtr
       - neovim
       - neovim-lspconfig
-      - neovim-lsp_signature
-      - neovim-nvim-treesitter
       - nmon
       - pastebinit
       - pinentry
@@ -121,3 +117,8 @@ packages:
       - zellij
       - zip
       - zoxide
+    aur:
+      - ack
+      - hunspell-pt-br
+      - neovim-lsp_signature
+      - neovim-nvim-treesitter
