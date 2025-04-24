@@ -61,7 +61,7 @@ end
  
 
 function __dt_login --description 'Write the login information'
-    echo -n -s (__dt_user) (set_color brblack) '@' (set_color normal) (__dt_host)
+    echo -n -s (__dt_user) (set_color white --dim) '@' (set_color normal) (__dt_host)
 end
  
 
@@ -74,7 +74,7 @@ end
 
 function __dt_prompt --description 'Write the prompt'
     set -q argv[1]; and set -l last_status $argv[1]; or set -l last_status 0
-    echo -s -n (__dt_login) (set_color brblack) ':' (set_color normal) (__dt_pwd) ' ' (__dt_vcs_prompt) ' ' (__dt_status $last_status)
+    echo -s -n (__dt_login) (set_color white --dim) ':' (set_color normal) (__dt_pwd) ' ' (__dt_vcs_prompt) ' ' (__dt_status $last_status)
 end
  
 
