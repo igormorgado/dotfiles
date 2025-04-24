@@ -26,7 +26,6 @@ else if command -q vim
     set -Ux GIT_EDITOR vim
 end
 
-
 set -Ux NMON vcmknt.
 set -Ux LESS '-R'
 set -Ux LESSOPEN '|~/.lessfilter %s'
