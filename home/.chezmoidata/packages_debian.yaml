@@ -13,7 +13,7 @@ packages:
       - autopoint
       - bash-completion
       - build-essential
-      - chezmoi
+      # - chezmoi
       - cmake
       - coreutils
       - cscope
@@ -36,7 +36,7 @@ packages:
       - iptraf-ng
       - ipython3
       - jq
-      - json-c
+      # - json-c
       - links
       - lsd
       - lsof
@@ -75,7 +75,7 @@ packages:
       # - xfonts-terminus-dos
       # - xfonts-terminus-oblique
       # - xsel
-      - xz
+      # - xz
       # - zathura
       # - zoxide
       - zstd
