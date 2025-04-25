@@ -19,7 +19,7 @@ packages:
       - cscope
       - curl
       - diffutils
-      - fd
+      # - fd
       - fdupes
       - fish
       - fzf
