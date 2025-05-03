@@ -147,7 +147,7 @@ set viewcolumns=*{name}..,16{mtime},7{}.
 set title
 
 " Show dotfiles by default
-set dotfiles
+set nodotfiles
 
 " Filter-out build and temporary files
 " filter! {*.lo,*.o,*.d,*.class,*.pyc,*.pyo,.*~}
