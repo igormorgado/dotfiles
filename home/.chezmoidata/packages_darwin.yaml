@@ -45,3 +45,4 @@ packages:
       - xz
       - zoxide
       - zstd
+      - gitleaks
