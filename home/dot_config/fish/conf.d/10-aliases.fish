@@ -4,9 +4,10 @@ alias cp='cp -i'
 alias ln='ln -i'
 
 # Parenting changing perms on / #
-alias chown='chown --preserve-root'
-alias chmod='chmod --preserve-root'
-alias chgrp='chgrp --preserve-root'
+# TODO: Make chezmoi template to not install --preserve-root at macosx
+# alias chown='chown --preserve-root'
+# alias chmod='chmod --preserve-root'
+# alias chgrp='chgrp --preserve-root'
 
 # alias venv='source venv/bin/activate.fish'
 # alias actv='source venv/bin/activate.fish'
