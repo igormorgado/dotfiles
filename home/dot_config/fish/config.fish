@@ -27,7 +27,7 @@ else if command -q vim
 end
 
 set -Ux NMON vcmknt.
-set -Ux LESS '-R'
+set -Ux LESS '-RXF'
 set -Ux LESSOPEN '|~/.lessfilter %s'
 set -Ux PAGER less
 set -Ux MC_SKIN 'darktrial'
