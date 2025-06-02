@@ -697,6 +697,48 @@ require("lazy").setup({
     --     end
     -- },
 
+    -- Lazy config
+    {
+        defaults = {
+            -- lazy = false,      -- Always load plugins immediately unless explicitly marked
+            -- version = false,   -- Always use the latest version
+        },
+        dev = {
+            -- path = "~/projects",   -- For local development
+            -- fallback = true,       -- Try loading from git if local dev not found
+        },
+        install = {
+            missing = true,  -- Install missing plugins on startup
+            -- colorscheme = { "habamax" },
+        },
+        checker = {
+            enabled = true,
+            notify = false,
+        },
+        change_detection = {
+            enabled = true,
+            notify = false,
+        },
+
+        -- 🚫 Disable LuaRocks integration
+        rocks = {
+            enabled = false,       -- disable LuaRocks support completely
+            hererocks = false,     -- disable hererocks entirely
+        },
+
+        -- Additional optional options
+        performance = {
+            rtp = {
+                disabled_plugins = {
+                    "gzip",
+                    "tarPlugin",
+                    "tohtml",
+                    "tutor",
+                    "zipPlugin",
+                },
+            },
+        },
+    },
 })
 
 ------------------------------------------------------------------------------
