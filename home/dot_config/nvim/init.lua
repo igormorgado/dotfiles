@@ -234,7 +234,6 @@ require("lazy").setup({
         end
     },
 
-
     {
       "RRethy/vim-hexokinase",
       -- run the build step after install/update
