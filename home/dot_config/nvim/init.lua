@@ -365,6 +365,11 @@ require("lazy").setup({
         end
     },
 
+    { 'L3MON4D3/LuaSnip',
+      -- run the build step after install/update
+      build = "make install_jsregexp"
+    },
+
     -- LSP and completion
     { 'hrsh7th/nvim-cmp',
         event = { "InsertEnter", "CmdlineEnter" },
