@@ -10,9 +10,6 @@ vim.g.loaded_ruby_provider = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 
--- This is for macos onlyu for now
-vim.opt.rocks.enabled = false
-
 -- Disable netrw (since we're using nvim-tree)
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
