@@ -44,7 +44,7 @@ set syscalls
 " files by deleting them and then using p to put the file in the new location.
 " I recommend not changing this until you are familiar with vifm.
 " This probably shouldn't be an option.
-set trash
+" set trash
 
 " What should be saved automatically on restarting vifm.  Drop "savedirs"
 " value if you don't want vifm to remember last visited directories for you.
