@@ -326,44 +326,53 @@ require("lazy").setup({
         end
     },
 
-    { "David-Kunz/gen.nvim",
-        dependencies = { "nvim-lua/plenary.nvim" },
-        event = "VeryLazy",
+    { "greggh/claude-code.nvim",
+        dependencies = {
+            "nvim-lua/plenary.nvim"
+        },
         config = function()
-            require("gen").setup({
-                model = model_name,
-                -- Display response in a floating window
-                display_mode = "vsplit",
-                -- Show the model name in the output
-                show_model = true,
-                -- Don't auto-close the window
-                no_auto_close = true,
-            })
-            if vim.fn.executable("ollama") == 1 then
-                vim.fn.jobstart("pgrep ollama || ollama serve > /dev/null 2>&1 &")
-            end
-
-            local prompts = require("gen").prompts
-            prompts['Fix_Code'] = { prompt = "Fix the following code. Only output the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```", replace = true, extract = "```$filetype\n(.-)```" }
-            prompts["explain"] =  { prompt = "Explain the following code in detail:\n\n```$filetype\n$text\n```", replace = false }
-            prompts["refactor"] = { prompt = "Refactor the following code to improve its clarity, efficiency, and maintainability:\n\n```$filetype\n$text\n```\n\nProvide only the refactored code without explanations.", replace = true }
-            prompts["document"] = { prompt = "Add comprehensive documentation to the following code:\n\n```$filetype\n$text\n```\n\nProvide the documented code.", replace = false}
-            prompts["tests"] =    { prompt = "Generate unit tests for the following code:\n\n```$filetype\n$text\n```", replace = false}
-            prompts["optimize"] = { prompt = "Optimize the following code for better performance:\n\n```$filetype\n$text\n```\n\nProvide only the optimized code.", replace = false }
-            prompts["complete"] = { prompt = "Complete the following code snippet:\n\n```$filetype\n$text\n```\n\nProvide only the completion, not the original code.", replace = false }
-            local map_opts = { noremap = true, silent = true }
-            vim.keymap.set("v", "<leader>gg", ":Gen<CR>",          map_opts)     -- Generate from selection
-            vim.keymap.set("n", "<leader>gg", ":Gen<CR>",          map_opts)     -- Ask in normal mode
-            vim.keymap.set("n", "<leader>gc", ":Gen Chat<CR>",     map_opts)
-            vim.keymap.set("v", "<leader>ge", ":Gen explain<CR>",  map_opts)     -- Explain code
-            vim.keymap.set("v", "<leader>gr", ":Gen refactor<CR>", map_opts)     -- Refactor code
-            vim.keymap.set("v", "<leader>gd", ":Gen document<CR>", map_opts)     -- Document code
-            vim.keymap.set("v", "<leader>gt", ":Gen tests<CR>",    map_opts)     -- Generate tests
-            vim.keymap.set("v", "<leader>go", ":Gen optimize<CR>", map_opts)     -- Optimize code
-            vim.keymap.set("n", "<leader>gC", ":Gen complete<CR>", map_opts)     -- Complete code
-
+            require("claude-code").setup()
         end
     },
+
+    -- { "David-Kunz/gen.nvim",
+    --     dependencies = { "nvim-lua/plenary.nvim" },
+    --     event = "VeryLazy",
+    --     config = function()
+    --         require("gen").setup({
+    --             model = model_name,
+    --             -- Display response in a floating window
+    --             display_mode = "vsplit",
+    --             -- Show the model name in the output
+    --             show_model = true,
+    --             -- Don't auto-close the window
+    --             no_auto_close = true,
+    --         })
+    --         if vim.fn.executable("ollama") == 1 then
+    --             vim.fn.jobstart("pgrep ollama || ollama serve > /dev/null 2>&1 &")
+    --         end
+
+    --         local prompts = require("gen").prompts
+    --         prompts['Fix_Code'] = { prompt = "Fix the following code. Only output the result in format ```$filetype\n...\n```:\n```$filetype\n$text\n```", replace = true, extract = "```$filetype\n(.-)```" }
+    --         prompts["explain"] =  { prompt = "Explain the following code in detail:\n\n```$filetype\n$text\n```", replace = false }
+    --         prompts["refactor"] = { prompt = "Refactor the following code to improve its clarity, efficiency, and maintainability:\n\n```$filetype\n$text\n```\n\nProvide only the refactored code without explanations.", replace = true }
+    --         prompts["document"] = { prompt = "Add comprehensive documentation to the following code:\n\n```$filetype\n$text\n```\n\nProvide the documented code.", replace = false}
+    --         prompts["tests"] =    { prompt = "Generate unit tests for the following code:\n\n```$filetype\n$text\n```", replace = false}
+    --         prompts["optimize"] = { prompt = "Optimize the following code for better performance:\n\n```$filetype\n$text\n```\n\nProvide only the optimized code.", replace = false }
+    --         prompts["complete"] = { prompt = "Complete the following code snippet:\n\n```$filetype\n$text\n```\n\nProvide only the completion, not the original code.", replace = false }
+    --         local map_opts = { noremap = true, silent = true }
+    --         vim.keymap.set("v", "<leader>gg", ":Gen<CR>",          map_opts)     -- Generate from selection
+    --         vim.keymap.set("n", "<leader>gg", ":Gen<CR>",          map_opts)     -- Ask in normal mode
+    --         vim.keymap.set("n", "<leader>gc", ":Gen Chat<CR>",     map_opts)
+    --         vim.keymap.set("v", "<leader>ge", ":Gen explain<CR>",  map_opts)     -- Explain code
+    --         vim.keymap.set("v", "<leader>gr", ":Gen refactor<CR>", map_opts)     -- Refactor code
+    --         vim.keymap.set("v", "<leader>gd", ":Gen document<CR>", map_opts)     -- Document code
+    --         vim.keymap.set("v", "<leader>gt", ":Gen tests<CR>",    map_opts)     -- Generate tests
+    --         vim.keymap.set("v", "<leader>go", ":Gen optimize<CR>", map_opts)     -- Optimize code
+    --         vim.keymap.set("n", "<leader>gC", ":Gen complete<CR>", map_opts)     -- Complete code
+
+    --     end
+    -- },
 
     { 'L3MON4D3/LuaSnip',
       -- run the build step after install/update
