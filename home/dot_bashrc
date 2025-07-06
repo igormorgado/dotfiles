@@ -301,6 +301,8 @@ unset file
 
 export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
 export SHELL=/bin/bash
+
+eval "$(pyenv virtualenv-init -)"
 #export WINEARCH=win
 # vim: foldmethod=marker:ft=sh:
 
