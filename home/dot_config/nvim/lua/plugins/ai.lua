@@ -9,7 +9,7 @@ return {
             require("claude-code").setup({
                 window = {
                     split_ratio = 0.3,
-                    position = "vertical",
+                    position = "botleft",
                     enter_insert = true,
                     hide_numbers = true,
                     hide_signcolumn = true,
