@@ -84,7 +84,6 @@ done
 addpath "${HOME}"/bin
 addpath "${HOME}"/usr/bin
 addpath "${HOME}"/.local/bin
-addpath "${HOME}"/.local/opt/pycharm-2019.3.2/bin
 addpath /Applications/MacVim.app/Contents/MacOS/
 addpath "/c/Anaconda"
 addpath "/c/Anaconda2"
@@ -151,10 +150,6 @@ export GIT_EDITOR="vim"
 # Configure nmon
 export NMON=vcmknt.
 
-# CVS Sample
-CVS_RSH=ssh
-CVSROOT=:ext:imorgado@HOSTNAME:/PATH
-export CVS_RSH CVSROOT
 
 # MC settings
 export MC_SKIN=/home/igor/.local/dotfiles/mc/_local/share/mc/skins/darktrial.ini
@@ -180,9 +175,15 @@ export BACKGROUND COLOR
 
 #}}}
 
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH=$PYENV_ROOT/bin:$PATH
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+
 # Terminal dependant settings {{{
 ###########################################################################
-
 
 ###############
 ### PS1
@@ -259,7 +260,6 @@ loadresource ~/.local/bin/factory
 loadresource ~/.bash_aliases
 loadresource ~/.bash_python
 loadresource ~/.bash_tmux
-loadresource ~/.bash_seismic
 
 
 PS1="\n${PS1}"
@@ -302,7 +302,6 @@ unset file
 export XLA_FLAGS=--xla_gpu_cuda_data_dir=/usr/lib/cuda
 export SHELL=/bin/bash
 
-eval "$(pyenv virtualenv-init -)"
 #export WINEARCH=win
 # vim: foldmethod=marker:ft=sh:
 
