@@ -23,7 +23,7 @@ function M.setup()
     vim.opt.relativenumber = true
     vim.opt.cursorline = true
     vim.opt.cursorcolumn = true
-    vim.opt.colorcolumn = '80'
+    vim.opt.colorcolumn = '80,120'
     vim.opt.modeline = true
     vim.opt.modelines = 3
     vim.opt.scrolloff = 5
@@ -37,6 +37,7 @@ function M.setup()
     -- Text display settings
     vim.opt.wrap = false
     vim.opt.breakindent = true
+    vim.opt.linebreak = true
 
     -- List chars
     local default_listchars = { tab = "  ", extends = "⏵", precedes = "⏴" }

@@ -30,6 +30,19 @@ function M.setup()
             end, 10)
         end,
     })
+
+    vim.api.nvim_create_autocmd(
+        {
+            'BufWinEnter',
+            'WinEnter', 
+            'VimResized', 
+            'ColorScheme'
+        },
+        {
+            pattern = '*',
+            callback = _G.set_colored_columns,
+        }
+    )
 end
 
 return M

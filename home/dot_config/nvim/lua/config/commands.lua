@@ -79,6 +79,34 @@ function M.setup()
         silent = true, 
         desc = "Toggle typewriter scroll mode" 
     })
+
+    -- Function to apply custom colored columns
+    function _G.set_colored_columns()
+      -- Remove existing matches to avoid duplicates
+      if vim.w.colored_column_matches then
+        for _, match in ipairs(vim.w.colored_column_matches) do
+          vim.fn.matchdelete(match)
+        end
+      end
+    
+      -- Add new matches at specified columns
+      vim.w.colored_column_matches = {
+        vim.fn.matchadd('ColorColumn80', '\\%80v.', 100),
+        vim.fn.matchadd('ColorColumn120', '\\%120v.', 100),
+      }
+    end
+
+    function _G.safe_set_colorcolumn_hl(name, link)
+        local existing = vim.api.nvim_get_hl(0, { name = name, link = true })
+        if not existing.link then
+            vim.api.nvim_set_hl(0, name, { link = link })
+        end
+    end
+
+    -- Set up custom highlight groups linked to existing colorscheme highlights
+    safe_set_colorcolumn_hl('ColorColumn80', 'WarningMsg')
+    safe_set_colorcolumn_hl('ColorColumn120', 'ErrorMsg')
+
 end
 
 return M
