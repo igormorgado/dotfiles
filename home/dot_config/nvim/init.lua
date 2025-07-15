@@ -4,9 +4,9 @@
 -- Load core configuration modules
 require('config.options').setup()
 require('config.persistence').setup()
+require('config.commands').setup()
 require('config.autocmds').setup()
 require('config.keymaps').setup()
-require('config.commands').setup()
 require('config.neovide').setup()
 
 -- Plugin manager setup (Lazy.nvim)
