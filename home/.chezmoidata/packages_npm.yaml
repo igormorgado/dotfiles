@@ -21,3 +21,4 @@ packages:
       - lint-staged
       - commitizen
       - cz-conventional-changelog
+      - bash-language-server
