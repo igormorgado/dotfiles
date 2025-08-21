@@ -16,12 +16,23 @@ return {
             'L3MON4D3/LuaSnip',
             'saadparwaiz1/cmp_luasnip',
             'hrsh7th/cmp-nvim-lsp-signature-help',
+            'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-calc',
+            'f3fora/cmp-spell',
         },
         config = function()
             local cmp = require('cmp')
             local luasnip = require('luasnip')
 
             cmp.setup({
+                performance = {
+                    debounce = 60,
+                    throttle = 30,
+                    fetching_timeout = 500,
+                    confirm_resolve_timeout = 80,
+                    async_budget = 1,
+                    max_view_entries = 200,
+                },
                 snippet = {
                     expand = function(args)
                         luasnip.lsp_expand(args.body)
@@ -31,8 +42,61 @@ return {
                     completion = cmp.config.window.bordered(),
                     documentation = cmp.config.window.bordered(),
                 },
+                formatting = {
+                    expandable_indicator = true,
+                    fields = { "kind", "abbr", "menu" },
+                    format = function(entry, vim_item)
+                        local kind_icons = {
+                            Text = "󰉿", Method = "󰆧", Function = "󰊕",
+                            Constructor = "", Field = "󰜢", Variable = "󰀫",
+                            Class = "󰠱", Interface = "", Module = "",
+                            Property = "󰜢", Unit = "󰑭", Value = "󰎠",
+                            Enum = "", Keyword = "󰌋", Snippet = "",
+                            Color = "󰏘", File = "󰈙", Reference = "󰈇",
+                            Folder = "󰉋", EnumMember = "", Constant = "󰏿",
+                            Struct = "󰙅", Event = "", Operator = "󰆕",
+                            TypeParameter = "",
+                        }
+                        vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+                        vim_item.menu = ({
+                            nvim_lsp = "[LSP]",
+                            luasnip = "[Snippet]",
+                            buffer = "[Buffer]",
+                            path = "[Path]",
+                            nvim_lua = "[Lua]",
+                            calc = "[Calc]",
+                            spell = "[Spell]",
+                        })[entry.source.name]
+                        return vim_item
+                    end,
+                },
                 mapping = cmp.mapping.preset.insert({
                     ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<CR>'] = cmp.mapping.confirm({ 
+                        behavior = cmp.ConfirmBehavior.Replace,
+                        select = false 
+                    }),
+                    ['<Tab>'] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_next_item()
+                        elseif luasnip.expandable() then
+                            luasnip.expand()
+                        elseif luasnip.expand_or_jumpable() then
+                            luasnip.expand_or_jump()
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
+                    ['<S-Tab>'] = cmp.mapping(function(fallback)
+                        if cmp.visible() then
+                            cmp.select_prev_item()
+                        elseif luasnip.jumpable(-1) then
+                            luasnip.jump(-1)
+                        else
+                            fallback()
+                        end
+                    end, { 'i', 's' }),
                     ['<C-n>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
                             cmp.select_next_item()
@@ -53,13 +117,34 @@ return {
                     end, { 'i', 's' }),
                 }),
                 sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
-                    { name = 'nvim_lsp_signature_help' },
-                    { name = 'luasnip' },
+                    { 
+                        name = 'nvim_lsp', 
+                        priority = 1000,
+                        entry_filter = function(entry, ctx)
+                            return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
+                        end
+                    },
+                    { name = 'nvim_lsp_signature_help', priority = 1000 },
+                    { name = 'luasnip', priority = 750, max_item_count = 5 },
+                    { name = 'nvim_lua', priority = 500 },
                 }, {
-                    { name = 'buffer' },
-                    { name = 'path' },
+                    { 
+                        name = 'buffer', 
+                        priority = 250,
+                        keyword_length = 3,
+                        option = {
+                            get_bufnrs = function()
+                                return vim.api.nvim_list_bufs()
+                            end
+                        }
+                    },
+                    { name = 'path', priority = 250 },
+                    { name = 'calc', priority = 150 },
+                    { name = 'spell', priority = 100, keyword_length = 4 },
                 }),
+                experimental = {
+                    ghost_text = true,
+                },
             })
 
             -- Use buffer source for `/` and `?`

@@ -87,6 +87,17 @@ function M.setup()
         return
       end
       
+      -- Skip terminal buffers
+      if vim.bo.buftype == 'terminal' then
+        return
+      end
+      
+      -- Also check if buffer name contains 'term://'
+      local bufname = vim.api.nvim_buf_get_name(0)
+      if string.match(bufname, '^term://') then
+        return
+      end
+      
       -- Remove existing matches to avoid duplicates
       if vim.w.colored_column_matches then
         for _, match in ipairs(vim.w.colored_column_matches) do

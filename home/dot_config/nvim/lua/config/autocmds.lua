@@ -29,6 +29,20 @@ function M.setup()
         end 
     })
 
+    -- Disable color column in terminal 
+    vim.api.nvim_create_autocmd({ "TermOpen" }, {
+        pattern = "*",
+        callback = function()
+            vim.opt_local.colorcolumn = ""
+            -- Also clear any custom match highlights
+            if vim.w.colored_column_matches then
+                for _, match in ipairs(vim.w.colored_column_matches) do
+                    pcall(vim.fn.matchdelete, match)
+                end
+                vim.w.colored_column_matches = nil
+            end
+        end
+    })
 
     -- Remember last position in file
     vim.api.nvim_create_autocmd("BufReadPost", {
