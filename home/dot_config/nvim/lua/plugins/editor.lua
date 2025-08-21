@@ -68,19 +68,52 @@ return {
             local wk = require("which-key")
             wk.setup({
                 preset = "modern",
-                delay = 300,
-            })
-            -- Register key groups
-            wk.add({
-                { "<leader>b", group = "Buffer" },
-                { "<leader>c", group = "Code" },
-                { "<leader>e", group = "Execute/REPL" },
-                { "<leader>f", group = "Find" },
-                { "<leader>g", group = "Git" },
-                { "<leader>h", group = "Git Hunk" },
-                { "<leader>l", group = "Language" },
-                { "<leader>t", group = "Toggle" },
-                { "<leader>x", group = "Diagnostics" },
+                delay = 500,  -- Increased delay to prevent overlapping keymap warnings
+                -- Configure icons to use mini.icons
+                icons = {
+                    breadcrumb = "»",
+                    separator = "➜",
+                    group = "+",
+                    ellipsis = "…",
+                    mappings = false,  -- Disable which-key's internal mappings icons since we have mini.icons
+                },
+                -- Disable certain triggers that cause conflicts
+                triggers = {
+                    { "<auto>", mode = "nxsot" },
+                },
+                spec = {
+                    -- nvim-surround keymaps (explicit definitions to prevent overlap warnings)
+                    { "ys", desc = "Add surround" },
+                    { "yss", desc = "Add surround to line" },
+                    { "yS", desc = "Add surround (new lines)" },
+                    { "ySS", desc = "Add surround to line (new lines)" },
+                    { "ds", desc = "Delete surround" },
+                    { "cs", desc = "Change surround" },
+                    { "cS", desc = "Change surround (new lines)" },
+                    
+                    -- Comment.nvim keymaps (explicit definitions)
+                    { "gc", desc = "Comment toggle linewise" },
+                    { "gcc", desc = "Comment toggle current line" },
+                    { "gb", desc = "Comment toggle blockwise" },
+                    { "gbc", desc = "Comment toggle current block" },
+                    { "gcO", desc = "Comment insert above" },
+                    { "gco", desc = "Comment insert below" },
+                    { "gcA", desc = "Comment insert end of line" },
+                    
+                    -- General groups
+                    { "g", group = "goto" },
+                    { "]", group = "next" },
+                    { "[", group = "prev" },
+                    { "<leader>b", group = "Buffer" },
+                    { "<leader>c", group = "Code" },
+                    { "<leader>e", group = "Execute/REPL" },
+                    { "<leader>f", group = "Find" },
+                    { "<leader>g", group = "Git" },
+                    { "<leader>h", group = "Git Hunk" },
+                    { "<leader>l", group = "Language" },
+                    { "<leader>t", group = "Toggle" },
+                    { "<leader>x", group = "Diagnostics" },
+                }
             })
         end
     },

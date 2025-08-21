@@ -144,4 +144,13 @@ return {
         "lifepillar/vim-colortemplate", 
         lazy = false 
     },
+
+    -- Add mini.icons for which-key compatibility
+    {
+        "echasnovski/mini.icons",
+        version = false,
+        config = function()
+            require('mini.icons').setup()
+        end
+    },
 }

@@ -10,7 +10,43 @@ function M.setup()
     vim.g.loaded_ruby_provider = 0
     -- vim.g.loaded_node_provider = 0
     vim.g.loaded_perl_provider = 0
-    vim.g.python3_host_prog = vim.fn.expand('~/.pyenv/versions/nvim/bin/python')
+    -- Cross-platform Python3 provider detection
+    local function find_python3()
+        -- Try nvim-specific virtual environments first
+        local nvim_venv_paths = {
+            vim.fn.expand('~/.pyenv/versions/nvim/bin/python3'),
+            vim.fn.expand('~/.pyenv/versions/nvim/bin/python'),
+            vim.fn.expand('~/.virtualenvs/nvim/bin/python3'),
+            vim.fn.expand('~/.virtualenvs/nvim/bin/python'),
+        }
+        
+        for _, path in ipairs(nvim_venv_paths) do
+            if vim.fn.executable(path) == 1 then
+                return path
+            end
+        end
+        
+        -- Fallback to system Python3 (avoid shims by using full path)
+        local python3_candidates = {
+            '/opt/homebrew/bin/python3',  -- Homebrew on macOS Apple Silicon
+            '/usr/local/bin/python3',     -- Homebrew on macOS Intel
+            '/usr/bin/python3',           -- System Python on Linux/macOS
+            'python3',                    -- Last resort - use PATH
+        }
+        
+        for _, candidate in ipairs(python3_candidates) do
+            if vim.fn.executable(candidate) == 1 then
+                return candidate
+            end
+        end
+        
+        return nil
+    end
+    
+    local python3_path = find_python3()
+    if python3_path then
+        vim.g.python3_host_prog = python3_path
+    end
 
     -- Disable netrw (since we're using nvim-tree)
     vim.g.loaded_netrw = 1
