@@ -1,6 +1,25 @@
 -- AI and code assistance plugins
 return {
     {
+        "github/copilot.vim",
+        config = function()
+            -- Enable Copilot for all filetypes
+            vim.g.copilot_filetypes = {
+                ["*"] = true,
+            }
+            
+            -- Copilot keymaps
+            -- vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
+            --     expr = true,
+            --     replace_keycodes = false,
+            --     desc = 'Accept Copilot suggestion'
+            -- })
+            -- vim.keymap.set('i', '<C-H>', '<Plug>(copilot-dismiss)', { desc = 'Dismiss Copilot suggestion' })
+            -- vim.keymap.set('i', '<C-L>', '<Plug>(copilot-next)', { desc = 'Next Copilot suggestion' })
+            -- vim.keymap.set('i', '<C-K>', '<Plug>(copilot-previous)', { desc = 'Previous Copilot suggestion' })
+        end
+    },
+    {
         "greggh/claude-code.nvim",
         dependencies = {
             "nvim-lua/plenary.nvim"
