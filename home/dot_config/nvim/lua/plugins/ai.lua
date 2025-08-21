@@ -47,7 +47,7 @@ return {
                     scrolling = true,
                 }
             })
-            vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<CR>', { desc = 'Toggle Claude Code' })
+            vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<CR>', { desc = 'Code: Toggle Claude Code' })
         end
     },
 }

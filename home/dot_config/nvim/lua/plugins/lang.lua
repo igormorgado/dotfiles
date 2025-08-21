@@ -6,22 +6,32 @@ return {
         dependencies = "nvim-treesitter",
         ft = { "python" }, 
         config = function()
-            require("nvim-python-repl").setup({ 
+            local repl = require("nvim-python-repl")
+            repl.setup({ 
                 execute_on_send = true, 
                 vsplit = false, 
             })
-            local repl_mappings = {
-                ['<leader>eb'] = { "send_buffer_to_repl", "Send entire buffer to REPL" },
-                ['<leader>ee'] = { "send_statement_definition", "Send semantic unit to REPL" },
-                ['<leader>E']  = { "send_visual_to_repl", "Send visual selection to REPL" },
-                ['<leader>ct'] = { "toggle_execute", "Automatically execute command in REPL after sent" },
-                ['<leader>lv'] = { "toggle_vertical", "Create REPL in vertical or horizontal split" },
-                ['<leader>ls'] = { "open_repl", "Opens the REPL in a window split" }
+            local function call(method)
+                return function() repl[method]() end
+            end
+             -- declarative map table: mode -> { lhs = {method, desc} }
+            local maps = {
+              n = {
+                ["<leader>ee"] = { "send_statement_definition", "Execute: Send semantic unit to REPL" },
+                ["<leader>eb"] = { "send_buffer_to_repl",       "Execute: Send entire buffer to REPL" },
+                ["<leader>ct"] = { "toggle_execute",            "Code: Toggle auto-execute in REPL" },
+                ["<leader>lv"] = { "toggle_vertical",           "Language: Toggle REPL vertical/horizontal split" },
+                ["<leader>ls"] = { "open_repl",                 "Language: Open REPL in window split" },
+              },
+              x = {
+                ["<leader>ee"] = { "send_visual_to_repl",       "Execute: Send visual selection to REPL" },
+              },
             }
-            for key, command in pairs(repl_mappings) do
-                vim.keymap.set("n", key, function() 
-                    require("nvim-python-repl")[command[1]]() 
-                end, { desc = command[2] })
+            
+            for mode, defs in pairs(maps) do
+              for lhs, spec in pairs(defs) do
+                vim.keymap.set(mode, lhs, call(spec[1]), { desc = spec[2] })
+              end
             end
         end
     },
@@ -33,8 +43,8 @@ return {
         init = function()
             vim.g.vimtex_compiler_method = 'latexmk'
             vim.g.vimtex_view_method = 'zathura'
-            vim.keymap.set('n', '<localleader>v', '<plug>(vimtex-view)', { desc='View PDF' })
-            vim.keymap.set('n', '<localleader>lt', '<cmd>VimtexTocToggle<cr>', { desc='Toggle VimTeX ToC' })
+            vim.keymap.set('n', '<localleader>lv', '<plug>(vimtex-view)', { desc='Language: View PDF' })
+            vim.keymap.set('n', '<localleader>lt', '<cmd>VimtexTocToggle<cr>', { desc='Language: Toggle VimTeX ToC' })
         end,
     },
 

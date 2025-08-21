@@ -22,12 +22,12 @@ return {
         opts = {}, 
         cmd = "Trouble", 
         keys = {
-            { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics (Trouble)" },
-            { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Buffer Diagnostics (Trouble)" },
-            { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Symbols (Trouble)" },
-            { "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "LSP Definitions / references / ... (Trouble)" },
-            { "<leader>xl", "<cmd>Trouble loclist toggle<cr>", desc = "Location List (Trouble)" },
-            { "<leader>xq", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix List (Trouble)" },
+            { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics: Toggle" },
+            { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics: Buffer only" },
+            { "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", desc = "Code: Symbols" },
+            { "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>", desc = "Code: LSP definitions/references" },
+            { "<leader>xl", "<cmd>Trouble loclist toggle<cr>", desc = "Diagnostics: Location list" },
+            { "<leader>xq", "<cmd>Trouble qflist toggle<cr>", desc = "Diagnostics: Quickfix list" },
         },
     },
 
@@ -58,5 +58,66 @@ return {
                 hunspell =  { 'en_US', 'pt_BR', 'es_ES', 'es_MX', 'fr_FR' }, 
             }
         end,
+    },
+
+    {
+        "folke/which-key.nvim",
+        event = "VeryLazy",
+        opts = {},
+        config = function()
+            local wk = require("which-key")
+            wk.setup({
+                preset = "modern",
+                delay = 300,
+            })
+            -- Register key groups
+            wk.add({
+                { "<leader>c", group = "Code" },
+                { "<leader>e", group = "Execute/REPL" },
+                { "<leader>f", group = "Find" },
+                { "<leader>l", group = "Language" },
+                { "<leader>x", group = "Diagnostics" },
+            })
+        end
+    },
+
+    {
+        "kylechui/nvim-surround",
+        version = "*",
+        event = "VeryLazy",
+        config = function()
+            require("nvim-surround").setup({})
+        end
+    },
+
+    {
+        "numToStr/Comment.nvim",
+        event = "VeryLazy",
+        config = function()
+            require('Comment').setup({
+                padding = true,
+                sticky = true,
+                ignore = nil,
+                toggler = {
+                    line = 'gcc',
+                    block = 'gbc',
+                },
+                opleader = {
+                    line = 'gc',
+                    block = 'gb',
+                },
+                extra = {
+                    above = 'gcO',
+                    below = 'gco',
+                    eol = 'gcA',
+                },
+                mappings = {
+                    basic = true,
+                    extra = true,
+                },
+                pre_hook = nil,
+                post_hook = nil,
+            })
+        end
     },
 }

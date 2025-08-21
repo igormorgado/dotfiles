@@ -98,14 +98,14 @@ return {
                 vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
                 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
                 vim.keymap.set({ 'n', 'i' }, '<C-s>', vim.lsp.buf.signature_help, opts)
-                vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-                vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+                vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Code: Add workspace folder', buffer = bufnr, noremap = true, silent = true })
+                vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Code: Remove workspace folder', buffer = bufnr, noremap = true, silent = true })
                 vim.keymap.set('n', '<leader>wl', function()
                     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                end, opts)
-                vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
-                vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
-                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+                end, { desc = 'Code: List workspace folders', buffer = bufnr, noremap = true, silent = true })
+                vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, { desc = 'Code: Type definition', buffer = bufnr, noremap = true, silent = true })
+                vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Code: Rename symbol', buffer = bufnr, noremap = true, silent = true })
+                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code: Actions', buffer = bufnr, noremap = true, silent = true })
                 vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
                 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
                 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
@@ -115,6 +115,7 @@ return {
             require("lspconfig").pylsp.setup({
                 capabilities = capabilities,
                 on_attach = on_attach,
+                filetypes = { "python" },
                 settings = {
                     pylsp = {
                         plugins = {
@@ -128,6 +129,86 @@ return {
                         }
                     }
                 },    
+            })
+
+            -- Lua LSP (essential for Neovim configuration)
+            require("lspconfig").lua_ls.setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                filetypes = { "lua" },
+                settings = {
+                    Lua = {
+                        runtime = {
+                            version = 'LuaJIT',
+                            path = vim.split(package.path, ';'),
+                        },
+                        diagnostics = {
+                            globals = {'vim'},  -- Recognize vim global
+                        },
+                        workspace = {
+                            library = vim.api.nvim_get_runtime_file("", true),
+                            checkThirdParty = false,
+                        },
+                        telemetry = {
+                            enable = false,
+                        },
+                        completion = {
+                            callSnippet = "Replace"
+                        },
+                    },
+                },
+            })
+
+            -- TypeScript/JavaScript LSP
+            require("lspconfig").ts_ls.setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+                settings = {
+                    typescript = {
+                        inlayHints = {
+                            includeInlayParameterNameHints = 'all',
+                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                            includeInlayFunctionParameterTypeHints = true,
+                            includeInlayVariableTypeHints = true,
+                            includeInlayPropertyDeclarationTypeHints = true,
+                            includeInlayFunctionLikeReturnTypeHints = true,
+                            includeInlayEnumMemberValueHints = true,
+                        }
+                    },
+                    javascript = {
+                        inlayHints = {
+                            includeInlayParameterNameHints = 'all',
+                            includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+                            includeInlayFunctionParameterTypeHints = true,
+                            includeInlayVariableTypeHints = true,
+                            includeInlayPropertyDeclarationTypeHints = true,
+                            includeInlayFunctionLikeReturnTypeHints = true,
+                            includeInlayEnumMemberValueHints = true,
+                        }
+                    }
+                }
+            })
+
+            -- C/C++ LSP (clangd)
+            require("lspconfig").clangd.setup({
+                capabilities = capabilities,
+                on_attach = on_attach,
+                cmd = {
+                    "clangd",
+                    "--background-index",
+                    "--clang-tidy",
+                    "--header-insertion=iwyu",
+                    "--completion-style=detailed",
+                    "--function-arg-placeholders",
+                    "--fallback-style=llvm",
+                },
+                init_options = {
+                    usePlaceholders = true,
+                    completeUnimported = true,
+                    clangdFileStatus = true,
+                },
+                filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
             })
         end
     },
