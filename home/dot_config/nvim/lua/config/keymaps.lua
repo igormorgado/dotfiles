@@ -7,7 +7,7 @@ function M.setup()
 
     -- Quality of life mappings
     keymap('n', '<leader>a', ':keepjumps normal! ggVG<cr>', { desc = 'Select all' })
-    keymap('n', '<leader>w', '<cmd>write<cr>', { desc = 'Save' })
+    -- keymap('n', '<leader>w', '<cmd>write<cr>', { desc = 'Save file' })
     keymap('n', '<leader>P', 'vipgqq', { desc = 'Paragraph flow' })
     keymap('n', '<leader>s', '<cmd>setlocal spell!<cr>', { desc = 'Toggle spellcheck' })
     keymap({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
@@ -57,6 +57,12 @@ function M.setup()
     keymap('n', '<leader>o', function()
         vim.wo.cursorcolumn = not vim.wo.cursorcolumn
     end, { desc = "Toggle cursorcolumn" })
+
+    -- Better buffer navigation
+    keymap('n', '[b', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
+    keymap('n', ']b', '<cmd>bnext<CR>', { desc = 'Next buffer' })
+    keymap('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Delete buffer' })
+    keymap('n', '<leader>ba', '<cmd>%bdelete|edit#<CR>', { desc = 'Delete all buffers but current' })
 
 end
 

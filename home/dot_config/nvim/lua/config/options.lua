@@ -58,7 +58,6 @@ function M.setup()
     vim.opt.tabstop = 4
     vim.opt.shiftwidth = 4
     vim.opt.expandtab = true
-    -- no auto break in 79
     vim.opt.textwidth = 0
 
     -- Better completion UX
@@ -75,6 +74,12 @@ function M.setup()
     else
         vim.opt.clipboard = ""
     end
+
+    -- File handling options
+    vim.opt.swapfile = false     -- Disable swap files
+    vim.opt.backup = false       -- Disable backup files
+    vim.opt.writebackup = false  -- Disable backup before overwrite
+    vim.opt.undofile = true      -- Persistent undo
 
     -- Use `rg` if available locally
     if vim.fn.executable("rg") == 1 then
