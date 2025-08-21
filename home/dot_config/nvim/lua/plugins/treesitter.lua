@@ -12,7 +12,7 @@ return {
                     "python", "c", "vim", "javascript", "sql", "vimdoc",
                     "html", "query", "css", "lua", "markdown", "markdown_inline", 
                 },
-                auto_install = true,
+                auto_install = false,
                 highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = false,

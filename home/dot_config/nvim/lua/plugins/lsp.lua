@@ -157,6 +157,7 @@ return {
             safe_setup("lua_ls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
+                cmd = { "lua-language-server" },
                 filetypes = { "lua" },
                 settings = {
                     Lua = {
@@ -185,6 +186,7 @@ return {
             safe_setup("ts_ls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
+                cmd = { "typescript-language-server", "--stdio" },
                 filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
                 settings = {
                     typescript = {
@@ -216,6 +218,7 @@ return {
             safe_setup("bashls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
+                cmd = { "bash-language-server", "start" },
                 filetypes = { "sh", "bash" },
                 settings = {
                     bashIde = {
