@@ -3,7 +3,13 @@ return {
     {
         'nvim-telescope/telescope.nvim', 
         cmd = "Telescope",
-        dependencies = { 'nvim-lua/plenary.nvim' }, 
+        dependencies = { 
+            'nvim-lua/plenary.nvim',
+            {
+                'nvim-telescope/telescope-fzf-native.nvim',
+                build = 'make'
+            }
+        }, 
         keys = {
             { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find: Files" },
             { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Find: Live grep" },
@@ -27,8 +33,19 @@ return {
                     prompt_prefix = " ",
                     selection_caret = " ",
                     path_display = { "truncate" },
+                },
+                extensions = {
+                    fzf = {
+                        fuzzy = true,
+                        override_generic_sorter = true,
+                        override_file_sorter = true,
+                        case_mode = "smart_case",
+                    }
                 }
             })
+            
+            -- Load the fzf extension
+            require('telescope').load_extension('fzf')
         end
     },
 }

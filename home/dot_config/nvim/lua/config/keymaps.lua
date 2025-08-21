@@ -58,9 +58,7 @@ function M.setup()
         vim.wo.cursorcolumn = not vim.wo.cursorcolumn
     end, { desc = "Toggle cursorcolumn" })
 
-    -- Better buffer navigation
-    keymap('n', '[b', '<cmd>bprevious<CR>', { desc = 'Previous buffer' })
-    keymap('n', ']b', '<cmd>bnext<CR>', { desc = 'Next buffer' })
+    -- Better buffer navigation (now handled by bufferline)
     keymap('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Delete buffer' })
     keymap('n', '<leader>ba', '<cmd>%bdelete|edit#<CR>', { desc = 'Delete all buffers but current' })
 
