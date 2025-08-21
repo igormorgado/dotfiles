@@ -1,0 +1,23 @@
+packages:
+  npm:
+    global:
+      - "@typescript-eslint/eslint-plugin"
+      - "@typescript-eslint/parser"
+      - eslint
+      - prettier
+      - typescript
+      - typescript-language-server
+      - ts-node
+      - nodemon
+      - npm-check-updates
+      - live-server
+      - http-server
+      - json-server
+      - serve
+      - concurrently
+      - cross-env
+      - rimraf
+      - husky
+      - lint-staged
+      - commitizen
+      - cz-conventional-changelog

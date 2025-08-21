@@ -67,6 +67,7 @@ packages:
       - lua51-jsregexp
       - lua51-lpeg
       - luajit
+      - lua-language-server
       - luarocks
       - lz4
       - lzip
@@ -80,6 +81,7 @@ packages:
       - neovim
       - neovim-lspconfig
       - nmon
+      - npm
       - pastebinit
       - pinentry
       - procs

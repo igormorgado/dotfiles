@@ -41,7 +41,9 @@ packages:
       - lsd
       - lsof
       - lsscsi
+      - llvm
       - lua5.1
+      - lua-language-server
       - luarocks
       - m4
       - make
@@ -51,6 +53,7 @@ packages:
       - ncdu
       - neovim
       - nmon
+      - npm
       - p7zip-full
       - pastebinit
       - pkg-config

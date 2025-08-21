@@ -33,6 +33,7 @@ packages:
       - mtr
       - ncdu
       - neovim
+      - node
       - readline
       - ripgrep
       - rsync
@@ -46,3 +47,5 @@ packages:
       - zoxide
       - zstd
       - gitleaks
+      - lua-language-server
+      - llvm
