@@ -23,5 +23,5 @@ fi
 
 # Install npm packages globally if npm is available
 if command -v npm >/dev/null 2>&1; then
-  npm install -g {{- if .packages.npm.global }}{{ range .packages.npm.global }} {{ . }}{{ end }}{{ end }}
+  sudo npm install -g {{- if .packages.npm.global }}{{ range .packages.npm.global }} {{ . }}{{ end }}{{ end }}
 fi
