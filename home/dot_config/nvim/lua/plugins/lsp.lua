@@ -89,6 +89,28 @@ return {
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+            -- Helper function to safely setup LSP server
+            local function safe_setup(server, config)
+                local ok, lspconfig = pcall(require, "lspconfig")
+                if not ok then
+                    vim.notify("LSP config not available", vim.log.levels.WARN)
+                    return
+                end
+                
+                if not lspconfig[server] then
+                    vim.notify("LSP server '" .. server .. "' not found", vim.log.levels.WARN)
+                    return
+                end
+                
+                local server_available = vim.fn.executable(config.cmd and config.cmd[1] or server) == 1
+                if not server_available then
+                    vim.notify("LSP server '" .. server .. "' not installed", vim.log.levels.WARN)
+                    return
+                end
+                
+                lspconfig[server].setup(config)
+            end
+
             -- LSP keybindings function
             local function on_attach(client, bufnr)
                 local opts = { noremap = true, silent = true, buffer = bufnr }
@@ -112,7 +134,7 @@ return {
             end
 
             -- Python LSP
-            require("lspconfig").pylsp.setup({
+            safe_setup("pylsp", {
                 capabilities = capabilities,
                 on_attach = on_attach,
                 filetypes = { "python" },
@@ -132,7 +154,7 @@ return {
             })
 
             -- Lua LSP (essential for Neovim configuration)
-            require("lspconfig").lua_ls.setup({
+            safe_setup("lua_ls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
                 filetypes = { "lua" },
@@ -160,7 +182,7 @@ return {
             })
 
             -- TypeScript/JavaScript LSP
-            require("lspconfig").ts_ls.setup({
+            safe_setup("ts_ls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
                 filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
@@ -190,8 +212,20 @@ return {
                 }
             })
 
+            -- Bash LSP
+            safe_setup("bashls", {
+                capabilities = capabilities,
+                on_attach = on_attach,
+                filetypes = { "sh", "bash" },
+                settings = {
+                    bashIde = {
+                        globPattern = "*@(.sh|.inc|.bash|.command)"
+                    }
+                }
+            })
+
             -- C/C++ LSP (clangd)
-            require("lspconfig").clangd.setup({
+            safe_setup("clangd", {
                 capabilities = capabilities,
                 on_attach = on_attach,
                 cmd = {

@@ -72,10 +72,14 @@ return {
             })
             -- Register key groups
             wk.add({
+                { "<leader>b", group = "Buffer" },
                 { "<leader>c", group = "Code" },
                 { "<leader>e", group = "Execute/REPL" },
                 { "<leader>f", group = "Find" },
+                { "<leader>g", group = "Git" },
+                { "<leader>h", group = "Git Hunk" },
                 { "<leader>l", group = "Language" },
+                { "<leader>t", group = "Toggle" },
                 { "<leader>x", group = "Diagnostics" },
             })
         end
