@@ -22,3 +22,4 @@ packages:
       - commitizen
       - cz-conventional-changelog
       - bash-language-server
+      - '@anthropic-ai/claude-code'
