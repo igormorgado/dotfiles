@@ -49,3 +49,4 @@ packages:
       - gitleaks
       - lua-language-server
       - llvm
+      - lld
