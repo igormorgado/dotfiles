@@ -78,8 +78,9 @@ return {
                     mappings = false,  -- Disable which-key's internal mappings icons since we have mini.icons
                 },
                 -- Disable certain triggers that cause conflicts
+                -- Exclude terminal mode ('t') from which-key triggers
                 triggers = {
-                    { "<auto>", mode = "nxsot" },
+                    { "<auto>", mode = "nxso" },  -- Removed 't' (terminal) mode
                 },
                 spec = {
                     -- nvim-surround keymaps (explicit definitions to prevent overlap warnings)
