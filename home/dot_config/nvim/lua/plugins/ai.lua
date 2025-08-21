@@ -10,27 +10,29 @@ return {
                 window = {
                     position = "float",
                     float = {
-                        width = "45%",      -- Take up 45% of screen width
-                        height = "90%",     -- Take up 90% of screen height
-                        row = "5%",         -- Small margin from top
-                        col = "52%",        -- Position on right side
+                        width = 95,
+                        height = "90%",
+                        row = "5%",
+                        col = "70%",
                         relative = "editor",
-                        border = "rounded"  -- Rounded border for aesthetics
+                        border = "rounded"
                     },
                     enter_insert = true,
                     hide_numbers = true,
                     hide_signcolumn = true,
-                    wrap = true,         -- Enable text wrapping for better readability
+                    hide_cursorcolumn = true,
+                    hide_colorcolumn = true,
+                    wrap = true,
                 },
                 refresh = {
                     enable = true,
-                    updatetime = 200,    -- Slightly less aggressive
+                    updatetime = 200,
                     timer_interval = 200,
-                    show_notifications = false,  -- Less noise during work
+                    show_notifications = false,
                 },
                 git = {
                     use_git_root = true,
-                    auto_stage = false,  -- Don't auto-stage files
+                    auto_stage = false,
                 },
                 shell = {
                     separator = '&&',
@@ -42,7 +44,7 @@ return {
                     continue = "--continue",
                     resume = "--resume",
                     verbose = "--verbose",
-                    code = "--code",     -- Add code-focused mode
+                    code = "--code",
                 },
                 keymaps = {
                     toggle = {
@@ -56,7 +58,7 @@ return {
                     },
                     window_navigation = true,
                     scrolling = true,
-                    send_selection = "<leader>cs",  -- Send visual selection
+                    send_selection = "<leader>cs",
                 }
             })
             -- Enhanced keybindings

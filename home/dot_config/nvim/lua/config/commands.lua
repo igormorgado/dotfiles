@@ -82,6 +82,11 @@ function M.setup()
 
     -- Function to apply custom colored columns
     function _G.set_colored_columns()
+      -- Skip if this is a Claude Code window
+      if vim.bo.filetype == 'claude-code' or string.find(vim.api.nvim_buf_get_name(0), 'claude') then
+        return
+      end
+      
       -- Remove existing matches to avoid duplicates
       if vim.w.colored_column_matches then
         for _, match in ipairs(vim.w.colored_column_matches) do

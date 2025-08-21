@@ -55,7 +55,8 @@ function M.setup()
 
     -- Toggle column highlight on demand (when you actually need it)
     keymap('n', '<leader>o', function()
-        vim.wo.cursorcolumn = not vim.wo.cursorcolumn
+        vim.opt.cursorcolumn = not vim.opt.cursorcolumn:get()
+        print("Cursorcolumn: " .. tostring(vim.opt.cursorcolumn:get()))
     end, { desc = "Toggle cursorcolumn" })
 
     -- Better buffer navigation (now handled by bufferline)

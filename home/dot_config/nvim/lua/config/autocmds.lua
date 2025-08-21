@@ -39,7 +39,9 @@ function M.setup()
                 vim.api.nvim_win_set_cursor(0, {last_pos, 0})
             end
             vim.defer_fn(function()
-                vim.cmd("normal! zvzz")
+                if vim.api.nvim_get_mode().mode ~= 't' then
+                    vim.cmd("normal! zvzz")
+                end
             end, 10)
         end,
     })
