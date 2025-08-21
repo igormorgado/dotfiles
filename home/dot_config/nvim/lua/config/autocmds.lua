@@ -17,6 +17,19 @@ function M.setup()
         end
     })
 
+    -- Cursorline only in active window
+    vim.api.nvim_create_autocmd({ "WinEnter", "BufEnter" }, {
+        callback = function()
+            vim.wo.cursorline = true
+        end
+    })
+    vim.api.nvim_create_autocmd({ "WinLeave" }, {
+        callback = function()
+            vim.wo.cursorline = false 
+        end 
+    })
+
+
     -- Remember last position in file
     vim.api.nvim_create_autocmd("BufReadPost", {
         pattern = "*",

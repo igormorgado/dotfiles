@@ -13,6 +13,9 @@ function M.setup()
     keymap({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
     keymap({ 'n', 'x' }, '<leader>p', '"+p', { desc = 'Paste from system clipboard' })
 
+    -- Quick mapping: clear search highlight fast
+    vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR><Esc>')
+
     -- Terminal escape
     keymap('t', '<leader><esc>', '<C-\\><C-n>', { desc = 'Escape from Terminal insert mode' })
 
@@ -35,7 +38,7 @@ function M.setup()
 
     -- Toggle listchars
     local default_listchars = { tab = "  ", extends = "⏵", precedes = "⏴" }
-    local extended_listchars = { eol = "↲", nbsp = "␣", trail = "•", extends = "⏵", precedes = "⏵", tab = "⟶ " }
+    local extended_listchars = { eol = "↲", nbsp = "␣", trail = "•", extends = "⏵", precedes = "⏴", tab = "⟶ " }
     local show_extra = false
 
     local function toggle_list()
@@ -48,6 +51,13 @@ function M.setup()
     end
 
     keymap('n', '<leader>l', toggle_list, { desc = 'Toggle list' })
+
+
+    -- Toggle column highlight on demand (when you actually need it)
+    keymap('n', '<leader>o', function()
+        vim.wo.cursorcolumn = not vim.wo.cursorcolumn
+    end, { desc = "Toggle cursorcolumn" })
+
 end
 
 return M
