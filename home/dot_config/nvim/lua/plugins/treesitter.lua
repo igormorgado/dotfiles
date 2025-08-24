@@ -10,9 +10,9 @@ return {
                 parser_install_dir = treesitter_parser_install_dir,
                 ensure_installed = {
                     "python", "c", "vim", "javascript", "sql", "vimdoc",
-                    "html", "query", "css", "lua", "markdown", "markdown_inline", 
+                    "html", "query", "css", "lua", "markdown", "markdown_inline", "json",
                 },
-                auto_install = false,
+                auto_install = true,
                 highlight = {
                     enable = true,
                     additional_vim_regex_highlighting = false,
