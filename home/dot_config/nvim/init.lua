@@ -80,7 +80,6 @@ require("lazy").setup({
             paths = {}, -- add any custom paths here that you want to include in the rtp
             disabled_plugins = {
                 "gzip",
-                "matchit",
                 "matchparen",
                 "netrwPlugin",
                 "tarPlugin",
