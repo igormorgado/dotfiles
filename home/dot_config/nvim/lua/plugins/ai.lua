@@ -78,21 +78,88 @@ return {
                     window_navigation = true,
                     scrolling = true,
                     send_selection = "<leader>cs",
+                    send_buffer = "<leader>cb",
+                    send_visual = "<leader>cv",
+                    ask_question = "<leader>cq",
                 }
             })
-            -- Enhanced keybindings
-            vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<CR>', { desc = 'Code: Toggle Claude Code' })
-            vim.keymap.set('n', '<leader>cn', '<cmd>ClaudeCode new<CR>', { desc = 'Code: New Claude conversation' })
-            vim.keymap.set('v', '<leader>cs', function()
-                local start_pos = vim.fn.getpos("'<")
-                local end_pos = vim.fn.getpos("'>")
-                local lines = vim.fn.getline(start_pos[2], end_pos[2])
-                -- Send selected text to Claude
+            -- Enhanced keybindings for better Claude Code integration
+            vim.keymap.set('n', '<leader>cc', '<cmd>ClaudeCode<CR>', { desc = 'AI: Toggle Claude Code' })
+            vim.keymap.set('n', '<leader>cn', '<cmd>ClaudeCode new<CR>', { desc = 'AI: New Claude conversation' })
+            vim.keymap.set('n', '<leader>cb', '<cmd>ClaudeCode --code<CR>', { desc = 'AI: Send buffer to Claude' })
+            vim.keymap.set('n', '<leader>cj', '<cmd>ClaudeCode --continue<CR>', { desc = 'AI: Continue Claude conversation' })
+            vim.keymap.set('n', '<leader>cx', '<cmd>ClaudeCode --quit<CR>', { desc = 'AI: Quit Claude session' })
+            vim.keymap.set('n', '<leader>ch', '<cmd>ClaudeCode --help<CR>', { desc = 'AI: Claude help' })
+            vim.keymap.set('n', '<leader>cr', '<cmd>ClaudeCode --resume<CR>', { desc = 'AI: Resume Claude session' })
+            
+            -- Visual mode bindings for sending selections
+            vim.keymap.set('v', '<leader>cv', function()
+                -- Get visual selection
+                local mode = vim.fn.mode()
+                if mode == 'v' or mode == 'V' then
+                    -- Exit visual mode and get selection
+                    vim.cmd('normal! ""gvy')
+                    local selection = vim.fn.getreg('"')
+                    
+                    -- Open Claude Code if not already open
+                    vim.cmd('ClaudeCode')
+                    
+                    -- Optional: Auto-insert the selection as a question
+                    vim.defer_fn(function()
+                        local claude_buf = vim.fn.bufnr('claude-code')
+                        if claude_buf ~= -1 then
+                            local prompt = "Please help me with this code:\n\n```\n" .. selection .. "\n```\n\n"
+                            vim.api.nvim_buf_set_text(claude_buf, -1, 0, -1, 0, vim.split(prompt, '\n'))
+                        end
+                    end, 100)
+                end
+            end, { desc = 'AI: Send visual selection to Claude' })
+            
+            -- Quick access for common Claude Code workflows
+            vim.keymap.set('n', '<leader>ce', function()
+                local buf_name = vim.api.nvim_buf_get_name(0)
+                local file_ext = vim.fn.fnamemodify(buf_name, ':e')
+                local lang_context = ""
+                
+                if file_ext == "py" then
+                    lang_context = "This is a Python file. "
+                elseif file_ext == "lua" then
+                    lang_context = "This is a Lua file for Neovim configuration. "
+                elseif file_ext == "js" or file_ext == "ts" then
+                    lang_context = "This is a JavaScript/TypeScript file. "
+                end
+                
                 vim.cmd('ClaudeCode')
-                -- You can add logic here to send the selection
-            end, { desc = 'Code: Send selection to Claude' })
-            vim.keymap.set('n', '<leader>cq', '<cmd>ClaudeCode --quit<CR>', { desc = 'Code: Quit Claude session' })
-            vim.keymap.set('n', '<leader>ch', '<cmd>ClaudeCode --help<CR>', { desc = 'Code: Claude help' })
+                vim.defer_fn(function()
+                    local claude_buf = vim.fn.bufnr('claude-code')
+                    if claude_buf ~= -1 then
+                        local prompt = lang_context .. "Please explain this code:\n\n"
+                        vim.api.nvim_buf_set_text(claude_buf, -1, 0, -1, 0, vim.split(prompt, '\n'))
+                    end
+                end, 100)
+            end, { desc = 'AI: Explain current file with Claude' })
+            
+            vim.keymap.set('n', '<leader>cd', function()
+                vim.cmd('ClaudeCode')
+                vim.defer_fn(function()
+                    local claude_buf = vim.fn.bufnr('claude-code')
+                    if claude_buf ~= -1 then
+                        local prompt = "Please review this code for potential bugs and improvements:\n\n"
+                        vim.api.nvim_buf_set_text(claude_buf, -1, 0, -1, 0, vim.split(prompt, '\n'))
+                    end
+                end, 100)
+            end, { desc = 'AI: Debug/review code with Claude' })
+            
+            vim.keymap.set('n', '<leader>ct', function()
+                vim.cmd('ClaudeCode')
+                vim.defer_fn(function()
+                    local claude_buf = vim.fn.bufnr('claude-code')
+                    if claude_buf ~= -1 then
+                        local prompt = "Please write unit tests for this code:\n\n"
+                        vim.api.nvim_buf_set_text(claude_buf, -1, 0, -1, 0, vim.split(prompt, '\n'))
+                    end
+                end, 100)
+            end, { desc = 'AI: Generate tests with Claude' })
         end
     },
 }

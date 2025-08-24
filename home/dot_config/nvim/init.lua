@@ -1,6 +1,11 @@
 -- Modular Neovim Configuration
 -- Main entry point that loads all configuration modules
 
+-- Performance: Enable bytecode cache (Neovim 0.9+)
+if vim.loader then
+    vim.loader.enable()
+end
+
 -- Load core configuration modules
 require('config.options').setup()
 require('config.persistence').setup()
@@ -30,6 +35,7 @@ require("lazy").setup({
     { import = "plugins.editor" },
     { import = "plugins.git" },
     { import = "plugins.lsp" },
+    { import = "plugins.linting" },
     { import = "plugins.fuzzy" },
     { import = "plugins.treesitter" },
     { import = "plugins.ai" },
@@ -65,9 +71,18 @@ require("lazy").setup({
 
     -- Performance optimizations
     performance = {
+        cache = {
+            enabled = true,
+        },
+        reset_packpath = true, -- reset the package path to improve startup time
         rtp = {
+            reset = true, -- reset the runtime path to $VIMRUNTIME and your config directory
+            paths = {}, -- add any custom paths here that you want to include in the rtp
             disabled_plugins = {
                 "gzip",
+                "matchit",
+                "matchparen",
+                "netrwPlugin",
                 "tarPlugin",
                 "tohtml",
                 "tutor",

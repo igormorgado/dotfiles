@@ -122,6 +122,12 @@ function M.setup()
         vim.opt.grepprg = "rg --vimgrep --hidden --smart-case"
         vim.opt.grepformat = "%f:%l:%c:%m"
     end
+
+    -- Performance optimizations
+    vim.opt.lazyredraw = true        -- Don't redraw during macros
+    vim.opt.synmaxcol = 300          -- Limit syntax highlighting column
+    vim.opt.regexpengine = 1         -- Use old regex engine (sometimes faster)
+    vim.opt.maxmempattern = 20000    -- Increase pattern matching memory
 end
 
 return M

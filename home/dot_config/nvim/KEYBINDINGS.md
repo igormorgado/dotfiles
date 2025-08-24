@@ -174,10 +174,29 @@ This document contains all custom keybindings configured in this Neovim setup.
 
 ## AI Assistant (Claude Code)
 
+### Core Claude Code Commands
 | Key | Mode | Action | Description |
 |-----|------|--------|-------------|
 | `<leader>cc` | Normal | `:ClaudeCode` | Toggle Claude Code |
 | `<C-,>` | Normal/Terminal | - | Toggle Claude Code window |
+| `<leader>cn` | Normal | - | New Claude conversation |
+| `<leader>cb` | Normal | - | Send buffer to Claude |
+| `<leader>cj` | Normal | - | Continue Claude conversation |
+| `<leader>cx` | Normal | - | Quit Claude session |
+| `<leader>ch` | Normal | - | Claude help |
+| `<leader>cr` | Normal | - | Resume Claude session |
+
+### Advanced Claude Code Workflows
+| Key | Mode | Action | Description |
+|-----|------|--------|-------------|
+| `<leader>cv` | Visual | - | Send visual selection to Claude |
+| `<leader>ce` | Normal | - | Explain current file with Claude |
+| `<leader>cd` | Normal | - | Debug/review code with Claude |
+| `<leader>ct` | Normal | - | Generate tests with Claude |
+
+### Legacy Keybindings
+| Key | Mode | Action | Description |
+|-----|------|--------|-------------|
 | `<leader>cC` | Normal | - | Continue with Claude Code |
 | `<leader>cV` | Normal | - | Verbose mode Claude Code |
 

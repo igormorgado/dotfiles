@@ -107,6 +107,7 @@ return {
                     { "[", group = "prev" },
                     { "<leader>b", group = "Buffer" },
                     { "<leader>c", group = "Code" },
+                    { "<leader>d", group = "Diagnostics/Lint" },
                     { "<leader>e", group = "Execute/REPL" },
                     { "<leader>f", group = "Find" },
                     { "<leader>g", group = "Git" },

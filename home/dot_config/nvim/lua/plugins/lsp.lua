@@ -26,12 +26,12 @@ return {
 
             cmp.setup({
                 performance = {
-                    debounce = 60,
-                    throttle = 30,
-                    fetching_timeout = 500,
+                    debounce = 100,        -- Increased from 60 for better performance
+                    throttle = 50,         -- Increased from 30 for better performance
+                    fetching_timeout = 200, -- Reduced from 500 for faster response
                     confirm_resolve_timeout = 80,
                     async_budget = 1,
-                    max_view_entries = 200,
+                    max_view_entries = 50, -- Reduced from 200 for better performance
                 },
                 snippet = {
                     expand = function(args)
@@ -218,7 +218,7 @@ return {
                 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
             end
 
-            -- Python LSP
+            -- Python LSP (focused on completion and navigation only)
             safe_setup("pylsp", {
                 capabilities = capabilities,
                 on_attach = on_attach,
@@ -226,11 +226,23 @@ return {
                 settings = {
                     pylsp = {
                         plugins = {
-                            flake8 = { enabled = true, maxLineLength = 119 },
-                            jedi_completion = { enable = true },
-                            jedi_definition = { enable = true },
-                            jedi_references = { enable = true },
-                            jedi_symbols = { enable = true, all_scopes = true },
+                            -- Disable built-in linting (handled by nvim-lint + ruff)
+                            flake8 = { enabled = false },
+                            pylint = { enabled = false },
+                            pycodestyle = { enabled = false },
+                            pyflakes = { enabled = false },
+                            mccabe = { enabled = false },
+                            
+                            -- Disable formatting (handled by conform.nvim + ruff)
+                            black = { enabled = false },
+                            autopep8 = { enabled = false },
+                            yapf = { enabled = false },
+                            
+                            -- Keep completion and navigation features
+                            jedi_completion = { enabled = true, fuzzy = true },
+                            jedi_definition = { enabled = true, follow_imports = true },
+                            jedi_references = { enabled = true },
+                            jedi_symbols = { enabled = true, all_scopes = true },
                             rope_completion = { enabled = true },
                             rope_autoimport = { enabled = true },
                         }

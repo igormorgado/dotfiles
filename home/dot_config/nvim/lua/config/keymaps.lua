@@ -59,6 +59,9 @@ function M.setup()
         print("Cursorcolumn: " .. tostring(vim.opt.cursorcolumn:get()))
     end, { desc = "Toggle cursorcolumn" })
 
+    -- Cleanup utilities
+    keymap('n', '<leader>tw', '<cmd>%s/\\s\\+$//g<CR>', { desc = 'Remove trailing whitespace' })
+    
     -- Better buffer navigation (now handled by bufferline)
     keymap('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Delete buffer' })
     keymap('n', '<leader>ba', '<cmd>%bdelete|edit#<CR>', { desc = 'Delete all buffers but current' })
