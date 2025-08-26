@@ -148,22 +148,31 @@ return {
             })
 
             -- Use buffer source for `/` and `?`
+<<<<<<< Updated upstream
             -- cmp.setup.cmdline({ '/', '?' }, {
             --     mapping = cmp.mapping.preset.cmdline(),
             --     sources = {
             --         { name = 'buffer' }
             --     }
             -- })
+=======
+            cmp.setup.cmdline({ '/', '?' }, {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'buffer' }
+                }
+            })
+>>>>>>> Stashed changes
 
-            -- -- Use cmdline & path source for ':'
-            -- cmp.setup.cmdline(':', {
-            --     mapping = cmp.mapping.preset.cmdline(),
-            --     sources = cmp.config.sources({
-            --         { name = 'path' }
-            --     }, {
-            --         { name = 'cmdline' }
-            --     })
-            -- })
+            -- Use cmdline & path source for ':'
+            cmp.setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                    { name = 'path' }
+                }, {
+                    { name = 'cmdline' }
+                })
+            })
         end
     },
 
