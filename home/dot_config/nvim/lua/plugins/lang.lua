@@ -4,20 +4,26 @@ return {
     {
         "geg2102/nvim-python-repl",
         dependencies = "nvim-treesitter",
-        ft = { "python" }, 
+        ft = { "python" },
         config = function()
             local repl = require("nvim-python-repl")
-            repl.setup({ 
-                execute_on_send = true, 
-                vsplit = false, 
+            repl.setup({
+                execute_on_send = true,
+                vsplit = false,
             })
             local function call(method)
                 return function() repl[method]() end
+            end
+
+            local function send_and_jump()
+                repl.send_statement_definition()
+                vim.cmd('normal! ]]')
             end
              -- declarative map table: mode -> { lhs = {method, desc} }
             local maps = {
               n = {
                 ["<leader>ee"] = { "send_statement_definition", "Execute: Send semantic unit to REPL" },
+                ["<leader>ej"] = { send_and_jump,              "Execute: Send semantic unit and jump to next" },
                 ["<leader>eb"] = { "send_buffer_to_repl",       "Execute: Send entire buffer to REPL" },
                 ["<leader>ct"] = { "toggle_execute",            "Code: Toggle auto-execute in REPL" },
                 ["<leader>lv"] = { "toggle_vertical",           "Language: Toggle REPL vertical/horizontal split" },
@@ -27,10 +33,11 @@ return {
                 ["<leader>ee"] = { "send_visual_to_repl",       "Execute: Send visual selection to REPL" },
               },
             }
-            
+
             for mode, defs in pairs(maps) do
               for lhs, spec in pairs(defs) do
-                vim.keymap.set(mode, lhs, call(spec[1]), { desc = spec[2] })
+                local handler = type(spec[1]) == "function" and spec[1] or call(spec[1])
+                vim.keymap.set(mode, lhs, handler, { desc = spec[2] })
               end
             end
         end
@@ -50,8 +57,8 @@ return {
 
     -- Markdown
     {
-        'preservim/vim-markdown', 
-        dependencies = { 'godlygeek/tabular' }, 
-        ft = 'markdown' 
+        'preservim/vim-markdown',
+        dependencies = { 'godlygeek/tabular' },
+        ft = 'markdown'
     },
 }
