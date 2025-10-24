@@ -7,7 +7,6 @@ function M.setup()
 
     -- Quality of life mappings
     keymap('n', '<leader>a', ':keepjumps normal! ggVG<cr>', { desc = 'Select all' })
-    -- keymap('n', '<leader>w', '<cmd>write<cr>', { desc = 'Save file' })
     keymap('n', '<leader>P', 'vipgqq', { desc = 'Paragraph flow' })
     keymap('n', '<leader>s', '<cmd>setlocal spell!<cr>', { desc = 'Toggle spellcheck' })
     keymap({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
@@ -60,11 +59,24 @@ function M.setup()
     end, { desc = "Toggle cursorcolumn" })
 
     -- Cleanup utilities
-    keymap('n', '<leader>tw', '<cmd>%s/\\s\\+$//g<CR>', { desc = 'Remove trailing whitespace' })
-    
+    keymap('n', '<leader>tw', function()
+        local save_cursor = vim.fn.getpos(".")
+        vim.cmd('%s/\\s\\+$//ge')
+        vim.fn.setpos(".", save_cursor)
+        vim.cmd('write')
+    end, { desc = 'Remove trailing whitespace and save' })
+
     -- Better buffer navigation (now handled by bufferline)
     keymap('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Delete buffer' })
     keymap('n', '<leader>ba', '<cmd>%bdelete|edit#<CR>', { desc = 'Delete all buffers but current' })
+
+    -- Jupyter cell navigation (vim-unimpaired style)
+    keymap('n', ']j', function()
+        vim.fn.search("^# .* %%$", "W")
+    end, { desc = 'Jump to next jupyter cell' })
+    keymap('n', '[j', function()
+        vim.fn.search("^# .* %%$", "bW")
+    end, { desc = 'Jump to previous jupyter cell' })
 
 end
 
