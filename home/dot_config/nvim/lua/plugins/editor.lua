@@ -18,9 +18,9 @@ return {
     },
 
     {
-        "folke/trouble.nvim", 
-        opts = {}, 
-        cmd = "Trouble", 
+        "folke/trouble.nvim",
+        opts = {},
+        cmd = "Trouble",
         keys = {
             { "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>", desc = "Diagnostics: Toggle" },
             { "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Diagnostics: Buffer only" },
@@ -32,30 +32,30 @@ return {
     },
 
     {
-        "mbbill/undotree", 
-        cmd = "UndotreeToggle", 
-        keys = { 
-            { "<leader>u", "<cmd>UndotreeToggle<CR>", desc = "Toggle Undo Tree" } 
-        } 
+        "mbbill/undotree",
+        cmd = "UndotreeToggle",
+        keys = {
+            { "<leader>u", "<cmd>UndotreeToggle<CR>", desc = "Toggle Undo Tree" }
+        }
     },
 
     {
-        'tpope/vim-unimpaired', 
-        event = "VeryLazy" 
+        'tpope/vim-unimpaired',
+        event = "VeryLazy"
     },
 
     {
-        'kshenoy/vim-signature', 
-        event = "VeryLazy" 
+        'kshenoy/vim-signature',
+        event = "VeryLazy"
     },
 
     {
         'konfekt/vim-DetectSpellLang',
         event = "VeryLazy",
         init = function()
-            vim.g.detectspelllang_langs = { 
-                aspell = { 'en_US', 'en', 'pt_BR', 'es', 'fr_FR', 'fr' }, 
-                hunspell =  { 'en_US', 'pt_BR', 'es_ES', 'es_MX', 'fr_FR' }, 
+            vim.g.detectspelllang_langs = {
+                aspell = { 'en_US', 'en', 'pt_BR', 'es', 'fr_FR', 'fr' },
+                hunspell =  { 'en_US', 'pt_BR', 'es_ES', 'es_MX', 'fr_FR' },
             }
         end,
     },
@@ -91,7 +91,7 @@ return {
                     { "ds", desc = "Delete surround" },
                     { "cs", desc = "Change surround" },
                     { "cS", desc = "Change surround (new lines)" },
-                    
+
                     -- Comment.nvim keymaps (explicit definitions)
                     { "gc", desc = "Comment toggle linewise" },
                     { "gcc", desc = "Comment toggle current line" },
@@ -100,7 +100,7 @@ return {
                     { "gcO", desc = "Comment insert above" },
                     { "gco", desc = "Comment insert below" },
                     { "gcA", desc = "Comment insert end of line" },
-                    
+
                     -- General groups
                     { "g", group = "goto" },
                     { "]", group = "next" },
