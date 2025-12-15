@@ -139,6 +139,21 @@ return {
                 scope = {
                     enabled = true,
                     highlight = "IblScope",
+                    show_start = true,
+                    show_end = false,
+                    include = {
+                        node_type = {
+                            python = {
+                                "function_definition",
+                                "class_definition",
+                                "with_statement",
+                                "for_statement",
+                                "while_statement",
+                                "if_statement",
+                                "try_statement",
+                            },
+                        },
+                    },
                 },
                 indent = {
                     highlight = "IblIndent",

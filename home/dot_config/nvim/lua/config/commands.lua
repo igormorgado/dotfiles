@@ -16,24 +16,54 @@ function M.setup()
     -- Keybinding for DeleteSwap command
     vim.keymap.set('n', '<leader>ds', '<cmd>DeleteSwap<CR>', { desc = 'Delete swap file for current buffer' })
 
-    -- Darktrial boring mode toggle
-    vim.api.nvim_create_user_command('DarktrialToggleBoring', function()
-        -- Load the colorscheme module properly from package cache
+    -- Darktrial commands
+    local function get_darktrial()
         local darktrial = package.loaded['darktrial']
-
         if not darktrial then
-            -- If not loaded yet, source the colorscheme file
             vim.cmd('colorscheme darktrial')
             darktrial = package.loaded['darktrial']
         end
-
-        if darktrial then
-            -- Toggle boring mode (includes indent-blankline refresh)
-            darktrial.toggle_boring()
-        else
+        if not darktrial then
             vim.notify("Failed to load darktrial colorscheme", vim.log.levels.ERROR)
         end
-    end, {})
+        return darktrial
+    end
+
+    -- Toggle boring mode
+    vim.api.nvim_create_user_command('DarktrialToggleBoring', function()
+        local darktrial = get_darktrial()
+        if darktrial then darktrial.toggle_boring() end
+    end, { desc = 'Toggle DarkTrial boring (monochrome) mode' })
+
+    -- Toggle transparent background
+    vim.api.nvim_create_user_command('DarktrialToggleTransparent', function()
+        local darktrial = get_darktrial()
+        if darktrial then darktrial.toggle_transparent() end
+    end, { desc = 'Toggle DarkTrial transparent background' })
+
+    -- Toggle dim inactive windows
+    vim.api.nvim_create_user_command('DarktrialToggleDimInactive', function()
+        local darktrial = get_darktrial()
+        if darktrial then darktrial.toggle_dim_inactive() end
+    end, { desc = 'Toggle DarkTrial dim inactive windows' })
+
+    -- Cycle contrast levels
+    vim.api.nvim_create_user_command('DarktrialCycleContrast', function()
+        local darktrial = get_darktrial()
+        if darktrial then darktrial.cycle_contrast() end
+    end, { desc = 'Cycle DarkTrial contrast levels (low/medium/high)' })
+
+    -- Check contrast ratio
+    vim.api.nvim_create_user_command('DarktrialCheckContrast', function()
+        local darktrial = get_darktrial()
+        if darktrial then darktrial.check_contrast() end
+    end, { desc = 'Check DarkTrial WCAG contrast ratio' })
+
+    -- Show help
+    vim.api.nvim_create_user_command('DarktrialHelp', function()
+        local darktrial = get_darktrial()
+        if darktrial then darktrial.help() end
+    end, { desc = 'Show DarkTrial colorscheme help' })
 
     -- Typewriter mode toggle
     vim.g.typewriter_mode = false
