@@ -1,22 +1,55 @@
 -- AI and code assistance plugins
 return {
+    -- Original copilot.vim configuration (commented out for copilot-cmp integration)
+    -- {
+    --     "github/copilot.vim",
+    --     config = function()
+    --         -- Enable Copilot for all filetypes
+    --         vim.g.copilot_filetypes = {
+    --             ["*"] = true,
+    --         }
+    --         
+    --         -- Copilot keymaps
+    --         -- vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
+    --         --     expr = true,
+    --         --     replace_keycodes = false,
+    --         --     desc = 'Accept Copilot suggestion'
+    --         -- })
+    --         -- vim.keymap.set('i', '<C-H>', '<Plug>(copilot-dismiss)', { desc = 'Dismiss Copilot suggestion' })
+    --         -- vim.keymap.set('i', '<C-L>', '<Plug>(copilot-next)', { desc = 'Next Copilot suggestion' })
+    --         -- vim.keymap.set('i', '<C-K>', '<Plug>(copilot-previous)', { desc = 'Previous Copilot suggestion' })
+    --     end
+    -- },
+
+    -- Copilot integration via nvim-cmp
     {
-        "github/copilot.vim",
+        "zbirenbaum/copilot.lua",
+        cmd = "Copilot",
+        event = "InsertEnter",
         config = function()
-            -- Enable Copilot for all filetypes
-            vim.g.copilot_filetypes = {
-                ["*"] = true,
-            }
-            
-            -- Copilot keymaps
-            -- vim.keymap.set('i', '<C-J>', 'copilot#Accept("\\<CR>")', {
-            --     expr = true,
-            --     replace_keycodes = false,
-            --     desc = 'Accept Copilot suggestion'
-            -- })
-            -- vim.keymap.set('i', '<C-H>', '<Plug>(copilot-dismiss)', { desc = 'Dismiss Copilot suggestion' })
-            -- vim.keymap.set('i', '<C-L>', '<Plug>(copilot-next)', { desc = 'Next Copilot suggestion' })
-            -- vim.keymap.set('i', '<C-K>', '<Plug>(copilot-previous)', { desc = 'Previous Copilot suggestion' })
+            require("copilot").setup({
+                suggestion = { enabled = false },  -- Disable inline suggestions (handled by cmp)
+                panel = { enabled = false },       -- Disable copilot panel (handled by cmp)
+                filetypes = {
+                    yaml = false,
+                    markdown = true,
+                    help = false,
+                    gitcommit = false,
+                    gitrebase = false,
+                    hgcommit = false,
+                    svn = false,
+                    cvs = false,
+                    ["."] = false,
+                },
+                copilot_node_command = 'node', -- Node.js version must be > 18.x
+                server_opts_overrides = {},
+            })
+        end,
+    },
+    {
+        "zbirenbaum/copilot-cmp",
+        config = function()
+            require("copilot_cmp").setup()
         end
     },
     {

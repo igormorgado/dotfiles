@@ -16,39 +16,14 @@ function M.setup()
     -- Keybinding for DeleteSwap command
     vim.keymap.set('n', '<leader>ds', '<cmd>DeleteSwap<CR>', { desc = 'Delete swap file for current buffer' })
 
-    -- Treesitter syntax inspection
-    function _G.ts_syntax_at_point()
-        local bufnr = vim.api.nvim_get_current_buf()
-        local cursor = vim.api.nvim_win_get_cursor(0)
-        local row, col = cursor[1] - 1, cursor[2]
-        
-        local parsers = require('nvim-treesitter.parsers')
-        if not parsers.has_parser() then
-            print("No treesitter parser available for this buffer")
-            return
+    -- Darktrial boring mode toggle
+    vim.api.nvim_create_user_command('DarktrialToggleBoring', function()
+        -- Get or create the darktrial instance
+        if not _G.darktrial_instance then
+            _G.darktrial_instance = dofile(vim.fn.stdpath('config') .. '/colors/darktrial.lua')
         end
-        
-        local parser = vim.treesitter.get_parser(bufnr)
-        local tree = parser:parse()[1]
-        local root = tree:root()
-        
-        local node = root:named_descendant_for_range(row, col, row, col)
-        
-        if node then
-            local node_type = node:type()
-            print("Treesitter node: " .. node_type)
-            
-            local ts_utils = require('nvim-treesitter.ts_utils')
-            local hl_groups = vim.treesitter.highlighter.hl_map
-            if hl_groups then
-                print("Highlight group: " .. vim.inspect(hl_groups[node_type] or "unknown"))
-            end
-        else
-            print("No treesitter node at cursor position")
-        end
-    end
-
-    vim.keymap.set('n', '<F12>', _G.ts_syntax_at_point, {noremap = true})
+        _G.darktrial_instance.toggle_boring()
+    end, {})
 
     -- Typewriter mode toggle
     vim.g.typewriter_mode = false

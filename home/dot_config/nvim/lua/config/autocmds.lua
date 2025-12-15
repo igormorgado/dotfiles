@@ -63,8 +63,8 @@ function M.setup()
     vim.api.nvim_create_autocmd(
         {
             'BufWinEnter',
-            'WinEnter', 
-            'VimResized', 
+            'WinEnter',
+            'VimResized',
             'ColorScheme'
         },
         {

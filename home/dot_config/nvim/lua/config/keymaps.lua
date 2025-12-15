@@ -66,6 +66,8 @@ function M.setup()
         vim.cmd('write')
     end, { desc = 'Remove trailing whitespace and save' })
 
+    keymap('n', '<leader>tw', '<cmd>%s/\\s\\+$//g<CR>', { desc = 'Remove trailing whitespace' })
+
     -- Better buffer navigation (now handled by bufferline)
     keymap('n', '<leader>bd', '<cmd>bdelete<CR>', { desc = 'Delete buffer' })
     keymap('n', '<leader>ba', '<cmd>%bdelete|edit#<CR>', { desc = 'Delete all buffers but current' })

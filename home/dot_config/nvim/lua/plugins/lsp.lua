@@ -26,12 +26,12 @@ return {
 
             cmp.setup({
                 performance = {
-                    debounce = 100,        -- Increased from 60 for better performance
-                    throttle = 50,         -- Increased from 30 for better performance
-                    fetching_timeout = 200, -- Reduced from 500 for faster response
+                    debounce = 100,
+                    throttle = 50,
+                    fetching_timeout = 200,
                     confirm_resolve_timeout = 80,
                     async_budget = 1,
-                    max_view_entries = 50, -- Reduced from 200 for better performance
+                    max_view_entries = 50,
                 },
                 snippet = {
                     expand = function(args)
@@ -60,6 +60,7 @@ return {
                         vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
                         vim_item.menu = ({
                             nvim_lsp = "[LSP]",
+                            copilot = "[Copilot]",
                             luasnip = "[Snippet]",
                             buffer = "[Buffer]",
                             path = "[Path]",
@@ -73,9 +74,9 @@ return {
                 mapping = cmp.mapping.preset.insert({
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<C-e>'] = cmp.mapping.abort(),
-                    ['<CR>'] = cmp.mapping.confirm({ 
+                    ['<CR>'] = cmp.mapping.confirm({
                         behavior = cmp.ConfirmBehavior.Replace,
-                        select = false 
+                        select = false
                     }),
                     ['<Tab>'] = cmp.mapping(function(fallback)
                         if cmp.visible() then
@@ -117,19 +118,20 @@ return {
                     end, { 'i', 's' }),
                 }),
                 sources = cmp.config.sources({
-                    { 
-                        name = 'nvim_lsp', 
+                    {
+                        name = 'nvim_lsp',
                         priority = 1000,
                         entry_filter = function(entry, ctx)
                             return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
                         end
                     },
                     { name = 'nvim_lsp_signature_help', priority = 1000 },
+                    { name = 'copilot', priority = 900, group_index = 2 },
                     { name = 'luasnip', priority = 750, max_item_count = 5 },
                     { name = 'nvim_lua', priority = 500 },
                 }, {
-                    { 
-                        name = 'buffer', 
+                    {
+                        name = 'buffer',
                         priority = 250,
                         keyword_length = 3,
                         option = {
@@ -146,23 +148,6 @@ return {
                     ghost_text = true,
                 },
             })
-
-            -- Use buffer source for `/` and `?`
-            -- cmp.setup.cmdline({ '/', '?' }, {
-            --     mapping = cmp.mapping.preset.cmdline(),
-            --     sources = {
-            --         { name = 'buffer' }
-            --     }
-            -- })
-            -- Use cmdline & path source for ':'
-            -- cmp.setup.cmdline(':', {
-            --     mapping = cmp.mapping.preset.cmdline(),
-            --     sources = cmp.config.sources({
-            --         { name = 'path' }
-            --     }, {
-            --         { name = 'cmdline' }
-            --     })
-            -- })
         end
     },
 
@@ -173,51 +158,65 @@ return {
         config = function()
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-            -- Helper function to safely setup LSP server
-            local function safe_setup(server, config)
-                local ok, lspconfig = pcall(require, "lspconfig")
-                if not ok then
-                    vim.notify("LSP config not available", vim.log.levels.WARN)
-                    return
-                end
-                
-                if not lspconfig[server] then
-                    vim.notify("LSP server '" .. server .. "' not found", vim.log.levels.WARN)
-                    return
-                end
-                
-                local server_available = vim.fn.executable(config.cmd and config.cmd[1] or server) == 1
-                if not server_available then
-                    vim.notify("LSP server '" .. server .. "' not installed", vim.log.levels.WARN)
-                    return
-                end
-                
-                lspconfig[server].setup(config)
-            end
-
-            -- LSP keybindings function
+            -- LSP keybindings
             local function on_attach(client, bufnr)
                 local opts = { noremap = true, silent = true, buffer = bufnr }
-                
+
                 vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
                 vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
                 vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
                 vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
                 vim.keymap.set({ 'n', 'i' }, '<C-s>', vim.lsp.buf.signature_help, opts)
-                vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, { desc = 'Code: Add workspace folder', buffer = bufnr, noremap = true, silent = true })
-                vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, { desc = 'Code: Remove workspace folder', buffer = bufnr, noremap = true, silent = true })
+                vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder,
+                    { desc = 'Code: Add workspace folder', buffer = bufnr, noremap = true, silent = true })
+                vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder,
+                    { desc = 'Code: Remove workspace folder', buffer = bufnr, noremap = true, silent = true })
                 vim.keymap.set('n', '<leader>wl', function()
                     print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
                 end, { desc = 'Code: List workspace folders', buffer = bufnr, noremap = true, silent = true })
-                vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, { desc = 'Code: Type definition', buffer = bufnr, noremap = true, silent = true })
-                vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { desc = 'Code: Rename symbol', buffer = bufnr, noremap = true, silent = true })
-                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, { desc = 'Code: Actions', buffer = bufnr, noremap = true, silent = true })
+                vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition,
+                    { desc = 'Code: Type definition', buffer = bufnr, noremap = true, silent = true })
+                vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename,
+                    { desc = 'Code: Rename symbol', buffer = bufnr, noremap = true, silent = true })
+                vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action,
+                    { desc = 'Code: Actions', buffer = bufnr, noremap = true, silent = true })
                 vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
                 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
                 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
             end
 
-            -- Python LSP (focused on completion and navigation only)
+            ----------------------------------------------------------------------
+            -- Helper: extend config + enable via vim.lsp.config / vim.lsp.enable
+            ----------------------------------------------------------------------
+            local function safe_setup(server_name, cfg)
+                -- Decide which binary to check
+                local cmd = cfg.cmd
+                local bin = (cmd and cmd[1]) or server_name
+
+                if vim.fn.executable(bin) ~= 1 then
+                    vim.notify("LSP server '" .. bin .. "' not installed", vim.log.levels.WARN)
+                    return
+                end
+
+                -- Merge into existing nvim-lspconfig defaults, if any
+                vim.lsp.config(server_name, {
+                    cmd = cfg.cmd,
+                    filetypes = cfg.filetypes,
+                    settings = cfg.settings,
+                    capabilities = cfg.capabilities,
+                    on_attach = cfg.on_attach,
+                    init_options = cfg.init_options,
+                })
+
+                -- Enable this config so it auto-attaches on matching filetypes
+                vim.lsp.enable(server_name)
+            end
+
+            ----------------------------------------------------------------------
+            -- Servers
+            ----------------------------------------------------------------------
+
+            -- Python LSP (pylsp) – navigation and completion only
             safe_setup("pylsp", {
                 capabilities = capabilities,
                 on_attach = on_attach,
@@ -231,12 +230,12 @@ return {
                             pycodestyle = { enabled = false },
                             pyflakes = { enabled = false },
                             mccabe = { enabled = false },
-                            
+
                             -- Disable formatting (handled by conform.nvim + ruff)
                             black = { enabled = false },
                             autopep8 = { enabled = false },
                             yapf = { enabled = false },
-                            
+
                             -- Keep completion and navigation features
                             jedi_completion = { enabled = true, fuzzy = true },
                             jedi_definition = { enabled = true, follow_imports = true },
@@ -246,10 +245,10 @@ return {
                             rope_autoimport = { enabled = true },
                         }
                     }
-                },    
+                },
             })
 
-            -- Lua LSP (essential for Neovim configuration)
+            -- Lua LSP (lua-language-server)
             safe_setup("lua_ls", {
                 capabilities = capabilities,
                 on_attach = on_attach,
@@ -262,7 +261,7 @@ return {
                             path = vim.split(package.path, ';'),
                         },
                         diagnostics = {
-                            globals = {'vim'},  -- Recognize vim global
+                            globals = { 'vim' },
                         },
                         workspace = {
                             library = vim.api.nvim_get_runtime_file("", true),
@@ -278,7 +277,7 @@ return {
                 },
             })
 
-            -- TypeScript/JavaScript LSP
+            -- TypeScript/JavaScript LSP (typescript-language-server)
             safe_setup("ts_ls", {
                 capabilities = capabilities,
                 on_attach = on_attach,

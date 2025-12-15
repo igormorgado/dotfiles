@@ -61,7 +61,7 @@ return {
         event = "VeryLazy",
         config = function()
             vim.opt.showmode = false
-            
+
             local function dynamic_path()
                 local cwd = vim.fn.getcwd()
                 local full_path = vim.fn.expand('%:p')
@@ -112,7 +112,7 @@ return {
                     lualine_x = { { lsp_status }, 'encoding', 'fileformat', 'filetype' },
                     lualine_y = { 'progress' },
                     lualine_z = { 'location' }
-                } 
+                }
             })
         end
     },
@@ -134,15 +134,36 @@ return {
         main = "ibl",
         opts = {},
         config = function()
+            -- Get colors from darktrial colorscheme
+            local colors = {
+                fg_secondary = "#b2b2b2",  -- brightwhite
+                fg_muted = "#4e4e4e",      -- brightblack
+            }
+
+            -- Set highlights BEFORE plugin setup
+            vim.api.nvim_set_hl(0, 'IblScope', { fg = colors.fg_secondary })
+            vim.api.nvim_set_hl(0, 'IblIndent', { fg = colors.fg_muted })
+            vim.api.nvim_set_hl(0, 'IblWhitespace', { fg = colors.fg_muted })
+
             require("ibl").setup {
-                scope = { enabled = true },
+                scope = {
+                    enabled = true,
+                    highlight = "IblScope",
+                },
+                indent = {
+                    highlight = "IblIndent",
+                    char = "│",
+                },
+                whitespace = {
+                    highlight = "IblWhitespace",
+                },
             }
         end
     },
 
     {
-        "lifepillar/vim-colortemplate", 
-        lazy = false 
+        "lifepillar/vim-colortemplate",
+        lazy = false
     },
 
     -- Add mini.icons for which-key compatibility
