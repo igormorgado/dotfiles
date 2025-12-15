@@ -134,17 +134,7 @@ return {
         main = "ibl",
         opts = {},
         config = function()
-            -- Get colors from darktrial colorscheme
-            local colors = {
-                fg_secondary = "#b2b2b2",  -- brightwhite
-                fg_muted = "#4e4e4e",      -- brightblack
-            }
-
-            -- Set highlights BEFORE plugin setup
-            vim.api.nvim_set_hl(0, 'IblScope', { fg = colors.fg_secondary })
-            vim.api.nvim_set_hl(0, 'IblIndent', { fg = colors.fg_muted })
-            vim.api.nvim_set_hl(0, 'IblWhitespace', { fg = colors.fg_muted })
-
+            -- Let the colorscheme handle the highlights
             require("ibl").setup {
                 scope = {
                     enabled = true,

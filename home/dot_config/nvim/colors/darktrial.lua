@@ -558,7 +558,7 @@ end
 -- Plugin-specific highlights (lazy loaded)
 function M.set_plugin_highlights(colors)
   -- Indent Blankline
-  if config.plugin_integrations.indent_blankline and plugin_loaded('ibl') then
+  if config.plugin_integrations.indent_blankline then
     hl("IblScope", { fg = colors.fg_secondary })
     hl("IblIndent", { fg = colors.fg_muted })
     hl("IblWhitespace", { fg = colors.fg_muted })
