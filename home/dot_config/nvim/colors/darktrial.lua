@@ -665,11 +665,22 @@ function M.toggle_boring()
   config.boring = not config.boring
   M.load()
   print("DarkTrial: boring mode " .. (config.boring and "enabled" or "disabled"))
+
+  -- Force indent-blankline to refresh with new highlights
+  vim.schedule(function()
+    local ok, ibl = pcall(require, 'ibl')
+    if ok then
+      ibl.update({})
+    end
+  end)
 end
 
 -- Auto-setup when loaded (maintains backward compatibility)
 if not config or vim.tbl_isempty(config) then
   M.setup()
 end
+
+-- Register the module so it can be accessed via require/package.loaded
+package.loaded['darktrial'] = M
 
 return M

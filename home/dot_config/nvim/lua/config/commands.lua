@@ -18,11 +18,21 @@ function M.setup()
 
     -- Darktrial boring mode toggle
     vim.api.nvim_create_user_command('DarktrialToggleBoring', function()
-        -- Get or create the darktrial instance
-        if not _G.darktrial_instance then
-            _G.darktrial_instance = dofile(vim.fn.stdpath('config') .. '/colors/darktrial.lua')
+        -- Load the colorscheme module properly from package cache
+        local darktrial = package.loaded['darktrial']
+
+        if not darktrial then
+            -- If not loaded yet, source the colorscheme file
+            vim.cmd('colorscheme darktrial')
+            darktrial = package.loaded['darktrial']
         end
-        _G.darktrial_instance.toggle_boring()
+
+        if darktrial then
+            -- Toggle boring mode (includes indent-blankline refresh)
+            darktrial.toggle_boring()
+        else
+            vim.notify("Failed to load darktrial colorscheme", vim.log.levels.ERROR)
+        end
     end, {})
 
     -- Typewriter mode toggle
