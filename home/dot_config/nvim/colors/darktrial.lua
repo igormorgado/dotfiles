@@ -67,34 +67,64 @@ local default_config = {
 -- User configuration (will be merged with defaults)
 local config = {}
 
--- Raw color palette (enhanced with intermediate shades)
 local raw_colors = {
-  none          = "NONE",
-  black         = "#121212",
-  bg_darker     = "#0a0a0a",
-  bg_lighter    = "#1a1a1a",
-  red           = "#ff7c3b",
-  green         = "#48d56b",
-  yellow        = "#f2d085",
-  blue          = "#84a7f2",
-  magenta       = "#ff66e4",
-  cyan          = "#39e7d8",
-  white         = "#eeeeee",
-  orange        = "#ff9f66",
-  brightblack   = "#4e4e4e",
-  brightred     = "#b51530",
-  brightgreen   = "#076b47",
-  brightyellow  = "#934305",
-  brightblue    = "#10237a",
-  brightmagenta = "#9700b7",
-  brightcyan    = "#005c7d",
-  brightwhite   = "#b2b2b2",
-  highcol       = "#303030",
-  gray1         = "#2a2a2a",
-  gray2         = "#3a3a3a",
-  gray3         = "#5e5e5e",
-  gray4         = "#6e6e6e",
+  none       = "NONE",
+
+  -- Base palette
+  black      = "#121212",
+  red        = "#d2191a",
+  green      = "#076b47",
+  brown      = "#d27519",
+  blue       = "#1976d2",
+  purple     = "#7519d2",
+  teal       = "#005c7d",
+  white      = "#e3e3e3",
+  darkgray   = "#383838",
+  orange     = "#ef8911",
+  lime       = "#1ad219",
+  yellow     = "#d2d119",
+  indigo     = "#84a7f2",
+  magenta    = "#d119d2",
+  cyan       = "#39e7d8",
+  whitesmoke = "#f1f1f1",
+
+  -- Extra colors
+  bg_darker  = "#0a0a0a",
+  bg_lighter = "#1a1a1a",
+  gray0      = "#2a2a2a",
+  gray1      = "#303030",
+  gray2      = "#3a3a3a",
+  gray3      = "#5e5e5e",
+  gray4      = "#6e6e6e"
 }
+
+raw_colors.highcol      = raw_colors.bg_lighter
+-- Aliases for 16-color palette and bright variants
+raw_colors.color0       = raw_colors.black
+raw_colors.color1       = raw_colors.red
+raw_colors.color2       = raw_colors.green
+raw_colors.color3       = raw_colors.brown
+raw_colors.color4       = raw_colors.blue
+raw_colors.color5       = raw_colors.purple
+raw_colors.color6       = raw_colors.teal
+raw_colors.color7       = raw_colors.white
+raw_colors.color8       = raw_colors.darkgray
+raw_colors.color9       = raw_colors.orange
+raw_colors.color10      = raw_colors.lime
+raw_colors.color11      = raw_colors.yellow
+raw_colors.color12      = raw_colors.indigo
+raw_colors.color13      = raw_colors.magenta
+raw_colors.color14      = raw_colors.cyan
+raw_colors.color15      = raw_colors.whitesmoke
+
+raw_colors.brightblack  = raw_colors.darkgray
+raw_colors.brightred    = raw_colors.orange
+raw_colors.brightgreen  = raw_colors.lime
+raw_colors.brightbrown  = raw_colors.yellow
+raw_colors.brightblue   = raw_colors.indigo
+raw_colors.brightpurple = raw_colors.magenta
+raw_colors.brightcyan   = raw_colors.cyan
+raw_colors.brightwhite  = raw_colors.whitesmoke
 
 -- Color utilities
 local utils = {}
@@ -233,7 +263,7 @@ local function get_colors()
     diff_add = raw_colors.green,
     diff_change = raw_colors.cyan,
     diff_delete = raw_colors.red,
-    diff_text = raw_colors.magenta,
+    diff_text = raw_colors.purple,
 
     -- Git colors
     git_add = raw_colors.green,
@@ -241,37 +271,47 @@ local function get_colors()
     git_delete = raw_colors.red,
 
     -- Syntax colors
-    comment = adjust_fg(raw_colors.brightwhite),
+    comment = adjust_fg(raw_colors.darkgray),
     constant = adjust_fg(raw_colors.white),
     string = config.boring and adjust_fg(raw_colors.white) or raw_colors.green,
     identifier = raw_colors.blue,
-    statement = config.boring and adjust_fg(raw_colors.white) or raw_colors.yellow,
+    statement = config.boring and adjust_fg(raw_colors.white) or raw_colors.brown,
     preproc = adjust_fg(raw_colors.white),
     type = adjust_fg(raw_colors.brightwhite),
-    special = config.boring and adjust_fg(raw_colors.white) or raw_colors.magenta,
+    special = config.boring and adjust_fg(raw_colors.white) or raw_colors.purple,
 
     -- Raw colors (for compatibility)
-    black = raw_colors.black,
-    red = raw_colors.red,
-    green = raw_colors.green,
-    yellow = raw_colors.yellow,
-    blue = raw_colors.blue,
-    magenta = raw_colors.magenta,
-    cyan = raw_colors.cyan,
-    white = raw_colors.white,
-    orange = raw_colors.orange,
-    brightblack = raw_colors.brightblack,
-    brightred = raw_colors.brightred,
-    brightgreen = raw_colors.brightgreen,
-    brightyellow = raw_colors.brightyellow,
-    brightblue = raw_colors.brightblue,
-    brightmagenta = raw_colors.brightmagenta,
-    brightcyan = raw_colors.brightcyan,
-    brightwhite = raw_colors.brightwhite,
-    gray1 = raw_colors.gray1,
-    gray2 = raw_colors.gray2,
-    gray3 = raw_colors.gray3,
-    gray4 = raw_colors.gray4,
+    black         =  raw_colors.black       ,
+    red           =  raw_colors.red         ,
+    green         =  raw_colors.green       ,
+    brown         =  raw_colors.brown       ,
+    blue          =  raw_colors.blue        ,
+    purple        =  raw_colors.purple      ,
+    teal          =  raw_colors.teal        ,
+    white         =  raw_colors.white       ,
+    darkgray      =  raw_colors.darkgray    ,
+    brightblack   =  raw_colors.brightblack ,
+    orange        =  raw_colors.orange      ,
+    brightred     =  raw_colors.brightred   ,
+    lime          =  raw_colors.lime        ,
+    brightgreen   =  raw_colors.brightgreen ,
+    yellow        =  raw_colors.yellow      ,
+    brightbrown   =  raw_colors.brightbrown ,
+    indigo        =  raw_colors.indigo      ,
+    brightblue    =  raw_colors.brightblue  ,
+    magenta       =  raw_colors.magenta     ,
+    brightpurple  =  raw_colors.brightpurple,
+    cyan          =  raw_colors.cyan        ,
+    brightcyan    =  raw_colors.brightcyan  ,
+    whitesmoke    =  raw_colors.whitesmoke  ,
+    brightwhite   =  raw_colors.brightwhite ,
+    bg_darker     =  raw_colors.bg_darker   ,
+    bg_lighter    =  raw_colors.bg_lighter  ,
+    gray1         =  raw_colors.gray1       ,
+    gray2         =  raw_colors.gray2       ,
+    gray3         =  raw_colors.gray3       ,
+    gray4         =  raw_colors.gray4       ,
+    highcol       =  raw_colors.highcol
   }
 end
 
@@ -328,17 +368,17 @@ function M.load()
     colors.black,
     colors.red,
     colors.green,
-    colors.yellow,
+    colors.brown,
     colors.blue,
-    colors.magenta,
+    colors.purple,
     colors.cyan,
     colors.white,
     colors.brightblack,
     colors.brightred,
     colors.brightgreen,
-    colors.brightyellow,
+    colors.brightbrown,
     colors.brightblue,
-    colors.brightmagenta,
+    colors.brightpurple,
     colors.brightcyan,
     colors.brightwhite,
   }
@@ -404,7 +444,7 @@ function M.load()
   hl("StatusLineInsert", { fg = colors.bg_primary, bg = colors.success, bold = true })
   hl("StatusLineVisual", { fg = colors.bg_primary, bg = colors.warning, bold = true })
   hl("StatusLineReplace", { fg = colors.bg_primary, bg = colors.error, bold = true })
-  hl("StatusLineCommand", { fg = colors.bg_primary, bg = colors.magenta, bold = true })
+  hl("StatusLineCommand", { fg = colors.bg_primary, bg = colors.purple, bold = true })
 
   hl("TabLine", { bg = colors.bg_accent, bold = true })
   hl("TabLineFill", {})
@@ -615,7 +655,7 @@ function M.set_treesitter_highlights(colors, has_italics)
   hl("@markup.heading.3", { fg = colors.success, bold = true })
   hl("@markup.heading.4", { fg = colors.warning, bold = true })
   hl("@markup.heading.5", { fg = colors.error, bold = true })
-  hl("@markup.heading.6", { fg = colors.magenta, bold = true })
+  hl("@markup.heading.6", { fg = colors.brightpurple, bold = true })
   hl("@markup.quote", { fg = colors.comment, italic = true })
   hl("@markup.math", { fg = colors.special })
   hl("@markup.link", { fg = colors.accent, underline = true })
@@ -800,7 +840,7 @@ function M.set_plugin_highlights(colors)
     hl("NvimTreeGitDeleted", { fg = colors.git_delete })
     hl("NvimTreeSpecialFile", { fg = colors.special })
     hl("NvimTreeIndentMarker", { fg = colors.fg_muted })
-    hl("NvimTreeImageFile", { fg = colors.magenta })
+    hl("NvimTreeImageFile", { fg = colors.purple })
     hl("NvimTreeSymlink", { fg = colors.cyan })
     hl("NvimTreeFolderIcon", { fg = colors.accent })
   end
@@ -831,13 +871,25 @@ function M.set_plugin_highlights(colors)
 
   -- Lualine
   if config.plugin_integrations.lualine and plugin_loaded('lualine') then
-    hl("lualine_a_normal", { fg = colors.bg_primary, bg = colors.accent, bold = true })
-    hl("lualine_a_insert", { fg = colors.bg_primary, bg = colors.success, bold = true })
-    hl("lualine_a_visual", { fg = colors.bg_primary, bg = colors.warning, bold = true })
-    hl("lualine_a_replace", { fg = colors.bg_primary, bg = colors.error, bold = true })
-    hl("lualine_a_command", { fg = colors.bg_primary, bg = colors.magenta, bold = true })
-    hl("lualine_b_normal", { fg = colors.fg_primary, bg = colors.bg_secondary })
-    hl("lualine_c_normal", { fg = colors.fg_secondary, bg = colors.bg_primary })
+    -- Inherit StatusLine colors instead of redefining them
+    hl("lualine_a_normal",  { link = "StatusLineNormal" })
+    hl("lualine_a_insert",  { link = "StatusLineInsert" })
+    hl("lualine_a_visual",  { link = "StatusLineVisual" })
+    hl("lualine_a_replace", { link = "StatusLineReplace" })
+    hl("lualine_a_command", { link = "StatusLineCommand" })
+
+    hl("lualine_b_normal", { link = "StatusLine" })
+    hl("lualine_c_normal", { link = "StatusLine" })
+
+    -- Templates for other mode-specific sections (uncomment to customize)
+    -- hl("lualine_b_insert",  { link = "StatusLineInsert" })
+    -- hl("lualine_c_insert",  { link = "StatusLineInsert" })
+    -- hl("lualine_b_visual",  { link = "StatusLineVisual" })
+    -- hl("lualine_c_visual",  { link = "StatusLineVisual" })
+    -- hl("lualine_b_replace", { link = "StatusLineReplace" })
+    -- hl("lualine_c_replace", { link = "StatusLineReplace" })
+    -- hl("lualine_b_command", { link = "StatusLineCommand" })
+    -- hl("lualine_c_command", { link = "StatusLineCommand" })
   end
 
   -- Neogit
@@ -851,7 +903,7 @@ function M.set_plugin_highlights(colors)
     hl("NeogitChangeModified", { fg = colors.git_change, bold = true })
     hl("NeogitChangeAdded", { fg = colors.git_add, bold = true })
     hl("NeogitChangeDeleted", { fg = colors.git_delete, bold = true })
-    hl("NeogitChangeRenamed", { fg = colors.magenta, bold = true })
+    hl("NeogitChangeRenamed", { fg = colors.purple, bold = true })
     hl("NeogitChangeUpdated", { fg = colors.cyan, bold = true })
     hl("NeogitChangeCopied", { fg = colors.cyan, bold = true })
     hl("NeogitChangeBothModified", { fg = colors.warning, bold = true })
@@ -873,7 +925,7 @@ function M.set_plugin_highlights(colors)
   -- Trouble
   if config.plugin_integrations.trouble and plugin_loaded('trouble') then
     hl("TroubleText", { fg = colors.fg_primary })
-    hl("TroubleCount", { fg = colors.magenta, bold = true })
+    hl("TroubleCount", { fg = colors.purple, bold = true })
     hl("TroubleNormal", { fg = colors.fg_primary, bg = colors.bg_primary })
     hl("TroubleTextError", { fg = colors.error })
     hl("TroubleTextWarning", { fg = colors.warning })
@@ -901,7 +953,7 @@ function M.set_plugin_highlights(colors)
     hl("UndotreeSeq", { fg = colors.fg_secondary })
     hl("UndotreeTime", { fg = colors.fg_muted })
     hl("UndotreeHead", { fg = colors.warning, bold = true })
-    hl("UndotreeBranch", { fg = colors.magenta })
+    hl("UndotreeBranch", { fg = colors.purple })
     hl("UndotreeCurrent", { fg = colors.success, bold = true })
     hl("UndotreeNext", { fg = colors.accent })
   end
