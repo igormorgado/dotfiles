@@ -29,8 +29,8 @@ if executable('fd')
     " Use %p to avoid implicit -name/-iname predicate that fd doesn't support
     set findprg="fd -H --color=never --glob %p %s"
 elseif system("find --version | grep -c 'GNU findutils'") != 0
-    " Simple, quoted find: :find *.txt  -> find '<cwd>' -iname '*.txt' -print
-    set findprg="find '%s' -iname '%a' -print"
+    " GNU find fallback (respects :find semantics via %s/%a macros).
+    set findprg="find %s %a -print"
 endif
 
 " }}}
@@ -55,7 +55,7 @@ set syscalls
 
 " What should be saved automatically on restarting vifm.  Drop "savedirs"
 " value if you don't want vifm to remember last visited directories for you.
-set vifminfo=bookmarks,chistory,commands,cs,dirstack,dhistory,fhistory,phistory,
+set vifminfo=bookmarks,chistory,cs,dirstack,dhistory,fhistory,phistory,
             \shistory,options,registers,savedirs,state,tui
 
 " This is size of all of the many kinds of histories, in particular it's the
@@ -207,21 +207,21 @@ mark d ~/dsc
 "  see `:help vifm-macros` and `:help vifm-filename-modifiers` for more
 
 command! df df -h %m 2> /dev/null
-command! diff vim -d %f %F
+command! diff :execute '!'.&vicmd.' -d %f %F'
 command! run !! ./%f
 command! make !!make %a
 command! mkcd :mkdir %a | cd %a
 command! reload :write | restart full
 command! Rg :grep %a
-command! vgrep vim "+grep %a"
+command! vgrep :execute '!'.&vicmd.' "+grep %a"'
 command! ln ln -s -- %f:p %D
 command! GG :!git -C %d status -sb || echo "Not a git repository"
-command! extract :!extract -f %d %f
+command! extract :!~/.config/vifm/scripts/extract -f %d %f
 
 " command! zip zip -r %c.zip %f
 
 " archpkg: fzf
-if executable('fzf')
+if executable('fzf') && executable('fd')
     command! FZFfind : set noquickview
                     \| let $FZF_PICK = term('fd -H -E .git | fzf --height 15 --ansi 2>/dev/tty')
                     \| if $FZF_PICK != ''
@@ -284,7 +284,7 @@ nnoremap <c-u> <c-w>x
 
 nnoremap <space> tj
 
-if executable('fzf')
+if executable('fzf') && executable('fd')
     nnoremap <c-g> :FZFlocate<cr>
     nnoremap <c-f> :FZFfind<cr>
 endif
@@ -403,7 +403,7 @@ filextype *.pdf,<application/pdf>
   \ {evince} evince %f &,
   \ {xdg} xdg-open %f &,
 fileview *.pdf
-  \ pdftotext -nopgbrk %c -
+  \ pdftotext -nopgbrk %c - 2>/dev/null | head -n 200
 
 fileview *.doc,*.docx,*.odt,*.rtf
   \ (docx2txt "%c" - 2>/dev/null || pandoc -t plain "%c") | head -n 200

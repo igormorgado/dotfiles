@@ -11,6 +11,7 @@ function M.setup()
     keymap('n', '<leader>s', '<cmd>setlocal spell!<cr>', { desc = 'Toggle spellcheck' })
     keymap({ 'n', 'x' }, '<leader>y', '"+y', { desc = 'Yank to system clipboard' })
     keymap({ 'n', 'x' }, '<leader>p', '"+p', { desc = 'Paste from system clipboard' })
+    keymap('n', '<leader><Space>', 'za', { desc = 'Fold: Toggle at cursor' })
 
     -- Quick mapping: clear search highlight fast
     vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR><Esc>')
