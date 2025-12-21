@@ -32,6 +32,8 @@ else if command -q vim
     set -gx GIT_EDITOR vim
 end
 
+set -gx npm_config_prefix "$HOME/.local"
+
 set -gx NMON vcmknt.
 set -gx LESS '-RXF'
 set -gx LESSOPEN '|~/.lessfilter %s'
@@ -42,6 +44,9 @@ set -l CUDA_DATA_DIR /usr/lib/cuda
 if test -d $CUDA_DATA_DIR
     set -gx XLA_FLAGS --xla_gpu_cuda_data_dir=$CUDA_DATA_DIR
 end
+
+
+
 set -q DEBUG; and echo -n "Settings "; and time_since_last
 
 # vim: ft=fish:
