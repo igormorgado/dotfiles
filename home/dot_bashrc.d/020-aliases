@@ -132,39 +132,8 @@ alias ls="lsd"
 alias top="btop"
 alias ps="procs"
 
-# Default pygmentize style (falls back to PYGMENTS_STYLE env, else darktrial)
-pygmentize() {
-  local args=("$@")
-
-  # Skip injection for query/help modes where extra -O would break parsing
-  for a in "${args[@]}"; do
-    case "$a" in
-      -L|-H|-N|-C|-V|-h|--help|-S)
-        command pygmentize "${args[@]}"
-        return
-        ;;
-    esac
-  done
-
-  # If caller already set a style in -O/-P, leave as-is
-  local i
-  for ((i=0; i<${#args[@]}; i++)); do
-    case "${args[i]}" in
-      -O|-P)
-        ((i++))
-        if (( i<${#args[@]} )) && [[ ${args[i]} == *style=* ]]; then
-          command pygmentize "${args[@]}"
-          return
-        fi
-        ;;
-      -O*|-P*)
-        [[ ${args[i]} == *style=* ]] && { command pygmentize "${args[@]}"; return; }
-        ;;
-    esac
-  done
-
-  command pygmentize -O "style=${PYGMENTS_STYLE:-darktrial}" "${args[@]}"
-}
+# Convenience alias to run pygmentize with your default style.
+alias pyg='pygmentize -O "style=${PYGMENTS_STYLE:-darktrial}"'
 
 
 # vim: ft=sh:

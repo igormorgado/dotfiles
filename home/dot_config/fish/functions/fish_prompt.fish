@@ -121,7 +121,12 @@ end
 function fish_prompt --description 'Write out the prompt'
     set -l last_status $status
 
-    if test $COLUMNS -lt 120; 
+    # Abbreviate path when login + pwd won't fit
+    set -l login_plain "$USER@"(prompt_hostname)":"
+    set -l pwd_full (pwd)
+    set -l prompt_chars (math (string length --visible -- "$login_plain$pwd_full") + 2)
+
+    if test $prompt_chars -gt $COLUMNS
         set -g fish_prompt_pwd_dir_length 1
         set -g fish_prompt_pwd_full_dirs 1
     else
