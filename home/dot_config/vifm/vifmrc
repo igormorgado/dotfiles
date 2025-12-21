@@ -574,7 +574,7 @@ fileview *.csv,*.tsv
 
 " Pretty previews for common text/code with ANSI colors (pygmentize)
 fileview {*.txt,*.md,*.markdown,*.rst,*.ini,*.conf,*.cfg,*.log,*.json,*.yaml,*.yml,*.toml,*.py,*.js,*.ts,*.tsx,*.c,*.h,*.cpp,*.cxx,*.cc,*.go,*.rs,*.java,*.scala,*.rb,*.lua,*.sh,*.bash,*.zsh,*.fish,*.php,*.pl,*.pm,*.clj,*.edn,*.hs,*.ml,*.sql}
-    \ pygmentize -O style=darktrial -f console256 -g %c
+    \ pygmentize -O style=darktrial -P stylelib=$HOME/.local/share/pygments -f console256 -g %c
 
 " Archive mount (Enter navigates via FUSE; alt: extract)
 filetype *.tar.gz,*.tgz,*.tar.bz,*.tbz,*.tar.bz2,*.tbz2,*.tar.Z,*.tZ,*.tar.lzo,*.tzo
