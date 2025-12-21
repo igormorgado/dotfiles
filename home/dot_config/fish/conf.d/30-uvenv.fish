@@ -1,3 +1,5 @@
+status is-interactive; or return
+
 set -gx uvenv_home "$HOME/.uvenv"
 
 if command -q uv
@@ -15,4 +17,3 @@ end
 #   uvenv base
 #   set -q DEBUG; and echo -n "Uv base "; and time_since_last
 # end
-

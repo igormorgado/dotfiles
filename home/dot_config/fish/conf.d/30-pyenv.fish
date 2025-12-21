@@ -1,3 +1,7 @@
+if not status is-interactive; and not status is-login
+  return
+end
+
 set -l PYENV_ROOT ~/.pyenv
 if test -d $PYENV_ROOT
   fish_add_path $PYENV_ROOT/bin
@@ -7,5 +11,4 @@ if test -d $PYENV_ROOT
   end
   set -q DEBUG; and echo -n "Pyenv "; and time_since_last
 end
-
 

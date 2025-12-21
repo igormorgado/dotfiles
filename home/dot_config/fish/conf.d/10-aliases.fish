@@ -16,12 +16,12 @@ alias ln='ln -i'
 # Linux only (commands that are based on Gnu Utils)
 if test (uname) = "Linux"
     alias rm='rm -I --preserve-root'
-    alias sstart="sudo systemctl start"
-    alias sstop="sudo systemctl stop"
-    alias srestart="sudo systemctl restart"
-    alias sstatus="sudo systemctl status"
-    alias shutc="sudo shutdown -c"
-    alias meminfo='free -m -l -t'
+    command -q systemctl; and alias sstart="sudo systemctl start"
+    command -q systemctl; and alias sstop="sudo systemctl stop"
+    command -q systemctl; and alias srestart="sudo systemctl restart"
+    command -q systemctl; and alias sstatus="sudo systemctl status"
+    command -q shutdown; and alias shutc="sudo shutdown -c"
+    command -q free; and alias meminfo='free -m -l -t'
     ## get top process eating memory
     alias psmem='ps auxf | sort -nr -k 4'
     alias psmem10='ps aux | sort -nr -k 4 | head -10'
@@ -39,11 +39,11 @@ end
 command -q gdircolors; and alias dircolors="gdircolors"
 
 # Vim
-alias vimclean="vim -u NONE -U NONE -N"
-alias vimgit='vim $(git diff --name-only stage | grep -v development.ini)'
+command -q vim; and alias vimclean="vim -u NONE -U NONE -N"
+command -q vim; and command -q git; and alias vimgit='vim $(git diff --name-only stage | grep -v development.ini)'
 
 # Git
-alias gplog="git log --oneline --graph --decorate --all"
+command -q git; and alias gplog="git log --oneline --graph --decorate --all"
 
 # Chezmoi
 if command -q chezmoi
@@ -74,13 +74,13 @@ command -q btop; and alias top="btop"
 
 # Rare command a based aliaes
 
-alias cscp="cscope -k -b -c -R; rm -f cctree.out"
-alias ackpy="ack --python"
+command -q cscope; and alias cscp="cscope -k -b -c -R; rm -f cctree.out"
+command -q ack; and alias ackpy="ack --python"
 
 # For environments with bad apt sources
 alias apt-get='apt-get --force-yes -y'
 
-alias gdb='gdb -q'
+command -q gdb; and alias gdb='gdb -q'
 
 if command -q cryfs
     alias secure="cryfs /mnt/data/igor/Secure/ /home/igor/Secure/ && cd /home/igor/Secure"
@@ -88,14 +88,13 @@ if command -q cryfs
 end
 
 # Custom env for cloudwalk/macosx
-alias tyrell="pyenv activate tyrell_venv; cd $HOME/repos/"
+command -q pyenv; and alias tyrell="pyenv activate tyrell_venv; cd $HOME/repos/"
 alias vols="cd /Volumes"
 alias sec="cd /Volumes/Secure"
 alias msec="hdiutil attach ~/secure.dmg"
-alias jobsync="unison -auto -batch -confirmbigdel=false ssh://lab//home/jupyter/jobs $HOME/jobs"
-alias k="kubectl"
+command -q unison; and alias jobsync="unison -auto -batch -confirmbigdel=false ssh://lab//home/jupyter/jobs $HOME/jobs"
+command -q kubectl; and alias k="kubectl"
 alias todo="cat -p ~/TODO.txt"
 alias etodo="e ~/TODO.txt"
 
 set -q DEBUG; and echo -n "Aliases "; and time_since_last
-

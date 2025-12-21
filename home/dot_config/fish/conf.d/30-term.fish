@@ -1,7 +1,10 @@
-test -r $HOME/.dir_colors;
-    and type -q dircolors; 
-    and set -gx LS_COLORS (dircolors -c $HOME/.dir_colors | sed 's/setenv LS_COLORS //') 
+if type -q dircolors
+    if test -r $HOME/.dir_colors
+        set -gx LS_COLORS (dircolors -c $HOME/.dir_colors | string replace 'setenv LS_COLORS ' '')
+    else
+        set -gx LS_COLORS (dircolors -c | string replace 'setenv LS_COLORS ' '')
+    end
+end
 
 set -q DEBUG; and echo -n "Term "; and time_since_last
-
 
