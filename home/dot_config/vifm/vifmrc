@@ -120,6 +120,7 @@ endif
 " turn it on)
 " set millerview
 set milleroptions+=rpreview:all
+set previewprg="~/.config/vifm/scripts/preview.sh %c"
 
 " Set custom status line look
 " %t filename
@@ -214,6 +215,7 @@ command! reload :write | restart full
 command! Rg :grep %a
 command! vgrep vim "+grep %a"
 command! ln ln -s -- %f:p %D
+command! GG :!git -C %d status -sb || echo "Not a git repository"
 command! extract :!extract -f %d %f
 
 " command! zip zip -r %c.zip %f
@@ -287,6 +289,9 @@ if executable('fzf')
     nnoremap <c-f> :FZFfind<cr>
 endif
 
+" Toggle quickview pane
+nnoremap <c-q> :set quickview!<cr>
+
 " Start shell in current directory
 nnoremap s :shell<cr>
 
@@ -308,16 +313,16 @@ nnoremap gb :file &<cr>l
 " nnoremap gb :!open -g %f<cr>
 
 "" yank current directory path into the clipboard
-nnoremap yd :if g:clipcmd != '' \| execute '!printf %s ' . fnameescape(expand('%"d')) . ' | ' . g:clipcmd \| echo expand('%"d') 'copied to clipboard' \| else \| echo 'No clipboard tool' \| endif<cr>
+nnoremap yd :if g:clipcmd != '' \| execute '!printf %s ' . shellescape(expand('%"d')) . ' | ' . g:clipcmd \| echo expand('%"d') 'copied to clipboard' \| else \| echo 'No clipboard tool' \| endif<cr>
 
 " yank current file path into the clipboard
-nnoremap yf :if g:clipcmd != '' \| execute '!printf %s ' . fnameescape(expand('%"c:p')) . ' | ' . g:clipcmd \| echo expand('%"c:p') 'copied to clipboard' \| else \| echo 'No clipboard tool' \| endif<cr>
+nnoremap yf :if g:clipcmd != '' \| execute '!printf %s ' . shellescape(expand('%"c:p')) . ' | ' . g:clipcmd \| echo expand('%"c:p') 'copied to clipboard' \| else \| echo 'No clipboard tool' \| endif<cr>
 
 " yank current filename without path into the clipboard
-nnoremap yn :if g:clipcmd != '' \| execute '!printf %s ' . fnameescape(expand('%"c')) . ' | ' . g:clipcmd \| echo expand('%"c') 'copied to clipboard' \| else \| echo 'No clipboard tool' \| endif<cr>
+nnoremap yn :if g:clipcmd != '' \| execute '!printf %s ' . shellescape(expand('%"c')) . ' | ' . g:clipcmd \| echo expand('%"c') 'copied to clipboard' \| else \| echo 'No clipboard tool' \| endif<cr>
 
 " yank root of current file's name into the clipboard
-nnoremap yr :if g:clipcmd != '' \| execute '!printf %s ' . fnameescape(expand('%"c:r')) . ' | ' . g:clipcmd \| echo expand('%"c:r') 'copied to clipboard' \| else \| echo 'No clipboard tool' \| endif<cr>
+nnoremap yr :if g:clipcmd != '' \| execute '!printf %s ' . shellescape(expand('%"c:r')) . ' | ' . g:clipcmd \| echo expand('%"c:r') 'copied to clipboard' \| else \| echo 'No clipboard tool' \| endif<cr>
 
 " External commands
 nmap ! :!
@@ -400,6 +405,12 @@ filextype *.pdf,<application/pdf>
 fileview *.pdf
   \ pdftotext -nopgbrk %c -
 
+fileview *.doc,*.docx,*.odt,*.rtf
+  \ (docx2txt "%c" - 2>/dev/null || pandoc -t plain "%c") | head -n 200
+
+fileview *.epub,*.fb2,*.mobi,*.azw3
+  \ (ebook-meta "%c" 2>/dev/null; echo; pandoc -t plain "%c") | head -n 200
+
 filextype {*.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm,*.svg,*.ico},<image/*>
   \ {viu} viu %f,
   \ {open} xdg-open %f &,
@@ -425,7 +436,7 @@ fileview *.csv,*.tsv
 
 " Pretty previews for common text/code with ANSI colors (pygmentize)
 fileview {*.txt,*.md,*.markdown,*.rst,*.ini,*.conf,*.cfg,*.log,*.json,*.yaml,*.yml,*.toml,*.py,*.js,*.ts,*.tsx,*.c,*.h,*.cpp,*.cxx,*.cc,*.go,*.rs,*.java,*.scala,*.rb,*.lua,*.sh,*.bash,*.zsh,*.fish,*.php,*.pl,*.pm,*.clj,*.edn,*.hs,*.ml,*.sql}
-    \ pygmentize -O style=darktrial -P stylelib=$HOME/.local/share/pygments -f console256 -g %c
+    \ pygmentize -O style=monokai -P stylelib=$HOME/.local/share/pygments -f console256 -g %c
 
 " List archive contents without extracting
 fileview *.tar.gz,*.tgz,*.tar.bz,*.tbz,*.tar.bz2,*.tbz2,*.tar.Z,*.tZ,*.tar.lzo,*.tzo
@@ -433,7 +444,7 @@ fileview *.tar.gz,*.tgz,*.tar.bz,*.tbz,*.tar.bz2,*.tbz2,*.tar.Z,*.tZ,*.tar.lzo,*
         \,*.lha,*.lzh,*.7z,*.alz,*.ace,*.a,*.arj,*.arc,*.rpm,*.deb,*.cab,*.gz,*.bz,*.bz2
         \,*.Z,*.lzma,*.lzo,*.lz,*.xz,*.rz,*.lrz,*.cpio
         \,*.ZIP,*.RAR,*.7Z,*.TAR.GZ,*.TAR.BZ2,*.TAR.XZ,*.TGZ,*.TBZ2
-        \ bsdtar -tf %c 2>/dev/null | head -n 200
+        \ bsdtar -tf %c 2>/dev/null | head -n 100
 
 " Archive mount (Enter navigates via FUSE; alt: extract)
 filetype *.tar.gz,*.tgz,*.tar.bz,*.tbz,*.tar.bz2,*.tbz2,*.tar.Z,*.tZ,*.tar.lzo,*.tzo
