@@ -198,18 +198,40 @@ return {
                     return
                 end
 
-                -- Merge into existing nvim-lspconfig defaults, if any
-                vim.lsp.config(server_name, {
+                local server_cfg = {
                     cmd = cfg.cmd,
                     filetypes = cfg.filetypes,
                     settings = cfg.settings,
                     capabilities = cfg.capabilities,
                     on_attach = cfg.on_attach,
                     init_options = cfg.init_options,
-                })
+                }
 
-                -- Enable this config so it auto-attaches on matching filetypes
-                vim.lsp.enable(server_name)
+                -- Neovim 0.11+: native LSP config API
+                if vim.lsp and vim.lsp.config and vim.lsp.enable then
+                    vim.lsp.config(server_name, server_cfg)
+                    vim.lsp.enable(server_name)
+                    return
+                end
+
+                -- Neovim <= 0.10: fallback to nvim-lspconfig setup()
+                local ok, lspconfig = pcall(require, "lspconfig")
+                if not ok then
+                    vim.notify("nvim-lspconfig not available for LSP setup", vim.log.levels.ERROR)
+                    return
+                end
+
+                local resolved = lspconfig[server_name]
+                if not resolved and server_name == "ts_ls" then
+                    resolved = lspconfig.tsserver
+                end
+
+                if not resolved then
+                    vim.notify("LSP config for '" .. server_name .. "' not found in nvim-lspconfig", vim.log.levels.WARN)
+                    return
+                end
+
+                resolved.setup(server_cfg)
             end
 
             ----------------------------------------------------------------------

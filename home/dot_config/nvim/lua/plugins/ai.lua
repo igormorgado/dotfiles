@@ -110,7 +110,7 @@ return {
                     },
                     window_navigation = true,
                     scrolling = true,
-                    send_selection = "<leader>cs",
+                    send_selection = "<leader>cS",
                     send_buffer = "<leader>cb",
                     send_visual = "<leader>cv",
                     ask_question = "<leader>cq",
@@ -183,7 +183,7 @@ return {
                 end, 100)
             end, { desc = 'AI: Debug/review code with Claude' })
             
-            vim.keymap.set('n', '<leader>ct', function()
+            vim.keymap.set('n', '<leader>cT', function()
                 vim.cmd('ClaudeCode')
                 vim.defer_fn(function()
                     local claude_buf = vim.fn.bufnr('claude-code')

@@ -111,11 +111,8 @@ function M.setup()
         vim.opt.clipboard = ""
     end
 
-    -- File handling options
-    vim.opt.swapfile = false     -- Disable swap files
-    vim.opt.backup = false       -- Disable backup files
-    vim.opt.writebackup = false  -- Disable backup before overwrite
-    vim.opt.undofile = true      -- Persistent undo
+    -- File persistence (swap/backup/undo) is configured in config.persistence
+    vim.opt.writebackup = false
 
     -- Use `rg` if available locally
     if vim.fn.executable("rg") == 1 then

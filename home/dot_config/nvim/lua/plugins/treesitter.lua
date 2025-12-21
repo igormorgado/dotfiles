@@ -1,9 +1,10 @@
 -- Treesitter for syntax highlighting and code navigation
 return {
     {
-        "nvim-treesitter/nvim-treesitter", 
-        event = { "BufReadPost", "BufNewFile" }, 
-        build = ":TSUpdate", 
+        "nvim-treesitter/nvim-treesitter",
+        dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+        event = { "BufReadPost", "BufNewFile" },
+        build = ":TSUpdate",
         config = function()
             local treesitter_parser_install_dir = vim.fn.stdpath("data") .. "/treesitter"
             require("nvim-treesitter.configs").setup({
@@ -29,8 +30,17 @@ return {
                 indent = {
                     enable = true
                 },
-                fold = {
-                    enable = true
+                textobjects = {
+                    select = {
+                        enable = true,
+                        lookahead = true,
+                        keymaps = {
+                            ["af"] = "@function.outer",
+                            ["if"] = "@function.inner",
+                            ["ac"] = "@class.outer",
+                            ["ic"] = "@class.inner",
+                        },
+                    },
                 },
             })
             vim.opt.runtimepath:append(treesitter_parser_install_dir)
@@ -38,8 +48,19 @@ return {
                 require('nvim-treesitter.incremental_selection').init_selection()
                 require('nvim-treesitter.incremental_selection').scope_incremental()
             end, { desc = "Select entire scope" })
-            vim.wo.foldmethod = "expr"
-            vim.wo.foldexpr = "nvim_treesitter#foldexpr()"
+
+            vim.keymap.set('n', '<F12>', function()
+                if vim.fn.exists(':Inspect') == 2 then
+                    vim.cmd('Inspect')
+                else
+                    vim.notify("Inspect command not available (requires newer Neovim)", vim.log.levels.WARN)
+                end
+            end, { desc = "Inspect highlights/TreeSitter at cursor" })
+
+            -- TreeSitter folds: set globally (not just current window)
+            vim.opt.foldmethod = "expr"
+            vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+            vim.opt.foldlevel = 99
         end
     },
 

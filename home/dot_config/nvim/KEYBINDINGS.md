@@ -192,7 +192,7 @@ This document contains all custom keybindings configured in this Neovim setup.
 | `<leader>cv` | Visual | - | Send visual selection to Claude |
 | `<leader>ce` | Normal | - | Explain current file with Claude |
 | `<leader>cd` | Normal | - | Debug/review code with Claude |
-| `<leader>ct` | Normal | - | Generate tests with Claude |
+| `<leader>cT` | Normal | - | Generate tests with Claude |
 
 ### Legacy Keybindings
 | Key | Mode | Action | Description |
@@ -225,7 +225,7 @@ This document contains all custom keybindings configured in this Neovim setup.
 ### Navigation
 | Key | Mode | Action | Description |
 |-----|------|--------|-------------|
-| `<leader>vs` | Normal | - | Toggle syntax highlighting at cursor |
+| `<leader>vs` | Normal | - | Select entire scope (TreeSitter) |
 
 ---
 
@@ -241,7 +241,7 @@ This document contains all custom keybindings configured in this Neovim setup.
 | Key | Mode | Action | Description |
 |-----|------|--------|-------------|
 | `<leader>ds` | Normal | `:DeleteSwap` | Delete swap file for current buffer |
-| `<F12>` | Normal | - | Show TreeSitter syntax info at cursor |
+| `<F12>` | Normal | `:Inspect` | Show TreeSitter/highlight info at cursor |
 | `<localleader>tw` | Normal | - | Toggle typewriter mode |
 
 ### Language-Specific (VimTeX)

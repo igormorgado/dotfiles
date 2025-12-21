@@ -18,15 +18,14 @@ function M.setup()
 
     -- Configure backup, swap, and undo settings
     vim.opt.swapfile = true
-    vim.opt.directory = swap_dir
+    vim.opt.directory = swap_dir .. "//"
     vim.opt.backup = true
-    vim.opt.backupdir = backup_dir
+    vim.opt.backupdir = backup_dir .. "//"
     vim.opt.undofile = true
-    vim.opt.undodir = undo_dir
+    vim.opt.undodir = undo_dir .. "//"
     vim.opt.confirm = true
 
-    -- Configure how often to write swap files
-    vim.opt.updatetime = 300
+    -- Configure swap write behavior
     vim.opt.updatecount = 80
 end
 

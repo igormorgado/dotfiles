@@ -19,7 +19,16 @@ return {
         config = function()
             require('telescope').setup({
                 defaults = {
-                    file_ignore_patterns = { "node_modules", ".git/", "*.pyc", "__pycache__/", "*.o", "*.a", "*.so" },
+                    -- Telescope uses Lua patterns, not globs
+                    file_ignore_patterns = {
+                        "node_modules/",
+                        "%.git/",
+                        "__pycache__/",
+                        "%.pyc$",
+                        "%.o$",
+                        "%.a$",
+                        "%.so$",
+                    },
                     layout_strategy = "horizontal",
                     layout_config = { 
                         width = 0.95, 
