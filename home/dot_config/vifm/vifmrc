@@ -430,13 +430,14 @@ fileview {*.avi,*.mp4,*.wmv,*.dat,*.3gp,*.ogv,*.mkv,*.mpg,*.mpeg,*.vob,*.fl[icv]
 fileviewer {*.xhtml,*.html,*.htm},<text/html>
     \ w3m -dump -T text/html %c
 
-"" All other files get free syntax highlighting
-fileview *.csv,*.tsv
-    \ column -t -s , %c
+fileview *.csv
+    \ column -t -s ',' %c
 
-" Pretty previews for common text/code with ANSI colors (pygmentize)
+fileview *.tsv
+    \ column -t %c
+
 fileview {*.txt,*.md,*.markdown,*.rst,*.ini,*.conf,*.cfg,*.log,*.json,*.yaml,*.yml,*.toml,*.py,*.js,*.ts,*.tsx,*.c,*.h,*.cpp,*.cxx,*.cc,*.go,*.rs,*.java,*.scala,*.rb,*.lua,*.sh,*.bash,*.zsh,*.fish,*.php,*.pl,*.pm,*.clj,*.edn,*.hs,*.ml,*.sql}
-    \ pygmentize -O style=monokai -P stylelib=$HOME/.local/share/pygments -f console256 -g %c
+    \ pygmentize -O style=darktrial -f console256 -g %c
 
 " List archive contents without extracting
 fileview *.tar.gz,*.tgz,*.tar.bz,*.tbz,*.tar.bz2,*.tbz2,*.tar.Z,*.tZ,*.tar.lzo,*.tzo

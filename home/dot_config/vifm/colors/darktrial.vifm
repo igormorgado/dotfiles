@@ -15,7 +15,7 @@ highlight  Border      cterm=none       ctermfg=8      ctermbg=0
 " Navigation bar uses a 256-color gray closest to bg_secondary (#1a1a1a)
 highlight  TopLine     cterm=none       ctermfg=7      ctermbg=234
 highlight  TopLineSel  cterm=bold       ctermfg=0      ctermbg=4
-highlight  CurrLine    cterm=reverse    ctermfg=none   ctermbg=none
+highlight  CurrLine                     ctermfg=8      ctermbg=7
 highlight  OtherLine   cterm=none       ctermfg=none   ctermbg=0
 highlight  Selected    cterm=bold       ctermfg=15     ctermbg=4
 highlight  StatusLine  cterm=bold       ctermfg=0      ctermbg=4
