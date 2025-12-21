@@ -15,15 +15,19 @@ elseif $EDITOR != ''
     let &vicmd = $EDITOR
 endif
 
-if executable('ag')
+if executable('rg')
+    " Fast search with hidden files but ignore .git
+    set grepprg="rg --line-number --smart-case --hidden --glob '!.git' %i %a %s"
+elseif executable('ag')
     set grepprg="ag --line-numbers %i %a %s"
 else
     set grepprg="grep -n -H -I -r -s %i %a %s"
 endif
 
-" TODO: Use fd instead find.
+" Prefer fd when available; fall back to GNU find
 if system("find --version | grep -c 'GNU findutils'") != 0
-    set findprg='find %s %a -print , -type d \( ! -readable -o ! -executable \) -prune'
+    " Simple, quoted find: :find *.txt  -> find '<cwd>' -iname '*.txt' -print
+    set findprg="find '%s' -iname '%a' -print"
 endif
 
 " }}}
@@ -49,7 +53,7 @@ set syscalls
 " What should be saved automatically on restarting vifm.  Drop "savedirs"
 " value if you don't want vifm to remember last visited directories for you.
 set vifminfo=bookmarks,chistory,commands,cs,dirstack,dhistory,fhistory,phistory,
-            \shistory,filetypes,options,registers,savedirs,state,tui
+            \shistory,options,registers,savedirs,state,tui
 
 " This is size of all of the many kinds of histories, in particular it's the
 " number of last visited directories (not necessarily distinct ones) stored in
@@ -111,6 +115,7 @@ endif
 
 " Enable preview of files in the right miller column (add `set millerview` to
 " turn it on)
+" set millerview
 set milleroptions+=rpreview:all
 
 " Set custom status line look
@@ -136,7 +141,7 @@ endif
 set viewcolumns=*{name}..,16{mtime},7{}.
 
 " Show vertical border
-" set fillchars=vborder:│
+set fillchars=vborder:│
 
 " Diplay number lines in vifm panes
 "set number
@@ -153,7 +158,7 @@ set nodotfiles
 " filter! {*.lo,*.o,*.d,*.class,*.pyc,*.pyo,.*~}
 
 " Set the directory to mount fuse filesystems
-set fusehome=~/tmp/fuse
+set fusehome=~/.cache/vifm/fuse
 
 " Add additional place to look for executables
 " let $PATH = $HOME.'/bin/fuse:'.$PATH
@@ -171,6 +176,12 @@ set fusehome=~/tmp/fuse
 " screen!
 
 colorscheme darktrial
+
+" Show dotfiles by default
+set dotfiles
+
+" Keep deletions in trash for safety
+set trash
 
 " }}}
 
@@ -213,6 +224,8 @@ command! mkcd :mkdir %a | cd %a
 command! reload :write | restart full
 command! vgrep vim "+grep %a"
 command! ln ln -s %f:p %D
+" Extract archives into current directory (uses scripts/extract)
+command! extract :!extract -f %d %f
 
 " command! zip zip -r %c.zip %f
 " extract command is at ~/.config/vifm/scripts 
@@ -526,9 +539,9 @@ nnoremap <silent> w : if &quickview && !layoutis('only')
 " 
 " " FtpMount
 " " archpkg: curlftpfs
-filetype *.ftp
-  \ {Mount with curlftpfs}
-  \ FUSE_MOUNT2|curlftpfs -o ftp_port=-,,disable_eprt %PARAM %DESTINATION_DIR %CLEAR,
+"filetype *.ftp
+"  \ {Mount with curlftpfs}
+"  \ FUSE_MOUNT2|curlftpfs -o ftp_port=-,,disable_eprt %PARAM %DESTINATION_DIR %CLEAR,
 "  
 " " Office files
 " " archpkg: libreoffice docx2txt
@@ -544,21 +557,6 @@ filetype *.ftp
 " 
 " fileview */ tree %c
 
-" " Archive
-" filetype *.tar.gz,*.tgz,*.tar.bz,*.tbz,*.tar.bz2,*.tbz2,*.tar.Z,*.tZ,*.tar.lzo,*.tzo
-"   \,*.tar.lz,*.tlz,*.tar.xz,*.txz,*.tar.7z,*.t7z,*.tar,*.zip,*.jar,*.war,*.rar
-"   \,*.lha,*.lzh,*.7z,*.alz,*.ace,*.a,*.arj,*.arc,*.rpm,*.deb,*.cab,*.gz,*.bz,*.bz2
-"   \,*.Z,*.lzma,*.lzo,*.lz,*.xz,*.rz,*.lrz,*.7z,*.cpio
-"   \ {View contents} als %f | less,
-"   \ {Extract here} aunpack %f,
- 
-" fileview *.tar.gz,*.tgz,*.tar.bz,*.tbz,*.tar.bz2,*.tbz2,*.tar.Z,*.tZ,*.tar.lzo,*.tzo
-"   \,*.tar.lz,*.tlz,*.tar.xz,*.txz,*.tar.7z,*.t7z,*.tar,*.zip,*.jar,*.war,*.rar
-"   \,*.lha,*.lzh,*.7z,*.alz,*.ace,*.a,*.arj,*.arc,*.rpm,*.deb,*.cab,*.gz,*.bz,*.bz2
-"   \,*.Z,*.lzma,*.lzo,*.lz,*.xz,*.rz,*.lrz,*.7z,*.cpio
-"   \ als %f
-" 
-
 " " 256-color terminal
 " fileview *.[ch],*.[ch]pp
 "     \ highlight -O xterm256 -s dante --syntax c %c
@@ -570,20 +568,26 @@ filetype *.ftp
 " fileview *[^/]
 "     \ pygmentize -O style=monokai -f console256 -g
 
+"" All other files get free syntax highlighting
+fileview *.csv,*.tsv
+    \ column -t -s , %c
 
-" Open all other files with default system programs (you can also remove all
-" :file[x]type commands above to ensure they don't interfere with system-wide
-" settings).  Use of the line below results in ignoring 'vi[x]cmd' option for
-" unknown file types on l/Enter keys.
+" Pretty previews for common text/code with ANSI colors (pygmentize)
+fileview {*.txt,*.md,*.markdown,*.rst,*.ini,*.conf,*.cfg,*.log,*.json,*.yaml,*.yml,*.toml,*.py,*.js,*.ts,*.tsx,*.c,*.h,*.cpp,*.cxx,*.cc,*.go,*.rs,*.java,*.scala,*.rb,*.lua,*.sh,*.bash,*.zsh,*.fish,*.php,*.pl,*.pm,*.clj,*.edn,*.hs,*.ml,*.sql}
+    \ pygmentize -O style=darktrial -f console256 -g %c
 
-" Open all other files with default system programs
-" archpkg: xdg-utils highlight
-filetype * 
-    \ xdg-open %i &
+" Archive mount (Enter navigates via FUSE; alt: extract)
+filetype *.tar.gz,*.tgz,*.tar.bz,*.tbz,*.tar.bz2,*.tbz2,*.tar.Z,*.tZ,*.tar.lzo,*.tzo
+        \,*.tar.lz,*.tlz,*.tar.xz,*.txz,*.tar.7z,*.t7z,*.tar,*.zip,*.jar,*.war,*.rar
+        \,*.lha,*.lzh,*.7z,*.alz,*.ace,*.a,*.arj,*.arc,*.rpm,*.deb,*.cab,*.gz,*.bz,*.bz2
+        \,*.Z,*.lzma,*.lzo,*.lz,*.xz,*.rz,*.lrz,*.cpio
+        \,*.ZIP,*.RAR,*.7Z,*.TAR.GZ,*.TAR.BZ2,*.TAR.XZ,*.TGZ,*.TBZ2
+        \ {Mount} FUSE_MOUNT|archivemount -o ro %SOURCE_FILE %DESTINATION_DIR,
+        \ {Extract} bsdtar -xf %f
 
-" All other files get free syntax highlighting
-fileview *
-    \ highlight --out-format=ansi --force -qWJ %pw -t 2 %c
+" Open all other files with default system programs (fallback)
+filetype *
+    \ xdg-open %f &
 
 
 " }}}

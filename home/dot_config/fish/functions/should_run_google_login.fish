@@ -24,8 +24,6 @@ function should_run_google_login --description "Verify time last google login"
         end
     end
 
-    # Update timestamp and allow run
-    echo $current_time > $timestamp_file
-    # Run
+    # Allow run; caller updates timestamp after successful check
     return 0
 end
