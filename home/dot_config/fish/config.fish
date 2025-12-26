@@ -2,7 +2,8 @@ fish_vi_key_bindings
 bind -M default delete delete-char
 bind -M insert delete delete-char
 bind -M visual delete delete-char
-set -q DEBUG; and echo -n "Bindings "; and time_since_last
+
+set -q DEBUG; and time_since_last "Bindings"
 
 # Ensure readenv autoload is available for PWD hook
 if not functions -q readenv
@@ -22,7 +23,7 @@ end
 if test -d /opt/nvim-macos/bin
   fish_add_path /opt/nvim-macos/bin
 end
-set -q DEBUG; and echo -n "Paths "; and time_since_last
+set -q DEBUG; and time_since_last "Paths"
 
 if command -q nvim
     set -gx EDITOR nvim
@@ -47,6 +48,6 @@ end
 
 
 
-set -q DEBUG; and echo -n "Settings "; and time_since_last
+set -q DEBUG; and time_since_last "Settings"
 
 # vim: ft=fish:

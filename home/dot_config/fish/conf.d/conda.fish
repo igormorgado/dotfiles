@@ -13,4 +13,5 @@ if test -d /opt/conda
   end
   set -e __conda_setup
   set -e conda_fish_conf
+  time_since_last "Conda"
 end

@@ -1,2 +1,2 @@
-set -q DEBUG; and echo -n "Last "; and time_since_last
+time_since_last "End Debug"
 set -eg DEBUG

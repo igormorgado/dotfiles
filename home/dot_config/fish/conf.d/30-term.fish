@@ -6,5 +6,5 @@ if type -q dircolors
     end
 end
 
-set -q DEBUG; and echo -n "Term "; and time_since_last
+time_since_last "Term"
 

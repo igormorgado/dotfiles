@@ -25,7 +25,7 @@ if test (uname) = "Linux"
     ## get top process eating memory
     alias psmem='ps auxf | sort -nr -k 4'
     alias psmem10='ps aux | sort -nr -k 4 | head -10'
-    
+
     # get top process eating cpu ##
     alias pscpu='ps auxf | sort -nr -k 3'
     alias pscpu10='ps aux | sort -nr -k 3 | head -10'
@@ -49,12 +49,12 @@ command -q git; and alias gplog="git log --oneline --graph --decorate --all"
 if command -q chezmoi
     alias chez="chezmoi edit --apply"
     set CONFEDITOR "chezmoi edit --apply"
-else 
+else
     set CONFEDITOR $EDITOR
 end
 
 if command -q chezmoi
-    command -q nvim; and alias ednvim="$CONFEDITOR ~/.config/nvim/init.lua" 
+    command -q nvim; and alias ednvim="$CONFEDITOR ~/.config/nvim/init.lua"
     command -q kitty; and alias edkitty="$CONFEDITOR ~/.config/kitty/kitty.conf"
     command -q vifm; and alias edvifm="$CONFEDITOR ~/.config/vifm/vifmrc"
     command -q fish; and alias edfish="$CONFEDITOR ~/.config/fish/config.fish"
@@ -97,4 +97,4 @@ command -q kubectl; and alias k="kubectl"
 alias todo="cat -p ~/TODO.txt"
 alias etodo="e ~/TODO.txt"
 
-set -q DEBUG; and echo -n "Aliases "; and time_since_last
+time_since_last "Aliases"

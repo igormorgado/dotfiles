@@ -9,6 +9,6 @@ if test -d $PYENV_ROOT
     pyenv init - | source
     pyenv virtualenv-init - | source
   end
-  set -q DEBUG; and echo -n "Pyenv "; and time_since_last
+  time_since_last "PyEnv"
 end
 

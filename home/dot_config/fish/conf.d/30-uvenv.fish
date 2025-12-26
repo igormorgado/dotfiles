@@ -4,12 +4,12 @@ set -gx uvenv_home "$HOME/.uvenv"
 
 if command -q uv
   uv generate-shell-completion fish | source
-  set -q DEBUG; and echo -n "Uv "; and time_since_last
+  time_since_last "Uv"
 end
 
 if command -q uvx
   uvx --generate-shell-completion fish | source
-  set -q DEBUG; and echo -n "Uvx "; and time_since_last
+  time_since_last "Uvx"
 end
 
 # Load base uvenv if it exists (check if no other env is already loaded
