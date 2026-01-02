@@ -19,11 +19,11 @@ function M.setup()
     -- Terminal escape
     keymap('t', '<leader><esc>', '<C-\\><C-n>', { desc = 'Escape from Terminal insert mode' })
 
-    -- Window navigation
-    keymap({ 'n', 't', 'v' }, '<C-h>', '<C-w><C-h>', { desc = 'Go Left Panel' })
-    keymap({ 'n', 't', 'v' }, '<C-j>', '<C-w><C-j>', { desc = 'Go Down Panel' })
-    keymap({ 'n', 't', 'v' }, '<C-k>', '<C-w><C-k>', { desc = 'Go Up Panel' })
-    keymap({ 'n', 't', 'v' }, '<C-l>', '<C-w><C-l>', { desc = 'Go Right Panel' })
+    -- Window navigation (we will handle using tmux-navigation or kitty-navigator)
+    -- keymap({ 'n', 't', 'v' }, '<C-h>', '<C-w><C-h>', { desc = 'Go Left Panel' })
+    -- keymap({ 'n', 't', 'v' }, '<C-j>', '<C-w><C-j>', { desc = 'Go Down Panel' })
+    -- keymap({ 'n', 't', 'v' }, '<C-k>', '<C-w><C-k>', { desc = 'Go Up Panel' })
+    -- keymap({ 'n', 't', 'v' }, '<C-l>', '<C-w><C-l>', { desc = 'Go Right Panel' })
 
     -- Window resizing
     keymap('n', '<M-l>', ':vertical resize +1<CR>', vim.tbl_extend('force', opts, { desc = 'Enlarge window horizontally' }))

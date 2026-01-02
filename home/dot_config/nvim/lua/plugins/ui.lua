@@ -4,6 +4,23 @@ return {
         "knubie/vim-kitty-navigator",
         build = "cp ./*.py ~/.config/kitty/",
     },
+
+    {
+        "alexghergh/nvim-tmux-navigation",
+        config = function()
+            require("nvim-tmux-navigation").setup({
+                keybindings = {
+                    left = "<C-h>",
+                    down = "<C-j>",
+                    up = "<C-k>",
+                    right = "<C-l>",
+                    last_active = "<C-\\>",
+                    next = "<C-Space>",
+                }
+            })
+        end,
+    },
+
     {
         'akinsho/bufferline.nvim',
         version = "*",
@@ -60,6 +77,7 @@ return {
             })
         end,
     },
+
     {
         'nvim-lualine/lualine.nvim',
         event = "VeryLazy",
