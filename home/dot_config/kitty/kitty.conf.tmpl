@@ -115,9 +115,11 @@ dynamic_background_opacity yes
 
 shell /usr/bin/fish
 allow_remote_control yes
+{{- if eq .chezmoi.os "linux" }}
 listen_on unix:@mykitty
-# For macos
-# listen_on unix:/tmp/mykitty
+{{- else if eq .chezmoi.os "darwin" }}
+listen_on unix:/tmp/mykitty
+{{- end }}
 
 
 # map ctrl+g kitten hints --type=linenum --linenum-action=tab vim +{line} {path}
