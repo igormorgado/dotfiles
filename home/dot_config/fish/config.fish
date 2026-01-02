@@ -46,8 +46,6 @@ if test -d $CUDA_DATA_DIR
     set -gx XLA_FLAGS --xla_gpu_cuda_data_dir=$CUDA_DATA_DIR
 end
 
-
-
 set -q DEBUG; and time_since_last "Settings"
 
 # vim: ft=fish:

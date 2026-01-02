@@ -1,6 +1,10 @@
 -- UI and appearance plugins
 return {
     {
+        "knubie/vim-kitty-navigator",
+        build = "cp ./*.py ~/.config/kitty/",
+    },
+    {
         'akinsho/bufferline.nvim',
         version = "*",
         dependencies = 'nvim-tree/nvim-web-devicons',

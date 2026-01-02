@@ -26,9 +26,7 @@ def encode_key_mapping(window, key_mapping):
 
 
 def main():
-    with open("/home/igor/kitten.log", "w") as f:
-        f.write("MAIN CALLED")
-    return True
+    pass
 
 
 @result_handler(no_ui=True)
