@@ -19,17 +19,7 @@ function M.setup()
     -- Terminal escape
     keymap('t', '<leader><esc>', '<C-\\><C-n>', { desc = 'Escape from Terminal insert mode' })
 
-    -- Window navigation (we will handle using tmux-navigation or kitty-navigator)
-    -- keymap({ 'n', 't', 'v' }, '<C-h>', '<C-w><C-h>', { desc = 'Go Left Panel' })
-    -- keymap({ 'n', 't', 'v' }, '<C-j>', '<C-w><C-j>', { desc = 'Go Down Panel' })
-    -- keymap({ 'n', 't', 'v' }, '<C-k>', '<C-w><C-k>', { desc = 'Go Up Panel' })
-    -- keymap({ 'n', 't', 'v' }, '<C-l>', '<C-w><C-l>', { desc = 'Go Right Panel' })
-
-    -- Window resizing
-    keymap('n', '<M-l>', ':vertical resize +1<CR>', vim.tbl_extend('force', opts, { desc = 'Enlarge window horizontally' }))
-    keymap('n', '<M-h>', ':vertical resize -1<CR>', vim.tbl_extend('force', opts, { desc = 'Reduce window horizontally' }))
-    keymap('n', '<M-k>', ':resize +1<CR>', vim.tbl_extend('force', opts, { desc = 'Enlarge window vertically' }))
-    keymap('n', '<M-j>', ':resize -1<CR>', vim.tbl_extend('force', opts, { desc = 'Reduce window vertically' }))
+    -- Window navigation + resizing now provided by smart-splits (see lua/plugins/ui.lua)
 
     -- Tab navigation
     for i = 1, 9 do

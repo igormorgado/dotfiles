@@ -1,24 +1,23 @@
 -- UI and appearance plugins
 return {
     {
-        "knubie/vim-kitty-navigator",
-        build = "cp ./*.py ~/.config/kitty/",
-    },
-
-    {
-        "alexghergh/nvim-tmux-navigation",
+        "mrjones2014/smart-splits.nvim",
+        lazy = false, -- ensure tmux pane detection is set on startup
+        build = "./kitty/install-kittens.bash",
         config = function()
-            require("nvim-tmux-navigation").setup({
-                keybindings = {
-                    left = "<C-h>",
-                    down = "<C-j>",
-                    up = "<C-k>",
-                    right = "<C-l>",
-                    last_active = "<C-\\>",
-                    next = "<C-Space>",
-                }
-            })
+            require("smart-splits").setup({})
         end,
+        keys = {
+            { "<C-h>",     function() require("smart-splits").move_cursor_left() end,  desc = "Move left split/pane" },
+            { "<C-j>",     function() require("smart-splits").move_cursor_down() end,  desc = "Move down split/pane" },
+            { "<C-k>",     function() require("smart-splits").move_cursor_up() end,    desc = "Move up split/pane" },
+            { "<C-l>",     function() require("smart-splits").move_cursor_right() end, desc = "Move right split/pane" },
+            { "<C-\\>",    function() require("smart-splits").move_cursor_previous() end, desc = "Move to previous split" },
+            { "<M-h>",     function() require("smart-splits").resize_left() end,       desc = "Resize split left" },
+            { "<M-j>",     function() require("smart-splits").resize_down() end,       desc = "Resize split down" },
+            { "<M-k>",     function() require("smart-splits").resize_up() end,         desc = "Resize split up" },
+            { "<M-l>",     function() require("smart-splits").resize_right() end,      desc = "Resize split right" },
+        },
     },
 
     {
