@@ -113,11 +113,12 @@ tab_title_template "{index}:{title}"
 #####################################
 dynamic_background_opacity yes
 
-shell /usr/bin/fish
 allow_remote_control yes
 {{- if eq .chezmoi.os "linux" }}
+shell /usr/bin/fish
 listen_on unix:/tmp/mykitty
 {{- else if eq .chezmoi.os "darwin" }}
+shell /opt/homebrew/bin/fish
 listen_on unix:/tmp/mykitty
 {{- end }}
 
