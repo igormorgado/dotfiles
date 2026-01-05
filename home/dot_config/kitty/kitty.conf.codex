@@ -1,0 +1,167 @@
+background_opacity 0.98
+
+
+foreground            #e3e3e3
+background            #121212
+selection_foreground  #655b53
+selection_background  #ebdbb2
+# url_color             #d65c0d
+
+# black
+color0   #121212
+color8   #383838
+
+# red
+# color1   #d2191a
+color1   #e83a3b
+color9   #ef8911
+
+# green
+# color2   #076b47
+color2   #098f5f
+color10  #1ad219
+
+# brown/yellow
+# color3   #d27519
+color3   #ba6816
+color11  #d1d119
+
+# blue
+# color4   #1976d2
+color4   #1b7ddf
+color12  #84a7f2
+
+# magenta
+# color5   #7519d2
+color5   #a057eb
+# color13  #d119d2
+color13  #ff66ff
+
+# cyan
+# color6   #005c7d
+color6   #0086b6
+color14  #39e7d8
+
+# white
+color7   #e3e3e3
+color15  #f1f1f1
+
+
+# Cursor
+cursor #00cc00
+cursor_text_color #000000
+cursor_shape block
+cursor_blink_interval 0.6
+cursor_stop_blinking_after 600
+
+#####################################
+# Decorations
+#####################################
+# Blue
+active_border_color   #84a7f2
+inactive_border_color #383838
+inactive_text_alpha 0.9
+hide_window_decorations no
+
+draw_minimal_borders no
+window_padding_width 6 8
+single_window_margin_width 6 8
+
+#####################################
+# Layouts
+#####################################
+# fat, tall
+# horizontal, vertical
+# grid, splits, stack
+enabled_layouts grid, stack
+
+#####################################
+# Font
+#####################################
+font_size 10.0
+font_family      family='Fira Code'
+# Pin explicit styles so all variants use the non-nerd Fira Code faces (includes italics).
+bold_font        family='Fira Code' style=Bold
+italic_font      family='Fira Code' style='Regular Italic'
+bold_italic_font family='Fira Code' style='Bold Italic'
+font_features    family='Fira Code' +calt
+
+symbol_map U+E0A0-U+E0A3,U+E0C0-U+E0C7 PowerlineSymbols
+symbol_map U+2500-U+259F FiraCode Nerd Font Mono
+symbol_map U+2800-U+28FF FiraCode Nerd Font Mono
+
+#####################################
+# Display
+#####################################
+scrollback_lines 20000
+sync_to_monitor yes
+scrollback_pager less -R
+clipboard_control write-clipboard write-primary
+
+#####################################
+# Tabs
+#####################################
+tab_bar_style separator
+tab_bar_min_tabs 2
+tab_title_template "{index}:{title}"
+
+
+#####################################
+#####################################
+# Background
+#####################################
+dynamic_background_opacity yes
+
+allow_remote_control yes
+shell /opt/homebrew/bin/fish
+listen_on unix:/tmp/mykitty
+
+# smart-splits: kitty pane navigation + resize (keys pass through to Neovim/tmux)
+map ctrl+h neighboring_window left
+map ctrl+j neighboring_window down
+map ctrl+k neighboring_window up
+map ctrl+l neighboring_window right
+
+# when tmux has focus, let tmux handle the keys
+map --when-focus-on cmdline:tmux ctrl+h
+map --when-focus-on cmdline:tmux ctrl+j
+map --when-focus-on cmdline:tmux ctrl+k
+map --when-focus-on cmdline:tmux ctrl+l
+
+# when Neovim has focus, let smart-splits handle the keys
+map --when-focus-on var:IS_NVIM ctrl+h
+map --when-focus-on var:IS_NVIM ctrl+j
+map --when-focus-on var:IS_NVIM ctrl+k
+map --when-focus-on var:IS_NVIM ctrl+l
+
+map alt+h kitten relative_resize.py left 3
+map alt+j kitten relative_resize.py down 3
+map alt+k kitten relative_resize.py up 3
+map alt+l kitten relative_resize.py right 3
+
+# when tmux has focus, let tmux handle the keys
+map --when-focus-on cmdline:tmux alt+h
+map --when-focus-on cmdline:tmux alt+j
+map --when-focus-on cmdline:tmux alt+k
+map --when-focus-on cmdline:tmux alt+l
+
+map --when-focus-on var:IS_NVIM alt+j
+map --when-focus-on var:IS_NVIM alt+k
+map --when-focus-on var:IS_NVIM alt+h
+map --when-focus-on var:IS_NVIM alt+l
+
+map ctrl+shift+enter new_window_with_cwd
+
+# Maintenance
+map kitty_mod+f1 show_kitty_doc overview
+map kitty_mod+f2 edit_config_file
+map kitty_mod+f5 load_config_file
+map kitty_mod+f6 debug_config
+map cmd+, edit_config_file
+map ctrl+cmd+, load_config_file
+map opt+cmd+, debug_config
+
+# Linux keyboard equivalents (no Cmd/Opt):
+# map ctrl+shift+, edit_config_file
+# map ctrl+shift+f5 load_config_file
+# map ctrl+shift+f6 debug_config
