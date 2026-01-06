@@ -1,6 +1,6 @@
 #!/usr/bin/env fish
                                                                                                                                                          
-function colors --description "List terminal colors"
+function fish_colors --description "List terminal colors"
 
   set_color 121212; echo "00. XXXXXXXXX"
   set_color ff7c59; echo "01. XXXXXXXXX"
