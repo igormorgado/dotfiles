@@ -121,6 +121,9 @@ shell /opt/homebrew/bin/fish
 listen_on unix:/tmp/mykitty
 {{- end }}
 
+detect_urls yes
+url_regex \b(telwa:[^ \n]+)
+
 # smart-splits: kitty pane navigation + resize (keys pass through to Neovim)
 map ctrl+h neighboring_window left
 map ctrl+j neighboring_window down
