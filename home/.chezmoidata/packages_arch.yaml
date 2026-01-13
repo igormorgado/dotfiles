@@ -88,6 +88,8 @@ packages:
       - python
       - python-pip
       - python-pipx
+      - python-uv
+      - python-hatch
       - ripgrep
       - rsync
       - sshfs
@@ -111,7 +113,6 @@ packages:
       - ttf-fira-sans
       - unrar
       - unzip
-      - uv
       - vifm
       - xsel
       - xz
