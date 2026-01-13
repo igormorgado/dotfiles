@@ -1,6 +1,35 @@
 -- Modular Neovim Configuration
 -- Main entry point that loads all configuration modules
 
+-- Prefer Lazy-managed nvim-treesitter over distro "dist" packages.
+-- Some distros ship a legacy nvim-treesitter that shadows the rewrite's Lua modules
+-- (e.g. provides `lua/nvim-treesitter.lua` without `install()`), which breaks
+-- treesitter-modules.nvim.
+do
+    for _, root in ipairs(vim.split(vim.o.packpath, ",", { plain = true, trimempty = true })) do
+        if vim.fn.isdirectory(root .. "/pack/dist/start/nvim-treesitter") == 1 then
+            vim.opt.packpath:remove(root)
+            vim.opt.packpath:remove(root .. "/after")
+        end
+    end
+
+    for _, p in ipairs(vim.opt.runtimepath:get()) do
+        if p:find("/pack/dist/start/nvim-treesitter", 1, true) then
+            vim.opt.runtimepath:remove(p)
+        end
+    end
+
+    for _, m in ipairs({
+        "nvim-treesitter",
+        "nvim-treesitter.install",
+        "nvim-treesitter.config",
+        "nvim-treesitter.configs",
+        "nvim-treesitter.parsers",
+    }) do
+        package.loaded[m] = nil
+    end
+end
+
 -- Performance: Enable bytecode cache (Neovim 0.9+)
 if vim.loader then
     vim.loader.enable()
