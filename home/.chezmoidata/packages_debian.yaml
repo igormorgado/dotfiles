@@ -19,7 +19,7 @@ packages:
       - cscope
       - curl
       - diffutils
-      # - fd
+      - fd
       - fdupes
       - fish
       - fzf
@@ -47,17 +47,17 @@ packages:
       - luarocks
       - m4
       - make
-      - mc
+      # - mc
       - mercurial
       - mtr-tiny
       - ncdu
       - neovim
       - nmon
-      - npm
+      # - npm
       - p7zip-full
-      - pastebinit
+      # - pastebinit
       - pkg-config
-      - powertop
+      # - powertop
       - python3-flake8
       - python3-pep8
       - python3-pip
@@ -67,7 +67,7 @@ packages:
       - rsync
       - sensible-utils
       - strace
-      - subversion
+      # - subversion
       - tmux
       - universal-ctags
       - unison
