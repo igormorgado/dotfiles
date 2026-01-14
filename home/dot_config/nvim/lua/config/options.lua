@@ -14,8 +14,11 @@ function M.setup()
     local function find_python3()
         -- Try nvim-specific virtual environments first
         local nvim_venv_paths = {
-            vim.fn.expand('~/.pyenv/versions/nvim/bin/python3'),
-            vim.fn.expand('~/.pyenv/versions/nvim/bin/python'),
+            vim.fn.expand('~/.uvenv/nvim/bin/python3'),
+            vim.fn.expand('~/.uvenv/nvim/bin/python'),
+            -- pyenv (disabled; migrated to uv)
+            -- vim.fn.expand('~/.pyenv/versions/nvim/bin/python3'),
+            -- vim.fn.expand('~/.pyenv/versions/nvim/bin/python'),
             vim.fn.expand('~/.virtualenvs/nvim/bin/python3'),
             vim.fn.expand('~/.virtualenvs/nvim/bin/python'),
         }

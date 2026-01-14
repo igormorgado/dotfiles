@@ -3,6 +3,214 @@ set -e
 
 export PATH="$HOME/.local/bin:$PATH"
 
+install_uv_arch() {
+  if command -v uv >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if command -v curl >/dev/null 2>&1; then
+    curl -LsSf "https://astral.sh/uv/install.sh" | sh
+  elif command -v wget >/dev/null 2>&1; then
+    wget -qO- "https://astral.sh/uv/install.sh" | sh
+  else
+    echo "Cannot install uv (missing curl/wget)" >&2
+    return 1
+  fi
+
+  local uv_source="" uvx_source=""
+  for uv_source in "$HOME/.local/bin/uv" "$HOME/.cargo/bin/uv"; do
+    if [[ -x "$uv_source" ]]; then
+      break
+    fi
+    uv_source=""
+  done
+
+  if [[ -z "$uv_source" ]]; then
+    echo "uv install finished but uv was not found in expected locations" >&2
+    return 1
+  fi
+
+  mkdir -p "$HOME/.local/bin"
+  local uv_link="$HOME/.local/bin/uv"
+  if [[ "$uv_source" != "$uv_link" ]]; then
+    if [[ -L "$uv_link" ]]; then
+      ln -sfn "$uv_source" "$uv_link"
+    elif [[ -e "$uv_link" ]]; then
+      echo "Not updating $uv_link (exists and is not a symlink)"
+    else
+      ln -s "$uv_source" "$uv_link"
+    fi
+  fi
+
+  uvx_source="$(dirname "$uv_source")/uvx"
+  local uvx_link="$HOME/.local/bin/uvx"
+  if [[ -x "$uvx_source" ]] && [[ "$uvx_source" != "$uvx_link" ]]; then
+    if [[ -L "$uvx_link" ]]; then
+      ln -sfn "$uvx_source" "$uvx_link"
+    elif [[ -e "$uvx_link" ]]; then
+      echo "Not updating $uvx_link (exists and is not a symlink)"
+    else
+      ln -s "$uvx_source" "$uvx_link"
+    fi
+  fi
+}
+
+install_uv_debian() {
+  if command -v uv >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if command -v curl >/dev/null 2>&1; then
+    curl -LsSf "https://astral.sh/uv/install.sh" | sh
+  elif command -v wget >/dev/null 2>&1; then
+    wget -qO- "https://astral.sh/uv/install.sh" | sh
+  else
+    echo "Cannot install uv (missing curl/wget)" >&2
+    return 1
+  fi
+
+  local uv_source="" uvx_source=""
+  for uv_source in "$HOME/.local/bin/uv" "$HOME/.cargo/bin/uv"; do
+    if [[ -x "$uv_source" ]]; then
+      break
+    fi
+    uv_source=""
+  done
+
+  if [[ -z "$uv_source" ]]; then
+    echo "uv install finished but uv was not found in expected locations" >&2
+    return 1
+  fi
+
+  mkdir -p "$HOME/.local/bin"
+  local uv_link="$HOME/.local/bin/uv"
+  if [[ "$uv_source" != "$uv_link" ]]; then
+    if [[ -L "$uv_link" ]]; then
+      ln -sfn "$uv_source" "$uv_link"
+    elif [[ -e "$uv_link" ]]; then
+      echo "Not updating $uv_link (exists and is not a symlink)"
+    else
+      ln -s "$uv_source" "$uv_link"
+    fi
+  fi
+
+  uvx_source="$(dirname "$uv_source")/uvx"
+  local uvx_link="$HOME/.local/bin/uvx"
+  if [[ -x "$uvx_source" ]] && [[ "$uvx_source" != "$uvx_link" ]]; then
+    if [[ -L "$uvx_link" ]]; then
+      ln -sfn "$uvx_source" "$uvx_link"
+    elif [[ -e "$uvx_link" ]]; then
+      echo "Not updating $uvx_link (exists and is not a symlink)"
+    else
+      ln -s "$uvx_source" "$uvx_link"
+    fi
+  fi
+}
+
+install_uv_ubuntu() {
+  if command -v uv >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if command -v curl >/dev/null 2>&1; then
+    curl -LsSf "https://astral.sh/uv/install.sh" | sh
+  elif command -v wget >/dev/null 2>&1; then
+    wget -qO- "https://astral.sh/uv/install.sh" | sh
+  else
+    echo "Cannot install uv (missing curl/wget)" >&2
+    return 1
+  fi
+
+  local uv_source="" uvx_source=""
+  for uv_source in "$HOME/.local/bin/uv" "$HOME/.cargo/bin/uv"; do
+    if [[ -x "$uv_source" ]]; then
+      break
+    fi
+    uv_source=""
+  done
+
+  if [[ -z "$uv_source" ]]; then
+    echo "uv install finished but uv was not found in expected locations" >&2
+    return 1
+  fi
+
+  mkdir -p "$HOME/.local/bin"
+  local uv_link="$HOME/.local/bin/uv"
+  if [[ "$uv_source" != "$uv_link" ]]; then
+    if [[ -L "$uv_link" ]]; then
+      ln -sfn "$uv_source" "$uv_link"
+    elif [[ -e "$uv_link" ]]; then
+      echo "Not updating $uv_link (exists and is not a symlink)"
+    else
+      ln -s "$uv_source" "$uv_link"
+    fi
+  fi
+
+  uvx_source="$(dirname "$uv_source")/uvx"
+  local uvx_link="$HOME/.local/bin/uvx"
+  if [[ -x "$uvx_source" ]] && [[ "$uvx_source" != "$uvx_link" ]]; then
+    if [[ -L "$uvx_link" ]]; then
+      ln -sfn "$uvx_source" "$uvx_link"
+    elif [[ -e "$uvx_link" ]]; then
+      echo "Not updating $uvx_link (exists and is not a symlink)"
+    else
+      ln -s "$uvx_source" "$uvx_link"
+    fi
+  fi
+}
+
+install_uv_darwin() {
+  if command -v uv >/dev/null 2>&1; then
+    return 0
+  fi
+
+  if command -v curl >/dev/null 2>&1; then
+    curl -LsSf "https://astral.sh/uv/install.sh" | sh
+  elif command -v wget >/dev/null 2>&1; then
+    wget -qO- "https://astral.sh/uv/install.sh" | sh
+  else
+    echo "Cannot install uv (missing curl/wget)" >&2
+    return 1
+  fi
+
+  local uv_source="" uvx_source=""
+  for uv_source in "$HOME/.local/bin/uv" "$HOME/.cargo/bin/uv"; do
+    if [[ -x "$uv_source" ]]; then
+      break
+    fi
+    uv_source=""
+  done
+
+  if [[ -z "$uv_source" ]]; then
+    echo "uv install finished but uv was not found in expected locations" >&2
+    return 1
+  fi
+
+  mkdir -p "$HOME/.local/bin"
+  local uv_link="$HOME/.local/bin/uv"
+  if [[ "$uv_source" != "$uv_link" ]]; then
+    if [[ -L "$uv_link" ]]; then
+      ln -sfn "$uv_source" "$uv_link"
+    elif [[ -e "$uv_link" ]]; then
+      echo "Not updating $uv_link (exists and is not a symlink)"
+    else
+      ln -s "$uv_source" "$uv_link"
+    fi
+  fi
+
+  uvx_source="$(dirname "$uv_source")/uvx"
+  local uvx_link="$HOME/.local/bin/uvx"
+  if [[ -x "$uvx_source" ]] && [[ "$uvx_source" != "$uvx_link" ]]; then
+    if [[ -L "$uvx_link" ]]; then
+      ln -sfn "$uvx_source" "$uvx_link"
+    elif [[ -e "$uvx_link" ]]; then
+      echo "Not updating $uvx_link (exists and is not a symlink)"
+    else
+      ln -s "$uvx_source" "$uvx_link"
+    fi
+  fi
+}
+
 install_neovim_appimage_debian() {
   local install_path="$HOME/.local/bin/nvim.appimage"
   local link_path="$HOME/.local/bin/nvim"
@@ -300,17 +508,20 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
   if [[ "$ID" == "arch" ]]; then
     # Pacman on Arch Linux
     sudo pacman -Sy --noconfirm {{- if .packages.arch.pacman }}{{ range .packages.arch.pacman }} {{ . }}{{ end }}{{ end }}
+    install_uv_arch
     install_node_nvm_arch
   elif [[ "$ID" == "debian" ]]; then
     # APT on Debian (independent from Ubuntu)
     sudo apt-get update
     sudo apt-get install -y {{- if .packages.debian.apt }}{{ range .packages.debian.apt }} {{ . }}{{ end }}{{ end }}
+    install_uv_debian
     install_neovim_appimage_debian
     install_node_nvm_debian
   elif [[ "$ID" == "ubuntu" ]]; then
     # APT on Ubuntu (independent from Debian)
     sudo apt-get update
     sudo apt-get install -y {{- if .packages.ubuntu.apt }}{{ range .packages.ubuntu.apt }} {{ . }}{{ end }}{{ end }}
+    install_uv_ubuntu
     install_neovim_appimage_ubuntu
     install_node_nvm_ubuntu
   fi
@@ -318,6 +529,7 @@ elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
   # Homebrew on macOS
   brew update
   brew install {{- if .packages.darwin.brew }}{{ range .packages.darwin.brew }} {{ . }}{{ end }}{{ end }}
+  install_uv_darwin
 fi
 
 # Install npm packages globally if npm is available

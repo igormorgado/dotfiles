@@ -94,7 +94,8 @@ if command -q cryfs
 end
 
 # Custom env for cloudwalk/macosx
-command -q pyenv; and alias tyrell="pyenv activate tyrell_venv; cd $HOME/repos/"
+# command -q pyenv; and alias tyrell="pyenv activate tyrell_venv; cd $HOME/repos/"
+test -f "$HOME/.config/fish/functions/uvenv.fish"; and alias tyrell="uvenv tyrell_venv; cd $HOME/repos/"
 alias vols="cd /Volumes"
 alias sec="cd /Volumes/Secure"
 alias msec="hdiutil attach ~/secure.dmg"
