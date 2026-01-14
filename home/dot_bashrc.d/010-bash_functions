@@ -664,23 +664,181 @@ export venv_home="$HOME/.uvenv"
 mkdir -p "$venv_home"
 
 uvenv() {
-    if [ $# -eq 0 ]; then
-        echo "Usage: uvenv <env_name> [packages...]"
+    local env_file=".uvenv"
+    local legacy_env_file=".python-uversion"
+
+    local python=""
+    local local_flag=0
+    local yes=0
+    local show=0
+
+    local _help
+    _help() {
+        echo "Creates or loads an uv virtual environment."
+        echo ""
+        echo "Usage: uvenv [env_name] [OPTIONS] [packages...]"
+        echo ""
+        echo "Options:"
+        echo "  --help/-h               This help message."
+        echo "  --local/-l              Creates a local \`$env_file\` that points to venv."
+        echo "  --yes/-y                Assumes yes in all interactions."
+        echo "  --show/-s               Shows all installed virtualenvs and versions."
+        echo "  --python/-p VERSION     Uses given Python version. Must be installed."
+        echo ""
+        echo "Behavior:"
+        echo "  - With no arguments: Loads environment from \`$env_file\` if it exists"
+        echo "  - With env_name: Activates existing or creates new environment"
+        echo "  - With env_name and packages: Also installs specified packages"
+        echo "  - With active venv and packages: Install packages in active venv"
+    }
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -p|--python)
+                python="${2-}"
+                shift 2
+                ;;
+            -l|--local)
+                local_flag=1
+                shift
+                ;;
+            -y|--yes)
+                yes=1
+                shift
+                ;;
+            -s|--show)
+                show=1
+                shift
+                ;;
+            -h|--help)
+                _help
+                return 0
+                ;;
+            --)
+                shift
+                break
+                ;;
+            -*)
+                echo "Unknown option: $1"
+                _help
+                return 1
+                ;;
+            *)
+                break
+                ;;
+        esac
+    done
+
+    if ! command -v uv >/dev/null 2>&1; then
+        echo "uv not found in PATH."
+        return 127
+    fi
+
+    if [[ $show -eq 1 ]]; then
+        local found=0
+        local venv_path
+        for venv_path in "$venv_home"/*; do
+            [[ -d "$venv_path" && -x "$venv_path/bin/python" ]] || continue
+            found=1
+            printf "%-15s %s\n" "$(basename "$venv_path")" "$("$venv_path/bin/python" --version 2>&1)"
+        done
+        [[ $found -eq 1 ]] || echo "No virtualenvs found in \`$venv_home\`."
+        return 0
+    fi
+
+    local env_name=""
+    local env_path=""
+    local from_file=0
+
+    # Try to load an environment name from:
+    # 1. First argument (if it matches an existing env)
+    # 2. Local environment file
+    # 3. Currently active environment
+    if [[ -n "${1-}" && -f "$venv_home/$1/bin/activate" ]]; then
+        env_name="$1"
+        env_path="$venv_home/$env_name"
+        shift
+    else
+        local env_file_to_read=""
+        if [[ -r "$env_file" ]]; then
+            env_file_to_read="$env_file"
+        elif [[ -r "$legacy_env_file" ]]; then
+            env_file_to_read="$legacy_env_file"
+        fi
+
+        if [[ -n "$env_file_to_read" ]]; then
+            local temp_env_name
+            temp_env_name="$(head -n 1 "$env_file_to_read")"
+            if [[ -n "$temp_env_name" && -f "$venv_home/$temp_env_name/bin/activate" ]]; then
+                env_name="$temp_env_name"
+                env_path="$venv_home/$env_name"
+                from_file=1
+            fi
+        fi
+    fi
+
+    if [[ -z "$env_name" ]]; then
+        if [[ -n "${VIRTUAL_ENV-}" && -d "$VIRTUAL_ENV" ]]; then
+            env_path="$VIRTUAL_ENV"
+            env_name="$(basename "$VIRTUAL_ENV")"
+            echo "Environment \`$env_name\` already active. Skipping activation."
+        elif [[ -n "${1-}" ]]; then
+            env_name="$1"
+            env_path="$venv_home/$env_name"
+            shift
+
+            local extra_message=""
+            local extra_args=()
+            if [[ -n "$python" ]]; then
+                extra_message=" with Python $python"
+                extra_args=(--python "$python")
+            fi
+
+            if [[ $yes -eq 0 ]]; then
+                echo "No env set and argument does not seem a valid env."
+                echo "Do you wish to proceed and create the \`$env_name\`?"
+                echo "Press CTRL-C to stop or ENTER to proceed."
+                read -r _ || return 0
+            fi
+
+            echo "Creating virtual environment: \`$env_name$extra_message\`."
+            uv venv "$env_path" "${extra_args[@]}" || {
+                echo "Failed to create virtual environment. Check uv output."
+                return 1
+            }
+
+            if [[ $local_flag -eq 1 ]]; then
+                echo "Creating local \`$env_file\` to \`$env_name\`."
+                echo "$env_name" > "$env_file" || echo "Warning: Failed to create $env_file file."
+                if [[ -e "$legacy_env_file" ]]; then
+                    echo "$env_name" > "$legacy_env_file" || echo "Warning: Failed to update $legacy_env_file file."
+                fi
+            fi
+        else
+            _help
+            return 1
+        fi
+    fi
+
+    if [[ ! -f "$env_path/bin/activate" ]]; then
+        echo "Could not find a valid environment at \`$env_path\`. Exiting."
         return 1
     fi
-    
-    env_name="$1"
-    shift
-    
-    if [ ! -d "$venv_home/$env_name" ]; then
-        echo "Creating virtual environment: $env_name"
-        uv venv "$venv_home/$env_name"
+
+    if [[ -z "${VIRTUAL_ENV-}" || "$VIRTUAL_ENV" != "$env_path" ]]; then
+        # shellcheck source=/dev/null
+        source "$env_path/bin/activate"
+        echo -n "Activated virtual environment: \`$env_name\`"
+        if [[ $from_file -eq 1 ]]; then
+            echo " from \`$env_file\`"
+        else
+            echo
+        fi
     fi
-    
-    if [ $# -gt 0 ]; then
-        echo "Installing packages: $@"
-        uv pip install --python "$venv_home/$env_name/bin/python" "$@"
+
+    if [[ $# -gt 0 ]]; then
+        echo "Using environment \`$env_path\`."
+        echo "Installing packages: $*"
+        uv pip install --python "$env_path/bin/python" "$@" || echo "Failed to install packages. Check uv output."
     fi
-    
-    echo "To activate: source $venv_home/$env_name/bin/activate"
 }

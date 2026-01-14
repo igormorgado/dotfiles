@@ -2,7 +2,10 @@ function uvenv --description "Creates or loads an uv virtual environment."
   argparse 'p/python=' 'l/local' 'y/yes' 'h/help' 's/show' -- $argv 
   or return 1
 
-  set env_file ".python-uversion"
+  # Local per-project env pointer file.
+  # Prefer the new name, but keep backward compatibility with the old one.
+  set -l env_file ".uvenv"
+  set -l legacy_env_file ".python-uversion"
 
   # Handle help request
   if set -q _flag_help
@@ -15,13 +18,17 @@ function uvenv --description "Creates or loads an uv virtual environment."
   mkdir -p "$uvenv_home"
 
   if set -q _flag_show
+    set -l found false
     for venv_path in $uvenv_home/*
+        test -e "$venv_path"; or continue
         set venv (basename $venv_path)
         if test -x "$venv_path/bin/python"
+            set found true
             set python_version ("$venv_path/bin/python" --version)
         printf "%-15s %s\n" "$venv" "$python_version"
         end
     end
+    $found; or echo "No virtualenvs found in `$uvenv_home`."
     return 0
   end
   # Try to load an environment name from:
@@ -38,22 +45,31 @@ function uvenv --description "Creates or loads an uv virtual environment."
     set env_name $argv[1]
     set env_path "$uvenv_home/$env_name"
     set -e argv[1]  # Consume first argument
-  else if test -r $env_file
-    # Try to load from environment file
-    set -l temp_env_name (head -n 1 $env_file)
-    if test -f "$uvenv_home/$temp_env_name$activate_path"
-      set env_name $temp_env_name
-      set env_path "$uvenv_home/$env_name"
-      set from_file true
+  else
+    set -l env_file_to_read ""
+    if test -r $env_file
+      set env_file_to_read $env_file
+    else if test -r $legacy_env_file
+      set env_file_to_read $legacy_env_file
+    end
+
+    if test -n "$env_file_to_read"
+      # Try to load from environment file
+      set -l temp_env_name (head -n 1 $env_file_to_read)
+      if test -f "$uvenv_home/$temp_env_name$activate_path"
+        set env_name $temp_env_name
+        set env_path "$uvenv_home/$env_name"
+        set from_file true
+      end
     end
   end
 
   # Create a new environment if needed
   if test -z "$env_name"
     # If we already have an active virtual environment, use it
-    if test -d "$VIRTUAL_ENV"
-      set env_name "$VIRTUAL_ENV_PROMPT"
+    if set -q VIRTUAL_ENV; and test -d "$VIRTUAL_ENV"
       set env_path "$VIRTUAL_ENV"
+      set env_name (basename "$VIRTUAL_ENV")
       echo "Environment `$env_name` already active. Skipping activation."
     else if test (count $argv) -gt 0
       # Create a new environment with the first argument as name
@@ -70,7 +86,7 @@ function uvenv --description "Creates or loads an uv virtual environment."
       end
       
       if not set -q _flag_yes
-        echo "No env set and argument does not seems a valid env."
+        echo "No env set and argument does not seem a valid env."
         echo "Do you wish to proceed and create the `$env_name`?"
         echo "Press CTRL-C to stop or ENTER to proceed."
         read -l input || return 0
@@ -86,6 +102,12 @@ function uvenv --description "Creates or loads an uv virtual environment."
         echo "Creating local `$env_file` to `$env_name`."
         echo "$env_name" > "$env_file"
         or echo "Warning: Failed to create $env_file file."
+
+        # Keep the legacy file in sync if it exists (or if we're migrating from it).
+        if test -e $legacy_env_file
+          echo "$env_name" > "$legacy_env_file"
+          or echo "Warning: Failed to update $legacy_env_file file."
+        end
       end
       
       echo "To activate: `source $env_path/bin/activate.fish`"
@@ -105,7 +127,7 @@ function uvenv --description "Creates or loads an uv virtual environment."
   end
 
   # Activate the environment if it's not already active
-  if test "$VIRTUAL_ENV" != "$env_path"
+  if not set -q VIRTUAL_ENV; or test "$VIRTUAL_ENV" != "$env_path"
     source "$env_path$activate_path"
     echo -n "Activated virtual environment: `$env_name`"
     $from_file; and echo " from `$env_file`"; or echo
