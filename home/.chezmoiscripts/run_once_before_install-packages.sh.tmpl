@@ -239,6 +239,58 @@ install_node_nvm_ubuntu() {
   done
 }
 
+install_node_nvm_arch() {
+  local nvm_dir="$HOME/.nvm"
+  export NVM_DIR="$nvm_dir"
+
+  if [[ ! -d "$nvm_dir" ]]; then
+    export PROFILE=/dev/null
+    if command -v curl >/dev/null 2>&1; then
+      curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh" | bash
+    elif command -v wget >/dev/null 2>&1; then
+      wget -qO- "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh" | bash
+    else
+      echo "Cannot install nvm (missing curl/wget)" >&2
+      return 1
+    fi
+  fi
+
+  if [[ ! -s "$nvm_dir/nvm.sh" ]]; then
+    echo "nvm installed but $nvm_dir/nvm.sh is missing" >&2
+    return 1
+  fi
+
+  # shellcheck disable=SC1090
+  source "$nvm_dir/nvm.sh"
+
+  nvm install node --latest-npm
+  nvm alias default node
+  nvm use default
+
+  local node_path bin_dir current_version_dir
+  node_path="$(nvm which current)"
+  bin_dir="$(dirname "$node_path")"
+  current_version_dir="$(dirname "$bin_dir")"
+
+  mkdir -p "$HOME/.local/bin"
+  ln -sfn "$node_path" "$HOME/.local/bin/node"
+  [[ -x "$bin_dir/npm" ]] && ln -sfn "$bin_dir/npm" "$HOME/.local/bin/npm"
+  [[ -x "$bin_dir/npx" ]] && ln -sfn "$bin_dir/npx" "$HOME/.local/bin/npx"
+
+  # Keep a single Node version under nvm.
+  if [[ "$current_version_dir" != "$nvm_dir/versions/node"/v* ]]; then
+    echo "Refusing to prune nvm versions: unexpected current dir: $current_version_dir" >&2
+    return 1
+  fi
+  local version_dir
+  for version_dir in "$nvm_dir/versions/node"/v*; do
+    [[ -d "$version_dir" ]] || continue
+    if [[ "$version_dir" != "$current_version_dir" ]]; then
+      rm -rf "$version_dir"
+    fi
+  done
+}
+
 if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
   # Load OS ID for distro detection
   if [[ -r /etc/os-release ]]; then
@@ -248,6 +300,7 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
   if [[ "$ID" == "arch" ]]; then
     # Pacman on Arch Linux
     sudo pacman -Sy --noconfirm {{- if .packages.arch.pacman }}{{ range .packages.arch.pacman }} {{ . }}{{ end }}{{ end }}
+    install_node_nvm_arch
   elif [[ "$ID" == "debian" ]]; then
     # APT on Debian (independent from Ubuntu)
     sudo apt-get update
