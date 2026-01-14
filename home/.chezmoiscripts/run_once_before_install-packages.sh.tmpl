@@ -371,9 +371,11 @@ install_node_nvm_debian() {
   # shellcheck disable=SC1090
   source "$nvm_dir/nvm.sh"
 
+  unset npm_config_prefix
   nvm install node --latest-npm
   nvm alias default node
   nvm use default
+  npm install -g npm@latest
 
   local node_path bin_dir current_version_dir
   node_path="$(nvm which current)"
@@ -423,9 +425,11 @@ install_node_nvm_ubuntu() {
   # shellcheck disable=SC1090
   source "$nvm_dir/nvm.sh"
 
+  unset npm_config_prefix
   nvm install node --latest-npm
   nvm alias default node
   nvm use default
+  npm install -g npm@latest
 
   local node_path bin_dir current_version_dir
   node_path="$(nvm which current)"
@@ -475,9 +479,11 @@ install_node_nvm_arch() {
   # shellcheck disable=SC1090
   source "$nvm_dir/nvm.sh"
 
+  unset npm_config_prefix
   nvm install node --latest-npm
   nvm alias default node
   nvm use default
+  npm install -g npm@latest
 
   local node_path bin_dir current_version_dir
   node_path="$(nvm which current)"
