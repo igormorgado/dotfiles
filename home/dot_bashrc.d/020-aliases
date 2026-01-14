@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+__has_cmd() { command -v "$1" >/dev/null 2>&1; }
+__has_func() { declare -F "$1" >/dev/null 2>&1; }
+
 if ${COLOR_ENVIRONMENT}; then
   alias dir='ls --color --format=vertical'
   alias ls="ls --color --hyperlink=auto"
@@ -11,49 +14,49 @@ else
   alias ll="ls -lF --hyperlink=auto"
 fi
 
-alias cscp="cscope -k -b -c -R; rm -f cctree.out"
+__has_cmd cscope && alias cscp="cscope -k -b -c -R; rm -f cctree.out"
 
-alias dropstart="DISPLAY= dropbox start"
-alias note="nohup jupyter-notebook > jup.log 2>&1 &"
+__has_cmd dropbox && alias dropstart="DISPLAY= dropbox start"
+__has_cmd jupyter-notebook && alias note="nohup jupyter-notebook > jup.log 2>&1 &"
 
 # Force XTERM mode, Fix on TMUX
 # alias mc="mc -x"
-alias ackpy="ack --python"
+__has_cmd ack && alias ackpy="ack --python"
 
-alias start="sudo systemctl start"
-alias stop="sudo systemctl stop"
-alias restart="sudo systemctl restart"
-alias status="sudo systemctl status"
+__has_cmd systemctl && alias start="sudo systemctl start"
+__has_cmd systemctl && alias stop="sudo systemctl stop"
+__has_cmd systemctl && alias restart="sudo systemctl restart"
+__has_cmd systemctl && alias status="sudo systemctl status"
 
-alias shutc="sudo shutdown -c"
-alias t=todo-txt
+__has_cmd shutdown && alias shutc="sudo shutdown -c"
+__has_cmd todo-txt && alias t=todo-txt
 alias wsz='echo "(${LINES}, ${COLUMNS})"'
-alias tb="nc termbin.com 9999"
-alias pb="pastebinit -b paste.ubuntu.com"
+__has_cmd nc && alias tb="nc termbin.com 9999"
+__has_cmd pastebinit && alias pb="pastebinit -b paste.ubuntu.com"
 
 # Host aliases
-alias inst1='ssh 104.154.20.1'
+__has_cmd ssh && alias inst1='ssh 104.154.20.1'
 
 
-alias vimclean="vim -u NONE -U NONE -N"
+__has_cmd vim && alias vimclean="vim -u NONE -U NONE -N"
 
-alias bespeak="espeak -v pt"
-alias fala='while :; do read LINE; espeak -v pt "${LINE}" 2> /dev/null;done'
+__has_cmd espeak && alias bespeak="espeak -v pt"
+__has_cmd espeak && alias fala='while :; do read LINE; espeak -v pt "${LINE}" 2> /dev/null;done'
 
-alias fload='source ${HOME}/bin/factory'
+[[ -f ${HOME}/bin/factory ]] && alias fload='source ${HOME}/bin/factory'
 
 
-alias dotpull="cd ~/dotfiles; git pull ; cd -"
-alias dotpush="cd ~/dotfiles; git push ; cd -"
+__has_cmd git && alias dotpull="cd ~/dotfiles; git pull ; cd -"
+__has_cmd git && alias dotpush="cd ~/dotfiles; git push ; cd -"
 
-alias gplog="git log --oneline --graph --decorate --all"
-alias vimgit='vim $(git diff --name-only stage | grep -v development.ini)'
+__has_cmd git && alias gplog="git log --oneline --graph --decorate --all"
+__has_cmd git && __has_cmd vim && alias vimgit='vim $(git diff --name-only stage | grep -v development.ini)'
 
 alias realias='source ~/.bashrc.d/020-aliases'
 
-alias cd=cd_func
+__has_func cd_func && alias cd=cd_func
 
-alias less='less -r'                          # raw control characters
+__has_cmd less && alias less='less -r'                          # raw control characters
 alias whence='type -a'                        # where, of a sort
 
 
@@ -73,21 +76,21 @@ alias chmod='chmod --preserve-root'
 alias chgrp='chgrp --preserve-root'
 
 # All of our servers eth0 is connected to the Internets via vlan / router etc  ##
-alias dnstop='dnstop -l 5  eth0'
-alias vnstat='vnstat -i eth0'
-alias iftop='iftop -i eth0'
-alias tcpdump='tshark -i eth0'
-alias tshark='tshark -i eth0'
-alias ethtool='ethtool eth0'
+__has_cmd dnstop && alias dnstop='dnstop -l 5  eth0'
+__has_cmd vnstat && alias vnstat='vnstat -i eth0'
+__has_cmd iftop && alias iftop='iftop -i eth0'
+__has_cmd tshark && alias tcpdump='tshark -i eth0'
+__has_cmd tshark && alias tshark='tshark -i eth0'
+__has_cmd ethtool && alias ethtool='ethtool eth0'
 
 # work on wlan0 by default #
 # Only useful for laptop as all servers are without wireless interface
-alias iwconfig='iwconfig wlan0'
+__has_cmd iwconfig && alias iwconfig='iwconfig wlan0'
 
-alias iotop='iotop'
+__has_cmd iotop && alias iotop='iotop'
 
 ## pass options to free ##
-alias meminfo='free -m -l -t'
+__has_cmd free && alias meminfo='free -m -l -t'
 
 ## get top process eating memory
 alias psmem='ps auxf | sort -nr -k 4'
@@ -98,7 +101,7 @@ alias pscpu='ps auxf | sort -nr -k 3'
 alias pscpu10='ps aux | sort -nr -k 3 | head -10'
 
 ## Get server cpu info ##
-alias cpuinfo='lscpu'
+__has_cmd lscpu && alias cpuinfo='lscpu'
 
 ## older system use /proc/cpuinfo ##
 ##alias cpuinfo='less /proc/cpuinfo' ##
@@ -107,7 +110,7 @@ alias cpuinfo='lscpu'
 alias gpumeminfo='grep -i --color memory /var/log/Xorg.0.log'
 
 # For environments with bad apt sources
-alias apt-get='apt-get --force-yes -y'
+__has_cmd apt-get && alias apt-get='apt-get --force-yes -y'
 
 alias whome='cd /c/Users/morga'
 alias cyg-get="/c/root/setup -q -P"
@@ -115,25 +118,28 @@ alias cyg-get="/c/root/setup -q -P"
 alias venv='source venv/bin/activate'
 alias actv='source venv/bin/activate'
 alias activate='source venv/bin/activate'
-alias gdb='gdb -q'
+__has_cmd gdb && alias gdb='gdb -q'
 alias ue4ed='/home/igor/src/UnrealEngine/Engine/Binaries/Linux/UE4Editor'
 
-alias icat="kitty +kitten icat"
+__has_cmd kitty && alias icat="kitty +kitten icat"
 
 alias zeroad="pushd ~/src/0ad/;./binaries/system/pyrogenesis; popd"
 alias litcorpt="source /home/igor/.virtualenvs/litcorpt/bin/activate; pushd ~/Projects/litcorpt/"
 
 # Modern life
-alias vim="nvim"
-alias vi="nvim"
-alias e="nvim"
-alias cat="bat"
-alias ls="lsd"
-alias top="btop"
-alias ps="procs"
+__has_cmd nvim && alias vim="nvim"
+__has_cmd nvim && alias vi="nvim"
+__has_cmd nvim && alias e="nvim"
+if __has_cmd bat; then
+  alias cat="bat"
+elif __has_cmd batcat; then
+  alias cat="batcat"
+fi
+__has_cmd lsd && alias ls="lsd"
+__has_cmd btop && alias top="btop"
 
 # Convenience alias to run pygmentize with your default style.
-alias pyg='pygmentize -O "style=${PYGMENTS_STYLE:-darktrial}"'
+__has_cmd pygmentize && alias pyg='pygmentize -O "style=${PYGMENTS_STYLE:-darktrial}"'
 
 
 # vim: ft=sh:

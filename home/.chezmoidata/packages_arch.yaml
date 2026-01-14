@@ -14,6 +14,7 @@ packages:
       - fish
       - fzf
       - gcc
+      - go
       - git
       - git-delta
       - htop
@@ -25,7 +26,6 @@ packages:
       - make
       - mc
       - neovim
-      - procs
       - python
       - python-pygments
       - ripgrep

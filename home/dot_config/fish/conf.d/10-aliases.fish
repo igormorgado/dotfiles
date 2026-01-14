@@ -71,6 +71,12 @@ end
 command -q lsd; and alias ls="lsd"
 command -q btop; and alias top="btop"
 
+if command -q bat
+    alias cat="bat"
+else if command -q batcat
+    alias cat="batcat"
+end
+
 
 # Rare command a based aliaes
 
@@ -78,7 +84,7 @@ command -q cscope; and alias cscp="cscope -k -b -c -R; rm -f cctree.out"
 command -q ack; and alias ackpy="ack --python"
 
 # For environments with bad apt sources
-alias apt-get='apt-get --force-yes -y'
+command -q apt-get; and alias apt-get='apt-get --force-yes -y'
 
 command -q gdb; and alias gdb='gdb -q'
 
@@ -94,7 +100,13 @@ alias sec="cd /Volumes/Secure"
 alias msec="hdiutil attach ~/secure.dmg"
 command -q unison; and alias jobsync="unison -auto -batch -confirmbigdel=false ssh://lab//home/jupyter/jobs $HOME/jobs"
 command -q kubectl; and alias k="kubectl"
-alias todo="cat -p ~/TODO.txt"
-alias etodo="e ~/TODO.txt"
+if command -q bat
+    alias todo="bat -p ~/TODO.txt"
+else if command -q batcat
+    alias todo="batcat -p ~/TODO.txt"
+else
+    alias todo="cat ~/TODO.txt"
+end
+command -q nvim; and alias etodo="e ~/TODO.txt"
 
 time_since_last "Aliases"

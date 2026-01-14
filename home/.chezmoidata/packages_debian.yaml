@@ -11,6 +11,7 @@ packages:
       - fish
       - fzf
       - git
+      - golang-go
       - htop
       - jq
       - lsd
@@ -30,5 +31,4 @@ packages:
       - universal-ctags
       - unzip
       - vifm
-      - wget
       - xz-utils
