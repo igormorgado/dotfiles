@@ -1,7 +1,7 @@
 # dotfiles
 
-Now `chezmoi` managed.
 
+Now `chezmoi` managed.
 
 ```
 chezmoi init igormorgado
@@ -10,10 +10,13 @@ chezmoi cd
 make config
 ```
 
+or simpler:
+
+```
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply igormorgado
+```
+
 
 ## TODO
 
-- Install packages for debian/arch/Mac
-- Review colors for terminal
-- Find a way to propagate colors using chezmoi templates and chezmoidata.
 - Maybe go beyond 16 colors.. We are at 2025.
