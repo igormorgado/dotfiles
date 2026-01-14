@@ -23,8 +23,6 @@ packages:
         - hunspell-en_us
         - hunspell-es_any
         - hunspell-fr
-        - hunspell-pt_br
-        - hunspell-pt_pt
         - jq
         - less
         - lsd
