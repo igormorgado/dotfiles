@@ -1,34 +1,36 @@
 packages:
   ubuntu:
     apt:
-      - bat
-      - btop
-      - build-essential
-      - cscope
-      - curl
-      - ca-certificates
-      - file
-      - fish
-      - fzf
-      - git
-      - golang-go
-      - htop
-      - jq
-      - lsd
-      - kitty
-      - less
-      - mc
-      # Neovim is installed via AppImage (see home/.chezmoiscripts/run_once_before_install-packages.sh.tmpl)
-      # - neovim
-      # - npm
-      - p7zip-full
-      # - pastebinit
-      - python3
-      - python3-pip
-      - python3-pygments
-      - ripgrep
-      - tmux
-      - universal-ctags
-      - unzip
-      - vifm
-      - xz-utils
+      cli:
+        - bat
+        - btop
+        - build-essential
+        - cscope
+        - curl
+        - ca-certificates
+        - file
+        - fish
+        - fzf
+        - git
+        - golang-go
+        - htop
+        - jq
+        - lsd
+        - less
+        - mc
+        # Neovim is installed via AppImage (see home/.chezmoiscripts/run_once_before_install-packages.sh.tmpl)
+        # - neovim
+        # - npm
+        - p7zip-full
+        # - pastebinit
+        - python3
+        - python3-pip
+        - python3-pygments
+        - ripgrep
+        - tmux
+        - universal-ctags
+        - unzip
+        - vifm
+        - xz-utils
+      gui:
+        - kitty

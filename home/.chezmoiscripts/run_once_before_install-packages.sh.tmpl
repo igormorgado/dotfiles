@@ -3,6 +3,10 @@ set -e
 
 export PATH="$HOME/.local/bin:$PATH"
 
+has_gui_session() {
+  [[ -n "${DISPLAY-}" || -n "${WAYLAND_DISPLAY-}" ]]
+}
+
 install_uv_arch() {
   if command -v uv >/dev/null 2>&1; then
     return 0
@@ -507,20 +511,41 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
 
   if [[ "$ID" == "arch" ]]; then
     # Pacman on Arch Linux
-    sudo pacman -Sy --noconfirm {{- if .packages.arch.pacman }}{{ range .packages.arch.pacman }} {{ . }}{{ end }}{{ end }}
+    {{- if .packages.arch.pacman.cli }}
+    sudo pacman -Sy --noconfirm {{ range .packages.arch.pacman.cli }} {{ . }}{{ end }}
+    {{- end }}
+    {{- if .packages.arch.pacman.gui }}
+    if has_gui_session; then
+      sudo pacman -Sy --noconfirm {{ range .packages.arch.pacman.gui }} {{ . }}{{ end }}
+    fi
+    {{- end }}
     install_uv_arch
     install_node_nvm_arch
   elif [[ "$ID" == "debian" ]]; then
     # APT on Debian (independent from Ubuntu)
     sudo apt-get update
-    sudo apt-get install -y {{- if .packages.debian.apt }}{{ range .packages.debian.apt }} {{ . }}{{ end }}{{ end }}
+    {{- if .packages.debian.apt.cli }}
+    sudo apt-get install -y {{ range .packages.debian.apt.cli }} {{ . }}{{ end }}
+    {{- end }}
+    {{- if .packages.debian.apt.gui }}
+    if has_gui_session; then
+      sudo apt-get install -y {{ range .packages.debian.apt.gui }} {{ . }}{{ end }}
+    fi
+    {{- end }}
     install_uv_debian
     install_neovim_appimage_debian
     install_node_nvm_debian
   elif [[ "$ID" == "ubuntu" ]]; then
     # APT on Ubuntu (independent from Debian)
     sudo apt-get update
-    sudo apt-get install -y {{- if .packages.ubuntu.apt }}{{ range .packages.ubuntu.apt }} {{ . }}{{ end }}{{ end }}
+    {{- if .packages.ubuntu.apt.cli }}
+    sudo apt-get install -y {{ range .packages.ubuntu.apt.cli }} {{ . }}{{ end }}
+    {{- end }}
+    {{- if .packages.ubuntu.apt.gui }}
+    if has_gui_session; then
+      sudo apt-get install -y {{ range .packages.ubuntu.apt.gui }} {{ . }}{{ end }}
+    fi
+    {{- end }}
     install_uv_ubuntu
     install_neovim_appimage_ubuntu
     install_node_nvm_ubuntu
