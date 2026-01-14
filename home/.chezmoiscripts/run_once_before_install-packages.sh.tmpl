@@ -1,6 +1,72 @@
 #!/usr/bin/env bash
 set -e
 
+install_neovim_appimage_debian() {
+  local install_path="$HOME/.local/bin/nvim.appimage"
+  local link_path="$HOME/.local/bin/nvim"
+  local machine_arch asset
+  machine_arch="$(uname -m)"
+
+  case "$machine_arch" in
+    x86_64|amd64) asset="nvim-linux-x86_64.appimage" ;;
+    aarch64|arm64) asset="nvim-linux-arm64.appimage" ;;
+    *) echo "Skipping Neovim AppImage: unsupported arch: $machine_arch"; return 0 ;;
+  esac
+
+  mkdir -p "$(dirname "$install_path")"
+
+  if [[ ! -e "$install_path" ]]; then
+    # AppImage runtime dependency (best-effort; varies by distro release)
+    if command -v apt-get >/dev/null 2>&1; then
+      sudo apt-get install -y libfuse2 2>/dev/null || sudo apt-get install -y libfuse2t64 2>/dev/null || true
+    fi
+
+    local tmp downloaded=""
+    tmp="$(mktemp)"
+
+    _download() {
+      local url="$1"
+      local out="$2"
+      if command -v curl >/dev/null 2>&1; then
+        curl -fsSL "$url" -o "$out"
+      elif command -v wget >/dev/null 2>&1; then
+        wget -qO "$out" "$url"
+      else
+        return 1
+      fi
+    }
+
+    for base in \
+      "https://github.com/neovim/neovim/releases/latest/download" \
+      "https://github.com/neovim/neovim-releases/releases/latest/download"
+    do
+      if _download "$base/$asset" "$tmp"; then
+        downloaded="yes"
+        break
+      fi
+    done
+
+    if [[ -z "$downloaded" ]]; then
+      echo "Failed to download Neovim AppImage ($asset); skipping" >&2
+      rm -f "$tmp"
+      return 0
+    fi
+
+    chmod +x "$tmp"
+    mv "$tmp" "$install_path"
+    echo "Installed Neovim AppImage -> $install_path"
+  fi
+
+  # Ensure a stable entrypoint on PATH.
+  if [[ -L "$link_path" ]]; then
+    ln -sfn "$install_path" "$link_path"
+  elif [[ -e "$link_path" ]]; then
+    echo "Not updating $link_path (exists and is not a symlink)"
+  else
+    ln -s "$install_path" "$link_path"
+  fi
+}
+
 if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
   # Load OS ID for distro detection
   if [[ -r /etc/os-release ]]; then
@@ -14,6 +80,7 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
     # APT on Debian/Ubuntu derivatives
     sudo apt-get update
     sudo apt-get install -y {{- if .packages.debian.apt }}{{ range .packages.debian.apt }} {{ . }}{{ end }}{{ end }}
+    install_neovim_appimage_debian
   fi
 elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
   # Homebrew on macOS

@@ -51,7 +51,8 @@ packages:
       - mercurial
       - mtr-tiny
       - ncdu
-      - neovim
+      # Neovim is installed via AppImage (see home/.chezmoiscripts/run_once_before_install-packages.sh.tmpl)
+      # - neovim
       - nmon
       # - npm
       - p7zip-full
