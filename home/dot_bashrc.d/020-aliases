@@ -40,9 +40,6 @@ __has_cmd ssh && alias inst1='ssh 104.154.20.1'
 
 __has_cmd vim && alias vimclean="vim -u NONE -U NONE -N"
 
-[[ -f ${HOME}/bin/factory ]] && alias fload='source ${HOME}/bin/factory'
-
-
 __has_cmd git && alias gplog="git log --oneline --graph --decorate --all"
 __has_cmd git && __has_cmd vim && alias vimgit='vim $(git diff --name-only stage | grep -v development.ini)'
 

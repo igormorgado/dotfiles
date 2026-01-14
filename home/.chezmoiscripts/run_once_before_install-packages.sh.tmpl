@@ -569,3 +569,5 @@ if command -v npm >/dev/null 2>&1; then
   mkdir -p "$npm_config_prefix/bin" "$npm_config_prefix/lib"
   npm install -g {{- if .packages.npm.global }}{{ range .packages.npm.global }} {{ . }}{{ end }}{{ end }}
 fi
+
+# vim: ft=bash:
