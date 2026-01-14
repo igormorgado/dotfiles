@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+export PATH="$HOME/.local/bin:$PATH"
+
 install_neovim_appimage_debian() {
   local install_path="$HOME/.local/bin/nvim.appimage"
   local link_path="$HOME/.local/bin/nvim"
@@ -67,6 +69,176 @@ install_neovim_appimage_debian() {
   fi
 }
 
+install_neovim_appimage_ubuntu() {
+  local install_path="$HOME/.local/bin/nvim.appimage"
+  local link_path="$HOME/.local/bin/nvim"
+  local machine_arch asset
+  machine_arch="$(uname -m)"
+
+  case "$machine_arch" in
+    x86_64|amd64) asset="nvim-linux-x86_64.appimage" ;;
+    aarch64|arm64) asset="nvim-linux-arm64.appimage" ;;
+    *) echo "Skipping Neovim AppImage: unsupported arch: $machine_arch"; return 0 ;;
+  esac
+
+  mkdir -p "$(dirname "$install_path")"
+
+  if [[ ! -e "$install_path" ]]; then
+    # AppImage runtime dependency (best-effort; varies by distro release)
+    if command -v apt-get >/dev/null 2>&1; then
+      sudo apt-get install -y libfuse2 2>/dev/null || sudo apt-get install -y libfuse2t64 2>/dev/null || true
+    fi
+
+    local tmp downloaded=""
+    tmp="$(mktemp)"
+
+    _download() {
+      local url="$1"
+      local out="$2"
+      if command -v curl >/dev/null 2>&1; then
+        curl -fsSL "$url" -o "$out"
+      elif command -v wget >/dev/null 2>&1; then
+        wget -qO "$out" "$url"
+      else
+        return 1
+      fi
+    }
+
+    for base in \
+      "https://github.com/neovim/neovim/releases/latest/download" \
+      "https://github.com/neovim/neovim-releases/releases/latest/download"
+    do
+      if _download "$base/$asset" "$tmp"; then
+        downloaded="yes"
+        break
+      fi
+    done
+
+    if [[ -z "$downloaded" ]]; then
+      echo "Failed to download Neovim AppImage ($asset); skipping" >&2
+      rm -f "$tmp"
+      return 0
+    fi
+
+    chmod +x "$tmp"
+    mv "$tmp" "$install_path"
+    echo "Installed Neovim AppImage -> $install_path"
+  fi
+
+  # Ensure a stable entrypoint on PATH.
+  if [[ -L "$link_path" ]]; then
+    ln -sfn "$install_path" "$link_path"
+  elif [[ -e "$link_path" ]]; then
+    echo "Not updating $link_path (exists and is not a symlink)"
+  else
+    ln -s "$install_path" "$link_path"
+  fi
+}
+
+install_node_nvm_debian() {
+  local nvm_dir="$HOME/.nvm"
+  export NVM_DIR="$nvm_dir"
+
+  if [[ ! -d "$nvm_dir" ]]; then
+    export PROFILE=/dev/null
+    if command -v curl >/dev/null 2>&1; then
+      curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh" | bash
+    elif command -v wget >/dev/null 2>&1; then
+      wget -qO- "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh" | bash
+    else
+      echo "Cannot install nvm (missing curl/wget)" >&2
+      return 1
+    fi
+  fi
+
+  if [[ ! -s "$nvm_dir/nvm.sh" ]]; then
+    echo "nvm installed but $nvm_dir/nvm.sh is missing" >&2
+    return 1
+  fi
+
+  # shellcheck disable=SC1090
+  source "$nvm_dir/nvm.sh"
+
+  nvm install node --latest-npm
+  nvm alias default node
+  nvm use default
+
+  local node_path bin_dir current_version_dir
+  node_path="$(nvm which current)"
+  bin_dir="$(dirname "$node_path")"
+  current_version_dir="$(dirname "$bin_dir")"
+
+  mkdir -p "$HOME/.local/bin"
+  ln -sfn "$node_path" "$HOME/.local/bin/node"
+  [[ -x "$bin_dir/npm" ]] && ln -sfn "$bin_dir/npm" "$HOME/.local/bin/npm"
+  [[ -x "$bin_dir/npx" ]] && ln -sfn "$bin_dir/npx" "$HOME/.local/bin/npx"
+
+  # Keep a single Node version under nvm.
+  if [[ "$current_version_dir" != "$nvm_dir/versions/node"/v* ]]; then
+    echo "Refusing to prune nvm versions: unexpected current dir: $current_version_dir" >&2
+    return 1
+  fi
+  local version_dir
+  for version_dir in "$nvm_dir/versions/node"/v*; do
+    [[ -d "$version_dir" ]] || continue
+    if [[ "$version_dir" != "$current_version_dir" ]]; then
+      rm -rf "$version_dir"
+    fi
+  done
+}
+
+install_node_nvm_ubuntu() {
+  local nvm_dir="$HOME/.nvm"
+  export NVM_DIR="$nvm_dir"
+
+  if [[ ! -d "$nvm_dir" ]]; then
+    export PROFILE=/dev/null
+    if command -v curl >/dev/null 2>&1; then
+      curl -fsSL "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh" | bash
+    elif command -v wget >/dev/null 2>&1; then
+      wget -qO- "https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh" | bash
+    else
+      echo "Cannot install nvm (missing curl/wget)" >&2
+      return 1
+    fi
+  fi
+
+  if [[ ! -s "$nvm_dir/nvm.sh" ]]; then
+    echo "nvm installed but $nvm_dir/nvm.sh is missing" >&2
+    return 1
+  fi
+
+  # shellcheck disable=SC1090
+  source "$nvm_dir/nvm.sh"
+
+  nvm install node --latest-npm
+  nvm alias default node
+  nvm use default
+
+  local node_path bin_dir current_version_dir
+  node_path="$(nvm which current)"
+  bin_dir="$(dirname "$node_path")"
+  current_version_dir="$(dirname "$bin_dir")"
+
+  mkdir -p "$HOME/.local/bin"
+  ln -sfn "$node_path" "$HOME/.local/bin/node"
+  [[ -x "$bin_dir/npm" ]] && ln -sfn "$bin_dir/npm" "$HOME/.local/bin/npm"
+  [[ -x "$bin_dir/npx" ]] && ln -sfn "$bin_dir/npx" "$HOME/.local/bin/npx"
+
+  # Keep a single Node version under nvm.
+  if [[ "$current_version_dir" != "$nvm_dir/versions/node"/v* ]]; then
+    echo "Refusing to prune nvm versions: unexpected current dir: $current_version_dir" >&2
+    return 1
+  fi
+  local version_dir
+  for version_dir in "$nvm_dir/versions/node"/v*; do
+    [[ -d "$version_dir" ]] || continue
+    if [[ "$version_dir" != "$current_version_dir" ]]; then
+      rm -rf "$version_dir"
+    fi
+  done
+}
+
 if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
   # Load OS ID for distro detection
   if [[ -r /etc/os-release ]]; then
@@ -76,11 +248,18 @@ if [[ "{{ .chezmoi.os }}" == "linux" ]]; then
   if [[ "$ID" == "arch" ]]; then
     # Pacman on Arch Linux
     sudo pacman -Sy --noconfirm {{- if .packages.arch.pacman }}{{ range .packages.arch.pacman }} {{ . }}{{ end }}{{ end }}
-  elif [[ "$ID" == "debian" ]] || [[ "$ID" == "ubuntu" ]] || [[ "$ID_LIKE" == *"debian"* ]]; then
-    # APT on Debian/Ubuntu derivatives
+  elif [[ "$ID" == "debian" ]]; then
+    # APT on Debian (independent from Ubuntu)
     sudo apt-get update
     sudo apt-get install -y {{- if .packages.debian.apt }}{{ range .packages.debian.apt }} {{ . }}{{ end }}{{ end }}
     install_neovim_appimage_debian
+    install_node_nvm_debian
+  elif [[ "$ID" == "ubuntu" ]]; then
+    # APT on Ubuntu (independent from Debian)
+    sudo apt-get update
+    sudo apt-get install -y {{- if .packages.ubuntu.apt }}{{ range .packages.ubuntu.apt }} {{ . }}{{ end }}{{ end }}
+    install_neovim_appimage_ubuntu
+    install_node_nvm_ubuntu
   fi
 elif [[ "{{ .chezmoi.os }}" == "darwin" ]]; then
   # Homebrew on macOS
@@ -90,5 +269,7 @@ fi
 
 # Install npm packages globally if npm is available
 if command -v npm >/dev/null 2>&1; then
-  sudo npm install -g {{- if .packages.npm.global }}{{ range .packages.npm.global }} {{ . }}{{ end }}{{ end }}
+  export npm_config_prefix="$HOME/.local"
+  mkdir -p "$npm_config_prefix/bin" "$npm_config_prefix/lib"
+  npm install -g {{- if .packages.npm.global }}{{ range .packages.npm.global }} {{ . }}{{ end }}{{ end }}
 fi
