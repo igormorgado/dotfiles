@@ -284,6 +284,24 @@ nnoremap <c-u> <c-w>x
 
 nnoremap <space> tj
 
+command! Tgz :!tar -czf "%d/%c:t".tgz -C "%d" -- "%c"
+nnoremap <wait> tgz :Tgz<cr>
+
+command! Zip :!zip -r "%d/%c:t".zip "%c"
+nnoremap <wait> zip :Zip<cr>
+
+command! Tbz :!tar -cjf "%d/%c:t".tbz -C "%d" -- "%c"
+nnoremap <wait> tbz :Tbz<cr>
+
+command! Tlz :!tar -caf "%d/%c:t".tlz -C "%d" -- "%c"
+nnoremap <wait> tlz :Tlz<cr>
+
+command! Tlz :!tar -caf "%d/%c:t".tlz -C "%d" -- "%c"
+nnoremap <wait> tlz :Tlz<cr>
+
+command! Tlz :!tar -caf "%d/%c:t".tlz -C "%d" -- "%c"
+nnoremap <wait> tlz :Tlz<cr>
+
 if executable('fzf') && executable('fd')
     nnoremap <c-g> :FZFlocate<cr>
     nnoremap <c-f> :FZFfind<cr>
