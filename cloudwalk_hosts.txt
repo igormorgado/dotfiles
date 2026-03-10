@@ -1,0 +1,9 @@
+# Hostnames or IP addresses that identify CloudWalk machines/networks.
+# One entry per line. Blank lines and lines starting with # are ignored.
+# Hostname entries are regex patterns anchored to the full hostname.
+# IP address entries are matched exactly.
+#
+# Examples:
+# cloudwalk-laptop
+# prm.*
+# 10.20.30.40

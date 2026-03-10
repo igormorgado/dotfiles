@@ -1,0 +1,51 @@
+{{- $cloudwalkHosts := list -}}
+{{- range (splitList "\n" (include "../cloudwalk_hosts.txt")) -}}
+{{- $entry := lower (trim .) -}}
+{{- if and $entry (not (hasPrefix "#" $entry)) -}}
+{{- $cloudwalkHosts = append $cloudwalkHosts $entry -}}
+{{- end -}}
+{{- end -}}
+
+{{- $hostname := lower .chezmoi.hostname -}}
+{{- $localAddresses := list -}}
+{{- $localAddressOutput := output "sh" "-c" `
+{
+  hostname -I 2>/dev/null || true
+  ifconfig 2>/dev/null | awk '/inet / { print $2 }' || true
+} 2>/dev/null
+` -}}
+{{- range (regexSplit "[[:space:]]+" $localAddressOutput -1) -}}
+{{- $address := lower (trim .) -}}
+{{- if and $address (not (hasPrefix "127." $address)) (ne $address "0.0.0.0") -}}
+{{- $localAddresses = append $localAddresses $address -}}
+{{- end -}}
+{{- end -}}
+
+{{- $isCloudwalk := false -}}
+{{- range $cloudwalkHosts -}}
+{{- if or (has . $localAddresses) (regexMatch (printf "^(?:%s)$" .) $hostname) -}}
+{{- $isCloudwalk = true -}}
+{{- end -}}
+{{- end -}}
+{{- $email := "morgado.igor@gmail.com" -}}
+{{- if $isCloudwalk -}}
+{{- $email = "igor.morgado@cloudwalk.io" -}}
+{{- end -}}
+[user]
+	email = {{ $email }}
+	name = Igor Morgado
+[core]
+	excludesfile = /home/igor/.gitignore
+[credential]
+	helper = store --file ~/.git-credentials
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
