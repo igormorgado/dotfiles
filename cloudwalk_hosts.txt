@@ -7,3 +7,4 @@
 # cloudwalk-laptop
 # prm.*
 # 10.20.30.40
+cyberdeck
