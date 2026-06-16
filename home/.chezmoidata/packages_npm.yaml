@@ -5,5 +5,6 @@ packages:
       - typescript
       - typescript-language-server
       - neovim
+      - tree-sitter-cli
       - bash-language-server
       - '@anthropic-ai/claude-code'
