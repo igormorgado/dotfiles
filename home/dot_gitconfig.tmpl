@@ -34,6 +34,13 @@
 [user]
 	email = {{ $email }}
 	name = Igor Morgado
+	signingkey = ~/.ssh/id_ed25519_signing_gh.pub
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+[gpg]
+	format = ssh
 [core]
 	excludesfile = /home/igor/.gitignore
 [credential]
