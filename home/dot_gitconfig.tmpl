@@ -35,12 +35,6 @@
 	email = {{ $email }}
 	name = Igor Morgado
 	signingkey = ~/.ssh/id_ed25519_signing_gh.pub
-[commit]
-	gpgsign = true
-[tag]
-	gpgSign = true
-[gpg]
-	format = ssh
 [core]
 	excludesfile = /home/igor/.gitignore
 [credential]
@@ -56,3 +50,11 @@
 [credential "https://gist.github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
+[gpg]
+	format = ssh
+[commit]
+	gpgsign = true
+[tag]
+	gpgSign = true
+[gpg "ssh"]
+	allowedSignersFile = ~/.config/git/allowed_signers
