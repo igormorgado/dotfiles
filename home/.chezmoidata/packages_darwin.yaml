@@ -28,6 +28,7 @@ packages:
       - tmux
       - unison
       - vifm
+      - tree-sitter
       - xz
       - zoxide
       - lua-language-server
