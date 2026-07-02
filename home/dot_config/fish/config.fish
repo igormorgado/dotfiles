@@ -3,6 +3,7 @@ bind -M default delete delete-char
 bind -M insert delete delete-char
 bind -M visual delete delete-char
 
+# comentario para o yete
 set -q DEBUG; and time_since_last "Bindings"
 
 # Ensure readenv autoload is available for PWD hook
