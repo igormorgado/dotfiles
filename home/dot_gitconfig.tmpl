@@ -31,6 +31,12 @@
 {{- if $isCloudwalk -}}
 {{- $email = "igor.morgado@cloudwalk.io" -}}
 {{- end -}}
+{{- $ghPath := "gh" -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{- $ghPath = "/usr/bin/gh" -}}
+{{- else if $isCloudwalk -}}
+{{- $ghPath = "/opt/homebrew/bin/gh" -}}
+{{- end -}}
 [user]
 	email = {{ $email }}
 	name = Igor Morgado
@@ -46,10 +52,10 @@
 	process = git-lfs filter-process
 [credential "https://github.com"]
 	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !{{ $ghPath }} auth git-credential
 [credential "https://gist.github.com"]
 	helper = 
-	helper = !/opt/homebrew/bin/gh auth git-credential
+	helper = !{{ $ghPath }} auth git-credential
 [gpg]
 	format = ssh
 [commit]
