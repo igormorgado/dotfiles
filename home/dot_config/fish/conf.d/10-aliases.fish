@@ -78,6 +78,7 @@ else if command -q batcat
 end
 
 
+
 # Rare command a based aliaes
 
 command -q cscope; and alias cscp="cscope -k -b -c -R; rm -f cctree.out"
