@@ -35,6 +35,7 @@ else if command -q vim
 end
 
 set -gx npm_config_prefix "$HOME/.local"
+set -gx CODEX_SKILLS_DIR "$HOME/.agents/skills"
 
 set -gx NMON vcmknt.
 set -gx LESS '-RXF'
