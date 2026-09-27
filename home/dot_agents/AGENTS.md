@@ -49,6 +49,23 @@ Codex-managed system skills under `~/.codex/skills/.system` (6):
 - `skill-creator`
 - `skill-installer`
 
+The `superpowers@openai-api-curated` Codex plugin is installed and enabled. Its skills are managed in the Codex plugin cache and use the `superpowers:` namespace (14):
+
+- `superpowers:brainstorming`
+- `superpowers:dispatching-parallel-agents`
+- `superpowers:executing-plans`
+- `superpowers:finishing-a-development-branch`
+- `superpowers:receiving-code-review`
+- `superpowers:requesting-code-review`
+- `superpowers:subagent-driven-development`
+- `superpowers:systematic-debugging`
+- `superpowers:test-driven-development`
+- `superpowers:using-git-worktrees`
+- `superpowers:using-superpowers`
+- `superpowers:verification-before-completion`
+- `superpowers:writing-plans`
+- `superpowers:writing-skills`
+
 <!-- codex-self-improvement:start -->
 ## Global self-improvement
 
