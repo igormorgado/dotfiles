@@ -49,6 +49,8 @@ Codex-managed system skills under `~/.codex/skills/.system` (6):
 - `skill-creator`
 - `skill-installer`
 
+The `zotero@openai-api-curated` Codex plugin is installed and enabled. It provides the `Zotero` skill for local Zotero Desktop library access.
+
 The `superpowers@openai-api-curated` Codex plugin is installed and enabled. Its skills are managed in the Codex plugin cache and use the `superpowers:` namespace (14):
 
 - `superpowers:brainstorming`
