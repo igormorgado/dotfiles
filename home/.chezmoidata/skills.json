@@ -1,0 +1,48 @@
+{
+  "skills": {
+    "personalHosts": [
+      "blackmonolith"
+    ],
+    "plugins": {
+      "allHosts": [
+        "superpowers@openai-api-curated"
+      ],
+      "personal": [
+        "zotero@openai-api-curated"
+      ]
+    },
+    "personal": {
+      "archive": "skills/personal.tar.gz",
+      "sha256": "010d44605626d45998c7256d4254f7ebacd1e3399fbd8320c9ad0781d56b064c",
+      "names": [
+        "academic-paper",
+        "academic-paper-reviewer",
+        "academic-pipeline",
+        "codex-self-improvement",
+        "deep-research",
+        "define-goal",
+        "evo-memory",
+        "experiment-craft",
+        "experiment-iterative-coder",
+        "experiment-pipeline",
+        "hypothesis-generation",
+        "networkx",
+        "paper-figures",
+        "paper-graph",
+        "paper-lookup",
+        "paper-navigator",
+        "paper-planning",
+        "paper-rebuttal",
+        "paper-review",
+        "paper-writing",
+        "research-ideation",
+        "research-survey",
+        "scikit-learn",
+        "systematic-debugging",
+        "torch-geometric",
+        "writing-plans",
+        "zotero-paper-summaries"
+      ]
+    }
+  }
+}

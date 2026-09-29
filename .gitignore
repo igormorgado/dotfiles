@@ -25,6 +25,11 @@ Session.vim
 Sessionx.vim
 
 # Temporary
+.cache/
+__pycache__/
+# Keep repository helpers despite the global ignore for directories named scripts.
+!/scripts/
+!/skills/personal.tar.gz
 .netrwhist
 *~
 # Auto-generated tag files
@@ -43,4 +48,3 @@ lazy-lock.json
 [._]s[a-rt-v][a-z]
 [._]ss[a-gi-z]
 [._]sw[a-p]
-
