@@ -6,6 +6,7 @@ import hashlib
 import io
 import json
 from pathlib import Path
+import subprocess
 import sys
 import tarfile
 
@@ -13,9 +14,17 @@ import tarfile
 EXCLUDED = {"__pycache__", ".git", ".cache", ".pytest_cache", ".mypy_cache", ".DS_Store"}
 
 
+def convert_data(content, template):
+    # Reuse chezmoi's YAML support instead of adding a Python YAML dependency.
+    return subprocess.run(
+        ["chezmoi", "execute-template", "--with-stdin", template],
+        input=content, capture_output=True, text=True, check=True,
+    ).stdout
+
+
 def snapshot(source, repository):
-    manifest = repository / "home/.chezmoidata/skills.json"
-    data = json.loads(manifest.read_text())
+    manifest = repository / "home/.chezmoidata/skills.yaml"
+    data = json.loads(convert_data(manifest.read_text(), "{{ .chezmoi.stdin | fromYaml | toJson }}"))
     skills = sorted(path for path in source.iterdir() if (path / "SKILL.md").is_file())
     if not skills:
         raise ValueError(f"No skills found in {source}")
@@ -44,10 +53,11 @@ def snapshot(source, repository):
     personal = data["skills"]["personal"]
     personal["names"] = [skill.name for skill in skills]
     personal["sha256"] = hashlib.sha256(content).hexdigest()
+    manifest_content = convert_data(json.dumps(data), "{{ .chezmoi.stdin | fromJson | toYaml }}")
     archive = repository / personal["archive"]
     archive.parent.mkdir(parents=True, exist_ok=True)
     archive.write_bytes(content)
-    manifest.write_text(json.dumps(data, indent=2) + "\n")
+    manifest.write_text(manifest_content)
     print(f"Bundled {len(skills)} skills ({len(entries)} files) into {archive}")
 
 
@@ -58,7 +68,7 @@ def main(argv=None):
     args = parser.parse_args(argv)
     try:
         snapshot(args.source, args.repository)
-    except (OSError, ValueError, KeyError) as error:
+    except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         print(f"Skill snapshot failed: {error}", file=sys.stderr)
         return 1
     return 0

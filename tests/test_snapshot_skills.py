@@ -6,6 +6,7 @@ import importlib.util
 import io
 import json
 from pathlib import Path
+import subprocess
 import tarfile
 import tempfile
 import unittest
@@ -36,13 +37,20 @@ class SnapshotSkillsTests(unittest.TestCase):
         (skill / "__pycache__/old.pyc").write_bytes(b"cache")
         (self.source / "not-a-skill").mkdir()
         (self.source / "not-a-skill/private.txt").write_text("Do not bundle\n")
-        self.manifest = self.root / "home/.chezmoidata/skills.json"
+        self.manifest = self.root / "home/.chezmoidata/skills.yaml"
         self.manifest.parent.mkdir(parents=True)
-        self.manifest.write_text(json.dumps({"skills": {
-            "personalHosts": ["blackmonolith"],
-            "plugins": {"allHosts": ["superpowers@openai-api-curated"], "personal": []},
-            "personal": {"archive": "skills/personal.tar.gz", "names": [], "sha256": ""},
-        }}))
+        self.manifest.write_text("""skills:
+  personalHosts:
+    - blackmonolith
+  plugins:
+    allHosts:
+      - superpowers@openai-api-curated
+    personal: []
+  personal:
+    archive: skills/personal.tar.gz
+    names: []
+    sha256: ''
+""")
 
     def snapshot(self):
         with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
@@ -54,9 +62,14 @@ class SnapshotSkillsTests(unittest.TestCase):
         first = archive.read_bytes()
         self.assertEqual(self.snapshot(), 0)
         self.assertEqual(archive.read_bytes(), first)
-        data = json.loads(self.manifest.read_text())["skills"]
+        rendered = subprocess.run([
+            "chezmoi", "execute-template", "--with-stdin",
+            "{{ .chezmoi.stdin | fromYaml | toJson }}",
+        ], input=self.manifest.read_text(), capture_output=True, text=True, check=True)
+        data = json.loads(rendered.stdout)["skills"]
         self.assertEqual(data["personal"]["names"], ["example"])
         self.assertEqual(data["personal"]["sha256"], hashlib.sha256(first).hexdigest())
+        self.assertEqual(data["personalHosts"], ["blackmonolith"])
         self.assertEqual(data["plugins"]["allHosts"], ["superpowers@openai-api-curated"])
         with tarfile.open(archive) as bundle:
             self.assertEqual(bundle.getnames(), ["example/SKILL.md", "example/helper.sh"])

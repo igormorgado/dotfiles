@@ -39,7 +39,7 @@ make test            # Test host isolation and installation in temporary directo
 The installer checks both the hostname used to render the template and the
 hostname of the machine running it. An unknown host receives only Superpowers.
 Keep the personal host allowlist and plugin lists in
-[skills.json](home/.chezmoidata/skills.json). Add work-specific skills through a
+[skills.yaml](home/.chezmoidata/skills.yaml). Add work-specific skills through a
 separate profile or installer when that set is defined.
 
 Existing skills and plugins are kept, including local customizations. An
