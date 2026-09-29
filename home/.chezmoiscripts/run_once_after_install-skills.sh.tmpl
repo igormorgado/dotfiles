@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export PATH="$HOME/.local/bin:$PATH"
+
+# The embedded helper checks both this template's host and the runtime host.
+# Superpowers is shared by all hosts; the personal bundle and Zotero are not.
+python3 - {{ .chezmoi.workingTree | shellQuote }} {{ .chezmoi.hostname | shellQuote }} {{ .skills | toJson | shellQuote }} "$@" <<'CHEZMOI_SKILL_INSTALLER'
+{{ include "../scripts/install_skills.py" -}}
+CHEZMOI_SKILL_INSTALLER
