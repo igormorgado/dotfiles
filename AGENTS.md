@@ -30,13 +30,14 @@ Run from the repo root:
 
 - Follow chezmoi conventions: new managed files live under `home/` and use `dot_` / `dot_config/` naming.
 - Prefer templates (`*.tmpl`) plus data in `home/.chezmoidata/` for OS-specific values.
+- Use YAML for files in `home/.chezmoidata/`, matching the existing package and skill manifests.
 - Match existing formatting; use tabs only in `Makefile`.
 
 ## Testing Guidelines
 
 Run `make test` for the skill installer's host isolation, integrity, and repeat-run checks. Run `make skills-preview` to render and preview the real template without installing anything. For other dotfiles, validate with `chezmoi diff` and/or `chezmoi apply --dry-run`, and apply on a disposable profile/VM first when practical.
 
-Skill installation uses `home/.chezmoidata/skills.json` and `home/.chezmoiscripts/run_once_after_install-skills.sh.tmpl`. Superpowers applies to all hosts; personal skills and Zotero require both the rendered and runtime hostname to be allowlisted. Keep source skill snapshots under `skills/`, outside the managed `home/` tree. `make snapshot-skills` deliberately refreshes the bundle from `~/.agents/skills`; never include private memory, credentials, or caches in it. Existing installed skills must not be overwritten. Generated scripts and test files live under `.cache/`, managed by `make clean`.
+Skill installation uses `home/.chezmoidata/skills.yaml` and `home/.chezmoiscripts/run_once_after_install-skills.sh.tmpl`. Superpowers applies to all hosts; personal skills and Zotero require both the rendered and runtime hostname to be allowlisted. Keep source skill snapshots under `skills/`, outside the managed `home/` tree. `make snapshot-skills` deliberately refreshes the bundle from `~/.agents/skills`; never include private memory, credentials, or caches in it. Existing installed skills must not be overwritten. Generated scripts and test files live under `.cache/`, managed by `make clean`.
 
 Debian/Ubuntu note: Neovim is installed as an AppImage to `~/.local/bin/nvim.appimage` with a symlink at `~/.local/bin/nvim` (not via `apt`).
 

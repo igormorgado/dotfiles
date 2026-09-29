@@ -4,7 +4,7 @@
 when this installer was added on 2026-09-29. It preserves the installed versions,
 including local customizations, references, templates, scripts, and bundled tests.
 The complete name list and SHA-256 checksum are in
-[the skill manifest](../home/.chezmoidata/skills.json).
+[the skill manifest](../home/.chezmoidata/skills.yaml).
 
 This is an installation snapshot, not a live upstream checkout. Four skills
 (`academic-paper`, `academic-paper-reviewer`, `academic-pipeline`, and
